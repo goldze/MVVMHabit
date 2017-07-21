@@ -1,0 +1,177 @@
+<resources>
+
+    <!-- require boolean value to decide whether requestFocus for view. -->
+    <attr name="requestFocus" format="boolean" />
+    <!-- require ItemView {@link me.tatarka.bindingcollectionadapter.ItemView} or ItemViewSelector {{@link me.tatarka.bindingcollectionadapter.ItemViewSelector}.} -->
+    <attr name="itemView" format="reference" />
+    <!-- require List<ViewModel> bind to ItemView to presentation.-->
+    <attr name="items" format="reference" />
+    <!-- require a adapter which type of BindingRecyclerViewAdapter<T> to AdapterView-->
+    <attr name="adapter" format="reference" />
+
+    <attr name="onScrollChangeCommand" format="reference" />
+    <attr name="onScrollStateChangedCommand" format="reference" />
+    <attr name="uri" format="string" />
+    <attr name="onTouchCommand" format="reference" />
+
+    <!-- require ReplyCommand {@link com.kelin.mvvmlight.command.ReplyCommand } to deal with view click event. -->
+    <attr name="onClickCommand" format="reference" />
+    <attr name="onLongClickCommand" format="reference" />
+    <!-- require ReplyCommand<Boolean> {@link com.kelin.mvvmlight.command.ReplyCommand } to deal with view focus change event.
+     ReplyCommand would has params which means if view hasFocus.-->
+    <attr name="onFocusChangeCommand" format="reference" />
+    <attr name="isThrottleFirst" format="reference" />
+
+    <declare-styleable name="View">
+
+        <!-- require ReplyCommand {@link com.kelin.mvvmlight.command.ReplyCommand } to deal with view click event. -->
+        <attr name="onClickCommand" />
+        <attr name="onLongClickCommand" />
+        <!-- require ReplyCommand<Boolean> {@link com.kelin.mvvmlight.command.ReplyCommand } to deal with view focus change event.
+         ReplyCommand would has params which means if view hasFocus.-->
+        <attr name="onFocusChangeCommand" />
+        <!-- require ReplyCommand<MotionEvent> -->
+        <attr name="onTouchCommand" />
+        <attr name="isThrottleFirst" />
+    </declare-styleable>
+
+
+    <declare-styleable name="AdapterView">
+        <!-- require ItemView {@link me.tatarka.bindingcollectionadapter.ItemView} or ItemViewSelector {{@link me.tatarka.bindingcollectionadapter.ItemViewSelector}.} -->
+        <attr name="itemView" />
+        <!-- require List<ViewModel> bind to ItemView to presentation.-->
+        <attr name="items" />
+        <!-- require a adapter which type of BindingRecyclerViewAdapter<T> to AdapterView-->
+        <attr name="adapter" />
+        <attr name="dropDownItemView" format="reference" />
+        <attr name="itemIds" format="reference" />
+        <attr name="itemIsEnabled" format="reference" />
+        <!-- require ReplyCommand<Integer> -->
+        <attr name="onScrollStateChangedCommand" />
+        <!-- require ReplyCommand<ListViewScrollDataWrapper> -->
+        <attr name="onScrollChangeCommand" />
+        <!-- require ReplyCommand<Integer> count of list items-->
+        <attr name="onLoadMoreCommand" format="reference" />
+    </declare-styleable>
+
+    <declare-styleable name="TextView">
+        <attr name="onClickCommand" />
+        <!-- require boolean value to decide whether requestFocus for view. -->
+        <attr name="requestFocus" />
+        <!--require ReplyCommand<TextChangeDataWrapper> -->
+        <attr name="beforeTextChangedCommand" format="reference" />
+        <!--require ReplyCommand<TextChangeDataWrapper> -->
+        <attr name="onTextChangedCommand" format="reference" />
+        <!--require ReplyCommand<String> -->
+        <attr name="afterTextChangedCommand" format="reference" />
+    </declare-styleable>
+
+
+    <declare-styleable name="ImageView">
+        <attr name="onClickCommand" />
+        <!--  load bitmap from uri(string type) -->
+        <attr name="uri" />
+        <!--width for ResizeOptions (use Fresco to load bitmap). -->
+        <attr name="request_width" format="integer" />
+        <!--height for ResizeOptions (use Fresco to load bitmap). -->
+        <attr name="request_height" format="integer" />
+        <attr name="placeholderImageRes" format="reference|color" />
+        <!--  require ReplyCommand<Bitmap> See {@link @link com.kelin.mvvmlight.command.ReplyCommand} -->
+        <attr name="onSuccessCommand" format="reference" />
+        <!--require ReplyCommand<CloseableReference<CloseableImage>> See {@link com.kelin.mvvmlight.command.ReplyCommand} -->
+        <attr name="onFailureCommand" format="reference" />
+
+    </declare-styleable>
+
+
+    <declare-styleable name="ViewGroup">
+        <attr name="onClickCommand" />
+        <!-- require ItemView {@link me.tatarka.bindingcollectionadapter.ItemView} or ItemViewSelector {{@link me.tatarka.bindingcollectionadapter.ItemViewSelector}.} -->
+        <attr name="itemView" />
+        <!-- require List<ViewModel> bind to ItemView to presentation.-->
+        <attr name="observableList" format="reference" />
+
+    </declare-styleable>
+
+    <declare-styleable name="RecyclerView" parent="AdapterView">
+        <attr name="lineManager" format="reference" />
+    </declare-styleable>
+
+    <declare-styleable name="ListView" parent="AdapterView">
+        <!--require ReplyCommand<Integer> integer mean to position where is clicked! -->
+        <attr name="onItemClickCommand" format="reference" />
+    </declare-styleable>
+
+    <declare-styleable name="ViewPager">
+        <!-- require ItemView {@link me.tatarka.bindingcollectionadapter.ItemView} or ItemViewSelector {{@link me.tatarka.bindingcollectionadapter.ItemViewSelector}.} -->
+        <attr name="itemView" />
+        <!-- require List<ViewModel> bind to ItemView to presentation.-->
+        <attr name="items" />
+        <!-- require a adapter which type of BindingRecyclerViewAdapter<T> to AdapterView-->
+        <attr name="adapter" />
+        <!-- require PageTitles<T>-->
+        <attr name="pageTitles" format="reference" />
+        <!--require ReplyCommand<ViewPagerDataWrapper> -->
+        <attr name="onPageScrolledCommand" format="reference" />
+        <!--require ReplyCommand<Integer> -->
+        <attr name="onPageSelectedCommand" format="reference" />
+        <!--require ReplyCommand<Integer> -->
+        <attr name="onPageScrollStateChangedCommand" format="reference" />
+
+    </declare-styleable>
+
+    <declare-styleable name="NestedScrollView">
+        <!-- require ReplyCommand<NestScrollDataWrapper> -->
+        <attr name="onScrollChangeCommand" />
+    </declare-styleable>
+
+    <declare-styleable name="SimpleDraweeView">
+        <!-- require String to load Image"-->
+        <attr name="uri" />
+    </declare-styleable>
+
+    <declare-styleable name="ScrollView">
+        <!-- require ReplyCommand<ScrollDataWrapper> -->
+        <attr name="onScrollChangeCommand" />
+    </declare-styleable>
+
+    <declare-styleable name="SwipeRefreshLayout">
+        <!-- require RelayCommand -->
+        <attr name="onRefreshCommand" format="reference" />
+    </declare-styleable>
+
+    <declare-styleable name="WebView">
+        <!-- require String render to html show in webview-->
+        <attr name="render" format="string" />
+    </declare-styleable>
+
+
+    <declare-styleable name="TwinklingRefreshLayout">
+        <attr name="tr_wave_height" format="dimension"/>
+        <attr name="tr_head_height" format="dimension"/>
+        <attr name="tr_bottom_height" format="dimension"/>
+        <attr name="tr_overscroll_height" format="dimension"/>
+        <attr name="tr_enable_loadmore" format="boolean"/>
+        <attr name="tr_pureScrollMode_on" format="boolean"/>
+        <attr name="tr_show_overlay_refreshview" format="boolean"/>
+        <attr name="tr_headerView" format="dimension"/>
+        <attr name="tr_bottomView" format="dimension"/>
+    </declare-styleable>
+
+    <declare-styleable name="AVLoadingIndicatorView">
+        <attr name="minWidth" format="dimension" />
+        <attr name="maxWidth" format="dimension"/>
+        <attr name="minHeight" format="dimension" />
+        <attr name="maxHeight" format="dimension"/>
+        <attr name="indicatorViewName" format="string"/>
+        <attr name="indicatorViewColor" format="color"/>
+    </declare-styleable>
+
+
+    <declare-styleable name="SwipeMenuLayout">
+        <attr name="leftViewId" format="reference" />
+        <attr name="rightViewId" format="reference" />
+        <attr name="contentViewId" format="reference" />
+    </declare-styleable>
+
+</resources>

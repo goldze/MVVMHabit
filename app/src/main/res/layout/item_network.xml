@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+    <data>
+        <import type="com.goldze.mvvmhabit.ui.vm.NetWorkItemViewModel" />
+        <variable
+                name="viewModel"
+                type="NetWorkItemViewModel"
+                />
+    </data>
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:layout_width="match_parent"
+            android:padding="10dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:onClickCommand="@{viewModel.itemClick}"
+            >
+        <TextView
+                android:id="@+id/tv_title"
+                android:text="@{viewModel.entity.name}"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                />
+    </LinearLayout>
+</layout>

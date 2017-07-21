@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+    <data>
+        <import type="com.goldze.mvvmhabit.ui.vm.DetailViewModel" />
+        <variable
+                name="viewModel"
+                type="DetailViewModel"
+                />
+        <import type="me.tatarka.bindingcollectionadapter.LayoutManagers" />
+        <import type="me.goldze.mvvmhabit.binding.viewadapter.recyclerview.LineManagers" />
+    </data>
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:layout_height="match_parent"
+            >
+        <ImageView
+                android:src="@mipmap/ic_launcher"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                />
+        <LinearLayout
+                android:layout_marginTop="10dp"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                >
+
+            <TextView
+                    android:gravity="center"
+                    android:textSize="18sp"
+                    android:text="id"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    />
+            <TextView
+                    android:gravity="center"
+                    android:textSize="18sp"
+                    android:text="@{String.valueOf(viewModel.entity.id)}"
+                    android:layout_weight="3"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    />
+        </LinearLayout>
+        <LinearLayout
+                android:layout_marginTop="10dp"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                >
+
+            <TextView
+                    android:gravity="center"
+                    android:textSize="18sp"
+                    android:text="名称"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    />
+            <TextView
+                    android:gravity="center"
+                    android:textSize="18sp"
+                    android:text="@{viewModel.entity.name}"
+                    android:layout_weight="3"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    />
+        </LinearLayout>
+        <LinearLayout
+                android:layout_marginTop="10dp"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                >
+
+            <TextView
+                    android:gravity="center"
+                    android:textSize="18sp"
+                    android:text="日期"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    />
+            <TextView
+                    android:gravity="center"
+                    android:textSize="18sp"
+                    android:text="@{viewModel.entity.pubDate}"
+                    android:layout_weight="3"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    />
+        </LinearLayout>
+        <LinearLayout
+                android:layout_marginTop="10dp"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                >
+
+            <TextView
+                    android:gravity="center"
+                    android:textSize="18sp"
+                    android:text="图片路径"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    />
+            <TextView
+                    android:gravity="center"
+                    android:textSize="18sp"
+                    android:text="@{viewModel.entity.img}"
+                    android:layout_weight="3"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    />
+        </LinearLayout>
+    </LinearLayout>
+</layout>
