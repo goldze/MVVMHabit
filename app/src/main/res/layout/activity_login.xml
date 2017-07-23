@@ -1,125 +1,120 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout>
+
     <data>
+
         <import type="com.goldze.mvvmhabit.ui.vm.LoginViewModel" />
+
         <variable
-                name="viewModel"
-                type="LoginViewModel"
-                />
+            name="viewModel"
+            type="LoginViewModel" />
     </data>
+
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-            xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:binding="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
             android:layout_width="match_parent"
-            android:orientation="vertical"
-            android:layout_height="match_parent"
-            >
-
-        <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:clickable="true"
-                android:padding="6dp"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
-                >
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:clickable="true"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:padding="6dp">
 
             <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="8dp"
-                    android:text="账 号"
-                    android:textColor="@color/textColor"
-                    android:textSize="16sp"
-                    />
-
-            <EditText
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:layout_weight="1"
-                    android:background="@null"
-                    android:hint="请输入账号"
-                    android:imeOptions="actionNext"
-                    android:minHeight="40dp"
-                    android:lines="1"
-                    android:maxLines="1"
-                    android:textColorHint="@color/textColorHint"
-                    android:textSize="16sp"
-                    android:text="@={viewModel.userName}"
-                    app:onFocusChangeCommand="@{viewModel.onFocusChangeCommand}"
-                    />
-
-            <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/login_clear_input"
-                    android:contentDescription="@null"
-                    android:layout_marginRight="6dp"
-                    android:visibility="@{viewModel.clearBtnVisibility}"
-                    app:onClickCommand="@{viewModel.clearUserNameOnClickCommand}"
-                    />
-        </LinearLayout>
-        <LinearLayout
-                android:id="@+id/ll_username"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:clickable="true"
-                android:padding="6dp"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
-                >
-
-            <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="8dp"
-                    android:text="密 码"
-                    android:textColor="@color/textColor"
-                    android:textSize="16sp"
-                    />
-
-            <EditText
-                    android:id="@+id/et_password"
-                    android:inputType="textPassword"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:layout_weight="1"
-                    android:background="@null"
-                    android:hint="请输入密码"
-                    android:imeOptions="actionNext"
-                    android:minHeight="40dp"
-                    android:lines="1"
-                    android:maxLines="1"
-                    android:textColorHint="@color/textColorHint"
-                    android:textSize="16sp"
-                    android:text="@={viewModel.password}"
-                    />
-
-            <ImageView
-                    android:id="@+id/iv_swich_passwrod"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@mipmap/registered_show_white"
-                    android:contentDescription="@null"
-                    android:layout_marginRight="6dp"
-                    app:onClickCommand="@{viewModel.passwordShowSwitchOnClickCommand}"
-                    />
-        </LinearLayout>
-        <Button
-                app:onClickCommand="@{viewModel.loginOnClickCommand}"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="登  录"
-                />
-        <TextView
-                android:layout_marginTop="6dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="#EE1010"
-                android:text="模拟一个登陆操作,随便输入账号密码点击登录即可进入"
-                />
+                android:layout_marginLeft="8dp"
+                android:text="账 号"
+                android:textColor="@color/textColor"
+                android:textSize="16sp" />
+
+            <EditText
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_weight="1"
+                android:background="@null"
+                android:hint="请输入账号"
+                android:imeOptions="actionNext"
+                android:lines="1"
+                android:maxLines="1"
+                android:minHeight="40dp"
+                android:text="@={viewModel.userName}"
+                android:textColorHint="@color/textColorHint"
+                android:textSize="16sp"
+                binding:onFocusChangeCommand="@{viewModel.onFocusChangeCommand}" />
+
+            <ImageView
+                binding:onClickCommand="@{viewModel.clearUserNameOnClickCommand}"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="6dp"
+                android:background="@drawable/login_clear_input"
+                android:contentDescription="@null"
+                android:visibility="@{viewModel.clearBtnVisibility}" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_username"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:clickable="true"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:padding="6dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:text="密 码"
+                android:textColor="@color/textColor"
+                android:textSize="16sp" />
+
+            <EditText
+                android:id="@+id/et_password"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_weight="1"
+                android:background="@null"
+                android:hint="请输入密码"
+                android:imeOptions="actionNext"
+                android:inputType="textPassword"
+                android:lines="1"
+                android:maxLines="1"
+                android:minHeight="40dp"
+                android:text="@={viewModel.password}"
+                android:textColorHint="@color/textColorHint"
+                android:textSize="16sp" />
+
+            <ImageView
+                android:id="@+id/iv_swich_passwrod"
+                binding:onClickCommand="@{viewModel.passwordShowSwitchOnClickCommand}"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="6dp"
+                android:background="@mipmap/registered_show_white"
+                android:contentDescription="@null" />
+        </LinearLayout>
+
+        <Button
+            binding:onClickCommand="@{viewModel.loginOnClickCommand}"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="登  录" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:text="模拟一个登陆操作,随便输入账号密码点击登录即可进入"
+            android:textColor="#EE1010" />
     </LinearLayout>
 </layout>

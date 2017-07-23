@@ -11,7 +11,7 @@ import me.goldze.mvvmhabit.base.IBindingItemViewModel;
 import me.tatarka.bindingcollectionadapter.ItemView;
 
 /**
- * Created by goldze on 2017/6/16.
+ * Created by goldze on 2017/6/18.
  */
 public final class ViewAdapter {
 

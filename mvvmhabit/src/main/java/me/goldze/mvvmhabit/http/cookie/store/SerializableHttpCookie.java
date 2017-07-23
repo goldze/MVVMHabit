@@ -1,4 +1,4 @@
-package me.goldze.mvvmhabit.http.cookie_okgo.store;
+package me.goldze.mvvmhabit.http.cookie.store;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;

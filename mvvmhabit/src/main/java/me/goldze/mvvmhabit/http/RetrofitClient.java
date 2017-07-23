@@ -9,8 +9,8 @@ import java.io.File;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
-import me.goldze.mvvmhabit.http.cookie.NovateCookieManger;
-import me.goldze.mvvmhabit.http.cookie_okgo.CookieJarImpl;
+import me.goldze.mvvmhabit.http.cookie.CookieJarImpl;
+import me.goldze.mvvmhabit.http.cookie.store.PersistentCookieStore;
 import okhttp3.Cache;
 import okhttp3.ConnectionPool;
 import okhttp3.OkHttpClient;
@@ -107,7 +107,7 @@ public class RetrofitClient {
                 .addNetworkInterceptor(
                         new HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
 //                .cookieJar(new NovateCookieManger(mContext))
-                .cookieJar(new CookieJarImpl(new me.goldze.mvvmhabit.http.cookie_okgo.store.PersistentCookieStore(mContext)))
+                .cookieJar(new CookieJarImpl(new PersistentCookieStore(mContext)))
                 .cache(cache)
                 .addInterceptor(new BaseInterceptor(headers))
                 .addInterceptor(new CaheInterceptor(mContext))
@@ -140,7 +140,7 @@ public class RetrofitClient {
      * addcookieJar
      */
     public static void addCookie() {
-        okHttpClient.newBuilder().cookieJar(new NovateCookieManger(mContext)).build();
+        okHttpClient.newBuilder().cookieJar(new CookieJarImpl(new PersistentCookieStore(mContext))).build();
         retrofit = builder.client(okHttpClient).build();
     }
 

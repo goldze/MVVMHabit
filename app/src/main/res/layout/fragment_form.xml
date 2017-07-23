@@ -3,109 +3,112 @@
 
     <data>
 
-        <import type="com.goldze.mvvmhabit.ui.vm.DetailViewModel" />
+        <import type="com.goldze.mvvmhabit.ui.vm.FormViewModel" />
 
         <variable
             name="viewModel"
-            type="DetailViewModel" />
+            type="FormViewModel" />
     </data>
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:binding="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:gravity="center"
         android:orientation="vertical">
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@mipmap/ic_launcher"
-            binding:uri="@{viewModel.entity.img}" />
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
             android:gravity="center_vertical"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:padding="10dp">
 
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="id"
-                android:textSize="18sp" />
+                android:gravity="center"
+                android:text="姓名" />
 
-            <TextView
+            <EditText
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="3"
-                android:text="@{String.valueOf(viewModel.entity.id)}"
-                android:textSize="18sp" />
+                android:text="@={viewModel.entity.name}" />
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:orientation="horizontal">
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:padding="10dp">
 
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="名称"
-                android:textSize="18sp" />
+                android:gravity="center"
+                android:text="性别" />
 
-            <TextView
+            <Spinner
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="3"
-                android:text="@{viewModel.entity.name}"
-                android:textSize="18sp" />
+                binding:itemDatas="@{viewModel.sexItemDatas}"
+                binding:onItemSelectedCommand="@{viewModel.onSexSelectorCommand}"
+                binding:valueReply="@{viewModel.entity.sex}" />
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:orientation="horizontal">
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:padding="10dp">
 
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="日期"
-                android:textSize="18sp" />
+                android:gravity="center"
+                android:text="生日" />
 
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="3"
-                android:text="@{viewModel.entity.pubDate}"
-                android:textSize="18sp" />
+                android:text="@={viewModel.entity.bir}"
+                binding:onClickCommand="@{viewModel.onBirClickCommand}" />
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:orientation="horizontal">
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:padding="10dp">
 
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="图片路径"
-                android:textSize="18sp" />
+                android:gravity="center"
+                android:text="是否已婚" />
 
-            <TextView
+            <Switch
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="3"
-                android:text="@{viewModel.entity.img}"
-                android:textSize="18sp" />
+                binding:onCheckedChangeCommand="@{viewModel.onMarryCheckedChangeCommand}"
+                binding:switchState="@{viewModel.entity.marry}" />
         </LinearLayout>
+
+        <Button
+            android:id="@+id/btn_cmt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="立即提交"
+            binding:onClickCommand="@{viewModel.onCmtClickCommand}" />
     </LinearLayout>
 </layout>

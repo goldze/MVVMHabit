@@ -6,6 +6,5 @@ package me.goldze.mvvmhabit.base;
 
 public interface IBaseViewModel {
 //    void injectionContext(Context context);
-//
 //    void initData();
 }

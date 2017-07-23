@@ -53,4 +53,6 @@ dependencies {
     compile 'com.afollestad.material-dialogs:commons:0.9.4.5'
     //下拉刷新,上拉加载
     compile 'com.lcodecorex:tkrefreshlayout:1.0.7'
+    //glide图片加载库
+    compile 'com.github.bumptech.glide:glide:4.0.0-RC1'
 }

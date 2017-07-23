@@ -1,25 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout>
+
     <data>
+
         <import type="com.goldze.mvvmhabit.ui.vm.NetWorkItemViewModel" />
+
         <variable
-                name="viewModel"
-                type="NetWorkItemViewModel"
-                />
+            name="viewModel"
+            type="NetWorkItemViewModel" />
     </data>
+
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-            xmlns:app="http://schemas.android.com/apk/res-auto"
-            android:layout_width="match_parent"
-            android:padding="10dp"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            app:onClickCommand="@{viewModel.itemClick}"
-            >
+        xmlns:binding="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?android:selectableItemBackground"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="10dp"
+        binding:onClickCommand="@{viewModel.itemClick}">
+
+        <ImageView
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@mipmap/ic_launcher"
+            binding:uri="@{viewModel.entity.img}" />
+
         <TextView
-                android:id="@+id/tv_title"
-                android:text="@{viewModel.entity.name}"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                />
+            android:id="@+id/tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="6dp"
+            android:text="@{viewModel.entity.name}" />
     </LinearLayout>
 </layout>

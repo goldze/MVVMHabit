@@ -1,4 +1,4 @@
-package me.goldze.mvvmhabit.http.cookie_okgo.store;
+package me.goldze.mvvmhabit.http.cookie.store;
 
 import java.util.ArrayList;
 import java.util.HashMap;

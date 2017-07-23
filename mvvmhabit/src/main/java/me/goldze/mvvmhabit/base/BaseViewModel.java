@@ -3,6 +3,7 @@ package me.goldze.mvvmhabit.base;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 
@@ -16,18 +17,26 @@ public class BaseViewModel implements IBaseViewModel {
 
     public BaseViewModel() {
     }
+
     public BaseViewModel(Context context) {
         this.context = context;
+    }
+
+    public BaseViewModel(Fragment fragment) {
+        this(fragment.getContext());
     }
 
     private MaterialDialog dialog;
 
     public void showDialog() {
-        //开始请求前显示对话框
+        showDialog("请稍后...");
+    }
+
+    public void showDialog(String title) {
         if (dialog != null) {
             dialog.show();
         } else {
-            MaterialDialog.Builder builder = MaterialDialogUtils.showIndeterminateProgressDialog(context, "正在请求,请稍后...", true);
+            MaterialDialog.Builder builder = MaterialDialogUtils.showIndeterminateProgressDialog(context, title, true);
             dialog = builder.show();
         }
     }
@@ -50,7 +59,7 @@ public class BaseViewModel implements IBaseViewModel {
     /**
      * 跳转页面
      *
-     * @param clz 所跳转的目的Activity类
+     * @param clz    所跳转的目的Activity类
      * @param bundle 跳转所携带的信息
      */
     public void startActivity(Class<?> clz, Bundle bundle) {
