@@ -3,7 +3,6 @@ package me.goldze.mvvmhabit.bus;
 import rx.Subscriber;
 
 /**
- * Created by goldze on 2017/6/15.
  * 为RxBus使用的Subscriber, 主要提供next事件的try,catch
  */
 public abstract class RxBusSubscriber<T> extends Subscriber<T> {

@@ -9,13 +9,7 @@ import okhttp3.Cookie;
 import okhttp3.HttpUrl;
 
 /**
- * ================================================
- * 作    者：廖子尧
- * 版    本：1.0
- * 创建日期：2016/1/14
- * 描    述：Cookie 的内存管理
- * 修订历史：
- * ================================================
+ * Created by goldze on 2017/5/13.
  */
 public class MemoryCookieStore implements CookieStore {
 

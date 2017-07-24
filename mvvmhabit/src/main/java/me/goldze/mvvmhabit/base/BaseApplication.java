@@ -11,7 +11,7 @@ import me.goldze.mvvmhabit.utils.Utils;
 import static android.content.ContentValues.TAG;
 
 /**
- * Created by 曾宪泽 on 2017/6/19.
+ * Created by goldze on 2017/6/15.
  */
 
 public class BaseApplication extends Application {

@@ -10,7 +10,7 @@ import com.goldze.mvvmhabit.ui.vm.NetWorkViewModel;
 import me.goldze.mvvmhabit.base.BaseFragment;
 
 /**
- * Created by 曾宪泽 on 2017/7/17.
+ * Created by goldze on 2017/7/17.
  * 网络请求列表界面
  */
 

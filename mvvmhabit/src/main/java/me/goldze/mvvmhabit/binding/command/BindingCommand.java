@@ -6,7 +6,7 @@ import rx.functions.Action1;
 import rx.functions.Func0;
 
 /**
- * Created by goldze on 2017/6/15.
+ * Created by goldze on 2017/6/18.
  * 执行的命令回调, 用于ViewModel与xml之间的数据绑定
  */
 public class BindingCommand<T> {

@@ -1,9 +1,8 @@
 package me.goldze.mvvmhabit.http;
 
-
 /**
+ * Created by goldze on 2017/5/10.
  * 网络返回基类 支持泛型
- * Created by Tamic on 2016-06-06.
  */
 public class BaseResponse<T> {
 

@@ -4,7 +4,6 @@ import rx.Subscription;
 import rx.subscriptions.CompositeSubscription;
 
 /**
- * Created by goldze on 2017/6/15.
  * 管理 CompositeSubscription
  */
 public class RxSubscriptions {

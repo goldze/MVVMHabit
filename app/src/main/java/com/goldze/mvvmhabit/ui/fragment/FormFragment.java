@@ -12,8 +12,8 @@ import com.goldze.mvvmhabit.ui.vm.FormViewModel;
 import me.goldze.mvvmhabit.base.BaseFragment;
 
 /**
- * Created by 曾宪泽 on 2017/7/17.
- * 表单提交/编辑假面
+ * Created by goldze on 2017/7/17.
+ * 表单提交/编辑界面
  */
 
 public class FormFragment extends BaseFragment<FragmentFormBinding, FormViewModel> {

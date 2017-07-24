@@ -12,7 +12,6 @@ import rx.functions.Action0;
 import rx.functions.Action1;
 
 /**
- * Created by goldze on 2017/6/19.
  * About : kelin的Messenger
  */
 public class WeakMessenger {

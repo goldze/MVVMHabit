@@ -8,9 +8,7 @@ import okhttp3.Request;
 import okhttp3.Response;
 
 /**
- * BaseInterceptor
- * Created by LIUYONGKUI726 on 2016-06-30.
- * {@link # https://github.com/NeglectedByBoss/RetrofitClient}
+ * Created by goldze on 2017/5/10.
  */
 public class BaseInterceptor implements Interceptor{
     private Map<String, String> headers;

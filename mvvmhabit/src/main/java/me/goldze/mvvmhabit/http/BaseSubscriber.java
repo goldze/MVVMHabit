@@ -7,8 +7,7 @@ import android.widget.Toast;
 import rx.Subscriber;
 
 /**
- * BaseSubscriber
- * Created by Tamic on 2016-08-03.
+ * Created by goldze on 2017/5/10.
  */
 public abstract class BaseSubscriber<T> extends Subscriber<T> {
 

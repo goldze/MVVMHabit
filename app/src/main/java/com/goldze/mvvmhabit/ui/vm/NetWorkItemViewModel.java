@@ -13,7 +13,7 @@ import me.goldze.mvvmhabit.binding.command.BindingCommand;
 import rx.functions.Action0;
 
 /**
- * Created by 曾宪泽 on 2017/7/18.
+ * Created by goldze on 2017/7/17.
  */
 
 public class NetWorkItemViewModel extends BaseViewModel {

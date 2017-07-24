@@ -20,15 +20,11 @@ import me.goldze.mvvmhabit.R;
 
 
 /**
- * Created by Administrator on 2016/11/7.
+ * Created by goldze on 2017/5/10.
  */
 
 public class MaterialDialogUtils {
 
-    /***
-     * 例子
-     *
-     */
     public void showThemed(Context context, String
             title, String content) {
         new MaterialDialog.Builder(context)

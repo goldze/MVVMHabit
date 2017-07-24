@@ -5,7 +5,7 @@ import rx.functions.Func0;
 import rx.functions.Func1;
 
 /**
- * Created by goldze on 2017/6/15.
+ * Created by goldze on 2017/6/18.
  * 执行的命令事件转换
  */
 public class ResponseCommand<T, R> {

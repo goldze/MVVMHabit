@@ -6,7 +6,7 @@ import android.os.Parcelable;
 import java.util.List;
 
 /**
- * Created by 曾宪泽 on 2017/7/11.
+ * Created by goldze on 2017/7/17.
  */
 
 public class DemoEntity {

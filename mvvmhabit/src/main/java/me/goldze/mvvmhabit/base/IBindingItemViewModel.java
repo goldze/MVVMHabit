@@ -1,7 +1,7 @@
 package me.goldze.mvvmhabit.base;
 
 /**
- * Created by 曾宪泽 on 2017/7/18.
+ * Created by goldze on 2017/6/15.
  */
 
 import android.databinding.ViewDataBinding;

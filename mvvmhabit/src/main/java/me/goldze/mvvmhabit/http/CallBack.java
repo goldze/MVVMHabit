@@ -1,7 +1,7 @@
 package me.goldze.mvvmhabit.http;
 
 /**
- * Created by Tamic on 2016-08-02.
+ * Created by goldze on 2017/5/10.
  */
 public abstract class CallBack {
     public void onStart(){}

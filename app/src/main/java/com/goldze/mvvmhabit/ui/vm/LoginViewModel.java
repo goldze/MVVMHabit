@@ -17,7 +17,7 @@ import rx.functions.Action0;
 import rx.functions.Action1;
 
 /**
- * Created by 曾宪泽 on 2017/6/15.
+ * Created by goldze on 2017/7/17.
  */
 
 public class LoginViewModel extends BaseViewModel {

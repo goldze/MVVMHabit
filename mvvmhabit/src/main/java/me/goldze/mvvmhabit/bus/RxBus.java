@@ -11,7 +11,6 @@ import rx.subjects.SerializedSubject;
 import rx.subjects.Subject;
 
 /**
- * Created by goldze on 2017/6/15.
  * 只会把在订阅发生的时间点之后来自原始Observable的数据发射给观察者
  */
 public class RxBus {

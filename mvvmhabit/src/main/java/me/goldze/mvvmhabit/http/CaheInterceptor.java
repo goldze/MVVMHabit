@@ -13,8 +13,7 @@ import okhttp3.Request;
 import okhttp3.Response;
 
 /**
- * caheInterceptor
- * Created by Tamic on 2016-08-09.
+ * Created by goldze on 2017/5/10.
  */
 public class CaheInterceptor implements Interceptor {
 

@@ -11,7 +11,9 @@ import android.view.ViewGroup;
 import com.trello.rxlifecycle.components.support.RxFragment;
 
 import me.goldze.mvvmhabit.bus.WeakMessenger;
-
+/**
+ * Created by goldze on 2017/6/15.
+ */
 public class BaseFragment<V extends ViewDataBinding, VM extends BaseViewModel> extends RxFragment implements IBaseActivity {
     protected V binding;
     protected VM viewModel;

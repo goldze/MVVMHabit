@@ -4,14 +4,13 @@ import android.os.Bundle;
 
 import com.goldze.mvvmhabit.BR;
 import com.goldze.mvvmhabit.R;
-import com.goldze.mvvmhabit.databinding.FragmentDetailBinding;
 import com.goldze.mvvmhabit.entity.DemoEntity;
 import com.goldze.mvvmhabit.ui.vm.DetailViewModel;
 
 import me.goldze.mvvmhabit.base.BaseFragment;
 
 /**
- * Created by 曾宪泽 on 2017/7/17.
+ * Created by goldze on 2017/7/17.
  * 详情界面
  */
 

@@ -25,9 +25,8 @@ import rx.functions.Func1;
 import rx.schedulers.Schedulers;
 
 /**
- * RetrofitClient
- * Created by Tamic on 2016-06-15.
- * {@link # https://github.com/NeglectedByBoss/RetrofitClient}
+ * Created by goldze on 2017/5/10.
+ * RetrofitClient封装单例类, 实现网络请求
  */
 public class RetrofitClient {
 
@@ -35,8 +34,6 @@ public class RetrofitClient {
     private static OkHttpClient okHttpClient;
     public static String baseUrl = "http://www.oschina.net/";
     private static Context mContext;
-    private static RetrofitClient sNewInstance;
-
     private static Retrofit retrofit;
     private Cache cache = null;
     private File httpCacheDirectory;
