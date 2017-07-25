@@ -5,7 +5,7 @@ import rx.functions.Func0;
 import rx.functions.Func1;
 
 /**
- * Created by goldze on 2017/6/18.
+ * About : kelin的ResponseCommand
  * 执行的命令事件转换
  */
 public class ResponseCommand<T, R> {
@@ -17,6 +17,7 @@ public class ResponseCommand<T, R> {
 
     /**
      * like {@link BindingCommand},but ResponseCommand can return result when command has executed!
+     *
      * @param execute function to execute when event occur.
      */
     public ResponseCommand(Func0<R> execute) {

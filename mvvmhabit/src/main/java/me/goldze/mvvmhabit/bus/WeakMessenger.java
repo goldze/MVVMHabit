@@ -281,7 +281,8 @@ public class WeakMessenger {
 
     /**
      * Unregister the receiver such as:
-     * WeakMessenger.getDefault().unregister(this)" in onDestroy in the Activity is required avoid to
+     * WeakMessenger.getDefault().unregister(this)" in onDestroy in the Activity is required avoid
+     * to
      * memory leak!
      *
      * @param recipient receiver of message
