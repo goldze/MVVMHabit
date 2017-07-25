@@ -1,19 +1,27 @@
-package me.goldze.mvvmhabit.http;
+package com.goldze.mvvmhabit.utils;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
-import android.util.Log;
 
 import java.io.File;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
+import me.goldze.mvvmhabit.BuildConfig;
+import me.goldze.mvvmhabit.http.CallBack;
+import me.goldze.mvvmhabit.http.DownLoadManager;
 import me.goldze.mvvmhabit.http.cookie.CookieJarImpl;
 import me.goldze.mvvmhabit.http.cookie.store.PersistentCookieStore;
+import me.goldze.mvvmhabit.http.interceptor.BaseInterceptor;
+import me.goldze.mvvmhabit.http.interceptor.CaheInterceptor;
+import me.goldze.mvvmhabit.http.interceptor.Level;
+import me.goldze.mvvmhabit.http.interceptor.LoggingInterceptor;
+import me.goldze.mvvmhabit.utils.KLog;
 import okhttp3.Cache;
 import okhttp3.ConnectionPool;
 import okhttp3.OkHttpClient;
+import okhttp3.internal.platform.Platform;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
@@ -21,7 +29,6 @@ import retrofit2.converter.gson.GsonConverterFactory;
 import rx.Observable;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Func1;
 import rx.schedulers.Schedulers;
 
 /**
@@ -29,10 +36,12 @@ import rx.schedulers.Schedulers;
  * RetrofitClient封装单例类, 实现网络请求
  */
 public class RetrofitClient {
-
+    //超时时间
     private static final int DEFAULT_TIMEOUT = 20;
+    //缓存时间
+    private static final int CACHE_TIMEOUT = 10 * 1024 * 1024;
     private static OkHttpClient okHttpClient;
-    public static String baseUrl = "http://www.oschina.net/";
+    public static String baseUrl;
     private static Context mContext;
     private static Retrofit retrofit;
     private Cache cache = null;
@@ -53,16 +62,13 @@ public class RetrofitClient {
      *
      * @param context 上下文
      */
-    public static void init(@NonNull final Context context) {
+    public static void init(@NonNull Context context, String baseUrl) {
         RetrofitClient.mContext = context.getApplicationContext();
-    }
-
-    private static class SingletonHolder {
-        private static RetrofitClient INSTANCE = new RetrofitClient();
+        RetrofitClient.baseUrl = baseUrl;
     }
 
     public static RetrofitClient getInstance() {
-        return SingletonHolder.INSTANCE;
+        return new RetrofitClient();
     }
 
     public static RetrofitClient getInstance(String url) {
@@ -75,7 +81,6 @@ public class RetrofitClient {
     }
 
     private RetrofitClient() {
-
         this(baseUrl, null);
     }
 
@@ -90,24 +95,30 @@ public class RetrofitClient {
         }
 
         if (httpCacheDirectory == null) {
-            httpCacheDirectory = new File(mContext.getCacheDir(), "tamic_cache");
+            httpCacheDirectory = new File(mContext.getCacheDir(), "goldze_cache");
         }
 
         try {
             if (cache == null) {
-                cache = new Cache(httpCacheDirectory, 10 * 1024 * 1024);
+                cache = new Cache(httpCacheDirectory, CACHE_TIMEOUT);
             }
         } catch (Exception e) {
-            Log.e("OKHttp", "Could not create http cache", e);
+            KLog.e("Could not create http cache", e);
         }
         okHttpClient = new OkHttpClient.Builder()
                 .addNetworkInterceptor(
                         new HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
-//                .cookieJar(new NovateCookieManger(mContext))
                 .cookieJar(new CookieJarImpl(new PersistentCookieStore(mContext)))
-                .cache(cache)
+//                .cache(cache)
                 .addInterceptor(new BaseInterceptor(headers))
-                .addInterceptor(new CaheInterceptor(mContext))
+                .addInterceptor(new LoggingInterceptor.Builder()
+                        .loggable(BuildConfig.DEBUG)
+                        .setLevel(Level.BASIC)
+                        .log(Platform.INFO)
+                        .request("Request")
+                        .response("Response")
+                        .addHeader("version", BuildConfig.VERSION_NAME).build()
+                )
                 .addNetworkInterceptor(new CaheInterceptor(mContext))
                 .connectTimeout(DEFAULT_TIMEOUT, TimeUnit.SECONDS)
                 .writeTimeout(DEFAULT_TIMEOUT, TimeUnit.SECONDS)
@@ -134,33 +145,6 @@ public class RetrofitClient {
     }
 
     /**
-     * addcookieJar
-     */
-    public static void addCookie() {
-        okHttpClient.newBuilder().cookieJar(new CookieJarImpl(new PersistentCookieStore(mContext))).build();
-        retrofit = builder.client(okHttpClient).build();
-    }
-
-    /**
-     * ApiBaseUrl
-     */
-    public static void changeApiHeader(Map<String, String> newApiHeaders) {
-
-        okHttpClient.newBuilder().addInterceptor(new BaseInterceptor(newApiHeaders)).build();
-        builder.client(httpClient.build()).build();
-    }
-
-//    /**
-//     * create BaseApi  defalte ApiManager
-//     *
-//     * @return ApiManager
-//     */
-//    public RetrofitClient createBaseApi() {
-//        apiService = create(BaseApiService.class);
-//        return this;
-//    }
-
-    /**
      * create you ApiService
      * Create an implementation of the API endpoints defined by the {@code service} interface.
      */
@@ -170,108 +154,6 @@ public class RetrofitClient {
         }
         return retrofit.create(service);
     }
-//    public Subscription getData(Subscriber<IpResult> subscriber, String ip) {
-//        return apiService.getData(ip)
-//                .compose(schedulersTransformer())
-//                .compose(transformer())
-//                .subscribe(subscriber);
-//    }
-//
-//    public Subscription get(String url, Map parameters, Subscriber<IpResult> subscriber) {
-//
-//        return apiService.executeGet(url, parameters)
-//                .compose(schedulersTransformer())
-//                .compose(transformer())
-//                .subscribe(subscriber);
-//    }
-//
-//    public void post(String url, Map<String, String> parameters, Subscriber<ResponseBody> subscriber) {
-//        apiService.executePost(url, parameters)
-//                .compose(schedulersTransformer())
-//                .compose(transformer())
-//                .subscribe(subscriber);
-//    }
-//
-//    public Subscription json(String url, RequestBody jsonStr, Subscriber<IpResult> subscriber) {
-//
-//        return apiService.json(url, jsonStr)
-//                .compose(schedulersTransformer())
-//                .compose(transformer())
-//                .subscribe(subscriber);
-//    }
-//
-//    public void upload(String url, RequestBody requestBody, Subscriber<ResponseBody> subscriber) {
-//        apiService.upLoadFile(url, requestBody)
-//                .compose(schedulersTransformer())
-//                .compose(transformer())
-//                .subscribe(subscriber);
-//    }
-//
-//    public void download(String url, final CallBack callBack) {
-//        apiService.downloadFile(url)
-//                .compose(schedulersTransformer())
-//                .compose(transformer())
-//                .subscribe(new DownSubscriber<ResponseBody>(callBack));
-//    }
-
-    Observable.Transformer schedulersTransformer() {
-        return new Observable.Transformer() {
-
-
-            @Override
-            public Object call(Object observable) {
-                return ((Observable) observable).subscribeOn(Schedulers.io())
-                        .unsubscribeOn(Schedulers.io())
-                        .observeOn(AndroidSchedulers.mainThread());
-            }
-
-           /* @Override
-            public Observable call(Observable observable) {
-                return observable.subscribeOn(Schedulers.io())
-                        .unsubscribeOn(Schedulers.io())
-                        .observeOn(AndroidSchedulers.mainThread());
-            }*/
-        };
-    }
-
-    <T> Observable.Transformer<T, T> applySchedulers() {
-        return (Observable.Transformer<T, T>) schedulersTransformer();
-    }
-
-    public <T> Observable.Transformer<BaseResponse<T>, T> transformer() {
-
-        return new Observable.Transformer() {
-
-            @Override
-            public Object call(Object observable) {
-                return ((Observable) observable).map(new HandleFuc<T>()).onErrorResumeNext(new HttpResponseFunc<T>());
-            }
-        };
-    }
-
-    public <T> Observable<T> switchSchedulers(Observable<T> observable) {
-        return observable.subscribeOn(Schedulers.io())
-                .unsubscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread());
-    }
-
-    private static class HttpResponseFunc<T> implements Func1<Throwable, Observable<T>> {
-        @Override
-        public Observable<T> call(Throwable t) {
-            return Observable.error(ExceptionHandle.handleException(t));
-        }
-    }
-
-    private class HandleFuc<T> implements Func1<BaseResponse<T>, T> {
-        @Override
-        public T call(BaseResponse<T> response) {
-            if (!response.isOk())
-                throw new RuntimeException(response.getCode() + "" + response.getMessage() != null ? response.getMessage() : "");
-            return response.getResult();
-        }
-    }
-
-
     /**
      * /**
      * execute your customer API
@@ -292,7 +174,6 @@ public class RetrofitClient {
 
         return null;
     }
-
 
     /**
      * DownSubscriber

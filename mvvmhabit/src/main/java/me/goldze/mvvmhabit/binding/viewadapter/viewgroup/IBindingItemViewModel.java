@@ -1,4 +1,4 @@
-package me.goldze.mvvmhabit.base;
+package me.goldze.mvvmhabit.binding.viewadapter.viewgroup;
 
 /**
  * Created by goldze on 2017/6/15.

@@ -7,7 +7,6 @@ import android.databinding.ViewDataBinding;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
-import me.goldze.mvvmhabit.base.IBindingItemViewModel;
 import me.tatarka.bindingcollectionadapter.ItemView;
 
 /**

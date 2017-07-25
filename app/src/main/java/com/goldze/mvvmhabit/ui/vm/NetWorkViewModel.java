@@ -9,11 +9,11 @@ import com.goldze.mvvmhabit.BR;
 import com.goldze.mvvmhabit.R;
 import com.goldze.mvvmhabit.entity.DemoEntity;
 import com.goldze.mvvmhabit.service.DemoApiService;
+import com.goldze.mvvmhabit.utils.RetrofitClient;
 
 import me.goldze.mvvmhabit.base.BaseViewModel;
 import me.goldze.mvvmhabit.binding.command.BindingCommand;
 import me.goldze.mvvmhabit.http.BaseResponse;
-import me.goldze.mvvmhabit.http.RetrofitClient;
 import me.goldze.mvvmhabit.utils.RxUtils;
 import me.goldze.mvvmhabit.utils.ToastUtils;
 import me.tatarka.bindingcollectionadapter.ItemView;
@@ -73,8 +73,9 @@ public class NetWorkViewModel extends BaseViewModel {
     private void requestNetWork() {
         RetrofitClient.getInstance().create(DemoApiService.class)
                 .demoGet()
-                .compose(RxUtils.bindToLifecycle(context))
-                .compose(RxUtils.schedulersTransformer())
+                .compose(RxUtils.bindToLifecycle(context)) //生命周期与界面同步
+                .compose(RxUtils.schedulersTransformer()) //线程调度
+                .compose(RxUtils.exceptionTransformer()) // 请求code异常处理, 这里可以换成自己的ExceptionHandle
                 .doOnSubscribe(new Action0() {
                     @Override
                     public void call() {

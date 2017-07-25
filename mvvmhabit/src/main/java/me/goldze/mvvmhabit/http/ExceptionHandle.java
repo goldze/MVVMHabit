@@ -82,7 +82,7 @@ public class ExceptionHandle {
 
 
     /**
-     * 约定异常
+     * 约定异常 这个具体规则需要与服务端或者领导商讨定义
      */
     class ERROR {
         /**

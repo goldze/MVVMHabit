@@ -1,12 +1,12 @@
-package me.goldze.mvvmhabit.http;
+package me.goldze.mvvmhabit.http.interceptor;
 
 import android.app.Activity;
 import android.content.Context;
-import android.util.Log;
 import android.widget.Toast;
 
 import java.io.IOException;
 
+import me.goldze.mvvmhabit.http.NetworkUtil;
 import okhttp3.CacheControl;
 import okhttp3.Interceptor;
 import okhttp3.Request;
@@ -14,6 +14,7 @@ import okhttp3.Response;
 
 /**
  * Created by goldze on 2017/5/10.
+ * 无网络状态下智能读取缓存的拦截器
  */
 public class CaheInterceptor implements Interceptor {
 
@@ -30,8 +31,6 @@ public class CaheInterceptor implements Interceptor {
             Response response = chain.proceed(request);
             // read from cache for 60 s
             int maxAge = 60;
-            String cacheControl = request.cacheControl().toString();
-            Log.e("Tamic", "60s load cahe" + cacheControl);
             return response.newBuilder()
                     .removeHeader("Pragma")
                     .removeHeader("Cache-Control")
@@ -44,7 +43,6 @@ public class CaheInterceptor implements Interceptor {
                     Toast.makeText(context, "当前无网络! 为你智能加载缓存", Toast.LENGTH_SHORT).show();
                 }
             });
-            Log.e("Tamic", " no network load cahe");
             request = request.newBuilder()
                     .cacheControl(CacheControl.FORCE_CACHE)
                     .build();

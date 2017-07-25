@@ -12,7 +12,7 @@ import me.goldze.mvvmhabit.bus.WeakMessenger;
 /**
  *Created by goldze on 2017/6/15.
  * 一个拥有DataBinding框架的基Activity
- * 这里根据项目业务可以换成你自己熟悉的BaseActivity, 但是需要继承RxAppCompatActivity,方便LifecycleProvider绑定生命周期
+ * 这里根据项目业务可以换成你自己熟悉的BaseActivity, 但是需要继承RxAppCompatActivity,方便LifecycleProvider管理生命周期
  */
 
 public class BaseActivity<V extends ViewDataBinding, VM extends BaseViewModel> extends RxAppCompatActivity implements IBaseActivity {

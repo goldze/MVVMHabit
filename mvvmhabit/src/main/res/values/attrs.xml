@@ -158,7 +158,6 @@
         <attr name="render" format="string" />
     </declare-styleable>
 
-
     <declare-styleable name="TwinklingRefreshLayout">
         <attr name="tr_wave_height" format="dimension" />
         <attr name="tr_head_height" format="dimension" />
@@ -170,14 +169,8 @@
         <attr name="tr_headerView" format="dimension" />
         <attr name="tr_bottomView" format="dimension" />
     </declare-styleable>
-
-    <declare-styleable name="AVLoadingIndicatorView">
-        <attr name="minWidth" format="dimension" />
-        <attr name="maxWidth" format="dimension" />
-        <attr name="minHeight" format="dimension" />
-        <attr name="maxHeight" format="dimension" />
-        <attr name="indicatorViewName" format="string" />
-        <attr name="indicatorViewColor" format="color" />
+    <!-- 自定义控制事件分发的LinearLayout -->
+    <declare-styleable name="ControlDistributeLinearLayout">
+        <attr name="distribute_event" format="boolean" />
     </declare-styleable>
-
 </resources>

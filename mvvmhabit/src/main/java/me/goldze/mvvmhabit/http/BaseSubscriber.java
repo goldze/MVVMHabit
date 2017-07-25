@@ -1,9 +1,9 @@
 package me.goldze.mvvmhabit.http;
 
 import android.content.Context;
-import android.util.Log;
 import android.widget.Toast;
 
+import me.goldze.mvvmhabit.utils.KLog;
 import rx.Subscriber;
 
 /**
@@ -20,11 +20,11 @@ public abstract class BaseSubscriber<T> extends Subscriber<T> {
 
     @Override
     public void onError(Throwable e) {
-        Log.e("Tamic", e.getMessage());
+        KLog.e(e.getMessage());
         // todo error somthing
 
-        if(e instanceof ExceptionHandle.ResponeThrowable){
-            onError((ExceptionHandle.ResponeThrowable)e);
+        if (e instanceof ExceptionHandle.ResponeThrowable) {
+            onError((ExceptionHandle.ResponeThrowable) e);
         } else {
             onError(new ExceptionHandle.ResponeThrowable(e, ExceptionHandle.ERROR.UNKNOWN));
         }
@@ -36,7 +36,6 @@ public abstract class BaseSubscriber<T> extends Subscriber<T> {
         super.onStart();
 
         Toast.makeText(context, "http is start", Toast.LENGTH_SHORT).show();
-
         // todo some common as show loadding  and check netWork is NetworkAvailable
         // if  NetworkAvailable no !   must to call onCompleted
         if (!NetworkUtil.isNetworkAvailable(context)) {

@@ -5,7 +5,6 @@ package me.goldze.mvvmhabit.http;
  * 网络返回基类 支持泛型
  */
 public class BaseResponse<T> {
-
     private int code;
     private String message;
     private T result;
