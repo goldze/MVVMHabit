@@ -39,6 +39,8 @@ dependencies {
     compile 'me.tatarka.bindingcollectionadapter:bindingcollectionadapter-recyclerview:1.3.0'
     //rxbinding
     compile 'com.jakewharton.rxbinding:rxbinding:1.0.1'
+    //rx权限请求
+    compile 'com.tbruyelle.rxpermissions:rxpermissions:0.9.1@aar'
     //network
     compile 'com.squareup.okhttp3:okhttp:3.8.1'
     compile 'com.squareup.retrofit2:retrofit:2.3.0'

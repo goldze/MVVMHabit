@@ -19,6 +19,7 @@ public class ViewAdapter {
     public static final int CLICK_INTERVAL = 1;
 
     /**
+     * requireAll 是意思是是否需要绑定全部参数, false为否
      * View的onClick事件绑定
      * onClickCommand 绑定的命令,
      * isThrottleFirst 是否开启防止过快点击
@@ -51,8 +52,6 @@ public class ViewAdapter {
 
     /**
      * view的onLongClick事件绑定
-     * @param view
-     * @param clickCommand
      */
     @BindingAdapter(value = {"onLongClickCommand"}, requireAll = false)
     public static void onLongClickCommand(View view, final BindingCommand clickCommand) {
@@ -69,8 +68,6 @@ public class ViewAdapter {
 
     /**
      * view是否需要获取焦点
-     * @param view
-     * @param needRequestFocus
      */
     @BindingAdapter({"requestFocus"})
     public static void requestFocusCommand(View view, final Boolean needRequestFocus) {

@@ -12,8 +12,6 @@ import java.util.List;
 
 import me.goldze.mvvmhabit.binding.command.BindingCommand;
 
-import static me.goldze.mvvmhabit.R.attr.adapter;
-
 /**
  * Created by goldze on 2017/6/18.
  */
@@ -21,9 +19,9 @@ public class ViewAdapter {
     /**
      * 双向的SpinnerViewAdapter, 可以监听选中的条目,也可以回显选中的值
      *
-     * @param spinner        控件本身
-     * @param itemDatas      下拉条目
-     * @param valueReply     回显的value
+     * @param spinner 控件本身
+     * @param itemDatas 下拉条目
+     * @param valueReply 回显的value
      * @param bindingCommand 条目点击的监听
      */
     @BindingAdapter(value = {"itemDatas", "valueReply", "onItemSelectedCommand"})
