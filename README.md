@@ -4,7 +4,7 @@
 
 ![](./img/mvvm_fc.jpg) 
 
-##框架特点
+## 框架特点
 - **快速开发**
 
 	只需要写项目的业务逻辑，不用再去关心网络请求、权限申请、view的生命周期等问题，撸起袖子就是干。
@@ -26,5 +26,5 @@
 	专门针对MVVM模式打造的BaseActivity、BaseFragment、BaseViewModel，在View层中不再需要定义ViewDataBinding和ViewModel，直接在BaseActivity、BaseFragment上限定泛型即可使用
 
 - ****
-##一、快速上手
+## 一、快速上手
 
