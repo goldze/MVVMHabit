@@ -1,4 +1,4 @@
-package com.goldze.mvvmhabit.ui.activity;
+package me.goldze.mvvmhabit.base;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,8 +12,6 @@ import android.widget.LinearLayout;
 import com.trello.rxlifecycle.components.support.RxAppCompatActivity;
 
 import java.lang.ref.WeakReference;
-
-import me.goldze.mvvmhabit.base.BaseFragment;
 
 import static android.view.View.generateViewId;
 

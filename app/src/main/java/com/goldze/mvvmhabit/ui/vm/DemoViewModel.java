@@ -1,11 +1,9 @@
 package com.goldze.mvvmhabit.ui.vm;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 
 import com.goldze.mvvmhabit.entity.FormEntity;
-import com.goldze.mvvmhabit.ui.activity.ContainerActivity;
 import com.goldze.mvvmhabit.ui.fragment.FormFragment;
 import com.goldze.mvvmhabit.ui.fragment.NetWorkFragment;
 
@@ -27,20 +25,14 @@ public class DemoViewModel extends BaseViewModel {
     public BindingCommand netWorkClick = new BindingCommand(new Action0() {
         @Override
         public void call() {
-            Intent intent = new Intent();
-            intent.setClass(context, ContainerActivity.class);
-            intent.putExtra(ContainerActivity.FRAGMENT, NetWorkFragment.class.getCanonicalName());
-            context.startActivity(intent);
+            startContainerActivity(NetWorkFragment.class.getCanonicalName());
         }
     });
     //表单提交点击事件
     public BindingCommand formSbmClick = new BindingCommand(new Action0() {
         @Override
         public void call() {
-            Intent intent = new Intent();
-            intent.setClass(context, ContainerActivity.class);
-            intent.putExtra(ContainerActivity.FRAGMENT, FormFragment.class.getCanonicalName());
-            context.startActivity(intent);
+            startContainerActivity(FormFragment.class.getCanonicalName());
         }
     });
     //表单修改点击事件
@@ -54,13 +46,9 @@ public class DemoViewModel extends BaseViewModel {
             entity.setBir("xxxx年xx月xx日");
             entity.setMarry(true);
             //传入实体数据
-            Intent intent = new Intent();
             Bundle mBundle = new Bundle();
             mBundle.putParcelable("entity", entity);
-            intent.setClass(context, ContainerActivity.class);
-            intent.putExtra(ContainerActivity.BUNDLE, mBundle);
-            intent.putExtra(ContainerActivity.FRAGMENT, FormFragment.class.getCanonicalName());
-            context.startActivity(intent);
+            startContainerActivity(FormFragment.class.getCanonicalName(), mBundle);
         }
     });
 }

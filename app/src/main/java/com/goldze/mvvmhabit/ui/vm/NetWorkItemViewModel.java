@@ -5,7 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import com.goldze.mvvmhabit.entity.DemoEntity;
-import com.goldze.mvvmhabit.ui.activity.ContainerActivity;
+import me.goldze.mvvmhabit.base.ContainerActivity;
 import com.goldze.mvvmhabit.ui.fragment.DetailFragment;
 
 import me.goldze.mvvmhabit.base.BaseViewModel;

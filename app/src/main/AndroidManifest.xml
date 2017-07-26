@@ -25,7 +25,6 @@
             </intent-filter>
         </activity>
         <activity android:name=".ui.activity.DemoActivity"></activity>
-        <activity android:name=".ui.activity.ContainerActivity"></activity>
     </application>
 
 </manifest>

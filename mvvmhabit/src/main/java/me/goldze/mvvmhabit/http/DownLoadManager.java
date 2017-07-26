@@ -3,7 +3,6 @@ package me.goldze.mvvmhabit.http;
 import android.content.Context;
 import android.os.Handler;
 import android.os.Looper;
-import android.util.Log;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -11,6 +10,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
+import me.goldze.mvvmhabit.utils.KLog;
 import okhttp3.ResponseBody;
 
 /**
@@ -52,7 +52,7 @@ public class DownLoadManager {
 
     public boolean  writeResponseBodyToDisk(Context context, ResponseBody body) {
 
-        Log.d(TAG, "contentType:>>>>"+ body.contentType().toString());
+        KLog.d(TAG, "contentType:>>>>"+ body.contentType().toString());
 
         String type = body.contentType().toString();
 
@@ -70,7 +70,7 @@ public class DownLoadManager {
         final String name = System.currentTimeMillis() + fileSuffix;
         final String path = context.getExternalFilesDir(null) + File.separator + name;
 
-        Log.d(TAG, "path:>>>>"+ path);
+        KLog.d(TAG, "path:>>>>"+ path);
 
         try {
             // todo change the file location/name according to your needs
@@ -88,7 +88,7 @@ public class DownLoadManager {
 
                 final long fileSize = body.contentLength();
                 long fileSizeDownloaded = 0;
-                Log.d(TAG, "file length: "+ fileSize);
+                KLog.d(TAG, "file length: "+ fileSize);
                 inputStream = body.byteStream();
                 outputStream = new FileOutputStream(futureStudioIconFile);
 
@@ -103,7 +103,7 @@ public class DownLoadManager {
 
                     fileSizeDownloaded += read;
 
-                    Log.d(TAG, "file download: " + fileSizeDownloaded + " of " + fileSize);
+                    KLog.d(TAG, "file download: " + fileSizeDownloaded + " of " + fileSize);
                     if (callBack != null) {
                         handler = new Handler(Looper.getMainLooper());
                         final long finalFileSizeDownloaded = fileSizeDownloaded;
@@ -118,7 +118,7 @@ public class DownLoadManager {
                 }
 
                 outputStream.flush();
-                Log.d(TAG, "file downloaded: " + fileSizeDownloaded + " of " + fileSize);
+                KLog.d(TAG, "file downloaded: " + fileSizeDownloaded + " of " + fileSize);
                 if (callBack != null) {
                     handler = new Handler(Looper.getMainLooper());
                     handler.post(new Runnable() {
@@ -128,7 +128,7 @@ public class DownLoadManager {
 
                         }
                     });
-                    Log.d(TAG, "file downloaded: " + fileSizeDownloaded + " of " + fileSize);
+                    KLog.d(TAG, "file downloaded: " + fileSizeDownloaded + " of " + fileSize);
                 }
                 
                 return true;

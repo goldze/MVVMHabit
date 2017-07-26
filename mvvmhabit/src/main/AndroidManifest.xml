@@ -2,4 +2,8 @@
 
         package="me.goldze.mvvmhabit">
 
+    <application>
+        <activity android:name=".base.ContainerActivity"></activity>
+    </application>
+
 </manifest>
