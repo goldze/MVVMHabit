@@ -27,7 +27,11 @@
 
 - **全局操作**
 
-	全局的Activity堆栈式管理，在任何地方可以打开、结束指定的Activity，一键退出应用程序；LoggingInterceptor全局拦截网络请求，打印Request和Response，格式化json、xml数据显示，方便与后台调试接口；全局Cookie，支持SharedPreferences和内存管理；全局的错误监听，根据不同的状态码或异常设置相应的message
+	1. 全局的Activity堆栈式管理，在程序任何地方可以打开、结束指定的Activity，一键退出应用程序。
+	2. LoggingInterceptor全局拦截网络请求，打印Request和Response，格式化json、xml数据显示，方便与后台调试接口。
+	3. 全局Cookie，支持SharedPreferences和内存两种管理模式。
+	4. 全局的错误监听，根据不同的状态码或异常设置相应的message。
+	5. 全局的异常捕获，程序发生异常时不会崩溃，可跳入异常界面重启应用。
 
 	
 ## 一、快速上手
