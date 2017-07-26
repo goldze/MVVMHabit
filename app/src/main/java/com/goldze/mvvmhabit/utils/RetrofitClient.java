@@ -1,7 +1,6 @@
 package com.goldze.mvvmhabit.utils;
 
 import android.content.Context;
-import android.support.annotation.NonNull;
 import android.text.TextUtils;
 
 import java.io.File;
@@ -15,14 +14,14 @@ import me.goldze.mvvmhabit.http.cookie.CookieJarImpl;
 import me.goldze.mvvmhabit.http.cookie.store.PersistentCookieStore;
 import me.goldze.mvvmhabit.http.interceptor.BaseInterceptor;
 import me.goldze.mvvmhabit.http.interceptor.CaheInterceptor;
-import me.goldze.mvvmhabit.http.interceptor.Level;
-import me.goldze.mvvmhabit.http.interceptor.LoggingInterceptor;
+import me.goldze.mvvmhabit.http.interceptor.logging.Level;
+import me.goldze.mvvmhabit.http.interceptor.logging.LoggingInterceptor;
 import me.goldze.mvvmhabit.utils.KLog;
+import me.goldze.mvvmhabit.utils.Utils;
 import okhttp3.Cache;
 import okhttp3.ConnectionPool;
 import okhttp3.OkHttpClient;
 import okhttp3.internal.platform.Platform;
-import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -40,35 +39,23 @@ public class RetrofitClient {
     private static final int DEFAULT_TIMEOUT = 20;
     //缓存时间
     private static final int CACHE_TIMEOUT = 10 * 1024 * 1024;
+    //服务端根路径
+    public static String baseUrl = "http://www.oschina.net/";
+
+    private static Context mContext = Utils.getContext();
+
     private static OkHttpClient okHttpClient;
-    public static String baseUrl;
-    private static Context mContext;
     private static Retrofit retrofit;
+
     private Cache cache = null;
     private File httpCacheDirectory;
 
-    private static Retrofit.Builder builder =
-            new Retrofit.Builder()
-                    .addConverterFactory(GsonConverterFactory.create())
-                    .addCallAdapterFactory(RxJavaCallAdapterFactory.create());
-    private static OkHttpClient.Builder httpClient =
-            new OkHttpClient.Builder()
-                    .addNetworkInterceptor(
-                            new HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.HEADERS))
-                    .connectTimeout(DEFAULT_TIMEOUT, TimeUnit.SECONDS);
-
-    /**
-     * 初始化工具类
-     *
-     * @param context 上下文
-     */
-    public static void init(@NonNull Context context, String baseUrl) {
-        RetrofitClient.mContext = context.getApplicationContext();
-        RetrofitClient.baseUrl = baseUrl;
+    private static class SingletonHolder {
+        private static RetrofitClient INSTANCE = new RetrofitClient();
     }
 
     public static RetrofitClient getInstance() {
-        return new RetrofitClient();
+        return SingletonHolder.INSTANCE;
     }
 
     public static RetrofitClient getInstance(String url) {
@@ -106,20 +93,18 @@ public class RetrofitClient {
             KLog.e("Could not create http cache", e);
         }
         okHttpClient = new OkHttpClient.Builder()
-                .addNetworkInterceptor(
-                        new HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
                 .cookieJar(new CookieJarImpl(new PersistentCookieStore(mContext)))
 //                .cache(cache)
                 .addInterceptor(new BaseInterceptor(headers))
-                .addInterceptor(new LoggingInterceptor.Builder()
-                        .loggable(BuildConfig.DEBUG)
-                        .setLevel(Level.BASIC)
+                .addInterceptor(new CaheInterceptor(mContext))
+                .addNetworkInterceptor(new LoggingInterceptor.Builder()
+                        .loggable(true)
+                        .setLevel(Level.BODY)
                         .log(Platform.INFO)
                         .request("Request")
                         .response("Response")
                         .addHeader("version", BuildConfig.VERSION_NAME).build()
                 )
-                .addNetworkInterceptor(new CaheInterceptor(mContext))
                 .connectTimeout(DEFAULT_TIMEOUT, TimeUnit.SECONDS)
                 .writeTimeout(DEFAULT_TIMEOUT, TimeUnit.SECONDS)
                 .connectionPool(new ConnectionPool(8, 15, TimeUnit.SECONDS))
@@ -135,16 +120,6 @@ public class RetrofitClient {
     }
 
     /**
-     * ApiBaseUrl
-     */
-    public static void changeApiBaseUrl(String newApiBaseUrl) {
-        baseUrl = newApiBaseUrl;
-        builder = new Retrofit.Builder()
-                .addConverterFactory(GsonConverterFactory.create())
-                .baseUrl(baseUrl);
-    }
-
-    /**
      * create you ApiService
      * Create an implementation of the API endpoints defined by the {@code service} interface.
      */
@@ -154,6 +129,7 @@ public class RetrofitClient {
         }
         return retrofit.create(service);
     }
+
     /**
      * /**
      * execute your customer API

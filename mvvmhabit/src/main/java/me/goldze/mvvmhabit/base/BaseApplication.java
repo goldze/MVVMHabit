@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.app.Application;
 import android.os.Bundle;
 
+import me.goldze.mvvmhabit.utils.Utils;
+
 /**
  * Created by goldze on 2017/6/15.
  */
@@ -15,6 +17,8 @@ public class BaseApplication extends Application {
     public void onCreate() {
         super.onCreate();
         sInstance = this;
+        //初始化工具类
+        Utils.init(this);
         registerActivityLifecycleCallbacks(mCallbacks);
     }
 

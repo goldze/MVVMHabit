@@ -1,4 +1,4 @@
-package me.goldze.mvvmhabit.http.interceptor;
+package me.goldze.mvvmhabit.http.interceptor.logging;
 
 import okhttp3.internal.platform.Platform;
 

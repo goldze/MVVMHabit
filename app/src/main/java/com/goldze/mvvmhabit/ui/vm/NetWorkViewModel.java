@@ -75,7 +75,7 @@ public class NetWorkViewModel extends BaseViewModel {
                 .demoGet()
                 .compose(RxUtils.bindToLifecycle(context)) //生命周期与界面同步
                 .compose(RxUtils.schedulersTransformer()) //线程调度
-                .compose(RxUtils.exceptionTransformer()) // 请求code异常处理, 这里可以换成自己的ExceptionHandle
+//                .compose(RxUtils.exceptionTransformer()) // 请求code异常处理, 这里可以换成自己的ExceptionHandle
                 .doOnSubscribe(new Action0() {
                     @Override
                     public void call() {

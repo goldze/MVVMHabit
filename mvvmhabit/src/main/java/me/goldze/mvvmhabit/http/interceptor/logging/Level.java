@@ -1,4 +1,4 @@
-package me.goldze.mvvmhabit.http.interceptor;
+package me.goldze.mvvmhabit.http.interceptor.logging;
 
 /**
  * @author ihsan on 21/02/2017.
