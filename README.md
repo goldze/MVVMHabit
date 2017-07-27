@@ -133,7 +133,7 @@ dependencies = [] 是依赖第三方库的配置，可以加新库，但不要�
 LoginActivity继承BaseActivity
 	
 	public class LoginActivity extends BaseActivity<ActivityLoginBinding, LoginViewModel> {
-		...
+		....
 	}
 
 > 保存activity_login.xml后databing会生成一个ActivityLoginBinding类。
@@ -171,3 +171,15 @@ LoginViewModel继承BaseViewModel
     }
 在构造方法中调用super(context) 将上下文交给父类，即可使用父类的showDialog()、startActivity()等方法。在这个LoginViewModel中就可以尽情的写你的逻辑了！
 ### 2.1、数据绑定
+
+绑定用户名：
+
+在LoginViewModel中定义
+
+	//用户名的绑定
+	public ObservableField<String> userName = new ObservableField<>("");
+在用户名EditText中
+
+	android:text="@={viewModel.userName}"
+
+这样一来，输入框中输入了什么，userName.get()就是什么，userName.set("")设置什么，输入框中就是什么。这就是databing的双向绑定的特性。
