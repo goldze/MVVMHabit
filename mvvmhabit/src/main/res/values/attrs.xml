@@ -20,7 +20,7 @@
     <!-- require ReplyCommand<Boolean> {@link com.kelin.mvvmlight.command.ReplyCommand } to deal with view focus change event.
      ReplyCommand would has params which means if view hasFocus.-->
     <attr name="onFocusChangeCommand" format="reference" />
-    <attr name="isThrottleFirst" format="reference" />
+    <attr name="isThrottleFirst" format="boolean" />
     <declare-styleable name="View">
 
         <!-- require ReplyCommand {@link com.kelin.mvvmlight.command.ReplyCommand } to deal with view click event. -->

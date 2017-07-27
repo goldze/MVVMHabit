@@ -36,7 +36,7 @@
 
 
 ## 1、准备工作
->网上的很多有关MVVM的资料，在此就不再阐述是什么MVVM了，不清除的朋友可以先去了解一下。
+> 网上的很多有关MVVM的资料，在此就不再阐述什么是MVVM了，不清除的朋友可以先去了解一下。
 ### 1.1、启用databinding
 在主工程app的build.gradle的android {}中加入：
 
@@ -110,9 +110,10 @@ dependencies = [] 是依赖第三方库的配置，可以加新库，但不要�
 ## 2、快速上手
 
 ### 2.1、第一个Activity
-以大家都熟悉的LoginActivty为例：三个文件**LoginActivty.java**、**LoginViewModel.java**、**activity_login.xml**
+> 以大家都熟悉的登录操作为例：三个文件**LoginActivty.java**、**LoginViewModel.java**、**activity_login.xml**
 
-在activity_login.xml中导入LoginViewModel。
+##### 2.1.1、关联ViewModel
+在activity_login.xml中关联LoginViewModel。
 
 	<layout>
 
@@ -130,6 +131,8 @@ dependencies = [] 是依赖第三方库的配置，可以加新库，但不要�
 
 > variable - type：类的全路径 <br>variable - name：变量名
 
+##### 2.1.2、继承Base
+
 LoginActivity继承BaseActivity
 	
 	public class LoginActivity extends BaseActivity<ActivityLoginBinding, LoginViewModel> {
@@ -140,7 +143,7 @@ LoginActivity继承BaseActivity
 
 BaseActivity有两个泛型参数，一个是ViewDataBinding，另一个是BaseViewModel，ActivityLoginBinding则是继承的ViewDataBinding作为第一个泛型参数，LoginViewModel继承BaseViewModel作为第二个泛型参数。
 
-重写三个BaseActivity的三个方法
+重写BaseActivity的三个方法
 
 	@Override
     public int initContentView() {
@@ -158,10 +161,8 @@ BaseActivity有两个泛型参数，一个是ViewDataBinding，另一个是BaseV
         return new LoginViewModel(this);
     }
 
-initContentView() 返回界面layout的id
-<br>
-initVariableId() 返回变量的id，对应activity_login中variable - name：变量名，就像一个控件的id,可以使用R.id.xxx，这里的BR跟R文件一样，由系统生成，使用BR.xxx找到这个ViewModel的id。
-<br>
+initContentView() 返回界面layout的id<br>
+initVariableId() 返回变量的id，对应activity_login中variable - name：变量名，就像一个控件的id，可以使用R.id.xxx，这里的BR跟R文件一样，由系统生成，使用BR.xxx找到这个ViewModel的id。<br>
 initViewModel() 返回ViewModel对象
 
 LoginViewModel继承BaseViewModel
@@ -170,16 +171,106 @@ LoginViewModel继承BaseViewModel
         super(context);
     }
 在构造方法中调用super(context) 将上下文交给父类，即可使用父类的showDialog()、startActivity()等方法。在这个LoginViewModel中就可以尽情的写你的逻辑了！
-### 2.1、数据绑定
-
+### 2.2、数据绑定
+> 拥有databinding框架自带的双向绑定，也有扩展
+##### 2.2.1、传统绑定
 绑定用户名：
 
 在LoginViewModel中定义
 
 	//用户名的绑定
 	public ObservableField<String> userName = new ObservableField<>("");
-在用户名EditText中
+在用户名EditText中绑定
 
 	android:text="@={viewModel.userName}"
 
-这样一来，输入框中输入了什么，userName.get()就是什么，userName.set("")设置什么，输入框中就是什么。这就是databing的双向绑定的特性。
+这样一来，输入框中输入了什么，userName.get()的内容就是什么，userName.set("")设置什么，输入框中就显示什么。
+**注意：**@符号后面需要加=号才能达到双向绑定效果；userName需要是public的，不然viewModel无法找到它。
+
+点击事件绑定：
+
+在LoginViewModel中定义
+	
+	//登录按钮的点击事件
+	 public View.OnClickListener loginOnClick = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            
+        }
+    };
+在登录按钮中绑定
+
+	android:onClick="@{viewModel.loginOnClick}"
+
+这样一来，用户的点击事件直接被回调到ViewModel层了，更好的维护了业务逻辑
+
+这就是强大的databing框架双向绑定的特性，不用再给控件定义id，setText()，setOnClickListener()。
+
+**但是，光有这些，完全满足不了我们复杂业务的需求啊！那么救星登场：MVVMHabit，它有一套自定义的绑定规则，可以满足大部分的场景需求，请继续往下看。**
+
+##### 2.2.2、自定义绑定
+还拿点击事件说吧，不用传统的绑定方式，使用自定义的点击事件绑定。
+
+在LoginViewModel中定义
+
+	//登录按钮的点击事件
+    public BindingCommand loginOnClickCommand = new BindingCommand(new Action0() {
+        @Override
+        public void call() {
+            
+        }
+    });
+
+在activity_login中定义命名空间
+
+	xmlns:binding="http://schemas.android.com/apk/res-auto"
+
+在登录按钮中绑定
+
+	binding:onClickCommand="@{viewModel.loginOnClickCommand}"
+
+这和原本传统的绑定不是一样吗？不，这其实是有差别的。使用这种形式的绑定，在原本事件绑定的基础之上，带有防重复点击的功能，1秒内多次点击也只会执行一次操作。如果不需要防重复点击，可以加入这条属性
+
+	binding:isThrottleFirst="@{Boolean.TRUE}"
+
+那这功能是在哪里做的呢？答案在下面的代码中。
+
+	//防重复点击间隔(秒)
+    public static final int CLICK_INTERVAL = 1;
+
+    /**
+     * requireAll 是意思是是否需要绑定全部参数, false为否
+     * View的onClick事件绑定
+     * onClickCommand 绑定的命令,
+     * isThrottleFirst 是否开启防止过快点击
+     */
+    @BindingAdapter(value = {"onClickCommand", "isThrottleFirst"}, requireAll = false)
+    public static void onClickCommand(View view, final BindingCommand clickCommand, final boolean isThrottleFirst) {
+        if (isThrottleFirst) {
+            RxView.clicks(view)
+                    .subscribe(new Action1<Void>() {
+                        @Override
+                        public void call(Void aVoid) {
+                            if (clickCommand != null) {
+                                clickCommand.execute();
+                            }
+                        }
+                    });
+        } else {
+            RxView.clicks(view)
+                    .throttleFirst(CLICK_INTERVAL, TimeUnit.SECONDS)//1秒钟内只允许点击1次
+                    .subscribe(new Action1<Void>() {
+                        @Override
+                        public void call(Void aVoid) {
+                            if (clickCommand != null) {
+                                clickCommand.execute();
+                            }
+                        }
+                    });
+        }
+    }
+
+onClickCommand方法是自定义的，使用@BindingAdapter注解来标明这是一个绑定方法。在方法中使用了RxView来增强view的clicks事件，.throttleFirst()限制订阅者在指定的时间内重复执行，最后通过BindingCommand将事件回调出去，就好比有一种拦截器，在点击时先做一下判断，然后再把事件沿着他原有的方向传递。
+
+是不是觉得有点意思，好戏还在后头呢！
+##### 2.2.3、自定义ImageView图片加载

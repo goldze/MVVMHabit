@@ -8,6 +8,7 @@ import com.jakewharton.rxbinding.view.RxView;
 import java.util.concurrent.TimeUnit;
 
 import me.goldze.mvvmhabit.binding.command.BindingCommand;
+import me.goldze.mvvmhabit.utils.KLog;
 import rx.functions.Action1;
 
 /**
@@ -26,6 +27,7 @@ public class ViewAdapter {
      */
     @BindingAdapter(value = {"onClickCommand", "isThrottleFirst"}, requireAll = false)
     public static void onClickCommand(View view, final BindingCommand clickCommand, final boolean isThrottleFirst) {
+        KLog.e("-----"+ isThrottleFirst + "---");
         if (isThrottleFirst) {
             RxView.clicks(view)
                     .subscribe(new Action1<Void>() {
