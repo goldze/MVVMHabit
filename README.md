@@ -1,7 +1,6 @@
 # MVVMHabit
 ##
-目前，android流行的MVC、MVP模式的开发框架很多，然而一款基于MVVM模式开发框架却很少。**MVVMHabit**则是一款以谷歌的databinding为基础，整合Okhttp+RxJava+Retrofit+Glide等流行库，加上各种原生控件自定义的BindingAdapter，让事件与数据源完美绑定的一款容易上瘾的快速开发框架。再也不用findViewById()，再也不用setText()，再也不用setOnClickListener()...
-
+目前，android流行的MVC、MVP模式的开发框架很多，然而一款基于MVVM模式开发框架却很少。**MVVMHabit则是一款以谷歌的databinding为基础，整合Okhttp+RxJava+Retrofit+Glide等流行库，加上各种原生控件自定义的BindingAdapter，让事件与数据源完美绑定的一款容易上瘾的实用性快速开发框架**。告别findViewById()，告别setText()，也告别setOnClickListener()...
 ![](./img/mvvm_fc.jpg) 
 
 ## 框架特点
@@ -33,6 +32,142 @@
 	4. 全局的错误监听，根据不同的状态码或异常设置相应的message。
 	5. 全局的异常捕获，程序发生异常时不会崩溃，可跳入异常界面重启应用。
 
-	
-## 一、快速上手
 
+
+
+## 1、准备工作
+>网上的很多有关MVVM的资料，在此就不再阐述是什么MVVM了，不清除的朋友可以先去了解一下。
+### 1.1、启用databinding
+在主工程app的build.gradle的android {}中加入：
+
+	dataBinding {
+		enabled true
+	}
+
+### 1.2、依赖Library
+从jcenter中央仓库远程依赖：
+
+	暂不支持
+
+
+或
+
+下载例子程序，在主项目中依赖例子程序中的**mvvmhabit**：
+
+	compile project(':mvvmhabit')
+
+### 1.3、配置config.gradle
+如果是下载的例子程序，那么还需要将例子程序中的config.gradle放入你的主项目根目录中，然后在根目录build.gradle的第一行加入：
+
+	apply from: "config.gradle"
+
+最后面加入：
+
+
+	task clean(type: Delete) {
+	    delete rootProject.buildDir
+	}
+
+
+**注意：**config.gradle中的 
+
+android = [] 是你的开发相关版本配置，可自行修改
+
+support = [] 是你的support相关配置，可自行修改
+
+dependencies = [] 是依赖第三方库的配置，可以加新库，但不要去修改原有第三方库的版本号，不然可能会编译不过
+### 1.4、配置AndroidManifest
+添加权限：
+
+	<uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
+配置Application：
+
+继承**mvvmhabit**中的BaseApplication，在你的自己AppApplication中配置
+	
+	//是否开启日志打印
+	KLog.init(true);
+	//配置全局异常崩溃操作
+	CaocConfig.Builder.create()
+        .backgroundMode(CaocConfig.BACKGROUND_MODE_SILENT) //背景模式,开启沉浸式
+        .enabled(true) //是否启动全局异常捕获
+        .showErrorDetails(true) //是否显示错误详细信息
+        .showRestartButton(true) //是否显示重启按钮
+        .trackActivities(true) //是否跟踪Activity
+        .minTimeBetweenCrashesMs(2000) //崩溃的间隔时间(毫秒)
+        .errorDrawable(R.mipmap.ic_launcher) //错误图标
+        .restartActivity(LoginActivity.class) //重新启动后的activity
+	  //.errorActivity(YourCustomErrorActivity.class) //崩溃后的错误activity
+	  //.eventListener(new YourCustomEventListener()) //崩溃后的错误监听
+        .apply();
+
+
+## 2、快速上手
+
+### 2.1、第一个Activity
+以大家都熟悉的LoginActivty为例：三个文件**LoginActivty.java**、**LoginViewModel.java**、**activity_login.xml**
+
+在activity_login.xml中导入LoginViewModel。
+
+	<layout>
+
+    <data>
+        <variable
+			type="com.goldze.mvvmhabit.ui.vm.LoginViewModel"
+            name="viewModel"
+            />
+    </data>
+
+		.....
+
+	</layout>
+
+
+> variable - type：类的全路径 <br>variable - name：变量名
+
+LoginActivity继承BaseActivity
+	
+	public class LoginActivity extends BaseActivity<ActivityLoginBinding, LoginViewModel> {
+		...
+	}
+
+> 保存activity_login.xml后databing会生成一个ActivityLoginBinding类。
+
+BaseActivity有两个泛型参数，一个是ViewDataBinding，另一个是BaseViewModel，ActivityLoginBinding则是继承的ViewDataBinding作为第一个泛型参数，LoginViewModel继承BaseViewModel作为第二个泛型参数。
+
+重写三个BaseActivity的三个方法
+
+	@Override
+    public int initContentView() {
+        return R.layout.activity_login;
+    }
+
+    @Override
+    public int initVariableId() {
+        return BR.viewModel;
+    }
+
+    @Override
+    public LoginViewModel initViewModel() {
+        //View持有ViewModel的引用 (这里暂时没有用Dagger2解耦)
+        return new LoginViewModel(this);
+    }
+
+initContentView() 返回界面layout的id
+<br>
+initVariableId() 返回变量的id，对应activity_login中variable - name：变量名，就像一个控件的id,可以使用R.id.xxx，这里的BR跟R文件一样，由系统生成，使用BR.xxx找到这个ViewModel的id。
+<br>
+initViewModel() 返回ViewModel对象
+
+LoginViewModel继承BaseViewModel
+
+	public LoginViewModel(Context context) {
+        super(context);
+    }
+在构造方法中调用super(context) 将上下文交给父类，即可使用父类的showDialog()、startActivity()等方法。在这个LoginViewModel中就可以尽情的写你的逻辑了！
+### 2.1、数据绑定

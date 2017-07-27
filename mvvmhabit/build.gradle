@@ -8,7 +8,6 @@ android {
         targetSdkVersion rootProject.ext.android.targetSdkVersion
         versionCode rootProject.ext.android.versionCode
         versionName rootProject.ext.android.versionName
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     dataBinding {
         enabled true
@@ -23,14 +22,11 @@ android {
 
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
-    compile 'com.android.support:appcompat-v7:25.3.1'
+    compile 'com.android.support:appcompat-v7:' + rootProject.ext.support["appcompat-v7"]
     testCompile 'junit:junit:4.12'
-    //rxjava2
-    //    compile 'io.reactivex.rxjava2:rxjava:2.1.0'
-    //    compile 'io.reactivex.rxjava2:rxandroid:2.0.1'
     //rxjava
-    compile 'io.reactivex:rxjava:1.2.5'
-    compile 'io.reactivex:rxandroid:1.2.1'
+    compile rootProject.ext.dependencies.rxjava
+    compile rootProject.ext.dependencies.rxandroid
     //rx管理View的生命周期
     compile 'com.trello:rxlifecycle:1.0'
     compile 'com.trello:rxlifecycle-components:1.0'

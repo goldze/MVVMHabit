@@ -1,11 +1,49 @@
 ext {
-    android = [compileSdkVersion: 25,
-               buildToolsVersion: "25.0.2",
-               minSdkVersion    : 17,
-               targetSdkVersion : 25,
-               versionCode      : 1,
-               versionName      : "1.0"]
-    support = [supportVersion: "25.3.1"]
+    //android开发版本配置
+    android = [
+            compileSdkVersion: 25,
+            buildToolsVersion: "25.0.2",
+            applicationId    : "com.goldze.mvvmhabit",
+            minSdkVersion    : 17,
+            targetSdkVersion : 25,
+            versionCode      : 1,
+            versionName      : "1.0"
+    ]
+    //support配置
+    support = [
+            "appcompat-v7"     : "25.3.1",
+            "constraint-layout": "1.0.0-beta2"
+    ]
+    //依赖第三方配置
+    dependencies = [
+            //rxjava
+            "rxjava"                               : "io.reactivex:rxjava:1.2.5",
+            "rxandroid"                            : "io.reactivex:rxandroid:1.2.1",
+            //rx管理View的生命周期
+            "rxlifecycle"                          : "com.trello:rxlifecycle:1.0",
+            "rxlifecycle-components"               : "com.trello:rxlifecycle-components:1.0",
+            //rxbinding
+            "rxbinding"                            : "com.jakewharton.rxbinding:rxbinding:1.0.1",
+            //rx 6.0权限请求
+            "rxpermissions"                        : "com.tbruyelle.rxpermissions:rxpermissions:0.9.1@aar",
+            //network
+            "okhttp"                               : "com.squareup.okhttp3:okhttp:3.8.1",
+            "retrofit2"                            : "com.squareup.retrofit2:retrofit:2.3.0",
+            "converter-gson"                       : "com.squareup.retrofit2:converter-gson:2.3.0",
+            "adapter-rxjava"                       : "com.squareup.retrofit2:adapter-rxjava:2.3.0",
+            //glide图片加载
+            "glide"                                : "com.github.bumptech.glide:glide:4.0.0-RC1",
+            //json解析
+            "gson"                                 : "com.google.code.gson:gson:2.8.1",
+            //material-dialogs
+            "core"                                 : "com.afollestad.material-dialogs:core:0.9.4.5",
+            "commons"                              : "com.afollestad.material-dialogs:commons:0.9.4.5",
+            //下拉刷新,上拉加载
+            "tkrefreshlayout"                      : "com.lcodecorex:tkrefreshlayout:1.0.7",
+            //recyclerview的databinding套装
+            "bindingcollectionadapter"             : "me.tatarka.bindingcollectionadapter:bindingcollectionadapter:1.3.0",
+            "bindingcollectionadapter-recyclerview": "me.tatarka.bindingcollectionadapter:bindingcollectionadapter-recyclerview:1.3.0",
+    ]
 }
 
 

@@ -32,7 +32,6 @@ public class DemoViewModel extends BaseViewModel {
     public BindingCommand formSbmClick = new BindingCommand(new Action0() {
         @Override
         public void call() {
-            Integer.parseInt("a");
             startContainerActivity(FormFragment.class.getCanonicalName());
         }
     });

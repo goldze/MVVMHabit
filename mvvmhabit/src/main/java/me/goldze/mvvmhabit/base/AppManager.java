@@ -30,6 +30,14 @@ public class AppManager {
         return instance;
     }
 
+    public static Stack<Activity> getActivityStack() {
+        return activityStack;
+    }
+    public static Stack<Fragment> getFragmentStack() {
+        return fragmentStack;
+    }
+
+
     /**
      * 添加Activity到堆栈
      */

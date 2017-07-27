@@ -3,11 +3,9 @@
 
     <data>
 
-        <import type="com.goldze.mvvmhabit.ui.vm.LoginViewModel" />
-
         <variable
             name="viewModel"
-            type="LoginViewModel" />
+            type="com.goldze.mvvmhabit.ui.vm.LoginViewModel" />
     </data>
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"

@@ -19,6 +19,7 @@ public class BaseApplication extends Application {
         sInstance = this;
         //初始化工具类
         Utils.init(this);
+        //注册监听每个activity的生命周期,便于堆栈式管理
         registerActivityLifecycleCallbacks(mCallbacks);
     }
 

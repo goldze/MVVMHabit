@@ -17,7 +17,7 @@ public class AppApplication extends BaseApplication {
         super.onCreate();
         //开启打印日志
         KLog.init(true);
-
+        //初始化全局异常崩溃
         initCrash();
     }
 
@@ -27,7 +27,7 @@ public class AppApplication extends BaseApplication {
                 .enabled(true) //是否启动全局异常捕获
                 .showErrorDetails(true) //是否显示错误详细信息
                 .showRestartButton(true) //是否显示重启按钮
-                .trackActivities(true) //是否定位Activity
+                .trackActivities(true) //是否跟踪Activity
                 .minTimeBetweenCrashesMs(2000) //崩溃的间隔时间(毫秒)
                 .errorDrawable(R.mipmap.ic_launcher) //错误图标
                 .restartActivity(LoginActivity.class) //重新启动后的activity
