@@ -347,6 +347,36 @@ layoutManager控制是线性的还是网格的，lineManager是控制水平的�
 这样绑定后，在ViewModel中调用ObservableList的add()方法，添加一个Item的ViewModel，界面上就会实时绘制出一个Item。在Item对应的ViewModel中，同样可以以绑定的形式完成逻辑
 > 可以在请求到数据后，循环添加`observableList.add(new NetWorkItemViewModel(context, entity));`详细可以参考例子程序中NetWorkViewModel类
 
+## 3、网络请求
+> 网络请求一直都是一个项目的核心，现在的项目基本都离不开网络，一个好用网络请求框架可以让开发事半功倍。
+### 3.1、Retrofit+Okhttp+RxJava
+> 现今，这三个组合基本是网络请求的标配，如果你对这三个框架不了解，建议先去查阅相关资料。
 
+square出品的框架，用起来确实非常方便。在**MVVMHabit**中引入了
+
+	compile "com.squareup.okhttp3:okhttp:3.8.1"
+    compile "com.squareup.retrofit2:retrofit:2.3.0"
+    compile "com.squareup.retrofit2:converter-gson:2.3.0"
+    compile "com.squareup.retrofit2:adapter-rxjava:2.3.0"
+所以只要在你构建的Retrofit中加入
+	
+	Retrofit retrofit = new Retrofit.Builder()
+                .addConverterFactory(GsonConverterFactory.create())
+                .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
+ 				.build();
+
+或者直接使用例子程序中封装好的RetrofitClient
+### 3.2、网络拦截器
+**LoggingInterceptor：**全局拦截请求信息，格式化打印Request、Response，
+	
+	LoggingInterceptor mLoggingInterceptor = new LoggingInterceptor
+		.Builder()//构建者模式
+    	.loggable(true) //是否开启日志打印
+        .setLevel(Level.BODY) //打印的等级
+        .log(Platform.INFO) // 打印类型
+        .request("Request") // request的Tag
+        .response("Response")// Response的Tag
+        .addHeader("version", BuildConfig.VERSION_NAME)//打印版本
+        .build()
 
 

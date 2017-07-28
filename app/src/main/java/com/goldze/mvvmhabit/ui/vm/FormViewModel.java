@@ -1,15 +1,14 @@
 package com.goldze.mvvmhabit.ui.vm;
 
+import com.google.gson.Gson;
+
 import android.app.DatePickerDialog;
-import android.content.Context;
 import android.databinding.ObservableBoolean;
 import android.support.v4.app.Fragment;
-import android.view.View;
 import android.widget.DatePicker;
 
 import com.goldze.mvvmhabit.entity.FormEntity;
 import com.goldze.mvvmhabit.entity.SpinnerItemData;
-import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -91,6 +90,28 @@ public class FormViewModel extends BaseViewModel {
         public void call() {
             String submitJson = new Gson().toJson(entity);
             MaterialDialogUtils.showBasicDialog(context, "提交的json实体数据：\r\n" + submitJson).show();
+
+//            RetrofitClient.getInstance().create(DemoApiService.class)
+//                    .demoPost("666")
+//                    .compose(RxUtils.bindToLifecycle(context)) //生命周期与界面同步
+//                    .compose(RxUtils.schedulersTransformer()) //线程调度
+//                    .doOnSubscribe(new Action0() {
+//                        @Override
+//                        public void call() {
+//                            showDialog();
+//                        }
+//                    })
+//                    .subscribe(new Action1<BaseResponse<DemoEntity>>() {
+//                        @Override
+//                        public void call(BaseResponse<DemoEntity> demoEntityBaseResponse) {
+//                            dismissDialog();
+//                        }
+//                    }, new Action1<Throwable>() {
+//                        @Override
+//                        public void call(Throwable throwable) {
+//                            dismissDialog();
+//                        }
+//                    });
         }
     });
 }
