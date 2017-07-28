@@ -9,6 +9,7 @@
                 name="viewModel"
                 type="DetailViewModel"
                 />
+        <import type="com.goldze.mvvmhabit.R" />
     </data>
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -24,7 +25,8 @@
                 android:layout_width="280dp"
                 android:layout_height="140dp"
                 android:src="@mipmap/ic_launcher"
-                binding:uri="@{viewModel.entity.img}"
+                binding:url="@{viewModel.entity.img}"
+                binding:placeholderRes="@{R.mipmap.ic_launcher_round}"
                 />
 
         <LinearLayout

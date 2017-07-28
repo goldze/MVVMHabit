@@ -28,27 +28,27 @@ dependencies {
     compile rootProject.ext.dependencies.rxjava
     compile rootProject.ext.dependencies.rxandroid
     //rx管理View的生命周期
-    compile 'com.trello:rxlifecycle:1.0'
-    compile 'com.trello:rxlifecycle-components:1.0'
-    //recyclerview的databinding套装
-    compile 'me.tatarka.bindingcollectionadapter:bindingcollectionadapter:1.3.0'
-    compile 'me.tatarka.bindingcollectionadapter:bindingcollectionadapter-recyclerview:1.3.0'
+    compile rootProject.ext.dependencies.rxlifecycle
+    compile rootProject.ext.dependencies["rxlifecycle-components"]
     //rxbinding
-    compile 'com.jakewharton.rxbinding:rxbinding:1.0.1'
+    compile rootProject.ext.dependencies.rxbinding
     //rx权限请求
-    compile 'com.tbruyelle.rxpermissions:rxpermissions:0.9.1@aar'
+    compile rootProject.ext.dependencies.rxpermissions
     //network
-    compile 'com.squareup.okhttp3:okhttp:3.8.1'
-    compile 'com.squareup.retrofit2:retrofit:2.3.0'
-    compile 'com.squareup.retrofit2:converter-gson:2.3.0'
-    compile 'com.squareup.retrofit2:adapter-rxjava:2.3.0'
+    compile rootProject.ext.dependencies.okhttp
+    compile rootProject.ext.dependencies.retrofit
+    compile rootProject.ext.dependencies["converter-gson"]
+    compile rootProject.ext.dependencies["adapter-rxjava"]
     //json解析
-    compile 'com.google.code.gson:gson:2.8.1'
+    compile rootProject.ext.dependencies.gson
     //material-dialogs
-    compile 'com.afollestad.material-dialogs:core:0.9.4.5'
-    compile 'com.afollestad.material-dialogs:commons:0.9.4.5'
+    compile rootProject.ext.dependencies.core
+    compile rootProject.ext.dependencies.commons
     //下拉刷新,上拉加载
-    compile 'com.lcodecorex:tkrefreshlayout:1.0.7'
+    compile rootProject.ext.dependencies.tkrefreshlayout
     //glide图片加载库
-    compile 'com.github.bumptech.glide:glide:4.0.0-RC1'
+    compile rootProject.ext.dependencies.glide
+    //recyclerview的databinding套装
+    compile rootProject.ext.dependencies.bindingcollectionadapter
+    compile rootProject.ext.dependencies["bindingcollectionadapter-recyclerview"]
 }

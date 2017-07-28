@@ -28,11 +28,11 @@ ext {
             "rxpermissions"                        : "com.tbruyelle.rxpermissions:rxpermissions:0.9.1@aar",
             //network
             "okhttp"                               : "com.squareup.okhttp3:okhttp:3.8.1",
-            "retrofit2"                            : "com.squareup.retrofit2:retrofit:2.3.0",
+            "retrofit"                            : "com.squareup.retrofit2:retrofit:2.3.0",
             "converter-gson"                       : "com.squareup.retrofit2:converter-gson:2.3.0",
             "adapter-rxjava"                       : "com.squareup.retrofit2:adapter-rxjava:2.3.0",
             //glide图片加载
-            "glide"                                : "com.github.bumptech.glide:glide:4.0.0-RC1",
+            "glide"                                : "com.github.bumptech.glide:glide:3.8.0",
             //json解析
             "gson"                                 : "com.google.code.gson:gson:2.8.1",
             //material-dialogs

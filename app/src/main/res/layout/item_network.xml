@@ -24,7 +24,7 @@
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:src="@mipmap/ic_launcher"
-            binding:uri="@{viewModel.entity.img}" />
+            binding:url="@{viewModel.entity.img}" />
 
         <TextView
             android:id="@+id/tv_title"

@@ -47,11 +47,13 @@ public class NetWorkViewModel extends BaseViewModel {
     public final ItemViewSelector<NetWorkItemViewModel> itemView = new ItemViewSelector<NetWorkItemViewModel>() {
         @Override
         public void select(ItemView itemView, int position, NetWorkItemViewModel item) {
+            //设置item中ViewModel的id和item的layout
             itemView.set(BR.viewModel, R.layout.item_network);
         }
 
         @Override
         public int viewTypeCount() {
+            //RecyclerView需要划分的部分数，如果是一个list,就返回1，如果带有head和list，就返回2
             return 1;
         }
     };
@@ -86,6 +88,7 @@ public class NetWorkViewModel extends BaseViewModel {
                     @Override
                     public void call(BaseResponse<DemoEntity> response) {
                         dismissDialog();
+                        //请求成功
                         if (response.getCode() == 1) {
                             //将实体赋给全局变量
                             for (DemoEntity.ItemsEntity entity : response.getResult().getItems()) {

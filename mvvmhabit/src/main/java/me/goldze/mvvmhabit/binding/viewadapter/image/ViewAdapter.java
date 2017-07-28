@@ -11,11 +11,12 @@ import com.bumptech.glide.Glide;
  * Created by goldze on 2017/6/18.
  */
 public final class ViewAdapter {
-    @BindingAdapter(value = {"uri"}, requireAll = false)
-    public static void setImageUri(ImageView imageView, String uri) {
-        if (!TextUtils.isEmpty(uri)) {
+    @BindingAdapter(value = {"url", "placeholderRes"}, requireAll = false)
+    public static void setImageUri(ImageView imageView, String url, int placeholderRes) {
+        if (!TextUtils.isEmpty(url)) {
             //使用Glide框架加载图片
-            Glide.with(imageView.getContext()).load(uri).into(imageView);
+            Glide.with(imageView.getContext()).load(url).placeholder(placeholderRes)
+                    .into(imageView);
         }
     }
 }

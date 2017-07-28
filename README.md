@@ -180,7 +180,7 @@ LoginViewModel继承BaseViewModel
 
 	//用户名的绑定
 	public ObservableField<String> userName = new ObservableField<>("");
-在用户名EditText中绑定
+在用户名EditText标签中绑定
 
 	android:text="@={viewModel.userName}"
 
@@ -198,7 +198,7 @@ LoginViewModel继承BaseViewModel
             
         }
     };
-在登录按钮中绑定
+在登录按钮标签中绑定
 
 	android:onClick="@{viewModel.loginOnClick}"
 
@@ -206,7 +206,7 @@ LoginViewModel继承BaseViewModel
 
 这就是强大的databing框架双向绑定的特性，不用再给控件定义id，setText()，setOnClickListener()。
 
-**但是，光有这些，完全满足不了我们复杂业务的需求啊！那么救星登场：MVVMHabit，它有一套自定义的绑定规则，可以满足大部分的场景需求，请继续往下看。**
+**但是，光有这些，完全满足不了我们复杂业务的需求啊！MVVMHabit闪亮登场：它有一套自定义的绑定规则，可以满足大部分的场景需求，请继续往下看。**
 
 ##### 2.2.2、自定义绑定
 还拿点击事件说吧，不用传统的绑定方式，使用自定义的点击事件绑定。
@@ -225,7 +225,7 @@ LoginViewModel继承BaseViewModel
 
 	xmlns:binding="http://schemas.android.com/apk/res-auto"
 
-在登录按钮中绑定
+在登录按钮标签中绑定
 
 	binding:onClickCommand="@{viewModel.loginOnClickCommand}"
 
@@ -274,3 +274,79 @@ onClickCommand方法是自定义的，使用@BindingAdapter注解来标明这是
 
 是不是觉得有点意思，好戏还在后头呢！
 ##### 2.2.3、自定义ImageView图片加载
+绑定图片路径：
+
+在ViewModel中定义
+
+	public String imgUrl = "http://img0.imgtn.bdimg.com/it/u=2183314203,562241301&fm=26&gp=0.jpg";
+
+在ImageView标签中
+
+	binding:url="@{viewModel.imgUrl}"
+
+url是图片路径，这样绑定后，这个ImageView就会去显示这张图片，不限网络图片还是本地图片。
+
+如果需要给一个默认加载中的图片，可以加这一句
+
+	binding:placeholderRes="@{R.mipmap.ic_launcher_round}"
+
+> R文件需要在data标签中导入使用，如：`<import type="com.goldze.mvvmhabit.R" />`
+
+BindingAdapter中的实现
+
+	@BindingAdapter(value = {"url", "placeholderRes"}, requireAll = false)
+    public static void setImageUri(ImageView imageView, String url, int placeholderRes) {
+        if (!TextUtils.isEmpty(url)) {
+            //使用Glide框架加载图片
+            Glide.with(imageView.getContext()).load(url).placeholder(placeholderRes)
+                    .into(imageView);
+        }
+    }
+
+很简单就自定义了一个ImageView图片加载的绑定，学会这种方式，可自定义扩展。
+> 如果你对这些感兴趣，可以下载源码，在binding包中可以看到各类控件的绑定实现方式
+
+##### 2.2.4、RecyclerView绑定
+很常用的RecyclerView的绑定方式。
+
+在ViewModel中定义：
+	
+	//给RecyclerView添加items
+	public final ObservableList<NetWorkItemViewModel> observableList = new ObservableArrayList<>();
+	//给RecyclerView添加ItemView
+	public final ItemViewSelector<NetWorkItemViewModel> itemView = new ItemViewSelector<NetWorkItemViewModel>() {
+        @Override
+        public void select(ItemView itemView, int position, NetWorkItemViewModel item) {
+			//设置item中ViewModel的id和item的layout
+            itemView.set(BR.viewModel, R.layout.item_network);
+        }
+
+        @Override
+        public int viewTypeCount() {
+	 		//将RecyclerView划分成几部分，如果是一个list,就返回1，如果带有head和list，就返回2
+            return 1;
+        }
+    };
+ObservableList<>和ItemViewSelector<>的泛型是Item布局所对应的ViewModel
+
+在xml中绑定
+
+	<android.support.v7.widget.RecyclerView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                binding:itemView="@{viewModel.itemView}"
+                binding:items="@{viewModel.observableList}"
+                binding:layoutManager="@{LayoutManagers.linear()}"
+                binding:lineManager="@{LineManagers.horizontal()}" />
+
+layoutManager控制是线性的还是网格的，lineManager是控制水平的还是垂直的
+> layoutManager和lineManager需要导入
+> `<import type="me.tatarka.bindingcollectionadapter.LayoutManagers" />`
+> `<import type="me.goldze.mvvmhabit.binding.viewadapter.recyclerview.LineManagers" />`
+
+这样绑定后，在ViewModel中调用ObservableList的add()方法，添加一个Item的ViewModel，界面上就会实时绘制出一个Item。在Item对应的ViewModel中，同样可以以绑定的形式完成逻辑
+> 可以在请求到数据后，循环添加`observableList.add(new NetWorkItemViewModel(context, entity));`详细可以参考例子程序中NetWorkViewModel类
+
+
+
+
