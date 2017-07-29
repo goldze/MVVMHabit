@@ -10,7 +10,10 @@ import com.goldze.mvvmhabit.databinding.ActivityLoginBinding;
 import com.goldze.mvvmhabit.ui.vm.LoginViewModel;
 
 import me.goldze.mvvmhabit.base.BaseActivity;
+import me.goldze.mvvmhabit.bus.RxBus;
+import me.goldze.mvvmhabit.bus.RxBusSubscriber;
 import me.goldze.mvvmhabit.utils.ToastUtils;
+import rx.functions.Action1;
 
 /**
  * 一个MVVM模式的登陆界面

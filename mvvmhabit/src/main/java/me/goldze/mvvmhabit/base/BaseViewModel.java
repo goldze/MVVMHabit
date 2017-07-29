@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 
+import me.goldze.mvvmhabit.utils.KLog;
 import me.goldze.mvvmhabit.utils.MaterialDialogUtils;
 
 /**
@@ -59,7 +60,7 @@ public class BaseViewModel implements IBaseViewModel {
     /**
      * 跳转页面
      *
-     * @param clz 所跳转的目的Activity类
+     * @param clz    所跳转的目的Activity类
      * @param bundle 跳转所携带的信息
      */
     public void startActivity(Class<?> clz, Bundle bundle) {
@@ -74,7 +75,7 @@ public class BaseViewModel implements IBaseViewModel {
      * 跳转容器页面
      *
      * @param canonicalName 规范名 : Fragment.class.getCanonicalName()
-     * @param bundle 跳转所携带的信息
+     * @param bundle        跳转所携带的信息
      */
     public void startContainerActivity(String canonicalName, Bundle bundle) {
         Intent intent = new Intent(context, ContainerActivity.class);
@@ -94,5 +95,25 @@ public class BaseViewModel implements IBaseViewModel {
         Intent intent = new Intent(context, ContainerActivity.class);
         intent.putExtra(ContainerActivity.FRAGMENT, canonicalName);
         context.startActivity(intent);
+    }
+
+    @Override
+    public void onCreateView() {
+        KLog.d("ViewModel：onCreateView");
+    }
+
+    @Override
+    public void onDestroyView() {
+        KLog.d("ViewModel：onDestroyView");
+    }
+
+    @Override
+    public void registerRxBus() {
+        KLog.d("ViewModel：registerRxBus");
+    }
+
+    @Override
+    public void removeRxBus() {
+        KLog.d("ViewModel：removeRxBus");
     }
 }

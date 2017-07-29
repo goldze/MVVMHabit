@@ -6,11 +6,12 @@ import android.os.Bundle;
 
 import com.trello.rxlifecycle.components.support.RxAppCompatActivity;
 
-import me.goldze.mvvmhabit.bus.WeakMessenger;
+import me.goldze.mvvmhabit.bus.Messenger;
+import me.goldze.mvvmhabit.bus.RxBus;
 
 
 /**
- *Created by goldze on 2017/6/15.
+ * Created by goldze on 2017/6/15.
  * 一个拥有DataBinding框架的基Activity
  * 这里根据项目业务可以换成你自己熟悉的BaseActivity, 但是需要继承RxAppCompatActivity,方便LifecycleProvider管理生命周期
  */
@@ -30,12 +31,18 @@ public class BaseActivity<V extends ViewDataBinding, VM extends BaseViewModel> e
         initData();
 
         initViewObservable();
+
+        viewModel.onCreateView();
+
+        viewModel.registerRxBus();
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        WeakMessenger.getDefault().unregister(this);
+        Messenger.getDefault().unregister(this);
+        viewModel.removeRxBus();
+        viewModel.onDestroyView();
     }
 
     /**

@@ -10,7 +10,8 @@ import android.view.ViewGroup;
 
 import com.trello.rxlifecycle.components.support.RxFragment;
 
-import me.goldze.mvvmhabit.bus.WeakMessenger;
+import me.goldze.mvvmhabit.bus.Messenger;
+
 /**
  * Created by goldze on 2017/6/15.
  */
@@ -27,7 +28,9 @@ public class BaseFragment<V extends ViewDataBinding, VM extends BaseViewModel> e
     @Override
     public void onDestroy() {
         super.onDestroy();
-        WeakMessenger.getDefault().unregister(this);
+        Messenger.getDefault().unregister(this);
+        viewModel.removeRxBus();
+        viewModel.onDestroyView();
     }
 
     @Nullable
@@ -50,6 +53,10 @@ public class BaseFragment<V extends ViewDataBinding, VM extends BaseViewModel> e
         initData();
 
         initViewObservable();
+
+        viewModel.onCreateView();
+
+        viewModel.registerRxBus();
     }
 
     @Override

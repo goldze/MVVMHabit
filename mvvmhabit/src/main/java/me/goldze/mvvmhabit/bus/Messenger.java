@@ -14,23 +14,23 @@ import rx.functions.Action1;
 /**
  * About : kelin的Messenger
  */
-public class WeakMessenger {
+public class Messenger {
 
-    private static WeakMessenger defaultInstance;
+    private static Messenger defaultInstance;
 
     private HashMap<Type, List<WeakActionAndToken>> recipientsOfSubclassesAction;
 
     private HashMap<Type, List<WeakActionAndToken>> recipientsStrictAction;
 
-    public static WeakMessenger getDefault() {
+    public static Messenger getDefault() {
         if (defaultInstance == null) {
-            defaultInstance = new WeakMessenger();
+            defaultInstance = new Messenger();
         }
         return defaultInstance;
     }
 
 
-    public static void overrideDefault(WeakMessenger newWeakMessenger) {
+    public static void overrideDefault(Messenger newWeakMessenger) {
         defaultInstance = newWeakMessenger;
     }
 

@@ -5,6 +5,24 @@ package me.goldze.mvvmhabit.base;
  */
 
 public interface IBaseViewModel {
-//    void injectionContext(Context context);
 //    void initData();
+
+    /**
+     * View的界面创建时回调
+     */
+    void onCreateView();
+
+    /**
+     * View的界面销毁时回调
+     */
+    void onDestroyView();
+
+    /**
+     * 注册RxBus
+     */
+    void registerRxBus();
+    /**
+     * 移除RxBus
+     */
+    void removeRxBus();
 }

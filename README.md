@@ -25,12 +25,12 @@
 	专门针对MVVM模式打造的BaseActivity、BaseFragment、BaseViewModel，在View层中不再需要定义ViewDataBinding和ViewModel，直接在BaseActivity、BaseFragment上限定泛型即可使用。普通界面只需要编写Fragment，然后使用ContainerActivity盛装(代理)，这样就不需要每个界面都在AndroidManifest中注册一遍。
 
 - **全局操作**
-
 	1. 全局的Activity堆栈式管理，在程序任何地方可以打开、结束指定的Activity，一键退出应用程序。
 	2. LoggingInterceptor全局拦截网络请求，打印Request和Response，格式化json、xml数据显示，方便与后台调试接口。
 	3. 全局Cookie，支持SharedPreferences和内存两种管理模式。
 	4. 全局的错误监听，根据不同的状态码或异常设置相应的message。
 	5. 全局的异常捕获，程序发生异常时不会崩溃，可跳入异常界面重启应用。
+	6. 全局事件回调，提供RxBus、Messenger两种回调方式。
 
 
 
@@ -347,18 +347,18 @@ layoutManager控制是线性的还是网格的，lineManager是控制水平的�
 这样绑定后，在ViewModel中调用ObservableList的add()方法，添加一个Item的ViewModel，界面上就会实时绘制出一个Item。在Item对应的ViewModel中，同样可以以绑定的形式完成逻辑
 > 可以在请求到数据后，循环添加`observableList.add(new NetWorkItemViewModel(context, entity));`详细可以参考例子程序中NetWorkViewModel类
 
-## 3、网络请求
+### 2.3、网络请求
 > 网络请求一直都是一个项目的核心，现在的项目基本都离不开网络，一个好用网络请求框架可以让开发事半功倍。
-### 3.1、Retrofit+Okhttp+RxJava
+#### 2.3.1、Retrofit+Okhttp+RxJava
 > 现今，这三个组合基本是网络请求的标配，如果你对这三个框架不了解，建议先去查阅相关资料。
 
-square出品的框架，用起来确实非常方便。在**MVVMHabit**中引入了
+square出品的框架，用起来确实非常方便。**MVVMHabit**中引入了
 
 	compile "com.squareup.okhttp3:okhttp:3.8.1"
     compile "com.squareup.retrofit2:retrofit:2.3.0"
     compile "com.squareup.retrofit2:converter-gson:2.3.0"
     compile "com.squareup.retrofit2:adapter-rxjava:2.3.0"
-所以只要在你构建的Retrofit中加入
+构建Retrofit时加入
 	
 	Retrofit retrofit = new Retrofit.Builder()
                 .addConverterFactory(GsonConverterFactory.create())
@@ -366,9 +366,9 @@ square出品的框架，用起来确实非常方便。在**MVVMHabit**中引入�
  				.build();
 
 或者直接使用例子程序中封装好的RetrofitClient
-### 3.2、网络拦截器
-**LoggingInterceptor：**全局拦截请求信息，格式化打印Request、Response，
-	
+#### 2.3.2、网络拦截器
+**LoggingInterceptor：**全局拦截请求信息，格式化打印Request、Response，可以清晰的看到与后台接口对接的数据，
+	 
 	LoggingInterceptor mLoggingInterceptor = new LoggingInterceptor
 		.Builder()//构建者模式
     	.loggable(true) //是否开启日志打印
@@ -378,5 +378,80 @@ square出品的框架，用起来确实非常方便。在**MVVMHabit**中引入�
         .response("Response")// Response的Tag
         .addHeader("version", BuildConfig.VERSION_NAME)//打印版本
         .build()
+构建okhttp时加入
+
+	OkHttpClient okHttpClient = new OkHttpClient.Builder()
+					.addNetworkInterceptor(mLoggingInterceptor)
+					.build();
+#### 2.3.3、Cookie管理
+**MVVMHabit**提供两种CookieStore：**PersistentCookieStore** (SharedPreferences管理)和**MemoryCookieStore** (内存管理)，可以根据自己的业务需求，在构建okhttp时加入相应的cookieJar
+	
+	OkHttpClient okHttpClient = new OkHttpClient.Builder()
+					.cookieJar(new CookieJarImpl(new PersistentCookieStore(mContext)))
+					.build();
+或者
+
+	OkHttpClient okHttpClient = new OkHttpClient.Builder()
+					.cookieJar(new CookieJarImpl(new MemoryCookieStore()))
+					.build();
+#### 2.3.4、绑定生命周期
+请求在ViewModel层，且持有View的引用，所以可以直接在ViewModel中绑定请求的生命周期，View与请求共存亡。
+	
+	RetrofitClient.getInstance().create(DemoApiService.class)
+                .demoGet()
+                .compose(RxUtils.bindToLifecycle(context)) //请求与View周期同步
+                .compose(RxUtils.schedulersTransformer()) //线程调度
+                .subscribe(new Action1<BaseResponse<DemoEntity>>() {
+                    @Override
+                    public void call(BaseResponse<DemoEntity> response) {
+                       
+                    }
+                }, new Action1<Throwable>() {
+                    @Override
+                    public void call(Throwable throwable) {
+                        
+                    }
+                });
 
 
+在请求时关键需要加入组合操作符`.compose(RxUtils.bindToLifecycle(context))`<br>
+**注意：**如果你没有使用**mvvmabit**里面的BaseActivity或BaseFragment，使用自己定义Base，那么需要让你自己的Activity继承RxAppCompatActivity、Fragment继承RxFragment才能用`RxUtils.bindToLifecycle(context)`方法。
+
+## 3、辅助功能
+> 一个完整的快速开发框架，当然也少不了常用的辅助类。下面来介绍一下**MVVMabit**中有哪些辅助功能。
+### 3.1、事件总线
+> 事件总线存在的优点想必大家都很清楚了，android自带的广播机制对于组件间的通信而言，使用非常繁琐，通信组件彼此之间的订阅和发布的耦合也比较严重，特别是对于事件的定义，广播机制局限于序列化的类（通过Intent传递），不够灵活。
+#### 3.3.1、RxBus
+RxBus并不是一个库，而是一种模式。相信大多数开发者都使用过EventBus，对RxBus也是很熟悉。由于**MVVMabit**中已经加入RxJava，所以采用了RxBus代替EventBus作为事件总线通信，以减少库的依赖。使用方法：<br>
+在ViewModel中重写registerRxBus()方法来注册RxBus，重写removeRxBus()方法来移除RxBus
+
+	//订阅者
+    private Subscription mSubscription;
+    //注册RxBus
+    @Override
+    public void registerRxBus() {
+        super.registerRxBus();
+        mSubscription = RxBus.getDefault().toObservable(String.class)
+                .subscribe(new Action1<String>() {
+                    @Override
+                    public void call(String s) {
+
+                    }
+                });
+		//将订阅者加入管理站
+        RxSubscriptions.add(mSubscription);
+    }
+    //移除RxBus
+    @Override
+    public void removeRxBus() {
+        super.removeRxBus();
+		//将订阅者从管理站中移除
+        RxSubscriptions.remove(mSubscription);
+    }
+
+在需要执行回调的地方发送
+
+	RxBus.getDefault().post(object);
+#### 3.3.2、Messenger
+> 这个才是本节要介绍的重点。
+Messenger是一个轻量级全局的消息通信工具，在我们的复杂业务中，难免会出现一些交叉的业务，比如ViewModel与ViewModel之间需要有数据交换，这时候可以轻松地使用Messenger发送一个实体或一个空消息，将事件从一个ViewModel回调到另一个ViewModel中。
