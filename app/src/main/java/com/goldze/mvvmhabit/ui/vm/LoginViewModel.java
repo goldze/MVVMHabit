@@ -12,6 +12,7 @@ import com.goldze.mvvmhabit.ui.activity.DemoActivity;
 
 import me.goldze.mvvmhabit.base.BaseViewModel;
 import me.goldze.mvvmhabit.binding.command.BindingCommand;
+import me.goldze.mvvmhabit.bus.Messenger;
 import me.goldze.mvvmhabit.bus.RxBus;
 import me.goldze.mvvmhabit.bus.RxSubscriptions;
 import me.goldze.mvvmhabit.utils.ToastUtils;
@@ -96,29 +97,5 @@ public class LoginViewModel extends BaseViewModel {
                 startActivity(DemoActivity.class);
             }
         }, 3 * 1000);
-
-    }
-    //订阅者
-    private Subscription mSubscription;
-    //注册RxBus
-    @Override
-    public void registerRxBus() {
-        super.registerRxBus();
-        mSubscription = RxBus.getDefault().toObservable(String.class)
-                .subscribe(new Action1<String>() {
-                    @Override
-                    public void call(String s) {
-
-                    }
-                });
-        //将订阅者加入管理站
-        RxSubscriptions.add(mSubscription);
-    }
-    //移除RxBus
-    @Override
-    public void removeRxBus() {
-        super.removeRxBus();
-        //将订阅者从管理站中移除
-        RxSubscriptions.remove(mSubscription);
     }
 }

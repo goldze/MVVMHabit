@@ -28,7 +28,7 @@ public class BaseFragment<V extends ViewDataBinding, VM extends BaseViewModel> e
     @Override
     public void onDestroy() {
         super.onDestroy();
-        Messenger.getDefault().unregister(this);
+        Messenger.getDefault().unregister(this.getContext());
         viewModel.removeRxBus();
         viewModel.onDestroyView();
     }

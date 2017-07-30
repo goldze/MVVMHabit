@@ -99,21 +99,17 @@ public class BaseViewModel implements IBaseViewModel {
 
     @Override
     public void onCreateView() {
-        KLog.d("ViewModel：onCreateView");
     }
 
     @Override
     public void onDestroyView() {
-        KLog.d("ViewModel：onDestroyView");
     }
 
     @Override
     public void registerRxBus() {
-        KLog.d("ViewModel：registerRxBus");
     }
 
     @Override
     public void removeRxBus() {
-        KLog.d("ViewModel：removeRxBus");
     }
 }

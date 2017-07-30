@@ -1,6 +1,6 @@
 # MVVMHabit
 ##
-目前，android流行的MVC、MVP模式的开发框架很多，然而一款基于MVVM模式开发框架却很少。**MVVMHabit则是一款以谷歌的databinding为基础，整合Okhttp+RxJava+Retrofit+Glide等流行库，加上各种原生控件自定义的BindingAdapter，让事件与数据源完美绑定的一款容易上瘾的实用性快速开发框架**。告别findViewById()，告别setText()，也告别setOnClickListener()...
+目前，android流行的MVC、MVP模式的开发框架很多，然而一款基于MVVM模式开发框架却很少。**MVVMHabit则是一款以谷歌的databinding为基础，整合Okhttp+RxJava+Retrofit+Glide等流行库，加上各种原生控件自定义的BindingAdapter，让事件与数据源完美绑定的一款容易上瘾的实用性快速开发框架**。从此告别findViewById()，告别setText()，也告别setOnClickListener()...
 ![](./img/mvvm_fc.jpg) 
 
 ## 框架特点
@@ -415,7 +415,7 @@ square出品的框架，用起来确实非常方便。**MVVMHabit**中引入了
 
 
 在请求时关键需要加入组合操作符`.compose(RxUtils.bindToLifecycle(context))`<br>
-**注意：**如果你没有使用**mvvmabit**里面的BaseActivity或BaseFragment，使用自己定义Base，那么需要让你自己的Activity继承RxAppCompatActivity、Fragment继承RxFragment才能用`RxUtils.bindToLifecycle(context)`方法。
+**注意：** 如果你没有使用 **mvvmabit** 里面的BaseActivity或BaseFragment，使用自己定义Base，那么需要让你自己的Activity继承RxAppCompatActivity、Fragment继承RxFragment才能用`RxUtils.bindToLifecycle(context)`方法。
 
 ## 3、辅助功能
 > 一个完整的快速开发框架，当然也少不了常用的辅助类。下面来介绍一下**MVVMabit**中有哪些辅助功能。
@@ -453,5 +453,47 @@ RxBus并不是一个库，而是一种模式。相信大多数开发者都使用
 
 	RxBus.getDefault().post(object);
 #### 3.3.2、Messenger
-> 这个才是本节要介绍的重点。
 Messenger是一个轻量级全局的消息通信工具，在我们的复杂业务中，难免会出现一些交叉的业务，比如ViewModel与ViewModel之间需要有数据交换，这时候可以轻松地使用Messenger发送一个实体或一个空消息，将事件从一个ViewModel回调到另一个ViewModel中。
+
+使用方法：
+
+定义一个静态String类型的字符串token
+
+	public static final String TOKEN_LOGINVIEWMODEL_REFRESH = "token_loginviewmodel_refresh";
+在ViewModel中注册消息监听
+
+	//注册一个空消息监听 
+	//参数1：接受人（上下文）
+	//参数2：定义的token
+	//参数3：执行的回调监听
+	Messenger.getDefault().register(context, LoginViewModel.TOKEN_LOGINVIEWMODEL_REFRESH, new Action0() {
+		@Override
+		public void call() {
+	
+		}
+	});
+
+	//注册一个带数据回调的消息监听 
+	//参数1：接受人（上下文）
+	//参数2：定义的token
+	//参数3：实体的泛型约束
+	//参数4：执行的回调监听
+	Messenger.getDefault().register(context, LoginViewModel.TOKEN_LOGINVIEWMODEL_REFRESH, String.class, new Action1<String>() {
+            @Override
+            public void call(String s) {
+                
+            }
+        });
+在需要回调的地方使用token发送消息
+
+	//发送一个空消息
+	//参数1：定义的token
+    Messenger.getDefault().sendNoMsg(LoginViewModel.TOKEN_LOGINVIEWMODEL_REFRESH);
+
+	//发送一个带数据回调消息
+	//参数1：回调的实体
+	//参数2：定义的token
+	Messenger.getDefault().send("refresh",LoginViewModel.TOKEN_LOGINVIEWMODEL_REFRESH);
+> token最好不要重名，不然可能就会出现逻辑上的bug，为了更好的维护和清晰逻辑，建议以`aa_bb_cc`的格式来定义token。aa：TOKEN，bb：ViewModel的类名，cc：动作名（功能名）
+
+注册了监听，当然也要解除它。在BaseActivity、BaseFragment的onDestroy()方法里已经调用`Messenger.getDefault().unregister(this);`解除注册，所以不用担心忘记解除导致的逻辑错误和内存泄漏。
