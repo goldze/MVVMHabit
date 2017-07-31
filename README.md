@@ -36,7 +36,7 @@
 
 
 ## 1、准备工作
-> 网上的很多有关MVVM的资料，在此就不再阐述什么是MVVM了，不清除的朋友可以先去了解一下。
+> 网上的很多有关MVVM的资料，在此就不再阐述什么是MVVM了，不清楚的朋友可以先去了解一下。
 ### 1.1、启用databinding
 在主工程app的build.gradle的android {}中加入：
 
@@ -367,7 +367,7 @@ square出品的框架，用起来确实非常方便。**MVVMHabit**中引入了
 
 或者直接使用例子程序中封装好的RetrofitClient
 #### 2.3.2、网络拦截器
-**LoggingInterceptor：**全局拦截请求信息，格式化打印Request、Response，可以清晰的看到与后台接口对接的数据，
+**LoggingInterceptor：** 全局拦截请求信息，格式化打印Request、Response，可以清晰的看到与后台接口对接的数据，
 	 
 	LoggingInterceptor mLoggingInterceptor = new LoggingInterceptor
 		.Builder()//构建者模式
@@ -422,7 +422,10 @@ square出品的框架，用起来确实非常方便。**MVVMHabit**中引入了
 ### 3.1、事件总线
 > 事件总线存在的优点想必大家都很清楚了，android自带的广播机制对于组件间的通信而言，使用非常繁琐，通信组件彼此之间的订阅和发布的耦合也比较严重，特别是对于事件的定义，广播机制局限于序列化的类（通过Intent传递），不够灵活。
 #### 3.3.1、RxBus
-RxBus并不是一个库，而是一种模式。相信大多数开发者都使用过EventBus，对RxBus也是很熟悉。由于**MVVMabit**中已经加入RxJava，所以采用了RxBus代替EventBus作为事件总线通信，以减少库的依赖。使用方法：<br>
+RxBus并不是一个库，而是一种模式。相信大多数开发者都使用过EventBus，对RxBus也是很熟悉。由于**MVVMabit**中已经加入RxJava，所以采用了RxBus代替EventBus作为事件总线通信，以减少库的依赖。
+
+使用方法：
+
 在ViewModel中重写registerRxBus()方法来注册RxBus，重写removeRxBus()方法来移除RxBus
 
 	//订阅者
@@ -494,6 +497,125 @@ Messenger是一个轻量级全局的消息通信工具，在我们的复杂业�
 	//参数1：回调的实体
 	//参数2：定义的token
 	Messenger.getDefault().send("refresh",LoginViewModel.TOKEN_LOGINVIEWMODEL_REFRESH);
-> token最好不要重名，不然可能就会出现逻辑上的bug，为了更好的维护和清晰逻辑，建议以`aa_bb_cc`的格式来定义token。aa：TOKEN，bb：ViewModel的类名，cc：动作名（功能名）
+> token最好不要重名，不然可能就会出现逻辑上的bug，为了更好的维护和清晰逻辑，建议以`aa_bb_cc`的格式来定义token。aa：TOKEN，bb：ViewModel的类名，cc：动作名（功能名）。
+
+> 为了避免大量使用Messenger，建议只在ViewModel与ViewModel之间使用，View与ViewModel之间采用ObservableField去监听UI上的逻辑，可在继承了Base的Activity或Fragment中重写initViewObservable()方法来初始化UI的监听
+
 
 注册了监听，当然也要解除它。在BaseActivity、BaseFragment的onDestroy()方法里已经调用`Messenger.getDefault().unregister(this);`解除注册，所以不用担心忘记解除导致的逻辑错误和内存泄漏。
+
+### 3.2、ContainerActivity
+一个盛装Fragment的一个容器(代理)Activity，普通界面只需要编写Fragment，使用此Activity盛装，这样就不需要每个界面都在AndroidManifest中注册一遍
+
+使用方法：
+
+在ViewModel中调用BaseViewModel的方法开一个Fragment
+
+	startContainerActivity(你的Fragment类名.class.getCanonicalName())
+	
+在ViewModel中调用BaseViewModel的方法，携带一个序列化实体打开一个Fragment
+
+	Bundle mBundle = new Bundle();
+    mBundle.putParcelable("entity", entity);
+    startContainerActivity(你的Fragment类名.class.getCanonicalName(), mBundle);
+
+在你的Fragment中取出实体
+
+	Bundle mBundle = getArguments();
+    if (mBundle != null) {
+    	entity = mBundle.getParcelable("entity");
+    }
+
+### 3.3、6.0权限申请
+> 对RxPermissions已经熟悉的朋友可以跳过。
+
+使用方法：
+
+例如请求相机权限，在ViewModel中调用
+
+	//请求打开相机权限
+	RxPermissions rxPermissions = new RxPermissions((Activity) context);
+	rxPermissions.request(Manifest.permission.CAMERA)
+                 .subscribe(new Action1<Boolean>() {
+	                 	@Override
+	                 	public void call(Boolean aBoolean) {
+	                 		if (aBoolean) {
+	                 			ToastUtils.showShort("权限已经打开，直接跳入相机");
+	                        } else {
+	                        	ToastUtils.showShort("权限被拒绝");
+	                        }
+	                    }
+                 });
+
+更多权限申请方式请参考[RxPermissions原项目地址](https://github.com/tbruyelle/RxPermissions)
+### 3.4、图片压缩
+> 为了节约用户流量和加快图片上传的速度，某些场景将图片在本地压缩后再传给后台，所以特此提供一个图片压缩的辅助功能。
+
+使用方法：
+
+RxJava的方式压缩单张图片，得到一个压缩后的图片文件对象
+	
+		String filePath = "mnt/sdcard/1.png";
+		ImageUtils.compressWithRx(filePath, new Action1<File>() {
+			@Override
+			public void call(File file) {
+	        	//将文件放入RequestBody
+				...
+			}
+		});
+
+RxJava的方式压缩多张图片，按集合顺序每压缩成功一张，都将在onNext方法中得到一个压缩后的图片文件对象
+
+		List<String> filePaths = new ArrayList<>();
+	    filePaths.add("mnt/sdcard/1.png");
+	    filePaths.add("mnt/sdcard/2.png");
+	    ImageUtils.compressWithRx(filePaths, new Subscriber() {
+	    	@Override
+	        public void onCompleted() {
+	
+	        }
+	
+	        @Override
+	        public void onError(Throwable e) {
+	
+	        }
+	
+	        @Override
+	        public void onNext(File file) {
+
+            }
+	    });
+
+### 3.5、其他辅助类
+**ToastUtils：** 吐司工具类
+
+**MaterialDialogUtils：** Material风格对话框工具类
+
+**SPUtils：** SharedPreferences工具类
+
+**SDCardUtils：** SD卡相关工具类
+
+**ConvertUtils：** 转换相关工具类
+
+**StringUtils：** 字符串相关工具类
+
+**RegexUtils：** 正则相关工具类
+
+**KLog：** 日志打印，含json格式打印
+
+
+## License
+
+	 Copyright 2017 goldze
+ 
+	 Licensed under the Apache License, Version 2.0 (the "License");
+	 you may not use this file except in compliance with the License.
+	 You may obtain a copy of the License at
+ 
+	    http://www.apache.org/licenses/LICENSE-2.0
+ 
+	 Unless required by applicable law or agreed to in writing, software
+	 distributed under the License is distributed on an "AS IS" BASIS,
+	 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+	 See the License for the specific language governing permissions and
+	 limitations under the License.

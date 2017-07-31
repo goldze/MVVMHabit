@@ -32,5 +32,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="表单编辑" />
+        <Button
+            binding:onClickCommand="@{viewModel.permissionsClick}"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="权限申请" />
     </LinearLayout>
 </layout>

@@ -1,15 +1,20 @@
 package com.goldze.mvvmhabit.ui.vm;
 
+import android.Manifest;
+import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 
 import com.goldze.mvvmhabit.entity.FormEntity;
 import com.goldze.mvvmhabit.ui.fragment.FormFragment;
 import com.goldze.mvvmhabit.ui.fragment.NetWorkFragment;
+import com.tbruyelle.rxpermissions.RxPermissions;
 
 import me.goldze.mvvmhabit.base.BaseViewModel;
 import me.goldze.mvvmhabit.binding.command.BindingCommand;
+import me.goldze.mvvmhabit.utils.ToastUtils;
 import rx.functions.Action0;
+import rx.functions.Action1;
 
 /**
  * Created by goldze on 2017/7/17.
@@ -49,6 +54,25 @@ public class DemoViewModel extends BaseViewModel {
             Bundle mBundle = new Bundle();
             mBundle.putParcelable("entity", entity);
             startContainerActivity(FormFragment.class.getCanonicalName(), mBundle);
+        }
+    });
+    //权限申请
+    public BindingCommand permissionsClick = new BindingCommand(new Action0() {
+        @Override
+        public void call() {
+            //请求打开相机权限
+            RxPermissions rxPermissions = new RxPermissions((Activity) context);
+            rxPermissions.request(Manifest.permission.CAMERA)
+                    .subscribe(new Action1<Boolean>() {
+                        @Override
+                        public void call(Boolean aBoolean) {
+                            if (aBoolean) {
+                                ToastUtils.showShort("权限已经打开，直接跳入相机");
+                            } else {
+                                ToastUtils.showShort("权限被拒绝");
+                            }
+                        }
+                    });
         }
     });
 }

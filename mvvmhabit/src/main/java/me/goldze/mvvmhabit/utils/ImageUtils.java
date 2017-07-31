@@ -907,6 +907,10 @@ public class ImageUtils {
         return new File(folder, filename);
     }
 
+    /**
+     * android图片压缩工具
+     * 压缩多张图片 RxJava 方式
+     */
     public static void compressWithRx(List<String> files, Subscriber subscriber) {
 
         Luban.get(getContext())
