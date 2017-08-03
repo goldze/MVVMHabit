@@ -1,7 +1,9 @@
 # MVVMHabit
 ##
 目前，android流行的MVC、MVP模式的开发框架很多，然而一款基于MVVM模式开发框架却很少。**MVVMHabit则是一款以谷歌的databinding为基础，整合Okhttp+RxJava+Retrofit+Glide等流行库，加上各种原生控件自定义的BindingAdapter，让事件与数据源完美绑定的一款容易上瘾的实用性快速开发框架**。从此告别findViewById()，告别setText()，也告别setOnClickListener()...
-![](./img/mvvm_fc.jpg) 
+
+## 框架流程
+![](./img/fc.png) 
 
 ## 框架特点
 - **快速开发**
