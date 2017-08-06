@@ -1,5 +1,4 @@
 apply plugin: 'com.android.library'
-
 android {
     compileSdkVersion rootProject.ext.android.compileSdkVersion
     buildToolsVersion rootProject.ext.android.buildToolsVersion
@@ -53,7 +52,7 @@ dependencies {
     compile rootProject.ext.dependencies.bindingcollectionadapter
     compile rootProject.ext.dependencies["bindingcollectionadapter-recyclerview"]
 }
-apply from: 'bintray.gradle'
+//apply from: 'bintray.gradle'
 
 ////添加
 //publish {

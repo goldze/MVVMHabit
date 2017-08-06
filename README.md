@@ -47,19 +47,35 @@
 	}
 
 ### 1.2、依赖Library
-从jcenter中央仓库远程依赖：
+从远程依赖：
 
-	暂不支持
+在根目录的build.gradle中加入
 
+	allprojects {
+		repositories {
+			...
+			maven { url 'https://jitpack.io' }
+		}
+	}
+
+在主项目app的build.gradle中依赖
+	
+	dependencies {	
+		...
+		compile 'com.github.goldze:MVVMHabit:1.0'
+	}
 
 或
 
-下载例子程序，在主项目中依赖例子程序中的**mvvmhabit**：
+下载例子程序，在主项目app的build.gradle中依赖例子程序中的**mvvmhabit**：
 
-	compile project(':mvvmhabit')
+	dependencies {	
+		...
+		compile project(':mvvmhabit')
+	}
 
 ### 1.3、配置config.gradle
-如果是下载的例子程序，那么还需要将例子程序中的config.gradle放入你的主项目根目录中，然后在根目录build.gradle的第一行加入：
+如果不是远程依赖，而是下载的例子程序，那么还需要将例子程序中的config.gradle放入你的主项目根目录中，然后在根目录build.gradle的第一行加入：
 
 	apply from: "config.gradle"
 
