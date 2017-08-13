@@ -62,7 +62,7 @@
 	
 	dependencies {	
 		...
-		compile 'com.github.goldze:MVVMHabit:1.0'
+		compile 'com.github.goldze:MVVMHabit:1.1'
 	}
 
 或
