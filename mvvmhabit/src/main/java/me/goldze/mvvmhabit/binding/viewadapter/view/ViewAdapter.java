@@ -2,6 +2,7 @@ package me.goldze.mvvmhabit.binding.viewadapter.view;
 
 import android.databinding.BindingAdapter;
 import android.view.View;
+import android.widget.TextView;
 
 import com.jakewharton.rxbinding.view.RxView;
 
@@ -64,6 +65,19 @@ public class ViewAdapter {
                         }
                     }
                 });
+    }
+
+    /**
+     * 回调控件本身
+     *
+     * @param currentView
+     * @param bindingCommand
+     */
+    @BindingAdapter(value = {"currentView"}, requireAll = false)
+    public static void replyCurrentView(View currentView, BindingCommand bindingCommand) {
+        if (bindingCommand != null) {
+            bindingCommand.execute(currentView);
+        }
     }
 
     /**

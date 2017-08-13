@@ -44,22 +44,9 @@ dependencies {
     //material-dialogs
     compile rootProject.ext.dependencies.core
     compile rootProject.ext.dependencies.commons
-    //下拉刷新,上拉加载
-    compile rootProject.ext.dependencies.tkrefreshlayout
     //glide图片加载库
     compile rootProject.ext.dependencies.glide
     //recyclerview的databinding套装
     compile rootProject.ext.dependencies.bindingcollectionadapter
     compile rootProject.ext.dependencies["bindingcollectionadapter-recyclerview"]
 }
-//apply from: 'bintray.gradle'
-
-////添加
-//publish {
-//    userOrg = 'gold'//bintray.com用户名
-//    groupId = 'me.gold'//jcenter上的路径
-//    artifactId = 'mvvmhabit'//项目名称
-//    publishVersion = '1.0.0'//版本号
-//    desc = '基于MVVM设计模式的一套快速开发库，整合Okhttp+RxJava+Retrofit+Glide等必备流行开源库，满足日常开发需求。'//描述，不重要
-//    website = 'https://github.com/goldze/MVVMHabit'//网站，不重要；尽量模拟github上的地址，例如我这样的；当然你有地址最好了
-//}

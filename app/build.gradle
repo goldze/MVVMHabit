@@ -27,6 +27,10 @@ dependencies {
     compile 'com.android.support:appcompat-v7:' + rootProject.ext.support["appcompat-v7"]
     compile 'com.android.support.constraint:constraint-layout:1.0.0-beta2'
     testCompile 'junit:junit:4.12'
-//    compile project(':mvvmhabit')
-    compile 'com.github.goldze:MVVMHabit:1.0'
+    //下拉刷新,上拉加载
+    compile rootProject.ext.dependencies.tkrefreshlayout
+    compile project(':mvvmhabit')
+//    compile 'com.github.goldze:MVVMHabit:1.0'
+
+
 }

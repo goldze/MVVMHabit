@@ -5,6 +5,7 @@ import com.google.gson.Gson;
 import android.app.DatePickerDialog;
 import android.databinding.ObservableBoolean;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.NestedScrollView;
 import android.widget.DatePicker;
 
 import com.goldze.mvvmhabit.entity.FormEntity;

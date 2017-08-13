@@ -14,24 +14,28 @@
     <attr name="url" format="string" />
     <attr name="onTouchCommand" format="reference" />
 
-    <!-- require ReplyCommand {@link com.kelin.mvvmlight.command.ReplyCommand } to deal with view click event. -->
+    <!-- require BindingCommand {@link com.kelin.mvvmlight.command.BindingCommand } to deal with view click event. -->
     <attr name="onClickCommand" format="reference" />
     <attr name="onLongClickCommand" format="reference" />
-    <!-- require ReplyCommand<Boolean> {@link com.kelin.mvvmlight.command.ReplyCommand } to deal with view focus change event.
-     ReplyCommand would has params which means if view hasFocus.-->
+    <!-- require BindingCommand<Boolean> {@link com.kelin.mvvmlight.command.BindingCommand } to deal with view focus change event.
+     BindingCommand would has params which means if view hasFocus.-->
     <attr name="onFocusChangeCommand" format="reference" />
     <attr name="isThrottleFirst" format="boolean" />
+    <attr name="currentView" format="reference" />
+
     <declare-styleable name="View">
 
-        <!-- require ReplyCommand {@link com.kelin.mvvmlight.command.ReplyCommand } to deal with view click event. -->
+        <!-- require BindingCommand {@link com.kelin.mvvmlight.command.BindingCommand } to deal with view click event. -->
         <attr name="onClickCommand" />
         <attr name="onLongClickCommand" />
-        <!-- require ReplyCommand<Boolean> {@link com.kelin.mvvmlight.command.ReplyCommand } to deal with view focus change event.
-         ReplyCommand would has params which means if view hasFocus.-->
+        <!-- require BindingCommand<Boolean> {@link com.kelin.mvvmlight.command.BindingCommand } to deal with view focus change event.
+         BindingCommand would has params which means if view hasFocus.-->
         <attr name="onFocusChangeCommand" />
-        <!-- require ReplyCommand<MotionEvent> -->
+        <!-- require BindingCommand<MotionEvent> -->
         <attr name="onTouchCommand" />
         <attr name="isThrottleFirst" />
+        <attr name="currentView" />
+
     </declare-styleable>
 
 
@@ -45,29 +49,27 @@
         <attr name="dropDownItemView" format="reference" />
         <attr name="itemIds" format="reference" />
         <attr name="itemIsEnabled" format="reference" />
-        <!-- require ReplyCommand<Integer> -->
+        <!-- require BindingCommand<Integer> -->
         <attr name="onScrollStateChangedCommand" />
-        <!-- require ReplyCommand<ListViewScrollDataWrapper> -->
+        <!-- require BindingCommand<ListViewScrollDataWrapper> -->
         <attr name="onScrollChangeCommand" />
-        <!-- require ReplyCommand<Integer> count of list items-->
+        <!-- require BindingCommand<Integer> count of list items-->
         <attr name="onLoadMoreCommand" format="reference" />
     </declare-styleable>
 
     <declare-styleable name="TextView">
-        <attr name="onClickCommand" />
         <!-- require boolean value to decide whether requestFocus for view. -->
         <attr name="requestFocus" />
-        <!--require ReplyCommand<TextChangeDataWrapper> -->
+        <!--require BindingCommand<TextChangeDataWrapper> -->
         <attr name="beforeTextChangedCommand" format="reference" />
-        <!--require ReplyCommand<TextChangeDataWrapper> -->
+        <!--require BindingCommand<TextChangeDataWrapper> -->
         <attr name="onTextChangedCommand" format="reference" />
-        <!--require ReplyCommand<String> -->
+        <!--require BindingCommand<String> -->
         <attr name="afterTextChangedCommand" format="reference" />
     </declare-styleable>
 
 
     <declare-styleable name="ImageView">
-        <attr name="onClickCommand" />
         <!--  load bitmap from uri(string type) -->
         <attr name="url" />
         <!--width for ResizeOptions (use Fresco to load bitmap). -->
@@ -75,16 +77,15 @@
         <!--height for ResizeOptions (use Fresco to load bitmap). -->
         <attr name="request_height" format="integer" />
         <attr name="placeholderRes" format="reference|color" />
-        <!--  require ReplyCommand<Bitmap> See {@link @link com.kelin.mvvmlight.command.ReplyCommand} -->
+        <!--  require BindingCommand<Bitmap> See {@link @link com.kelin.mvvmlight.command.BindingCommand} -->
         <attr name="onSuccessCommand" format="reference" />
-        <!--require ReplyCommand<CloseableReference<CloseableImage>> See {@link com.kelin.mvvmlight.command.ReplyCommand} -->
+        <!--require BindingCommand<CloseableReference<CloseableImage>> See {@link com.kelin.mvvmlight.command.BindingCommand} -->
         <attr name="onFailureCommand" format="reference" />
 
     </declare-styleable>
 
 
     <declare-styleable name="ViewGroup">
-        <attr name="onClickCommand" />
         <!-- require ItemView {@link me.tatarka.bindingcollectionadapter.ItemView} or ItemViewSelector {{@link me.tatarka.bindingcollectionadapter.ItemViewSelector}.} -->
         <attr name="itemView" />
         <!-- require List<ViewModel> bind to ItemView to presentation.-->
@@ -111,7 +112,7 @@
     </declare-styleable>
 
     <declare-styleable name="ListView" parent="AdapterView">
-        <!--require ReplyCommand<Integer> integer mean to position where is clicked! -->
+        <!--require BindingCommand<Integer> integer mean to position where is clicked! -->
         <attr name="onItemClickCommand" format="reference" />
     </declare-styleable>
 
@@ -124,17 +125,17 @@
         <attr name="adapter" />
         <!-- require PageTitles<T>-->
         <attr name="pageTitles" format="reference" />
-        <!--require ReplyCommand<ViewPagerDataWrapper> -->
+        <!--require BindingCommand<ViewPagerDataWrapper> -->
         <attr name="onPageScrolledCommand" format="reference" />
-        <!--require ReplyCommand<Integer> -->
+        <!--require BindingCommand<Integer> -->
         <attr name="onPageSelectedCommand" format="reference" />
-        <!--require ReplyCommand<Integer> -->
+        <!--require BindingCommand<Integer> -->
         <attr name="onPageScrollStateChangedCommand" format="reference" />
 
     </declare-styleable>
 
     <declare-styleable name="NestedScrollView">
-        <!-- require ReplyCommand<NestScrollDataWrapper> -->
+        <!-- require BindingCommand<NestScrollDataWrapper> -->
         <attr name="onScrollChangeCommand" />
     </declare-styleable>
 
@@ -144,7 +145,7 @@
     </declare-styleable>
 
     <declare-styleable name="ScrollView">
-        <!-- require ReplyCommand<ScrollDataWrapper> -->
+        <!-- require BindingCommand<ScrollDataWrapper> -->
         <attr name="onScrollChangeCommand" />
     </declare-styleable>
 
@@ -156,18 +157,6 @@
     <declare-styleable name="WebView">
         <!-- require String render to html show in webview-->
         <attr name="render" format="string" />
-    </declare-styleable>
-
-    <declare-styleable name="TwinklingRefreshLayout">
-        <attr name="tr_wave_height" format="dimension" />
-        <attr name="tr_head_height" format="dimension" />
-        <attr name="tr_bottom_height" format="dimension" />
-        <attr name="tr_overscroll_height" format="dimension" />
-        <attr name="tr_enable_loadmore" format="boolean" />
-        <attr name="tr_pureScrollMode_on" format="boolean" />
-        <attr name="tr_show_overlay_refreshview" format="boolean" />
-        <attr name="tr_headerView" format="dimension" />
-        <attr name="tr_bottomView" format="dimension" />
     </declare-styleable>
     <!-- 自定义控制事件分发的LinearLayout -->
     <declare-styleable name="ControlDistributeLinearLayout">
