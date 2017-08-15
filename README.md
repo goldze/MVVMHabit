@@ -624,7 +624,7 @@ RxJava的方式压缩多张图片，按集合顺序每压缩成功一张，都�
 
 ## License
 
-	 Copyright 2017 goldze
+	 Copyright 2017 goldze(曾宪泽)
  
 	 Licensed under the Apache License, Version 2.0 (the "License");
 	 you may not use this file except in compliance with the License.

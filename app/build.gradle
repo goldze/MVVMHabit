@@ -31,6 +31,4 @@ dependencies {
     compile rootProject.ext.dependencies.tkrefreshlayout
 //    compile project(':mvvmhabit')
     compile 'com.github.goldze:MVVMHabit:1.1'
-
-
 }
