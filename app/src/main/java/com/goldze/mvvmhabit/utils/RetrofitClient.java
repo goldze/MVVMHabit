@@ -97,7 +97,7 @@ public class RetrofitClient {
 //                .cache(cache)
                 .addInterceptor(new BaseInterceptor(headers))
                 .addInterceptor(new CaheInterceptor(mContext))
-                .addNetworkInterceptor(new LoggingInterceptor
+                .addInterceptor(new LoggingInterceptor
                         .Builder()//构建者模式
                         .loggable(true) //是否开启日志打印
                         .setLevel(Level.BODY) //打印的等级

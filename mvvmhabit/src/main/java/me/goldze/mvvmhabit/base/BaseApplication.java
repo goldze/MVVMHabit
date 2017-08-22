@@ -39,7 +39,6 @@ public class BaseApplication extends Application {
 
         @Override
         public void onActivityStarted(Activity activity) {
-            AppManager.getAppManager().removeActivity(activity);
         }
 
         @Override
@@ -60,6 +59,7 @@ public class BaseApplication extends Application {
 
         @Override
         public void onActivityDestroyed(Activity activity) {
+            AppManager.getAppManager().removeActivity(activity);
         }
     };
 }

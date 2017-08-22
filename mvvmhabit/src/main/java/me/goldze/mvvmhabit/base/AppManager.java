@@ -33,6 +33,7 @@ public class AppManager {
     public static Stack<Activity> getActivityStack() {
         return activityStack;
     }
+
     public static Stack<Fragment> getFragmentStack() {
         return fragmentStack;
     }
@@ -89,7 +90,6 @@ public class AppManager {
      */
     public void finishActivity(Activity activity) {
         if (activity != null) {
-            activityStack.remove(activity);
             if (!activity.isFinishing()) {
                 activity.finish();
             }

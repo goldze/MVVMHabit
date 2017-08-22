@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.text.InputType;
 import android.text.TextUtils;
+import android.util.TypedValue;
 import android.view.KeyEvent;
 import android.view.View;
 
@@ -81,13 +82,15 @@ public class MaterialDialogUtils {
      * @return MaterialDialog.Builder
      */
     public static MaterialDialog.Builder showIndeterminateProgressDialog(Context context, String content, boolean horizontal) {
-
+        //获取主题颜色
+        TypedValue typedValue = new  TypedValue();
+        context.getTheme().resolveAttribute(R.attr.colorPrimary, typedValue, true);
         MaterialDialog.Builder builder = new MaterialDialog.Builder(context)
                 .title(content)
                 .progress(true, 0)
                 .progressIndeterminateStyle(horizontal)
                 .canceledOnTouchOutside(false)
-                .widgetColorRes(R.color.colorPrimary)
+                .widgetColorRes(typedValue.data)
                 .backgroundColorRes(R.color.white)
                 .keyListener(new DialogInterface.OnKeyListener() {
                     @Override
