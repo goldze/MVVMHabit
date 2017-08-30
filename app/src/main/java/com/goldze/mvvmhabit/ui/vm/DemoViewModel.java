@@ -3,6 +3,7 @@ package com.goldze.mvvmhabit.ui.vm;
 import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 
 import com.goldze.mvvmhabit.entity.FormEntity;
@@ -67,12 +68,21 @@ public class DemoViewModel extends BaseViewModel {
                         @Override
                         public void call(Boolean aBoolean) {
                             if (aBoolean) {
-                                ToastUtils.showShort("权限已经打开，直接跳入相机");
+                                ToastUtils.showShort("相机权限已经打开，直接跳入相机");
                             } else {
                                 ToastUtils.showShort("权限被拒绝");
                             }
                         }
                     });
+        }
+    });
+
+    //异常全局异常捕获
+    public BindingCommand exceptionClick = new BindingCommand(new Action0() {
+        @Override
+        public void call() {
+            //伪造一个异常
+            Integer.parseInt("a");
         }
     });
 }

@@ -29,6 +29,6 @@ dependencies {
     testCompile 'junit:junit:4.12'
     //下拉刷新,上拉加载
     compile rootProject.ext.dependencies.tkrefreshlayout
-//    compile project(':mvvmhabit')
-    compile 'com.github.goldze:MVVMHabit:1.2.3'
+    compile project(':mvvmhabit')
+//    compile 'com.github.goldze:MVVMHabit:1.2.3'
 }

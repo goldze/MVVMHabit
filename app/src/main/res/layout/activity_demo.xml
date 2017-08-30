@@ -37,5 +37,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="权限申请" />
+        <Button
+            binding:onClickCommand="@{viewModel.exceptionClick}"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="全局异常捕获" />
     </LinearLayout>
 </layout>

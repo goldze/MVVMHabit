@@ -15,7 +15,7 @@ import me.goldze.mvvmhabit.bus.Messenger;
 /**
  * Created by goldze on 2017/6/15.
  */
-public class BaseFragment<V extends ViewDataBinding, VM extends BaseViewModel> extends RxFragment implements IBaseActivity {
+public abstract class BaseFragment<V extends ViewDataBinding, VM extends BaseViewModel> extends RxFragment implements IBaseActivity {
     protected V binding;
     protected VM viewModel;
 
@@ -71,20 +71,26 @@ public class BaseFragment<V extends ViewDataBinding, VM extends BaseViewModel> e
         }
     }
 
-    @Override
-    public int initContentView() {
-        return 0;
-    }
+    /**
+     * 初始化根布局
+     *
+     * @return 布局layout的id
+     */
+    public abstract int initContentView();
 
-    @Override
-    public int initVariableId() {
-        return 0;
-    }
+    /**
+     * 初始化ViewModel的id
+     *
+     * @return BR的id
+     */
+    public abstract int initVariableId();
 
-    @Override
-    public VM initViewModel() {
-        return null;
-    }
+    /**
+     * 初始化ViewModel
+     *
+     * @return 继承BaseViewModel的ViewModel
+     */
+    public abstract VM initViewModel();
 
     @Override
     public void initData() {

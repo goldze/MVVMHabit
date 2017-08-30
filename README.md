@@ -159,9 +159,9 @@ LoginActivity继承BaseActivity
 
 > 保存activity_login.xml后databing会生成一个ActivityLoginBinding类。
 
-BaseActivity有两个泛型参数，一个是ViewDataBinding，另一个是BaseViewModel，ActivityLoginBinding则是继承的ViewDataBinding作为第一个泛型参数，LoginViewModel继承BaseViewModel作为第二个泛型参数。
+BaseActivity是一个抽象类，有两个泛型参数，一个是ViewDataBinding，另一个是BaseViewModel，上面的ActivityLoginBinding则是继承的ViewDataBinding作为第一个泛型参数，LoginViewModel继承BaseViewModel作为第二个泛型参数。
 
-重写BaseActivity的三个方法
+重写BaseActivity的三个抽象方法
 
 	@Override
     public int initContentView() {
@@ -189,6 +189,8 @@ LoginViewModel继承BaseViewModel
         super(context);
     }
 在构造方法中调用super(context) 将上下文交给父类，即可使用父类的showDialog()、startActivity()等方法。在这个LoginViewModel中就可以尽情的写你的逻辑了！
+> BaseFragment的使用和BaseActivity一样，详情参考Demo。
+
 ### 2.2、数据绑定
 > 拥有databinding框架自带的双向绑定，也有扩展
 ##### 2.2.1、传统绑定
