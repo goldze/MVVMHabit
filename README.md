@@ -135,8 +135,8 @@ CaocConfig.Builder.create()
 
 ##### 2.1.1、关联ViewModel
 在activity_login.xml中关联LoginViewModel。
-
-	<layout>
+```xml
+<layout>
 
     <data>
         <variable
@@ -147,50 +147,51 @@ CaocConfig.Builder.create()
 
 		.....
 
-	</layout>
-
+</layout>
+```
 
 > variable - type：类的全路径 <br>variable - name：变量名
 
 ##### 2.1.2、继承Base
 
 LoginActivity继承BaseActivity
-	
-	public class LoginActivity extends BaseActivity<ActivityLoginBinding, LoginViewModel> {
-		....
-	}
-
+```java
+public class LoginActivity extends BaseActivity<ActivityLoginBinding, LoginViewModel> {
+	....
+}
+```
 > 保存activity_login.xml后databing会生成一个ActivityLoginBinding类。
 
 BaseActivity是一个抽象类，有两个泛型参数，一个是ViewDataBinding，另一个是BaseViewModel，上面的ActivityLoginBinding则是继承的ViewDataBinding作为第一个泛型参数，LoginViewModel继承BaseViewModel作为第二个泛型参数。
 
 重写BaseActivity的三个抽象方法
+```java
+@Override
+public int initContentView() {
+	return R.layout.activity_login;
+}
 
-	@Override
-    public int initContentView() {
-        return R.layout.activity_login;
-    }
+@Override
+public int initVariableId() {
+	return BR.viewModel;
+}
 
-    @Override
-    public int initVariableId() {
-        return BR.viewModel;
-    }
-
-    @Override
-    public LoginViewModel initViewModel() {
-        //View持有ViewModel的引用 (这里暂时没有用Dagger2解耦)
-        return new LoginViewModel(this);
-    }
-
+@Override
+public LoginViewModel initViewModel() {
+	//View持有ViewModel的引用 (这里暂时没有用Dagger2解耦)
+	return new LoginViewModel(this);
+}
+```
 initContentView() 返回界面layout的id<br>
 initVariableId() 返回变量的id，对应activity_login中variable - name：变量名，就像一个控件的id，可以使用R.id.xxx，这里的BR跟R文件一样，由系统生成，使用BR.xxx找到这个ViewModel的id。<br>
 initViewModel() 返回ViewModel对象
 
 LoginViewModel继承BaseViewModel
-
-	public LoginViewModel(Context context) {
-        super(context);
-    }
+```java
+public LoginViewModel(Context context) {
+	super(context);
+}
+```
 在构造方法中调用super(context) 将上下文交给父类，即可使用父类的showDialog()、startActivity()等方法。在这个LoginViewModel中就可以尽情的写你的逻辑了！
 > BaseFragment的使用和BaseActivity一样，详情参考Demo。
 
@@ -200,31 +201,33 @@ LoginViewModel继承BaseViewModel
 绑定用户名：
 
 在LoginViewModel中定义
-
-	//用户名的绑定
-	public ObservableField<String> userName = new ObservableField<>("");
+```java
+//用户名的绑定
+public ObservableField<String> userName = new ObservableField<>("");
+```
 在用户名EditText标签中绑定
-
-	android:text="@={viewModel.userName}"
-
+```xml
+android:text="@={viewModel.userName}"
+```
 这样一来，输入框中输入了什么，userName.get()的内容就是什么，userName.set("")设置什么，输入框中就显示什么。
 **注意：** @符号后面需要加=号才能达到双向绑定效果；userName需要是public的，不然viewModel无法找到它。
 
 点击事件绑定：
 
 在LoginViewModel中定义
-	
-	//登录按钮的点击事件
-	 public View.OnClickListener loginOnClick = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
+```java
+//登录按钮的点击事件
+public View.OnClickListener loginOnClick = new View.OnClickListener() {
+	@Override
+	public void onClick(View v) {
             
-        }
-    };
+	}
+};
+```
 在登录按钮标签中绑定
-
-	android:onClick="@{viewModel.loginOnClick}"
-
+```xml
+android:onClick="@{viewModel.loginOnClick}"
+```
 这样一来，用户的点击事件直接被回调到ViewModel层了，更好的维护了业务逻辑
 
 这就是强大的databing框架双向绑定的特性，不用再给控件定义id，setText()，setOnClickListener()。
@@ -235,64 +238,64 @@ LoginViewModel继承BaseViewModel
 还拿点击事件说吧，不用传统的绑定方式，使用自定义的点击事件绑定。
 
 在LoginViewModel中定义
-
-	//登录按钮的点击事件
-    public BindingCommand loginOnClickCommand = new BindingCommand(new Action0() {
-        @Override
-        public void call() {
+```java
+//登录按钮的点击事件
+public BindingCommand loginOnClickCommand = new BindingCommand(new Action0() {
+	@Override
+	public void call() {
             
-        }
-    });
-
+	}
+});
+```
 在activity_login中定义命名空间
-
-	xmlns:binding="http://schemas.android.com/apk/res-auto"
-
+```xml
+xmlns:binding="http://schemas.android.com/apk/res-auto"
+```
 在登录按钮标签中绑定
-
-	binding:onClickCommand="@{viewModel.loginOnClickCommand}"
-
+```xml
+binding:onClickCommand="@{viewModel.loginOnClickCommand}"
+```
 这和原本传统的绑定不是一样吗？不，这其实是有差别的。使用这种形式的绑定，在原本事件绑定的基础之上，带有防重复点击的功能，1秒内多次点击也只会执行一次操作。如果不需要防重复点击，可以加入这条属性
-
-	binding:isThrottleFirst="@{Boolean.TRUE}"
-
+```xml
+binding:isThrottleFirst="@{Boolean.TRUE}"
+```
 那这功能是在哪里做的呢？答案在下面的代码中。
+```java
+//防重复点击间隔(秒)
+public static final int CLICK_INTERVAL = 1;
 
-	//防重复点击间隔(秒)
-    public static final int CLICK_INTERVAL = 1;
-
-    /**
-     * requireAll 是意思是是否需要绑定全部参数, false为否
-     * View的onClick事件绑定
-     * onClickCommand 绑定的命令,
-     * isThrottleFirst 是否开启防止过快点击
-     */
-    @BindingAdapter(value = {"onClickCommand", "isThrottleFirst"}, requireAll = false)
-    public static void onClickCommand(View view, final BindingCommand clickCommand, final boolean isThrottleFirst) {
-        if (isThrottleFirst) {
-            RxView.clicks(view)
-                    .subscribe(new Action1<Void>() {
-                        @Override
-                        public void call(Void aVoid) {
-                            if (clickCommand != null) {
-                                clickCommand.execute();
-                            }
-                        }
-                    });
-        } else {
-            RxView.clicks(view)
-                    .throttleFirst(CLICK_INTERVAL, TimeUnit.SECONDS)//1秒钟内只允许点击1次
-                    .subscribe(new Action1<Void>() {
-                        @Override
-                        public void call(Void aVoid) {
-                            if (clickCommand != null) {
-                                clickCommand.execute();
-                            }
-                        }
-                    });
-        }
-    }
-
+/**
+* requireAll 是意思是是否需要绑定全部参数, false为否
+* View的onClick事件绑定
+* onClickCommand 绑定的命令,
+* isThrottleFirst 是否开启防止过快点击
+*/
+@BindingAdapter(value = {"onClickCommand", "isThrottleFirst"}, requireAll = false)
+public static void onClickCommand(View view, final BindingCommand clickCommand, final boolean isThrottleFirst) {
+	if (isThrottleFirst) {
+		RxView.clicks(view)
+		.subscribe(new Action1<Void>() {
+			@Override
+			public void call(Void aVoid) {
+				if (clickCommand != null) {
+					clickCommand.execute();
+				}
+			}
+		});
+	} else {
+		RxView.clicks(view)
+		.throttleFirst(CLICK_INTERVAL, TimeUnit.SECONDS)//1秒钟内只允许点击1次
+		.subscribe(new Action1<Void>() {
+			@Override
+			public void call(Void aVoid) {
+				if (clickCommand != null) {
+ 					clickCommand.execute();
+				}
+			}
+		});
+	}
+}
+```
 onClickCommand方法是自定义的，使用@BindingAdapter注解来标明这是一个绑定方法。在方法中使用了RxView来增强view的clicks事件，.throttleFirst()限制订阅者在指定的时间内重复执行，最后通过BindingCommand将事件回调出去，就好比有一种拦截器，在点击时先做一下判断，然后再把事件沿着他原有的方向传递。
 
 是不是觉得有点意思，好戏还在后头呢！
@@ -300,32 +303,34 @@ onClickCommand方法是自定义的，使用@BindingAdapter注解来标明这是
 绑定图片路径：
 
 在ViewModel中定义
-
-	public String imgUrl = "http://img0.imgtn.bdimg.com/it/u=2183314203,562241301&fm=26&gp=0.jpg";
-
+```java
+public String imgUrl = "http://img0.imgtn.bdimg.com/it/u=2183314203,562241301&fm=26&gp=0.jpg";
+```
 在ImageView标签中
-
-	binding:url="@{viewModel.imgUrl}"
-
+```xml
+binding:url="@{viewModel.imgUrl}"
+```
 url是图片路径，这样绑定后，这个ImageView就会去显示这张图片，不限网络图片还是本地图片。
 
 如果需要给一个默认加载中的图片，可以加这一句
-
-	binding:placeholderRes="@{R.mipmap.ic_launcher_round}"
-
+```xml
+binding:placeholderRes="@{R.mipmap.ic_launcher_round}"
+```
 > R文件需要在data标签中导入使用，如：`<import type="com.goldze.mvvmhabit.R" />`
 
 BindingAdapter中的实现
-
-	@BindingAdapter(value = {"url", "placeholderRes"}, requireAll = false)
-    public static void setImageUri(ImageView imageView, String url, int placeholderRes) {
-        if (!TextUtils.isEmpty(url)) {
-            //使用Glide框架加载图片
-            Glide.with(imageView.getContext()).load(url).placeholder(placeholderRes)
-                    .into(imageView);
-        }
-    }
-
+```java
+@BindingAdapter(value = {"url", "placeholderRes"}, requireAll = false)
+public static void setImageUri(ImageView imageView, String url, int placeholderRes) {
+	if (!TextUtils.isEmpty(url)) {
+		//使用Glide框架加载图片
+		Glide.with(imageView.getContext())
+			.load(url)
+			.placeholder(placeholderRes)
+			.into(imageView);
+	}
+}
+```
 很简单就自定义了一个ImageView图片加载的绑定，学会这种方式，可自定义扩展。
 > 如果你对这些感兴趣，可以下载源码，在binding包中可以看到各类控件的绑定实现方式
 
@@ -333,35 +338,36 @@ BindingAdapter中的实现
 很常用的RecyclerView的绑定方式。
 
 在ViewModel中定义：
-	
-	//给RecyclerView添加items
-	public final ObservableList<NetWorkItemViewModel> observableList = new ObservableArrayList<>();
-	//给RecyclerView添加ItemView
-	public final ItemViewSelector<NetWorkItemViewModel> itemView = new ItemViewSelector<NetWorkItemViewModel>() {
-        @Override
-        public void select(ItemView itemView, int position, NetWorkItemViewModel item) {
-			//设置item中ViewModel的id和item的layout
-            itemView.set(BR.viewModel, R.layout.item_network);
-        }
+```java
+//给RecyclerView添加items
+public final ObservableList<NetWorkItemViewModel> observableList = new ObservableArrayList<>();
+//给RecyclerView添加ItemView
+public final ItemViewSelector<NetWorkItemViewModel> itemView = new ItemViewSelector<NetWorkItemViewModel>() {
+	@Override
+	public void select(ItemView itemView, int position, NetWorkItemViewModel item) {
+		//设置item中ViewModel的id和item的layout
+		itemView.set(BR.viewModel, R.layout.item_network);
+	}
 
-        @Override
-        public int viewTypeCount() {
-	 		//将RecyclerView划分成几部分，如果是一个list,就返回1，如果带有head和list，就返回2
-            return 1;
-        }
-    };
+	@Override
+	public int viewTypeCount() {
+		//将RecyclerView划分成几部分，如果是一个list,就返回1，如果带有head和list，就返回2
+		return 1;
+	}
+};
+```
 ObservableList<>和ItemViewSelector<>的泛型是Item布局所对应的ViewModel
 
 在xml中绑定
-
-	<android.support.v7.widget.RecyclerView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                binding:itemView="@{viewModel.itemView}"
-                binding:items="@{viewModel.observableList}"
-                binding:layoutManager="@{LayoutManagers.linear()}"
-                binding:lineManager="@{LineManagers.horizontal()}" />
-
+```xml
+<android.support.v7.widget.RecyclerView
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	binding:itemView="@{viewModel.itemView}"
+	binding:items="@{viewModel.observableList}"
+	binding:layoutManager="@{LayoutManagers.linear()}"
+	binding:lineManager="@{LineManagers.horizontal()}" />
+```
 layoutManager控制是线性的还是网格的，lineManager是控制水平的还是垂直的
 > layoutManager和lineManager需要导入
 > `<import type="me.tatarka.bindingcollectionadapter.LayoutManagers" />`
