@@ -138,10 +138,10 @@ CaocConfig.Builder.create()
 ```xml
 <layout>
 
-    <data>
+	<data>
         <variable
 			type="com.goldze.mvvmhabit.ui.vm.LoginViewModel"
-            name="viewModel"
+			name="viewModel"
             />
     </data>
 
@@ -382,67 +382,72 @@ layoutManager控制是线性的还是网格的，lineManager是控制水平的�
 > 现今，这三个组合基本是网络请求的标配，如果你对这三个框架不了解，建议先去查阅相关资料。
 
 square出品的框架，用起来确实非常方便。**MVVMHabit**中引入了
-
-	compile "com.squareup.okhttp3:okhttp:3.8.1"
-    compile "com.squareup.retrofit2:retrofit:2.3.0"
-    compile "com.squareup.retrofit2:converter-gson:2.3.0"
-    compile "com.squareup.retrofit2:adapter-rxjava:2.3.0"
+```gradle
+compile "com.squareup.okhttp3:okhttp:3.8.1"
+compile "com.squareup.retrofit2:retrofit:2.3.0"
+compile "com.squareup.retrofit2:converter-gson:2.3.0"
+compile "com.squareup.retrofit2:adapter-rxjava:2.3.0"
+```
 构建Retrofit时加入
-	
-	Retrofit retrofit = new Retrofit.Builder()
-                .addConverterFactory(GsonConverterFactory.create())
-                .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
- 				.build();
-
+```java
+Retrofit retrofit = new Retrofit.Builder()
+	.addConverterFactory(GsonConverterFactory.create())
+	.addCallAdapterFactory(RxJavaCallAdapterFactory.create())
+	.build();
+```
 或者直接使用例子程序中封装好的RetrofitClient
 #### 2.3.2、网络拦截器
 **LoggingInterceptor：** 全局拦截请求信息，格式化打印Request、Response，可以清晰的看到与后台接口对接的数据，
-	 
-	LoggingInterceptor mLoggingInterceptor = new LoggingInterceptor
-		.Builder()//构建者模式
-    	.loggable(true) //是否开启日志打印
-        .setLevel(Level.BODY) //打印的等级
-        .log(Platform.INFO) // 打印类型
-        .request("Request") // request的Tag
-        .response("Response")// Response的Tag
-        .addHeader("version", BuildConfig.VERSION_NAME)//打印版本
-        .build()
+```java
+LoggingInterceptor mLoggingInterceptor = new LoggingInterceptor
+	.Builder()//构建者模式
+	.loggable(true) //是否开启日志打印
+	.setLevel(Level.BODY) //打印的等级
+	.log(Platform.INFO) // 打印类型
+	.request("Request") // request的Tag
+	.response("Response")// Response的Tag
+	.addHeader("version", BuildConfig.VERSION_NAME)//打印版本
+	.build()
+```
 构建okhttp时加入
-
-	OkHttpClient okHttpClient = new OkHttpClient.Builder()
-					.addNetworkInterceptor(mLoggingInterceptor)
-					.build();
+```java
+OkHttpClient okHttpClient = new OkHttpClient.Builder()
+	.addInterceptor(mLoggingInterceptor)
+	.build();
+```
 #### 2.3.3、Cookie管理
 **MVVMHabit**提供两种CookieStore：**PersistentCookieStore** (SharedPreferences管理)和**MemoryCookieStore** (内存管理)，可以根据自己的业务需求，在构建okhttp时加入相应的cookieJar
-	
-	OkHttpClient okHttpClient = new OkHttpClient.Builder()
-					.cookieJar(new CookieJarImpl(new PersistentCookieStore(mContext)))
-					.build();
+```java
+OkHttpClient okHttpClient = new OkHttpClient.Builder()
+	.cookieJar(new CookieJarImpl(new PersistentCookieStore(mContext)))
+	.build();
+```
 或者
-
-	OkHttpClient okHttpClient = new OkHttpClient.Builder()
-					.cookieJar(new CookieJarImpl(new MemoryCookieStore()))
-					.build();
+```java
+OkHttpClient okHttpClient = new OkHttpClient.Builder()
+	.cookieJar(new CookieJarImpl(new MemoryCookieStore()))
+	.build();
+```
 #### 2.3.4、绑定生命周期
 请求在ViewModel层，且持有View的引用，所以可以直接在ViewModel中绑定请求的生命周期，View与请求共存亡。
-	
-	RetrofitClient.getInstance().create(DemoApiService.class)
-                .demoGet()
-                .compose(RxUtils.bindToLifecycle(context)) //请求与View周期同步
-                .compose(RxUtils.schedulersTransformer()) //线程调度
-                .subscribe(new Action1<BaseResponse<DemoEntity>>() {
-                    @Override
-                    public void call(BaseResponse<DemoEntity> response) {
+```java
+RetrofitClient.getInstance().create(DemoApiService.class)
+	.demoGet()
+	.compose(RxUtils.bindToLifecycle(context)) //请求与View周期同步
+	.compose(RxUtils.schedulersTransformer()) //线程调度
+	.subscribe(new Action1<BaseResponse<DemoEntity>>() {
+		@Override
+		public void call(BaseResponse<DemoEntity> response) {
                        
-                    }
-                }, new Action1<Throwable>() {
-                    @Override
-                    public void call(Throwable throwable) {
+		}
+	}, new Action1<Throwable>() {
+		@Override
+		public void call(Throwable throwable) {
                         
-                    }
-                });
+		}
+	});
 
-
+```
 在请求时关键需要加入组合操作符`.compose(RxUtils.bindToLifecycle(context))`<br>
 **注意：** 如果你没有使用 **mvvmabit** 里面的BaseActivity或BaseFragment，使用自己定义Base，那么需要让你自己的Activity继承RxAppCompatActivity、Fragment继承RxFragment才能用`RxUtils.bindToLifecycle(context)`方法。
 
@@ -456,166 +461,230 @@ RxBus并不是一个库，而是一种模式。相信大多数开发者都使用
 使用方法：
 
 在ViewModel中重写registerRxBus()方法来注册RxBus，重写removeRxBus()方法来移除RxBus
+```java
+//订阅者
+private Subscription mSubscription;
+//注册RxBus
+@Override
+public void registerRxBus() {
+	super.registerRxBus();
+	mSubscription = RxBus.getDefault().toObservable(String.class)
+		.subscribe(new Action1<String>() {
+			@Override
+			public void call(String s) {
 
-	//订阅者
-    private Subscription mSubscription;
-    //注册RxBus
-    @Override
-    public void registerRxBus() {
-        super.registerRxBus();
-        mSubscription = RxBus.getDefault().toObservable(String.class)
-                .subscribe(new Action1<String>() {
-                    @Override
-                    public void call(String s) {
+			}
+		});
+	//将订阅者加入管理站
+	RxSubscriptions.add(mSubscription);
+}
 
-                    }
-                });
-		//将订阅者加入管理站
-        RxSubscriptions.add(mSubscription);
-    }
-    //移除RxBus
-    @Override
-    public void removeRxBus() {
-        super.removeRxBus();
-		//将订阅者从管理站中移除
-        RxSubscriptions.remove(mSubscription);
-    }
-
+//移除RxBus
+@Override
+public void removeRxBus() {
+	super.removeRxBus();
+	//将订阅者从管理站中移除
+	RxSubscriptions.remove(mSubscription);
+}
+```
 在需要执行回调的地方发送
-
-	RxBus.getDefault().post(object);
+```java
+RxBus.getDefault().post(object);
+```
 #### 3.3.2、Messenger
 Messenger是一个轻量级全局的消息通信工具，在我们的复杂业务中，难免会出现一些交叉的业务，比如ViewModel与ViewModel之间需要有数据交换，这时候可以轻松地使用Messenger发送一个实体或一个空消息，将事件从一个ViewModel回调到另一个ViewModel中。
 
 使用方法：
 
 定义一个静态String类型的字符串token
-
-	public static final String TOKEN_LOGINVIEWMODEL_REFRESH = "token_loginviewmodel_refresh";
+```java
+public static final String TOKEN_LOGINVIEWMODEL_REFRESH = "token_loginviewmodel_refresh";
+```
 在ViewModel中注册消息监听
-
-	//注册一个空消息监听 
-	//参数1：接受人（上下文）
-	//参数2：定义的token
-	//参数3：执行的回调监听
-	Messenger.getDefault().register(context, LoginViewModel.TOKEN_LOGINVIEWMODEL_REFRESH, new Action0() {
-		@Override
-		public void call() {
+```java
+//注册一个空消息监听 
+//参数1：接受人（上下文）
+//参数2：定义的token
+//参数3：执行的回调监听
+Messenger.getDefault().register(context, LoginViewModel.TOKEN_LOGINVIEWMODEL_REFRESH, new Action0() {
+	@Override
+	public void call() {
 	
-		}
-	});
+	}
+});
 
-	//注册一个带数据回调的消息监听 
-	//参数1：接受人（上下文）
-	//参数2：定义的token
-	//参数3：实体的泛型约束
-	//参数4：执行的回调监听
-	Messenger.getDefault().register(context, LoginViewModel.TOKEN_LOGINVIEWMODEL_REFRESH, String.class, new Action1<String>() {
-            @Override
-            public void call(String s) {
+//注册一个带数据回调的消息监听 
+//参数1：接受人（上下文）
+//参数2：定义的token
+//参数3：实体的泛型约束
+//参数4：执行的回调监听
+Messenger.getDefault().register(context, LoginViewModel.TOKEN_LOGINVIEWMODEL_REFRESH, String.class, new Action1<String>() {
+	@Override
+	public void call(String s) {
                 
-            }
-        });
+	}
+});
+```
 在需要回调的地方使用token发送消息
+```java
+//发送一个空消息
+//参数1：定义的token
+Messenger.getDefault().sendNoMsg(LoginViewModel.TOKEN_LOGINVIEWMODEL_REFRESH);
 
-	//发送一个空消息
-	//参数1：定义的token
-    Messenger.getDefault().sendNoMsg(LoginViewModel.TOKEN_LOGINVIEWMODEL_REFRESH);
-
-	//发送一个带数据回调消息
-	//参数1：回调的实体
-	//参数2：定义的token
-	Messenger.getDefault().send("refresh",LoginViewModel.TOKEN_LOGINVIEWMODEL_REFRESH);
+//发送一个带数据回调消息
+//参数1：回调的实体
+//参数2：定义的token
+Messenger.getDefault().send("refresh",LoginViewModel.TOKEN_LOGINVIEWMODEL_REFRESH);
+```
 > token最好不要重名，不然可能就会出现逻辑上的bug，为了更好的维护和清晰逻辑，建议以`aa_bb_cc`的格式来定义token。aa：TOKEN，bb：ViewModel的类名，cc：动作名（功能名）。
 
 > 为了避免大量使用Messenger，建议只在ViewModel与ViewModel之间使用，View与ViewModel之间采用ObservableField去监听UI上的逻辑，可在继承了Base的Activity或Fragment中重写initViewObservable()方法来初始化UI的监听
 
 
 注册了监听，当然也要解除它。在BaseActivity、BaseFragment的onDestroy()方法里已经调用`Messenger.getDefault().unregister(this);`解除注册，所以不用担心忘记解除导致的逻辑错误和内存泄漏。
+### 3.2、文件下载
+> 文件下载几乎是每个app必备的功能，图文的下载，软件的升级等都要用到，mvvmhabit中使用Retrofit+RxBus来实现带进度的文件下载。
+构建okhttp时加入
+```java
+OkHttpClient okHttpClient = new OkHttpClient.Builder()
+	.addInterceptor(new ProgressInterceptor()) // 文件下载进度拦截器
+	.build();
+```
 
-### 3.2、ContainerActivity
+定义ApiService接口方法
+```java
+@Streaming
+@GET
+Observable<ResponseBody> downloadFile(@Url String fileUrl);
+```
+下载文件
+```java
+String destFileDir = context.getCacheDir().getPath();  //文件存放的路径
+String destFileName = System.currentTimeMillis() + ".apk";//文件存放的名称
+final ProgressCallBack<ResponseBody> callBack = new ProgressCallBack<ResponseBody>(destFileDir, destFileName) {
+	@Override
+	public void onStart() {
+		//RxJava的onStart()
+	}
+	@Override
+	public void onCompleted() {
+		//RxJava的onCompleted()
+	}
+
+	@Override
+	public void onSuccess(ResponseBody responseBody) {
+		//下载成功的回调
+	}
+
+	@Override
+	public void progress(final long progress, final long total) {
+		//下载中的回调 progress：当前进度 ，total：文件总大小
+	}
+
+	@Override
+	public void onError(Throwable e) {
+		//下载错误回调
+	}
+};
+//构建下载
+RetrofitClient.getInstance().create(DemoApiService.class)
+	.downloadFile("文件下载路径")
+	.subscribeOn(Schedulers.io())//网络请求在子线程中进行
+	.observeOn(Schedulers.io()) //文件保存在子线程中进行
+	.doOnNext(new Action1<ResponseBody>() {
+		@Override
+		public void call(ResponseBody body) {
+			//这里做文件保存
+			callBack.saveFile(body);
+		}
+	})
+	.observeOn(AndroidSchedulers.mainThread()) //UI回调在主线程
+	.subscribe(new ProgressSubscriber<ResponseBody>(callBack));
+```
+在ProgressResponseBody中使用了RxBus，发送下载进度信息到ProgressCallBack中，继承ProgressCallBack就可以监听到下载状态了，详情请参考例子程序。
+### 3.3、ContainerActivity
 一个盛装Fragment的一个容器(代理)Activity，普通界面只需要编写Fragment，使用此Activity盛装，这样就不需要每个界面都在AndroidManifest中注册一遍
 
 使用方法：
 
 在ViewModel中调用BaseViewModel的方法开一个Fragment
-
-	startContainerActivity(你的Fragment类名.class.getCanonicalName())
-	
+```java
+startContainerActivity(你的Fragment类名.class.getCanonicalName())
+```
 在ViewModel中调用BaseViewModel的方法，携带一个序列化实体打开一个Fragment
-
-	Bundle mBundle = new Bundle();
-    mBundle.putParcelable("entity", entity);
-    startContainerActivity(你的Fragment类名.class.getCanonicalName(), mBundle);
-
+```
+Bundle mBundle = new Bundle();
+mBundle.putParcelable("entity", entity);
+startContainerActivity(你的Fragment类名.class.getCanonicalName(), mBundle);
+```
 在你的Fragment中取出实体
-
-	Bundle mBundle = getArguments();
-    if (mBundle != null) {
-    	entity = mBundle.getParcelable("entity");
-    }
-
-### 3.3、6.0权限申请
+```
+Bundle mBundle = getArguments();
+if (mBundle != null) {
+	entity = mBundle.getParcelable("entity");
+}
+```
+### 3.4、6.0权限申请
 > 对RxPermissions已经熟悉的朋友可以跳过。
 
 使用方法：
 
 例如请求相机权限，在ViewModel中调用
-
-	//请求打开相机权限
-	RxPermissions rxPermissions = new RxPermissions((Activity) context);
-	rxPermissions.request(Manifest.permission.CAMERA)
-                 .subscribe(new Action1<Boolean>() {
-	                 	@Override
-	                 	public void call(Boolean aBoolean) {
-	                 		if (aBoolean) {
-	                 			ToastUtils.showShort("权限已经打开，直接跳入相机");
-	                        } else {
-	                        	ToastUtils.showShort("权限被拒绝");
-	                        }
-	                    }
-                 });
-
+```java
+//请求打开相机权限
+RxPermissions rxPermissions = new RxPermissions((Activity) context);
+rxPermissions.request(Manifest.permission.CAMERA)
+	.subscribe(new Action1<Boolean>() {
+		@Override
+		public void call(Boolean aBoolean) {
+			if (aBoolean) {
+				ToastUtils.showShort("权限已经打开，直接跳入相机");
+			} else {
+				ToastUtils.showShort("权限被拒绝");
+			}
+		}
+	});
+```
 更多权限申请方式请参考[RxPermissions原项目地址](https://github.com/tbruyelle/RxPermissions)
-### 3.4、图片压缩
+### 3.5、图片压缩
 > 为了节约用户流量和加快图片上传的速度，某些场景将图片在本地压缩后再传给后台，所以特此提供一个图片压缩的辅助功能。
 
 使用方法：
 
 RxJava的方式压缩单张图片，得到一个压缩后的图片文件对象
-	
-		String filePath = "mnt/sdcard/1.png";
-		ImageUtils.compressWithRx(filePath, new Action1<File>() {
-			@Override
-			public void call(File file) {
-	        	//将文件放入RequestBody
-				...
-			}
-		});
-
+```java
+String filePath = "mnt/sdcard/1.png";
+ImageUtils.compressWithRx(filePath, new Action1<File>() {
+	@Override
+	public void call(File file) {
+		//将文件放入RequestBody
+		...
+	}
+});
+```
 RxJava的方式压缩多张图片，按集合顺序每压缩成功一张，都将在onNext方法中得到一个压缩后的图片文件对象
+```java
+List<String> filePaths = new ArrayList<>();
+filePaths.add("mnt/sdcard/1.png");
+filePaths.add("mnt/sdcard/2.png");
+ImageUtils.compressWithRx(filePaths, new Subscriber() {
+	@Override
+	public void onCompleted() {
+	
+	}
+	
+	@Override
+	public void onError(Throwable e) {
+	
+	}
+	
+	@Override
+	public void onNext(File file) {
 
-		List<String> filePaths = new ArrayList<>();
-	    filePaths.add("mnt/sdcard/1.png");
-	    filePaths.add("mnt/sdcard/2.png");
-	    ImageUtils.compressWithRx(filePaths, new Subscriber() {
-	    	@Override
-	        public void onCompleted() {
-	
-	        }
-	
-	        @Override
-	        public void onError(Throwable e) {
-	
-	        }
-	
-	        @Override
-	        public void onNext(File file) {
-
-            }
-	    });
-
-### 3.5、其他辅助类
+	}
+});
+```
+### 3.6、其他辅助类
 **ToastUtils：** 吐司工具类
 
 **MaterialDialogUtils：** Material风格对话框工具类

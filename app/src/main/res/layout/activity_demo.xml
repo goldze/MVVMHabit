@@ -42,5 +42,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="全局异常捕获" />
+        <Button
+            binding:onClickCommand="@{viewModel.fileDownLoadClick}"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="文件下载" />
     </LinearLayout>
 </layout>

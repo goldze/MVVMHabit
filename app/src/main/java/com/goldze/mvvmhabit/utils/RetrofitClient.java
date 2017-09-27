@@ -9,11 +9,11 @@ import java.util.concurrent.TimeUnit;
 
 import me.goldze.mvvmhabit.BuildConfig;
 import me.goldze.mvvmhabit.http.CallBack;
-import me.goldze.mvvmhabit.http.DownLoadManager;
 import me.goldze.mvvmhabit.http.cookie.CookieJarImpl;
 import me.goldze.mvvmhabit.http.cookie.store.PersistentCookieStore;
 import me.goldze.mvvmhabit.http.interceptor.BaseInterceptor;
 import me.goldze.mvvmhabit.http.interceptor.CaheInterceptor;
+import me.goldze.mvvmhabit.http.interceptor.ProgressInterceptor;
 import me.goldze.mvvmhabit.http.interceptor.logging.Level;
 import me.goldze.mvvmhabit.http.interceptor.logging.LoggingInterceptor;
 import me.goldze.mvvmhabit.utils.KLog;
@@ -97,6 +97,7 @@ public class RetrofitClient {
 //                .cache(cache)
                 .addInterceptor(new BaseInterceptor(headers))
                 .addInterceptor(new CaheInterceptor(mContext))
+                .addInterceptor(new ProgressInterceptor()) // 文件下载进度拦截器
                 .addInterceptor(new LoggingInterceptor
                         .Builder()//构建者模式
                         .loggable(true) //是否开启日志打印
@@ -151,44 +152,5 @@ public class RetrofitClient {
                 .subscribe(subscriber);
 
         return null;
-    }
-
-    /**
-     * DownSubscriber
-     */
-    class DownSubscriber<ResponseBody> extends Subscriber<ResponseBody> {
-        CallBack callBack;
-
-        public DownSubscriber(CallBack callBack) {
-            this.callBack = callBack;
-        }
-
-        @Override
-        public void onStart() {
-            super.onStart();
-            if (callBack != null) {
-                callBack.onStart();
-            }
-        }
-
-        @Override
-        public void onCompleted() {
-            if (callBack != null) {
-                callBack.onCompleted();
-            }
-        }
-
-        @Override
-        public void onError(Throwable e) {
-            if (callBack != null) {
-                callBack.onError(e);
-            }
-        }
-
-        @Override
-        public void onNext(ResponseBody responseBody) {
-            DownLoadManager.getInstance(callBack).writeResponseBodyToDisk(mContext, (okhttp3.ResponseBody) responseBody);
-
-        }
     }
 }
