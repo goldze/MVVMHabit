@@ -30,5 +30,5 @@ dependencies {
     //下拉刷新,上拉加载
     compile rootProject.ext.dependencies.tkrefreshlayout
     compile project(':mvvmhabit')
-//    compile 'com.github.goldze:MVVMHabit:1.2.4'
+//    compile 'com.github.goldze:MVVMHabit:1.2.5'
 }

@@ -62,7 +62,7 @@ allprojects {
 ```gradle
 dependencies {	
 	...
-	compile 'com.github.goldze:MVVMHabit:1.2.4'
+	compile 'com.github.goldze:MVVMHabit:1.2.5'
 }
 ```
 或
@@ -544,6 +544,7 @@ Messenger.getDefault().send("refresh",LoginViewModel.TOKEN_LOGINVIEWMODEL_REFRES
 注册了监听，当然也要解除它。在BaseActivity、BaseFragment的onDestroy()方法里已经调用`Messenger.getDefault().unregister(this);`解除注册，所以不用担心忘记解除导致的逻辑错误和内存泄漏。
 ### 3.2、文件下载
 > 文件下载几乎是每个app必备的功能，图文的下载，软件的升级等都要用到，mvvmhabit中使用Retrofit+RxBus来实现带进度的文件下载。
+
 构建okhttp时加入
 ```java
 OkHttpClient okHttpClient = new OkHttpClient.Builder()
@@ -601,7 +602,7 @@ RetrofitClient.getInstance().create(DemoApiService.class)
 	.observeOn(AndroidSchedulers.mainThread()) //UI回调在主线程
 	.subscribe(new ProgressSubscriber<ResponseBody>(callBack));
 ```
-在ProgressResponseBody中使用了RxBus，发送下载进度信息到ProgressCallBack中，继承ProgressCallBack就可以监听到下载状态了，详情请参考例子程序。
+在ProgressResponseBody中使用了RxBus，发送下载进度信息到ProgressCallBack中，继承ProgressCallBack就可以监听到下载状态。回调方法全部执行在主线程，方便UI的更新，详情请参考例子程序。
 ### 3.3、ContainerActivity
 一个盛装Fragment的一个容器(代理)Activity，普通界面只需要编写Fragment，使用此Activity盛装，这样就不需要每个界面都在AndroidManifest中注册一遍
 
