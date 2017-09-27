@@ -41,51 +41,53 @@
 > 网上的很多有关MVVM的资料，在此就不再阐述什么是MVVM了，不清楚的朋友可以先去了解一下。
 ### 1.1、启用databinding
 在主工程app的build.gradle的android {}中加入：
-
+```gradle
 	dataBinding {
 		enabled true
 	}
-
+```
 ### 1.2、依赖Library
 从远程依赖：
 
 在根目录的build.gradle中加入
-
+```gradle
 	allprojects {
 		repositories {
 			...
 			maven { url 'https://jitpack.io' }
 		}
 	}
-
+```
 在主项目app的build.gradle中依赖
-	
+```gradle
 	dependencies {	
 		...
 		compile 'com.github.goldze:MVVMHabit:1.2.4'
 	}
-
+```
 或
 
 下载例子程序，在主项目app的build.gradle中依赖例子程序中的**mvvmhabit**：
-
+```gradle
 	dependencies {	
 		...
 		compile project(':mvvmhabit')
 	}
-
+```
 ### 1.3、配置config.gradle
 如果不是远程依赖，而是下载的例子程序，那么还需要将例子程序中的config.gradle放入你的主项目根目录中，然后在根目录build.gradle的第一行加入：
 
+```gradle
 	apply from: "config.gradle"
+```
 
 最后面加入：
 
-
+```gradle
 	task clean(type: Delete) {
 	    delete rootProject.buildDir
 	}
-
+```
 
 **注意：** config.gradle中的 
 
@@ -96,18 +98,18 @@ support = [] 是你的support相关配置，可自行修改
 dependencies = [] 是依赖第三方库的配置，可以加新库，但不要去修改原有第三方库的版本号，不然可能会编译不过
 ### 1.4、配置AndroidManifest
 添加权限：
-
+```xml
 	<uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-
+```
 配置Application：
 
 继承**mvvmhabit**中的BaseApplication，在你的自己AppApplication中配置
-	
+```java
 	//是否开启日志打印
 	KLog.init(true);
 	//配置全局异常崩溃操作
@@ -123,7 +125,7 @@ dependencies = [] 是依赖第三方库的配置，可以加新库，但不要�
 	  //.errorActivity(YourCustomErrorActivity.class) //崩溃后的错误activity
 	  //.eventListener(new YourCustomEventListener()) //崩溃后的错误监听
         .apply();
-
+```
 
 ## 2、快速上手
 
