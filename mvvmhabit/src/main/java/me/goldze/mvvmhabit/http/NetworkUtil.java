@@ -15,7 +15,7 @@ import java.net.URL;
 import java.util.Enumeration;
 
 public class NetworkUtil {
-
+    public static String url = "http://www.baidu.com";
     public static int NET_CNNT_BAIDU_OK = 1; // NetworkAvailable
     public static int NET_CNNT_BAIDU_TIMEOUT = 2; // no NetworkAvailable
     public static int NET_NOT_PREPARE = 3; // Net no ready
@@ -98,7 +98,7 @@ public class NetworkUtil {
         boolean result = false;
         HttpURLConnection httpUrl = null;
         try {
-            httpUrl = (HttpURLConnection) new URL("http://www.baidu.com")
+            httpUrl = (HttpURLConnection) new URL(url)
                     .openConnection();
             httpUrl.setConnectTimeout(TIMEOUT);
             httpUrl.connect();

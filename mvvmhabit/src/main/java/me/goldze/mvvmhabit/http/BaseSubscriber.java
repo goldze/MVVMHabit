@@ -3,13 +3,18 @@ package me.goldze.mvvmhabit.http;
 import android.content.Context;
 import android.widget.Toast;
 
+import me.goldze.mvvmhabit.R;
 import me.goldze.mvvmhabit.utils.KLog;
+import me.goldze.mvvmhabit.utils.ToastUtils;
+import me.goldze.mvvmhabit.utils.Utils;
 import rx.Subscriber;
 
 /**
  * Created by goldze on 2017/5/10.
+ * 该类仅供参考，实际业务Code, 根据需求来定义，
  */
 public abstract class BaseSubscriber<T> extends Subscriber<T> {
+    public abstract void onResult(T t);
 
     private Context context;
     private boolean isNeedCahe;
@@ -55,4 +60,17 @@ public abstract class BaseSubscriber<T> extends Subscriber<T> {
 
     public abstract void onError(ExceptionHandle.ResponeThrowable e);
 
+    @Override
+    public void onNext(Object o) {
+        BaseResponse baseResponse = (BaseResponse) o;
+        if (baseResponse.getCode() == 200) {
+            onResult((T) baseResponse.getResult());
+        } else if (baseResponse.getCode() == 330) {
+            ToastUtils.showShort(baseResponse.getMessage());
+        } else if (baseResponse.getCode() == 503) {
+            KLog.e(baseResponse.getMessage());
+        } else {
+            ToastUtils.showShort("操作失败！错误代码:" + baseResponse.getCode());
+        }
+    }
 }

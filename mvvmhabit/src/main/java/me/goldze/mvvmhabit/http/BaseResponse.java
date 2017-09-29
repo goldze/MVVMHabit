@@ -2,7 +2,7 @@ package me.goldze.mvvmhabit.http;
 
 /**
  * Created by goldze on 2017/5/10.
- * 网络返回基类 支持泛型
+ * 该类仅供参考，实际业务返回的固定字段, 根据需求来定义，
  */
 public class BaseResponse<T> {
     private int code;

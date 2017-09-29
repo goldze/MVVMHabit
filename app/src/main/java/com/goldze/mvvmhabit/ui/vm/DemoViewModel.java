@@ -15,6 +15,7 @@ import com.tbruyelle.rxpermissions.RxPermissions;
 
 import me.goldze.mvvmhabit.base.BaseViewModel;
 import me.goldze.mvvmhabit.binding.command.BindingCommand;
+import me.goldze.mvvmhabit.http.DownLoadManager;
 import me.goldze.mvvmhabit.http.download.ProgressCallBack;
 import me.goldze.mvvmhabit.http.download.DownLoadSubscriber;
 import me.goldze.mvvmhabit.utils.ToastUtils;
@@ -107,9 +108,10 @@ public class DemoViewModel extends BaseViewModel {
         progressDialog.setCancelable(false);
         progressDialog.show();
 
+        String loadUrl = "http://a.gdown.baidu.com/data/wisegame/2828a29ba864e167/neihanduanzi_660.apk?from=a1101";
         String destFileDir = context.getCacheDir().getPath();  //文件存放的路径
         String destFileName = System.currentTimeMillis() + ".apk";//文件存放的名称
-        final ProgressCallBack<ResponseBody> callBack = new ProgressCallBack<ResponseBody>(destFileDir, destFileName) {
+        DownLoadManager.getInstance().load(loadUrl, new ProgressCallBack<ResponseBody>(destFileDir, destFileName) {
             @Override
             public void onStart() {
                 super.onStart();
@@ -136,19 +138,6 @@ public class DemoViewModel extends BaseViewModel {
                 e.printStackTrace();
                 ToastUtils.showShort("文件下载失败！");
             }
-        };
-        RetrofitClient.getInstance().create(DemoApiService.class)
-                .downloadFile("http://a.gdown.baidu.com/data/wisegame/2828a29ba864e167/neihanduanzi_660.apk?from=a1101")
-                .subscribeOn(Schedulers.io())//请求网络 在调度者的io线程
-                .observeOn(Schedulers.io()) //指定线程保存文件
-                .doOnNext(new Action1<ResponseBody>() {
-                    @Override
-                    public void call(ResponseBody body) {
-                        //这里做文件保存
-                        callBack.saveFile(body);
-                    }
-                })
-                .observeOn(AndroidSchedulers.mainThread()) //在主线程中更新ui
-                .subscribe(new DownLoadSubscriber<ResponseBody>(callBack));
+        });
     }
 }

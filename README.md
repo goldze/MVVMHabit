@@ -33,8 +33,7 @@
 	4. 全局的错误监听，根据不同的状态码或异常设置相应的message。
 	5. 全局的异常捕获，程序发生异常时不会崩溃，可跳入异常界面重启应用。
 	6. 全局事件回调，提供RxBus、Messenger两种回调方式。
-
-
+	7. 全局任意位置一行代码实现文件下载。
 
 
 ## 1、准备工作
@@ -62,7 +61,7 @@ allprojects {
 ```gradle
 dependencies {	
 	...
-	compile 'com.github.goldze:MVVMHabit:1.2.5'
+	compile 'com.github.goldze:MVVMHabit:1.2.5.0'
 }
 ```
 或
@@ -543,30 +542,19 @@ Messenger.getDefault().send("refresh",LoginViewModel.TOKEN_LOGINVIEWMODEL_REFRES
 
 注册了监听，当然也要解除它。在BaseActivity、BaseFragment的onDestroy()方法里已经调用`Messenger.getDefault().unregister(this);`解除注册，所以不用担心忘记解除导致的逻辑错误和内存泄漏。
 ### 3.2、文件下载
-> 文件下载几乎是每个app必备的功能，图文的下载，软件的升级等都要用到，mvvmhabit中使用Retrofit+RxBus来实现带进度的文件下载。
+> 文件下载几乎是每个app必备的功能，图文的下载，软件的升级等都要用到，mvvmhabit使用Retrofit+Okhttp+RxJava+RxBus实现一行代码监听带进度的文件下载。
 
-构建okhttp时加入
-```java
-OkHttpClient okHttpClient = new OkHttpClient.Builder()
-	.addInterceptor(new ProgressInterceptor()) // 文件下载进度拦截器
-	.build();
-```
-
-定义ApiService接口方法
-```java
-@Streaming
-@GET
-Observable<ResponseBody> downloadFile(@Url String fileUrl);
-```
 下载文件
 ```java
+String loadUrl = "你的文件下载路径";
 String destFileDir = context.getCacheDir().getPath();  //文件存放的路径
 String destFileName = System.currentTimeMillis() + ".apk";//文件存放的名称
-final ProgressCallBack<ResponseBody> callBack = new ProgressCallBack<ResponseBody>(destFileDir, destFileName) {
+DownLoadManager.getInstance().load(loadUrl, new ProgressCallBack<ResponseBody>(destFileDir, destFileName) {
 	@Override
 	public void onStart() {
 		//RxJava的onStart()
 	}
+
 	@Override
 	public void onCompleted() {
 		//RxJava的onCompleted()
@@ -586,21 +574,7 @@ final ProgressCallBack<ResponseBody> callBack = new ProgressCallBack<ResponseBod
 	public void onError(Throwable e) {
 		//下载错误回调
 	}
-};
-//构建下载
-RetrofitClient.getInstance().create(DemoApiService.class)
-	.downloadFile("文件下载路径")
-	.subscribeOn(Schedulers.io())//网络请求在子线程中进行
-	.observeOn(Schedulers.io()) //文件保存在子线程中进行
-	.doOnNext(new Action1<ResponseBody>() {
-		@Override
-		public void call(ResponseBody body) {
-			//这里做文件保存
-			callBack.saveFile(body);
-		}
-	})
-	.observeOn(AndroidSchedulers.mainThread()) //UI回调在主线程
-	.subscribe(new ProgressSubscriber<ResponseBody>(callBack));
+});
 ```
 在ProgressResponseBody中使用了RxBus，发送下载进度信息到ProgressCallBack中，继承ProgressCallBack就可以监听到下载状态。回调方法全部执行在主线程，方便UI的更新，详情请参考例子程序。
 ### 3.3、ContainerActivity

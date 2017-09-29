@@ -8,7 +8,6 @@ import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 import me.goldze.mvvmhabit.BuildConfig;
-import me.goldze.mvvmhabit.http.CallBack;
 import me.goldze.mvvmhabit.http.cookie.CookieJarImpl;
 import me.goldze.mvvmhabit.http.cookie.store.PersistentCookieStore;
 import me.goldze.mvvmhabit.http.interceptor.BaseInterceptor;
@@ -97,7 +96,6 @@ public class RetrofitClient {
 //                .cache(cache)
                 .addInterceptor(new BaseInterceptor(headers))
                 .addInterceptor(new CaheInterceptor(mContext))
-                .addInterceptor(new ProgressInterceptor()) // 文件下载进度拦截器
                 .addInterceptor(new LoggingInterceptor
                         .Builder()//构建者模式
                         .loggable(true) //是否开启日志打印
