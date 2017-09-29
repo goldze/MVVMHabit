@@ -61,7 +61,7 @@ allprojects {
 ```gradle
 dependencies {	
 	...
-	compile 'com.github.goldze:MVVMHabit:1.2.5.0'
+	compile 'com.github.goldze:MVVMHabit:1.2.5.1'
 }
 ```
 或
