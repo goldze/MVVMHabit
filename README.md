@@ -1,6 +1,6 @@
 # MVVMHabit
 ##
-目前，android流行的MVC、MVP模式的开发框架很多，然而一款基于MVVM模式开发框架却很少。**MVVMHabit则是一款以谷歌的databinding为基础，整合Okhttp+RxJava+Retrofit+Glide等流行库，加上各种原生控件自定义的BindingAdapter，让事件与数据源完美绑定的一款容易上瘾的实用性快速开发框架**。从此告别findViewById()，告别setText()，也告别setOnClickListener()...
+目前，android流行的MVC、MVP模式的开发框架很多，然而一款基于MVVM模式开发框架却很少。**MVVMHabit则是一款以谷歌的databinding为基础，整合Okhttp+RxJava+Retrofit+Glide等流行库，加上各种原生控件自定义的BindingAdapter，让事件与数据源完美绑定的一款容易上瘾的实用性快速开发框架**。从此告别findViewById()，告别setText()，告别setOnClickListener()...
 
 ## 框架流程
 ![](./img/fc.png) 
@@ -177,7 +177,7 @@ public int initVariableId() {
 
 @Override
 public LoginViewModel initViewModel() {
-	//View持有ViewModel的引用 (这里暂时没有用Dagger2解耦)
+	//View持有ViewModel的引用 (考虑到框架适用性，这里暂时没有用Dagger2解耦)
 	return new LoginViewModel(this);
 }
 ```
@@ -334,7 +334,7 @@ public static void setImageUri(ImageView imageView, String url, int placeholderR
 > 如果你对这些感兴趣，可以下载源码，在binding包中可以看到各类控件的绑定实现方式
 
 ##### 2.2.4、RecyclerView绑定
-很常用的RecyclerView的绑定方式。
+> RecyclerView也是很常用的一种控件，传统的方式需要针对各种业务要写各种Adapter，如果你使用了mvvmhabit，则可大大简化这种工作量，从此告别setAdapter()。
 
 在ViewModel中定义：
 ```java
@@ -542,7 +542,7 @@ Messenger.getDefault().send("refresh",LoginViewModel.TOKEN_LOGINVIEWMODEL_REFRES
 
 注册了监听，当然也要解除它。在BaseActivity、BaseFragment的onDestroy()方法里已经调用`Messenger.getDefault().unregister(this);`解除注册，所以不用担心忘记解除导致的逻辑错误和内存泄漏。
 ### 3.2、文件下载
-> 文件下载几乎是每个app必备的功能，图文的下载，软件的升级等都要用到，mvvmhabit使用Retrofit+Okhttp+RxJava+RxBus实现一行代码监听带进度的文件下载。
+文件下载几乎是每个app必备的功能，图文的下载，软件的升级等都要用到，mvvmhabit使用Retrofit+Okhttp+RxJava+RxBus实现一行代码监听带进度的文件下载。
 
 下载文件
 ```java
@@ -576,7 +576,7 @@ DownLoadManager.getInstance().load(loadUrl, new ProgressCallBack<ResponseBody>(d
 	}
 });
 ```
-在ProgressResponseBody中使用了RxBus，发送下载进度信息到ProgressCallBack中，继承ProgressCallBack就可以监听到下载状态。回调方法全部执行在主线程，方便UI的更新，详情请参考例子程序。
+> 在ProgressResponseBody中使用了RxBus，发送下载进度信息到ProgressCallBack中，继承ProgressCallBack就可以监听到下载状态。回调方法全部执行在主线程，方便UI的更新，详情请参考例子程序。
 ### 3.3、ContainerActivity
 一个盛装Fragment的一个容器(代理)Activity，普通界面只需要编写Fragment，使用此Activity盛装，这样就不需要每个界面都在AndroidManifest中注册一遍
 

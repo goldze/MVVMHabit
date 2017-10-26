@@ -4,7 +4,7 @@ ext {
             compileSdkVersion: 25,
             buildToolsVersion: "25.0.2",
             applicationId    : "com.goldze.mvvmhabit",
-            minSdkVersion    : 17,
+            minSdkVersion    : 15,
             targetSdkVersion : 25,
             versionCode      : 1,
             versionName      : "1.0"
