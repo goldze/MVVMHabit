@@ -59,9 +59,9 @@ allprojects {
 ```
 在主项目app的build.gradle中依赖
 ```gradle
-dependencies {	
+dependencies {
 	...
-	compile 'com.github.goldze:MVVMHabit:1.2.5.2'
+	compile 'com.github.goldze:MVVMHabit:1.2.5.3'
 }
 ```
 或
@@ -340,40 +340,30 @@ public static void setImageUri(ImageView imageView, String url, int placeholderR
 ```java
 //给RecyclerView添加items
 public final ObservableList<NetWorkItemViewModel> observableList = new ObservableArrayList<>();
-//给RecyclerView添加ItemView
-public final ItemViewSelector<NetWorkItemViewModel> itemView = new ItemViewSelector<NetWorkItemViewModel>() {
-	@Override
-	public void select(ItemView itemView, int position, NetWorkItemViewModel item) {
-		//设置item中ViewModel的id和item的layout
-		itemView.set(BR.viewModel, R.layout.item_network);
-	}
-
-	@Override
-	public int viewTypeCount() {
-		//将RecyclerView划分成几部分，如果是一个list,就返回1，如果带有head和list，就返回2
-		return 1;
-	}
-};
+//给RecyclerView添加ItemBinding
+public final ItemBinding<NetWorkItemViewModel> itemView = ItemBinding.of(BR.viewModel, R.layout.item_network);
 ```
-ObservableList<>和ItemViewSelector<>的泛型是Item布局所对应的ViewModel
+ObservableList<>和ItemBinding<>的泛型是Item布局所对应的ItemViewModel
 
 在xml中绑定
 ```xml
 <android.support.v7.widget.RecyclerView
 	android:layout_width="match_parent"
 	android:layout_height="match_parent"
-	binding:itemView="@{viewModel.itemView}"
+	binding:itemBinding="@{viewModel.itemBinding}"
 	binding:items="@{viewModel.observableList}"
 	binding:layoutManager="@{LayoutManagers.linear()}"
 	binding:lineManager="@{LineManagers.horizontal()}" />
 ```
 layoutManager控制是线性的还是网格的，lineManager是控制水平的还是垂直的
 > layoutManager和lineManager需要导入
-> `<import type="me.tatarka.bindingcollectionadapter.LayoutManagers" />`
+> `<import type="me.tatarka.bindingcollectionadapter2.LayoutManagers" />`
 > `<import type="me.goldze.mvvmhabit.binding.viewadapter.recyclerview.LineManagers" />`
 
 这样绑定后，在ViewModel中调用ObservableList的add()方法，添加一个Item的ViewModel，界面上就会实时绘制出一个Item。在Item对应的ViewModel中，同样可以以绑定的形式完成逻辑
 > 可以在请求到数据后，循环添加`observableList.add(new NetWorkItemViewModel(context, entity));`详细可以参考例子程序中NetWorkViewModel类
+
+更多RecyclerView、ListView、ViewPager等绑定方式，请参考 [https://github.com/evant/binding-collection-adapter](https://github.com/evant/binding-collection-adapter)
 
 ### 2.3、网络请求
 > 网络请求一直都是一个项目的核心，现在的项目基本都离不开网络，一个好用网络请求框架可以让开发事半功倍。

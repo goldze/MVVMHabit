@@ -3,7 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/MVVMHabit.iml" filepath="$PROJECT_DIR$/MVVMHabit.iml" />
-      <module fileurl="file://$PROJECT_DIR$/MVVMHabit-sample.iml" filepath="$PROJECT_DIR$/MVVMHabit-sample.iml" />
+      <module fileurl="file://E:\android\project\MVVMHabit\MVVMHabit-sample.iml" filepath="E:\android\project\MVVMHabit\MVVMHabit-sample.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/mvvmhabit/mvvmhabit.iml" filepath="$PROJECT_DIR$/mvvmhabit/mvvmhabit.iml" />
     </modules>

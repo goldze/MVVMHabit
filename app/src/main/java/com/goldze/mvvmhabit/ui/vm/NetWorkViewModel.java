@@ -16,8 +16,7 @@ import me.goldze.mvvmhabit.binding.command.BindingCommand;
 import me.goldze.mvvmhabit.http.BaseResponse;
 import me.goldze.mvvmhabit.utils.RxUtils;
 import me.goldze.mvvmhabit.utils.ToastUtils;
-import me.tatarka.bindingcollectionadapter.ItemView;
-import me.tatarka.bindingcollectionadapter.ItemViewSelector;
+import me.tatarka.bindingcollectionadapter2.ItemBinding;
 import rx.functions.Action0;
 import rx.functions.Action1;
 
@@ -44,19 +43,8 @@ public class NetWorkViewModel extends BaseViewModel {
     //给RecyclerView添加ObservableList
     public final ObservableList<NetWorkItemViewModel> observableList = new ObservableArrayList<>();
     //给RecyclerView添加ItemView
-    public final ItemViewSelector<NetWorkItemViewModel> itemView = new ItemViewSelector<NetWorkItemViewModel>() {
-        @Override
-        public void select(ItemView itemView, int position, NetWorkItemViewModel item) {
-            //设置item中ViewModel的id和item的layout
-            itemView.set(BR.viewModel, R.layout.item_network);
-        }
+    public final ItemBinding<NetWorkItemViewModel> itemBinding = ItemBinding.of(BR.viewModel, R.layout.item_network);
 
-        @Override
-        public int viewTypeCount() {
-            //RecyclerView需要划分的部分数，如果是一个list,就返回1，如果带有head和list，就返回2
-            return 1;
-        }
-    };
     //下拉刷新
     public BindingCommand onRefreshCommand = new BindingCommand(new Action0() {
         @Override

@@ -21,7 +21,7 @@ android {
 
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
-    compile 'com.android.support:appcompat-v7:' + rootProject.ext.support["appcompat-v7"]
+    compile rootProject.ext.support["appcompat-v7"]
     testCompile 'junit:junit:4.12'
     //rxjava
     compile rootProject.ext.dependencies.rxjava

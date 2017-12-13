@@ -9,7 +9,7 @@
             name="viewModel"
             type="NetWorkViewModel" />
 
-        <import type="me.tatarka.bindingcollectionadapter.LayoutManagers" />
+        <import type="me.tatarka.bindingcollectionadapter2.LayoutManagers" />
 
         <import type="me.goldze.mvvmhabit.binding.viewadapter.recyclerview.LineManagers" />
     </data>
@@ -31,7 +31,7 @@
             <android.support.v7.widget.RecyclerView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                binding:itemView="@{viewModel.itemView}"
+                binding:itemBinding="@{viewModel.itemBinding}"
                 binding:items="@{viewModel.observableList}"
                 binding:layoutManager="@{LayoutManagers.linear()}"
                 binding:lineManager="@{LineManagers.horizontal()}" />
