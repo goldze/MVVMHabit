@@ -16,14 +16,11 @@ public class ViewAdapter {
     @BindingAdapter({"requestFocus"})
     public static void requestFocusCommand(EditText editText, final Boolean needRequestFocus) {
         if (needRequestFocus) {
-            editText.setFocusableInTouchMode(true);
             editText.setSelection(editText.getText().length());
             editText.requestFocus();
             InputMethodManager imm = (InputMethodManager) editText.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
             imm.showSoftInput(editText, InputMethodManager.SHOW_IMPLICIT);
-        } else {
-            editText.setEnabled(false);
-            editText.setEnabled(true);
         }
+		editText.setFocusableInTouchMode(needRequestFocus);
     }
 }

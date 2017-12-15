@@ -341,7 +341,7 @@ public static void setImageUri(ImageView imageView, String url, int placeholderR
 //给RecyclerView添加items
 public final ObservableList<NetWorkItemViewModel> observableList = new ObservableArrayList<>();
 //给RecyclerView添加ItemBinding
-public final ItemBinding<NetWorkItemViewModel> itemView = ItemBinding.of(BR.viewModel, R.layout.item_network);
+public final ItemBinding<NetWorkItemViewModel> itemBinding = ItemBinding.of(BR.viewModel, R.layout.item_network);
 ```
 ObservableList<>和ItemBinding<>的泛型是Item布局所对应的ItemViewModel
 
