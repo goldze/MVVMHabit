@@ -14,4 +14,10 @@ public class DetailViewModel extends BaseViewModel {
     public DetailViewModel(DemoEntity.ItemsEntity entity) {
         this.entity = entity;
     }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        entity = null;
+    }
 }

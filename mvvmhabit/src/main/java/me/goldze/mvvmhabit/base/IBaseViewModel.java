@@ -10,12 +10,12 @@ public interface IBaseViewModel {
     /**
      * View的界面创建时回调
      */
-    void onCreateView();
+    void onCreate();
 
     /**
      * View的界面销毁时回调
      */
-    void onDestroyView();
+    void onDestroy();
 
     /**
      * 注册RxBus

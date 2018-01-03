@@ -27,7 +27,7 @@ ext {
             "rxandroid"                            : "io.reactivex:rxandroid:1.2.1",
             //rx管理View的生命周期
             "rxlifecycle"                          : "com.trello:rxlifecycle:1.0",
-            "rxlifecycle-components"               : "com.trello:rxlifecycle-components:1.0",
+            "rxlifecycle-components"              : "com.trello:rxlifecycle-components:1.0",
             //rxbinding
             "rxbinding"                            : "com.jakewharton.rxbinding:rxbinding:1.0.1",
             //rx 6.0权限请求
@@ -38,7 +38,8 @@ ext {
             "converter-gson"                       : "com.squareup.retrofit2:converter-gson:2.3.0",
             "adapter-rxjava"                       : "com.squareup.retrofit2:adapter-rxjava:2.3.0",
             //glide图片加载
-            "glide"                                : "com.github.bumptech.glide:glide:3.8.0",
+            "glide"                                : "com.github.bumptech.glide:glide:4.4.0",
+            "glide-compiler"                      : "com.github.bumptech.glide:compiler:4.4.0",
             //json解析
             "gson"                                 : "com.google.code.gson:gson:2.8.1",
             //material-dialogs
@@ -49,6 +50,7 @@ ext {
             //recyclerview的databinding套装
             "bindingcollectionadapter"             : "me.tatarka.bindingcollectionadapter2:bindingcollectionadapter:2.2.0",
             "bindingcollectionadapter-recyclerview": "me.tatarka.bindingcollectionadapter2:bindingcollectionadapter-recyclerview:2.2.0",
+            "lifecycle-extensions": "android.arch.lifecycle:extensions:1.0.0",
     ]
 }
 

@@ -98,11 +98,11 @@ public class BaseViewModel implements IBaseViewModel {
     }
 
     @Override
-    public void onCreateView() {
+    public void onCreate() {
     }
 
     @Override
-    public void onDestroyView() {
+    public void onDestroy() {
     }
 
     @Override

@@ -32,7 +32,7 @@ public abstract class BaseActivity<V extends ViewDataBinding, VM extends BaseVie
 
         initViewObservable();
 
-        viewModel.onCreateView();
+        viewModel.onCreate();
 
         viewModel.registerRxBus();
     }
@@ -42,7 +42,8 @@ public abstract class BaseActivity<V extends ViewDataBinding, VM extends BaseVie
         super.onDestroy();
         Messenger.getDefault().unregister(this);
         viewModel.removeRxBus();
-        viewModel.onDestroyView();
+        viewModel.onDestroy();
+        viewModel = null;
     }
 
     /**

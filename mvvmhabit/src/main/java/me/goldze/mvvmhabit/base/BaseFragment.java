@@ -30,7 +30,8 @@ public abstract class BaseFragment<V extends ViewDataBinding, VM extends BaseVie
         super.onDestroy();
         Messenger.getDefault().unregister(this.getContext());
         viewModel.removeRxBus();
-        viewModel.onDestroyView();
+        viewModel.onDestroy();
+        viewModel = null;
     }
 
     @Nullable
@@ -54,7 +55,7 @@ public abstract class BaseFragment<V extends ViewDataBinding, VM extends BaseVie
 
         initViewObservable();
 
-        viewModel.onCreateView();
+        viewModel.onCreate();
 
         viewModel.registerRxBus();
     }

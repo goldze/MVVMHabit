@@ -28,6 +28,11 @@ public class NetWorkViewModel extends BaseViewModel {
 
     public NetWorkViewModel(Context context) {
         super(context);
+    }
+
+    @Override
+    public void onCreate() {
+        super.onCreate();
         //请求网络数据
         requestNetWork();
     }
@@ -41,9 +46,9 @@ public class NetWorkViewModel extends BaseViewModel {
     }
 
     //给RecyclerView添加ObservableList
-    public final ObservableList<NetWorkItemViewModel> observableList = new ObservableArrayList<>();
+    public ObservableList<NetWorkItemViewModel> observableList = new ObservableArrayList<>();
     //给RecyclerView添加ItemView
-    public final ItemBinding<NetWorkItemViewModel> itemBinding = ItemBinding.of(BR.viewModel, R.layout.item_network);
+    public ItemBinding<NetWorkItemViewModel> itemBinding = ItemBinding.of(BR.viewModel, R.layout.item_network);
 
     //下拉刷新
     public BindingCommand onRefreshCommand = new BindingCommand(new Action0() {
@@ -97,5 +102,12 @@ public class NetWorkViewModel extends BaseViewModel {
                         throwable.printStackTrace();
                     }
                 });
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        observableList.clear();
+        observableList = null;
     }
 }

@@ -24,7 +24,6 @@ public class NetWorkItemViewModel extends BaseViewModel {
         super(context);
         this.entity = entity;
     }
-
     //条目的点击事件
     public BindingCommand itemClick = new BindingCommand(new Action0() {
         @Override

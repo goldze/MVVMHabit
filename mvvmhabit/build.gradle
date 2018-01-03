@@ -20,32 +20,37 @@ android {
 }
 
 dependencies {
-    compile fileTree(include: ['*.jar'], dir: 'libs')
-    compile rootProject.ext.support["appcompat-v7"]
+    //rx管理View的生命周期
+    api fileTree(include: ['*.jar'], dir: 'libs')
+    api rootProject.ext.support["appcompat-v7"]
     testCompile 'junit:junit:4.12'
     //rxjava
-    compile rootProject.ext.dependencies.rxjava
-    compile rootProject.ext.dependencies.rxandroid
-    //rx管理View的生命周期
-    compile rootProject.ext.dependencies.rxlifecycle
-    compile rootProject.ext.dependencies["rxlifecycle-components"]
+    api rootProject.ext.dependencies.rxjava
+    api rootProject.ext.dependencies.rxandroid
+    api rootProject.ext.dependencies.rxlifecycle
+    api rootProject.ext.dependencies["rxlifecycle-components"]
     //rxbinding
-    compile rootProject.ext.dependencies.rxbinding
+    api rootProject.ext.dependencies.rxbinding
     //rx权限请求
-    compile rootProject.ext.dependencies.rxpermissions
+    api rootProject.ext.dependencies.rxpermissions
     //network
-    compile rootProject.ext.dependencies.okhttp
-    compile rootProject.ext.dependencies.retrofit
-    compile rootProject.ext.dependencies["converter-gson"]
-    compile rootProject.ext.dependencies["adapter-rxjava"]
+    api rootProject.ext.dependencies.okhttp
+    api rootProject.ext.dependencies.retrofit
+    api rootProject.ext.dependencies["converter-gson"]
+    api rootProject.ext.dependencies["adapter-rxjava"]
     //json解析
-    compile rootProject.ext.dependencies.gson
+    api rootProject.ext.dependencies.gson
     //material-dialogs
-    compile rootProject.ext.dependencies.core
-    compile rootProject.ext.dependencies.commons
+    api rootProject.ext.dependencies.core
+    api rootProject.ext.dependencies.commons
     //glide图片加载库
-    compile rootProject.ext.dependencies.glide
+    implementation (rootProject.ext.dependencies.glide){
+        exclude group: 'com.android.support'
+    }
+    annotationProcessor (rootProject.ext.dependencies["glide-compiler"])
     //recyclerview的databinding套装
-    compile rootProject.ext.dependencies.bindingcollectionadapter
-    compile rootProject.ext.dependencies["bindingcollectionadapter-recyclerview"]
+    api rootProject.ext.dependencies.bindingcollectionadapter
+    api rootProject.ext.dependencies["bindingcollectionadapter-recyclerview"]
+    //Google LiveData和ViewModel组件
+    //api rootProject.ext.dependencies["lifecycle-extensions"]
 }

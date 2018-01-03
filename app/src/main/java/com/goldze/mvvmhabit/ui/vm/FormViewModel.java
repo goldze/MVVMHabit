@@ -11,6 +11,8 @@ import android.widget.DatePicker;
 import com.goldze.mvvmhabit.entity.FormEntity;
 import com.goldze.mvvmhabit.entity.SpinnerItemData;
 
+import org.xmlpull.v1.XmlPullParserFactory;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -40,10 +42,10 @@ public class FormViewModel extends BaseViewModel {
     public FormViewModel(Fragment fragment, FormEntity entity) {
         super(fragment);
         this.entity = entity;
-        initData();
     }
 
-    public void initData() {
+    @Override
+    public void onCreate() {
         sexItemDatas = new ArrayList<>();
         //SpinnerItemData该实体可以是
         sexItemDatas.add(new SpinnerItemData("男", "1"));
@@ -91,28 +93,15 @@ public class FormViewModel extends BaseViewModel {
         public void call() {
             String submitJson = new Gson().toJson(entity);
             MaterialDialogUtils.showBasicDialog(context, "提交的json实体数据：\r\n" + submitJson).show();
-
-//            RetrofitClient.getInstance().create(DemoApiService.class)
-//                    .demoPost("666")
-//                    .compose(RxUtils.bindToLifecycle(context)) //生命周期与界面同步
-//                    .compose(RxUtils.schedulersTransformer()) //线程调度
-//                    .doOnSubscribe(new Action0() {
-//                        @Override
-//                        public void call() {
-//                            showDialog();
-//                        }
-//                    })
-//                    .subscribe(new Action1<BaseResponse<DemoEntity>>() {
-//                        @Override
-//                        public void call(BaseResponse<DemoEntity> demoEntityBaseResponse) {
-//                            dismissDialog();
-//                        }
-//                    }, new Action1<Throwable>() {
-//                        @Override
-//                        public void call(Throwable throwable) {
-//                            dismissDialog();
-//                        }
-//                    });
         }
     });
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        entity = null;
+        uc = null;
+        sexItemDatas.clear();
+        sexItemDatas = null;
+    }
 }
