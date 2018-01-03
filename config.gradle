@@ -1,24 +1,29 @@
 ext {
     //android开发版本配置
     android = [
-            compileSdkVersion: 26,
-            buildToolsVersion: "26.0.2",
+            compileSdkVersion: 27,
+            buildToolsVersion: "27.0.2",
             applicationId    : "com.goldze.mvvmhabit",
             minSdkVersion    : 15,
-            targetSdkVersion : 26,
+            targetSdkVersion : 27,
             versionCode      : 1,
             versionName      : "1.0",
     ]
     //support配置
     support = [
             "constraint-layout": "1.0.0-beta2",
-            'appcompat-v7'      :'com.android.support:appcompat-v7:${version["appcompat-v7"]}',
-            'junit'              : 'junit:junit:${version["junit"]}',
+            'support-v4'       : 'com.android.support:support-v4:${version["support-version"]}',
+            'appcompat-v7'     : 'com.android.support:appcompat-v7:${version["support-version"]}',
+            'recyclerview-v7'  : 'com.android.support:recyclerview-v7:${version["support-version"]}',
+            'support-v13'      : 'com.android.support:support-v13:${version["support-version"]}',
+            'support-fragment' : 'com.android.support:support-fragment:${version["support-version"]}',
+            'animated-vector-drawable' : 'com.android.support:animated-vector-drawable:${version["support-version"]}',
+            'junit'            : 'junit:junit:${version["junit-version"]}',
     ]
     //version配置
     version = [
-            "appcompat-v7"     : "26.1.0",
-            "junit"     : "4.12",
+            "support-version": "27.0.2",
+            "junit-version"  : "4.12",
     ]
     //依赖第三方配置
     dependencies = [
@@ -27,7 +32,7 @@ ext {
             "rxandroid"                            : "io.reactivex:rxandroid:1.2.1",
             //rx管理View的生命周期
             "rxlifecycle"                          : "com.trello:rxlifecycle:1.0",
-            "rxlifecycle-components"              : "com.trello:rxlifecycle-components:1.0",
+            "rxlifecycle-components"               : "com.trello:rxlifecycle-components:1.0",
             //rxbinding
             "rxbinding"                            : "com.jakewharton.rxbinding:rxbinding:1.0.1",
             //rx 6.0权限请求
@@ -39,7 +44,7 @@ ext {
             "adapter-rxjava"                       : "com.squareup.retrofit2:adapter-rxjava:2.3.0",
             //glide图片加载
             "glide"                                : "com.github.bumptech.glide:glide:4.4.0",
-            "glide-compiler"                      : "com.github.bumptech.glide:compiler:4.4.0",
+            "glide-compiler"                       : "com.github.bumptech.glide:compiler:4.4.0",
             //json解析
             "gson"                                 : "com.google.code.gson:gson:2.8.1",
             //material-dialogs
@@ -50,7 +55,7 @@ ext {
             //recyclerview的databinding套装
             "bindingcollectionadapter"             : "me.tatarka.bindingcollectionadapter2:bindingcollectionadapter:2.2.0",
             "bindingcollectionadapter-recyclerview": "me.tatarka.bindingcollectionadapter2:bindingcollectionadapter-recyclerview:2.2.0",
-            "lifecycle-extensions": "android.arch.lifecycle:extensions:1.0.0",
+            "lifecycle-extensions"                 : "android.arch.lifecycle:extensions:1.0.0",
     ]
 }
 
