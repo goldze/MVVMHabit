@@ -70,7 +70,7 @@ dependencies {
 ```gradle
 dependencies {	
 	...
-	compile project(':mvvmhabit')
+	api project(':mvvmhabit')
 }
 ```
 ### 1.3、配置config.gradle
