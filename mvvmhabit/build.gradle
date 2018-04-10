@@ -20,9 +20,9 @@ android {
 }
 
 dependencies {
-    //rx管理View的生命周期
-    api fileTree(include: ['*.jar'], dir: 'libs')
 
+    api fileTree(include: ['*.jar'], dir: 'libs')
+    testCompile 'junit:junit:4.12'
 //    api rootProject.ext.support["support-v4"]
 //    api rootProject.ext.support["appcompat-v7"]
 //    api rootProject.ext.support["support-v13"]
@@ -30,27 +30,20 @@ dependencies {
 //    api rootProject.ext.support["support-fragment"]
 //    api rootProject.ext.support["animated-vector-drawable"]
 
-
     api 'com.android.support:support-v4:' + rootProject.ext.version["support-version"]
     api 'com.android.support:appcompat-v7:' + rootProject.ext.version["support-version"]
     api 'com.android.support:support-v13:' + rootProject.ext.version["support-version"]
     api 'com.android.support:recyclerview-v7:' + rootProject.ext.version["support-version"]
     api 'com.android.support:support-fragment:' + rootProject.ext.version["support-version"]
     api 'com.android.support:animated-vector-drawable:' + rootProject.ext.version["support-version"]
-    testCompile 'junit:junit:4.12'
     //rxjava
     api rootProject.ext.dependencies.rxjava
     api rootProject.ext.dependencies.rxandroid
-    api (rootProject.ext.dependencies.rxlifecycle){
-        exclude group: 'com.android.support'
-    }
-    api (rootProject.ext.dependencies["rxlifecycle-components"]){
-        exclude group: 'com.android.support'
-    }
+    //rx管理View的生命周期
+    api (rootProject.ext.dependencies.rxlifecycle)
+    api (rootProject.ext.dependencies["rxlifecycle-components"])
     //rxbinding
-    api (rootProject.ext.dependencies.rxbinding){
-        exclude group: 'com.android.support'
-    }
+    api (rootProject.ext.dependencies.rxbinding)
     //rx权限请求
     api rootProject.ext.dependencies.rxpermissions
     //network
@@ -64,15 +57,11 @@ dependencies {
     api (rootProject.ext.dependencies.core)
     api (rootProject.ext.dependencies.commons)
     //glide图片加载库
-    implementation (rootProject.ext.dependencies.glide)
+    api (rootProject.ext.dependencies.glide)
     annotationProcessor (rootProject.ext.dependencies["glide-compiler"])
     //recyclerview的databinding套装
-    api (rootProject.ext.dependencies.bindingcollectionadapter){
-        exclude group: 'com.android.support'
-    }
-    api (rootProject.ext.dependencies["bindingcollectionadapter-recyclerview"]){
-        exclude group: 'com.android.support'
-    }
+    api (rootProject.ext.dependencies.bindingcollectionadapter)
+    api (rootProject.ext.dependencies["bindingcollectionadapter-recyclerview"])
     //Google LiveData和ViewModel组件
     //api rootProject.ext.dependencies["lifecycle-extensions"]
 }

@@ -21,6 +21,7 @@
         android:orientation="vertical">
 
         <com.lcodecore.tkrefreshlayout.TwinklingRefreshLayout
+            android:id="@+id/twinklingRefreshLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             binding:onLoadMoreCommand="@{viewModel.onLoadMoreCommand}"

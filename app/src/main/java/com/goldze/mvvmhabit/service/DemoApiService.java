@@ -2,6 +2,7 @@ package com.goldze.mvvmhabit.service;
 
 import com.goldze.mvvmhabit.entity.DemoEntity;
 
+import io.reactivex.Observable;
 import me.goldze.mvvmhabit.http.BaseResponse;
 import okhttp3.ResponseBody;
 import retrofit2.http.Field;
@@ -10,7 +11,6 @@ import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.Streaming;
 import retrofit2.http.Url;
-import rx.Observable;
 
 /**
  * Created by 曾宪泽 on 2017/6/15.

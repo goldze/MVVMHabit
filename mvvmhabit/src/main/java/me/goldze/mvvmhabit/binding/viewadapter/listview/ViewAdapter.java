@@ -8,9 +8,9 @@ import android.widget.ListView;
 
 import java.util.concurrent.TimeUnit;
 
+import io.reactivex.functions.Consumer;
+import io.reactivex.subjects.PublishSubject;
 import me.goldze.mvvmhabit.binding.command.BindingCommand;
-import rx.functions.Action1;
-import rx.subjects.PublishSubject;
 
 /**
  * Created by goldze on 2017/6/18.
@@ -72,9 +72,9 @@ public final class ViewAdapter {
             this.onLoadMoreCommand = onLoadMoreCommand;
             this.listView = listView;
             methodInvoke.throttleFirst(1, TimeUnit.SECONDS)
-                    .subscribe(new Action1<Integer>() {
+                    .subscribe(new Consumer<Integer>() {
                         @Override
-                        public void call(Integer integer) {
+                        public void accept(Integer integer) throws Exception {
                             onLoadMoreCommand.execute(integer);
                         }
                     });

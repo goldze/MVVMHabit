@@ -25,7 +25,6 @@ android {
 dependencies {
     api fileTree(include: ['*.jar'], dir: 'libs')
     testCompile 'junit:junit:4.12'
-    api 'com.android.support.constraint:constraint-layout:1.0.0-beta2'
     //下拉刷新,上拉加载
     api rootProject.ext.dependencies.tkrefreshlayout
     api project(':mvvmhabit')

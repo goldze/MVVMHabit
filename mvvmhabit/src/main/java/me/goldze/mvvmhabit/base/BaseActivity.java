@@ -4,7 +4,7 @@ import android.databinding.DataBindingUtil;
 import android.databinding.ViewDataBinding;
 import android.os.Bundle;
 
-import com.trello.rxlifecycle.components.support.RxAppCompatActivity;
+import com.trello.rxlifecycle2.components.support.RxAppCompatActivity;
 
 import me.goldze.mvvmhabit.bus.Messenger;
 import me.goldze.mvvmhabit.bus.RxBus;

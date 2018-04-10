@@ -32,12 +32,20 @@ public class NetWorkFragment extends BaseFragment<FragmentNetworkBinding, NetWor
 
     @Override
     public void initViewObservable() {
-        //请求成功的监听
-        viewModel.uc.isRequestSuccess.addOnPropertyChangedCallback(new Observable.OnPropertyChangedCallback() {
+        //监听下拉刷新完成
+        viewModel.uc.isFinishRefreshing.addOnPropertyChangedCallback(new Observable.OnPropertyChangedCallback() {
             @Override
             public void onPropertyChanged(Observable observable, int i) {
-                //请求成功,刷新布局
-                refreshLayout();
+                //结束刷新
+                binding.twinklingRefreshLayout.finishRefreshing();
+            }
+        });
+        //监听上拉加载完成
+        viewModel.uc.isFinishLoadmore.addOnPropertyChangedCallback(new Observable.OnPropertyChangedCallback() {
+            @Override
+            public void onPropertyChanged(Observable observable, int i) {
+                //结束刷新
+                binding.twinklingRefreshLayout.finishLoadmore();
             }
         });
     }

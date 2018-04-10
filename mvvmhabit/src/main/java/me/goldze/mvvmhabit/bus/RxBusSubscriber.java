@@ -1,11 +1,12 @@
 package me.goldze.mvvmhabit.bus;
 
-import rx.Subscriber;
+
+import io.reactivex.observers.DisposableObserver;
 
 /**
  * 为RxBus使用的Subscriber, 主要提供next事件的try,catch
  */
-public abstract class RxBusSubscriber<T> extends Subscriber<T> {
+public abstract class RxBusSubscriber<T> extends DisposableObserver<T> {
 
     @Override
     public void onNext(T t) {
@@ -17,7 +18,7 @@ public abstract class RxBusSubscriber<T> extends Subscriber<T> {
     }
 
     @Override
-    public void onCompleted() {
+    public void onComplete() {
     }
 
     @Override

@@ -2,15 +2,18 @@ package me.goldze.mvvmhabit.utils;
 
 import android.content.Context;
 
-import com.trello.rxlifecycle.LifecycleProvider;
-import com.trello.rxlifecycle.LifecycleTransformer;
 
+import com.trello.rxlifecycle2.LifecycleProvider;
+import com.trello.rxlifecycle2.LifecycleTransformer;
+
+import io.reactivex.Observable;
+import io.reactivex.ObservableSource;
+import io.reactivex.ObservableTransformer;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.functions.Function;
+import io.reactivex.schedulers.Schedulers;
 import me.goldze.mvvmhabit.http.BaseResponse;
 import me.goldze.mvvmhabit.http.ExceptionHandle;
-import rx.Observable;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Func1;
-import rx.schedulers.Schedulers;
 
 /**
  * Created by goldze on 2017/6/19.
@@ -33,43 +36,36 @@ public class RxUtils {
     /**
      * 线程调度器
      */
-    public static Observable.Transformer schedulersTransformer() {
-        return new Observable.Transformer() {
+    public static ObservableTransformer schedulersTransformer() {
+        return new ObservableTransformer() {
             @Override
-            public Object call(Object observable) {
-                return ((Observable) observable).subscribeOn(Schedulers.io())
+            public ObservableSource apply(Observable upstream) {
+                return upstream.subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread());
-            }
-           /* @Override
-            public Observable call(Observable observable) {
-                return observable.subscribeOn(Schedulers.io())
-                        .unsubscribeOn(Schedulers.io())
-                        .observeOn(AndroidSchedulers.mainThread());
-            }*/
-        };
-    }
-
-    public static <T> Observable.Transformer<BaseResponse<T>, T> exceptionTransformer() {
-
-        return new Observable.Transformer() {
-
-            @Override
-            public Object call(Object observable) {
-                return ((Observable) observable).map(new HandleFuc<T>()).onErrorResumeNext(new HttpResponseFunc<T>());
             }
         };
     }
 
-    private static class HttpResponseFunc<T> implements Func1<Throwable, Observable<T>> {
+    public static <T> ObservableTransformer<BaseResponse<T>, T> exceptionTransformer() {
+
+        return new ObservableTransformer() {
+            @Override
+            public ObservableSource apply(Observable observable) {
+                return (observable).map(new HandleFuc<T>()).onErrorResumeNext(new HttpResponseFunc<T>());
+            }
+        };
+    }
+
+    private static class HttpResponseFunc<T> implements Function<Throwable, Observable<T>> {
         @Override
-        public Observable<T> call(Throwable t) {
+        public Observable<T> apply(Throwable t) {
             return Observable.error(ExceptionHandle.handleException(t));
         }
     }
 
-    private static class HandleFuc<T> implements Func1<BaseResponse<T>, T> {
+    private static class HandleFuc<T> implements Function<BaseResponse<T>, T> {
         @Override
-        public T call(BaseResponse<T> response) {
+        public T apply(BaseResponse<T> response) {
             if (!response.isOk())
                 throw new RuntimeException(response.getCode() + "" + response.getMessage() != null ? response.getMessage() : "");
             return response.getResult();

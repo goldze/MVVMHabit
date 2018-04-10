@@ -3,16 +3,21 @@ package com.goldze.mvvmhabit.utils;
 import android.content.Context;
 import android.text.TextUtils;
 
+import org.reactivestreams.Subscriber;
+
 import java.io.File;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
+import io.reactivex.Observable;
+import io.reactivex.Observer;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
 import me.goldze.mvvmhabit.BuildConfig;
 import me.goldze.mvvmhabit.http.cookie.CookieJarImpl;
 import me.goldze.mvvmhabit.http.cookie.store.PersistentCookieStore;
 import me.goldze.mvvmhabit.http.interceptor.BaseInterceptor;
 import me.goldze.mvvmhabit.http.interceptor.CaheInterceptor;
-import me.goldze.mvvmhabit.http.interceptor.ProgressInterceptor;
 import me.goldze.mvvmhabit.http.interceptor.logging.Level;
 import me.goldze.mvvmhabit.http.interceptor.logging.LoggingInterceptor;
 import me.goldze.mvvmhabit.utils.KLog;
@@ -22,12 +27,8 @@ import okhttp3.ConnectionPool;
 import okhttp3.OkHttpClient;
 import okhttp3.internal.platform.Platform;
 import retrofit2.Retrofit;
-import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
+import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
-import rx.Observable;
-import rx.Subscriber;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
 
 /**
  * Created by goldze on 2017/5/10.
@@ -114,7 +115,7 @@ public class RetrofitClient {
         retrofit = new Retrofit.Builder()
                 .client(okHttpClient)
                 .addConverterFactory(GsonConverterFactory.create())
-                .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .baseUrl(url)
                 .build();
 
@@ -143,7 +144,7 @@ public class RetrofitClient {
      * * @param subscriber
      */
 
-    public static <T> T execute(Observable<T> observable, Subscriber<T> subscriber) {
+    public static <T> T execute(Observable<T> observable, Observer<T> subscriber) {
         observable.subscribeOn(Schedulers.io())
                 .unsubscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

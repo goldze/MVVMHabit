@@ -3,17 +3,15 @@ package me.goldze.mvvmhabit.http;
 import android.content.Context;
 import android.widget.Toast;
 
-import me.goldze.mvvmhabit.R;
+import io.reactivex.observers.DisposableObserver;
 import me.goldze.mvvmhabit.utils.KLog;
 import me.goldze.mvvmhabit.utils.ToastUtils;
-import me.goldze.mvvmhabit.utils.Utils;
-import rx.Subscriber;
 
 /**
  * Created by goldze on 2017/5/10.
  * 该类仅供参考，实际业务Code, 根据需求来定义，
  */
-public abstract class BaseSubscriber<T> extends Subscriber<T> {
+public abstract class BaseSubscriber<T> extends DisposableObserver<T> {
     public abstract void onResult(T t);
 
     private Context context;
@@ -45,13 +43,13 @@ public abstract class BaseSubscriber<T> extends Subscriber<T> {
         // if  NetworkAvailable no !   must to call onCompleted
         if (!NetworkUtil.isNetworkAvailable(context)) {
             Toast.makeText(context, "无网络，读取缓存数据", Toast.LENGTH_SHORT).show();
-            onCompleted();
+            onComplete();
         }
 
     }
 
     @Override
-    public void onCompleted() {
+    public void onComplete() {
 
         Toast.makeText(context, "http is Complete", Toast.LENGTH_SHORT).show();
         // todo some common as  dismiss loadding

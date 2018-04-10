@@ -8,8 +8,8 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 
-import rx.functions.Action0;
-import rx.functions.Action1;
+import me.goldze.mvvmhabit.binding.command.BindingAction;
+import me.goldze.mvvmhabit.binding.command.BindingConsumer;
 
 /**
  * About : kelin的Messenger
@@ -40,49 +40,49 @@ public class Messenger {
 
     /**
      * @param recipient the receiver,if register in activity the recipient always set "this",
-     * and "WeakMessenger.getDefault().unregister(this)" in onDestroy,if in ViewModel,
-     * you can also register with Activity context and also in onDestroy to unregister.
-     * @param action do something on message received
+     *                  and "WeakMessenger.getDefault().unregister(this)" in onDestroy,if in ViewModel,
+     *                  you can also register with Activity context and also in onDestroy to unregister.
+     * @param action    do something on message received
      */
-    public void register(Object recipient, Action0 action) {
+    public void register(Object recipient, BindingAction action) {
         register(recipient, null, false, action);
     }
 
     /**
-     * @param recipient the receiver,if register in activity the recipient always set "this",
-     * and "WeakMessenger.getDefault().unregister(this)" in onDestroy,if in ViewModel,
-     * you can also register with Activity context and also in onDestroy to unregister.
+     * @param recipient                 the receiver,if register in activity the recipient always set "this",
+     *                                  and "WeakMessenger.getDefault().unregister(this)" in onDestroy,if in ViewModel,
+     *                                  you can also register with Activity context and also in onDestroy to unregister.
      * @param receiveDerivedMessagesToo whether Derived class of recipient can receive the message
-     * @param action do something on message received
+     * @param action                    do something on message received
      */
-    public void register(Object recipient, boolean receiveDerivedMessagesToo, Action0 action) {
+    public void register(Object recipient, boolean receiveDerivedMessagesToo, BindingAction action) {
         register(recipient, null, receiveDerivedMessagesToo, action);
     }
 
     /**
      * @param recipient the receiver,if register in activity the recipient always set "this",
-     * and "WeakMessenger.getDefault().unregister(this)" in onDestroy,if in ViewModel,
-     * you can also register with Activity context and also in onDestroy to unregister.
-     * @param token register with a unique token,when a messenger send a msg with same token,it
-     * will
-     * receive this msg
-     * @param action do something on message received
+     *                  and "WeakMessenger.getDefault().unregister(this)" in onDestroy,if in ViewModel,
+     *                  you can also register with Activity context and also in onDestroy to unregister.
+     * @param token     register with a unique token,when a messenger send a msg with same token,it
+     *                  will
+     *                  receive this msg
+     * @param action    do something on message received
      */
-    public void register(Object recipient, Object token, Action0 action) {
+    public void register(Object recipient, Object token, BindingAction action) {
         register(recipient, token, false, action);
     }
 
     /**
-     * @param recipient the receiver,if register in activity the recipient always set "this",
-     * and "WeakMessenger.getDefault().unregister(this)" in onDestroy,if in ViewModel,
-     * you can also register with Activity context and also in onDestroy to unregister.
-     * @param token register with a unique token,when a messenger send a msg with same token,it
-     * will
-     * receive this msg
+     * @param recipient                 the receiver,if register in activity the recipient always set "this",
+     *                                  and "WeakMessenger.getDefault().unregister(this)" in onDestroy,if in ViewModel,
+     *                                  you can also register with Activity context and also in onDestroy to unregister.
+     * @param token                     register with a unique token,when a messenger send a msg with same token,it
+     *                                  will
+     *                                  receive this msg
      * @param receiveDerivedMessagesToo whether Derived class of recipient can receive the message
-     * @param action do something on message received
+     * @param action                    do something on message received
      */
-    public void register(Object recipient, Object token, boolean receiveDerivedMessagesToo, Action0 action) {
+    public void register(Object recipient, Object token, boolean receiveDerivedMessagesToo, BindingAction action) {
 
         Type messageType = NotMsgType.class;
 
@@ -120,24 +120,24 @@ public class Messenger {
 
     /**
      * @param recipient {}
-     * @param tClass class of T
-     * @param action this action has one params that type of tClass
-     * @param <T> message data type
+     * @param tClass    class of T
+     * @param action    this action has one params that type of tClass
+     * @param <T>       message data type
      */
-    public <T> void register(Object recipient, Class<T> tClass, Action1<T> action) {
+    public <T> void register(Object recipient, Class<T> tClass, BindingConsumer<T> action) {
         register(recipient, null, false, action, tClass);
     }
 
     /**
      * see {}
      *
-     * @param recipient receiver of message
+     * @param recipient                 receiver of message
      * @param receiveDerivedMessagesToo whether derived class of recipient can receive the message
-     * @param tClass class of T
-     * @param action this action has one params that type of tClass
-     * @param <T> message data type
+     * @param tClass                    class of T
+     * @param action                    this action has one params that type of tClass
+     * @param <T>                       message data type
      */
-    public <T> void register(Object recipient, boolean receiveDerivedMessagesToo, Class<T> tClass, Action1<T> action) {
+    public <T> void register(Object recipient, boolean receiveDerivedMessagesToo, Class<T> tClass, BindingConsumer<T> action) {
         register(recipient, null, receiveDerivedMessagesToo, action, tClass);
     }
 
@@ -145,30 +145,30 @@ public class Messenger {
      * see {}
      *
      * @param recipient receiver of message
-     * @param token register with a unique token,when a messenger send a msg with same token,it
-     * will
-     * receive this msg
-     * @param tClass class of T for Action1
-     * @param action this action has one params that type of tClass
-     * @param <T> message data type
+     * @param token     register with a unique token,when a messenger send a msg with same token,it
+     *                  will
+     *                  receive this msg
+     * @param tClass    class of T for BindingConsumer
+     * @param action    this action has one params that type of tClass
+     * @param <T>       message data type
      */
-    public <T> void register(Object recipient, Object token, Class<T> tClass, Action1<T> action) {
+    public <T> void register(Object recipient, Object token, Class<T> tClass, BindingConsumer<T> action) {
         register(recipient, token, false, action, tClass);
     }
 
     /**
      * see {}
      *
-     * @param recipient receiver of message
-     * @param token register with a unique token,when a messenger send a msg with same token,it
-     * will
-     * receive this msg
+     * @param recipient                 receiver of message
+     * @param token                     register with a unique token,when a messenger send a msg with same token,it
+     *                                  will
+     *                                  receive this msg
      * @param receiveDerivedMessagesToo whether derived class of recipient can receive the message
-     * @param action this action has one params that type of tClass
-     * @param tClass class of T for Action1
-     * @param <T> message data type
+     * @param action                    this action has one params that type of tClass
+     * @param tClass                    class of T for BindingConsumer
+     * @param <T>                       message data type
      */
-    public <T> void register(Object recipient, Object token, boolean receiveDerivedMessagesToo, Action1<T> action, Class<T> tClass) {
+    public <T> void register(Object recipient, Object token, boolean receiveDerivedMessagesToo, BindingConsumer<T> action, Class<T> tClass) {
 
         Type messageType = tClass;
 
@@ -212,7 +212,7 @@ public class Messenger {
 
     /**
      * @param token send with a unique token,when a receiver has register with same token,it will
-     * receive this msg
+     *              receive this msg
      */
     public void sendNoMsg(Object token) {
         sendToTargetOrType(null, token);
@@ -222,8 +222,8 @@ public class Messenger {
      * send to recipient directly with has not any message
      *
      * @param target WeakMessenger.getDefault().register(this, ..) in a activity,if target set this
-     * activity
-     * it will receive the message
+     *               activity
+     *               it will receive the message
      */
     public void sendNoMsgToTarget(Object target) {
         sendToTargetOrType(target.getClass(), null);
@@ -233,11 +233,11 @@ public class Messenger {
      * send message to target with token,when a receiver has register with same token,it will
      * receive this msg
      *
-     * @param token send with a unique token,when a receiver has register with same token,it will
-     * receive this msg
+     * @param token  send with a unique token,when a receiver has register with same token,it will
+     *               receive this msg
      * @param target send to recipient directly with has not any message,
-     * WeakMessenger.getDefault().register(this, ..) in a activity,if target set this activity
-     * it will receive the message
+     *               WeakMessenger.getDefault().register(this, ..) in a activity,if target set this activity
+     *               it will receive the message
      */
     public void sendNoMsgToTargetWithToken(Object token, Object target) {
         sendToTargetOrType(target.getClass(), token);
@@ -247,7 +247,7 @@ public class Messenger {
      * send the message type of T, all receiver can receive the message
      *
      * @param message any object can to be a message
-     * @param <T> message data type
+     * @param <T>     message data type
      */
     public <T> void send(T message) {
         sendToTargetOrType(message, null, null);
@@ -257,9 +257,9 @@ public class Messenger {
      * send the message type of T, all receiver can receive the message
      *
      * @param message any object can to be a message
-     * @param token send with a unique token,when a receiver has register with same token,it will
-     * receive this message
-     * @param <T> message data type
+     * @param token   send with a unique token,when a receiver has register with same token,it will
+     *                receive this message
+     * @param <T>     message data type
      */
     public <T> void send(T message, Object token) {
         sendToTargetOrType(message, null, token);
@@ -269,11 +269,11 @@ public class Messenger {
      * send message to recipient directly
      *
      * @param message any object can to be a message
-     * @param target send to recipient directly with has not any message,
-     * WeakMessenger.getDefault().register(this, ..) in a activity,if target set this activity
-     * it will receive the message
-     * @param <T> message data type
-     * @param <R> target
+     * @param target  send to recipient directly with has not any message,
+     *                WeakMessenger.getDefault().register(this, ..) in a activity,if target set this activity
+     *                it will receive the message
+     * @param <T>     message data type
+     * @param <R>     target
      */
     public <T, R> void sendToTarget(T message, R target) {
         sendToTargetOrType(message, target.getClass(), null);
@@ -351,7 +351,7 @@ public class Messenger {
 
     private static <T> void unregisterFromLists(
             Object recipient,
-            Action1<T> action,
+            BindingConsumer<T> action,
             HashMap<Type, List<WeakActionAndToken>> lists,
             Class<T> tClass) {
         Type messageType = tClass;
@@ -370,7 +370,7 @@ public class Messenger {
                 if (weakActionCasted != null
                         && recipient == weakActionCasted.getTarget()
                         && (action == null
-                        || action == weakActionCasted.getAction1())) {
+                        || action == weakActionCasted.getBindingConsumer())) {
                     item.getAction().markForDeletion();
                 }
             }
@@ -379,7 +379,7 @@ public class Messenger {
 
     private static void unregisterFromLists(
             Object recipient,
-            Action0 action,
+            BindingAction action,
             HashMap<Type, List<WeakActionAndToken>> lists
     ) {
         Type messageType = NotMsgType.class;
@@ -398,7 +398,7 @@ public class Messenger {
                 if (weakActionCasted != null
                         && recipient == weakActionCasted.getTarget()
                         && (action == null
-                        || action == weakActionCasted.getAction())) {
+                        || action == weakActionCasted.getBindingAction())) {
                     item.getAction().markForDeletion();
                 }
             }
@@ -409,7 +409,7 @@ public class Messenger {
     private static <T> void unregisterFromLists(
             Object recipient,
             Object token,
-            Action1<T> action,
+            BindingConsumer<T> action,
             HashMap<Type, List<WeakActionAndToken>> lists, Class<T> tClass) {
         Type messageType = tClass;
 
@@ -427,7 +427,7 @@ public class Messenger {
                 if (weakActionCasted != null
                         && recipient == weakActionCasted.getTarget()
                         && (action == null
-                        || action == weakActionCasted.getAction1())
+                        || action == weakActionCasted.getBindingConsumer())
                         && (token == null
                         || token.equals(item.getToken()))) {
                     item.getAction().markForDeletion();
@@ -439,7 +439,7 @@ public class Messenger {
     private static void unregisterFromLists(
             Object recipient,
             Object token,
-            Action0 action,
+            BindingAction action,
             HashMap<Type, List<WeakActionAndToken>> lists) {
         Type messageType = NotMsgType.class;
 
@@ -457,7 +457,7 @@ public class Messenger {
                 if (weakActionCasted != null
                         && recipient == weakActionCasted.getTarget()
                         && (action == null
-                        || action == weakActionCasted.getAction())
+                        || action == weakActionCasted.getBindingAction())
                         && (token == null
                         || token.equals(item.getToken()))) {
                     item.getAction().markForDeletion();

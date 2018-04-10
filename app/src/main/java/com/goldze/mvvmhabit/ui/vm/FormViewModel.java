@@ -1,28 +1,25 @@
 package com.goldze.mvvmhabit.ui.vm;
 
-import com.google.gson.Gson;
-
 import android.app.DatePickerDialog;
 import android.databinding.ObservableBoolean;
 import android.support.v4.app.Fragment;
-import android.support.v4.widget.NestedScrollView;
 import android.widget.DatePicker;
 
 import com.goldze.mvvmhabit.entity.FormEntity;
 import com.goldze.mvvmhabit.entity.SpinnerItemData;
-
-import org.xmlpull.v1.XmlPullParserFactory;
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+import io.reactivex.functions.Consumer;
 import me.goldze.mvvmhabit.base.BaseViewModel;
+import me.goldze.mvvmhabit.binding.command.BindingAction;
 import me.goldze.mvvmhabit.binding.command.BindingCommand;
+import me.goldze.mvvmhabit.binding.command.BindingConsumer;
 import me.goldze.mvvmhabit.binding.viewadapter.spinner.IKeyAndValue;
 import me.goldze.mvvmhabit.utils.MaterialDialogUtils;
-import rx.functions.Action0;
-import rx.functions.Action1;
 
 /**
  * Created by goldze on 2017/7/17.
@@ -53,14 +50,14 @@ public class FormViewModel extends BaseViewModel {
     }
 
     //性别选择的监听
-    public BindingCommand<IKeyAndValue> onSexSelectorCommand = new BindingCommand<>(new Action1<IKeyAndValue>() {
+    public BindingCommand<IKeyAndValue> onSexSelectorCommand = new BindingCommand<>(new BindingConsumer<IKeyAndValue>() {
         @Override
         public void call(IKeyAndValue iKeyAndValue) {
             entity.setSex(iKeyAndValue.getValue());
         }
     });
     //生日选择的监听
-    public BindingCommand onBirClickCommand = new BindingCommand(new Action0() {
+    public BindingCommand onBirClickCommand = new BindingCommand(new BindingAction() {
         @Override
         public void call() {
             final Calendar calendar = Calendar.getInstance();
@@ -81,14 +78,14 @@ public class FormViewModel extends BaseViewModel {
         }
     });
     //是否已婚Switch点状态改变回调
-    public BindingCommand<Boolean> onMarryCheckedChangeCommand = new BindingCommand<>(new Action1<Boolean>() {
+    public BindingCommand<Boolean> onMarryCheckedChangeCommand = new BindingCommand<>(new BindingConsumer<Boolean>() {
         @Override
         public void call(Boolean isChecked) {
             entity.setMarry(isChecked);
         }
     });
     //提交按钮点击事件
-    public BindingCommand onCmtClickCommand = new BindingCommand(new Action0() {
+    public BindingCommand onCmtClickCommand = new BindingCommand(new BindingAction() {
         @Override
         public void call() {
             String submitJson = new Gson().toJson(entity);

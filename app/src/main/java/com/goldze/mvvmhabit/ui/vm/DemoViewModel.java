@@ -7,23 +7,18 @@ import android.content.Context;
 import android.os.Bundle;
 
 import com.goldze.mvvmhabit.entity.FormEntity;
-import com.goldze.mvvmhabit.service.DemoApiService;
 import com.goldze.mvvmhabit.ui.fragment.FormFragment;
 import com.goldze.mvvmhabit.ui.fragment.NetWorkFragment;
-import com.goldze.mvvmhabit.utils.RetrofitClient;
-import com.tbruyelle.rxpermissions.RxPermissions;
+import com.tbruyelle.rxpermissions2.RxPermissions;
 
+import io.reactivex.functions.Consumer;
 import me.goldze.mvvmhabit.base.BaseViewModel;
+import me.goldze.mvvmhabit.binding.command.BindingAction;
 import me.goldze.mvvmhabit.binding.command.BindingCommand;
 import me.goldze.mvvmhabit.http.DownLoadManager;
 import me.goldze.mvvmhabit.http.download.ProgressCallBack;
-import me.goldze.mvvmhabit.http.download.DownLoadSubscriber;
 import me.goldze.mvvmhabit.utils.ToastUtils;
 import okhttp3.ResponseBody;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Action0;
-import rx.functions.Action1;
-import rx.schedulers.Schedulers;
 
 /**
  * Created by goldze on 2017/7/17.
@@ -36,21 +31,21 @@ public class DemoViewModel extends BaseViewModel {
     }
 
     //网络访问点击事件
-    public BindingCommand netWorkClick = new BindingCommand(new Action0() {
+    public BindingCommand netWorkClick = new BindingCommand(new BindingAction() {
         @Override
         public void call() {
             startContainerActivity(NetWorkFragment.class.getCanonicalName());
         }
     });
     //表单提交点击事件
-    public BindingCommand formSbmClick = new BindingCommand(new Action0() {
+    public BindingCommand formSbmClick = new BindingCommand(new BindingAction() {
         @Override
         public void call() {
             startContainerActivity(FormFragment.class.getCanonicalName());
         }
     });
     //表单修改点击事件
-    public BindingCommand formModifyClick = new BindingCommand(new Action0() {
+    public BindingCommand formModifyClick = new BindingCommand(new BindingAction() {
         @Override
         public void call() {
             //模拟一个修改的实体数据
@@ -66,15 +61,15 @@ public class DemoViewModel extends BaseViewModel {
         }
     });
     //权限申请
-    public BindingCommand permissionsClick = new BindingCommand(new Action0() {
+    public BindingCommand permissionsClick = new BindingCommand(new BindingAction() {
         @Override
         public void call() {
             //请求打开相机权限
             RxPermissions rxPermissions = new RxPermissions((Activity) context);
             rxPermissions.request(Manifest.permission.CAMERA)
-                    .subscribe(new Action1<Boolean>() {
+                    .subscribe(new Consumer<Boolean>() {
                         @Override
-                        public void call(Boolean aBoolean) {
+                        public void accept(Boolean aBoolean) throws Exception {
                             if (aBoolean) {
                                 ToastUtils.showShort("相机权限已经打开，直接跳入相机");
                             } else {
@@ -86,7 +81,7 @@ public class DemoViewModel extends BaseViewModel {
     });
 
     //异常全局异常捕获
-    public BindingCommand exceptionClick = new BindingCommand(new Action0() {
+    public BindingCommand exceptionClick = new BindingCommand(new BindingAction() {
         @Override
         public void call() {
             //伪造一个异常
@@ -94,7 +89,7 @@ public class DemoViewModel extends BaseViewModel {
         }
     });
     //文件下载
-    public BindingCommand fileDownLoadClick = new BindingCommand(new Action0() {
+    public BindingCommand fileDownLoadClick = new BindingCommand(new BindingAction() {
         @Override
         public void call() {
             downloadFile();

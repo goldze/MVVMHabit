@@ -4,23 +4,24 @@ package me.goldze.mvvmhabit.bus;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-import rx.Observable;
-import rx.Subscriber;
-import rx.subjects.PublishSubject;
-import rx.subjects.SerializedSubject;
-import rx.subjects.Subject;
+import io.reactivex.Observable;
+import io.reactivex.ObservableEmitter;
+import io.reactivex.ObservableOnSubscribe;
+import io.reactivex.subjects.PublishSubject;
+import io.reactivex.subjects.Subject;
+
 
 /**
  * 只会把在订阅发生的时间点之后来自原始Observable的数据发射给观察者
  */
 public class RxBus {
     private static volatile RxBus mDefaultInstance;
-    private final Subject<Object, Object> mBus;
+    private final Subject<Object> mBus;
 
     private final Map<Class<?>, Object> mStickyEventMap;
 
     public RxBus() {
-        mBus = new SerializedSubject<>(PublishSubject.create());
+        mBus = PublishSubject.create().toSerialized();
         mStickyEventMap = new ConcurrentHashMap<>();
     }
 
@@ -83,10 +84,10 @@ public class RxBus {
             final Object event = mStickyEventMap.get(eventType);
 
             if (event != null) {
-                return Observable.merge(observable, Observable.create(new Observable.OnSubscribe<T>() {
+                return Observable.merge(observable, Observable.create(new ObservableOnSubscribe<T>() {
                     @Override
-                    public void call(Subscriber<? super T> subscriber) {
-                        subscriber.onNext(eventType.cast(event));
+                    public void subscribe(ObservableEmitter<T> emitter) throws Exception {
+                        emitter.onNext(eventType.cast(event));
                     }
                 }));
             } else {

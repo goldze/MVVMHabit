@@ -1,3 +1,12 @@
+## 更新日志
+**v2.0.0：2018年4月10日**
+
+- 全面升级RxJava2；
+- 优化绑定回调方式；
+- 升级第三方依赖库；
+- 微调例子程序。
+
+**注：v1.x已停止维护**
 # MVVMHabit
 ##
 目前，android流行的MVC、MVP模式的开发框架很多，然而一款基于MVVM模式开发框架却很少。**MVVMHabit则是一款以谷歌的databinding为基础，整合Okhttp+RxJava+Retrofit+Glide等流行库，加上各种原生控件自定义的BindingAdapter，让事件与数据源完美绑定的一款容易上瘾的实用性快速开发框架**。从此告别findViewById()，告别setText()，告别setOnClickListener()...
@@ -61,7 +70,7 @@ allprojects {
 ```gradle
 dependencies {
 	...
-	api 'com.github.goldze:MVVMHabit:1.2.6.1'
+	api 'com.github.goldze:MVVMHabit:2.0.0'
 }
 ```
 或
@@ -73,6 +82,7 @@ dependencies {
 	api project(':mvvmhabit')
 }
 ```
+> 旧版本 api 'com.github.goldze:MVVMHabit:1.2.6.1'
 ### 1.3、配置config.gradle
 如果不是远程依赖，而是下载的例子程序，那么还需要将例子程序中的config.gradle放入你的主项目根目录中，然后在根目录build.gradle的第一行加入：
 
@@ -239,7 +249,7 @@ android:onClick="@{viewModel.loginOnClick}"
 在LoginViewModel中定义
 ```java
 //登录按钮的点击事件
-public BindingCommand loginOnClickCommand = new BindingCommand(new Action0() {
+public BindingCommand loginOnClickCommand = new BindingCommand(new BindingAction() {
 	@Override
 	public void call() {
             
@@ -273,9 +283,9 @@ public static final int CLICK_INTERVAL = 1;
 public static void onClickCommand(View view, final BindingCommand clickCommand, final boolean isThrottleFirst) {
 	if (isThrottleFirst) {
 		RxView.clicks(view)
-		.subscribe(new Action1<Void>() {
+		.subscribe(new Consumer<Object>() {
 			@Override
-			public void call(Void aVoid) {
+			public void accept(Object object) throws Exception {
 				if (clickCommand != null) {
 					clickCommand.execute();
 				}
@@ -284,9 +294,9 @@ public static void onClickCommand(View view, final BindingCommand clickCommand, 
 	} else {
 		RxView.clicks(view)
 		.throttleFirst(CLICK_INTERVAL, TimeUnit.SECONDS)//1秒钟内只允许点击1次
-		.subscribe(new Action1<Void>() {
+		.subscribe(new Consumer<Object>() {
 			@Override
-			public void call(Void aVoid) {
+			public void accept(Object object) throws Exception {
 				if (clickCommand != null) {
  					clickCommand.execute();
 				}
@@ -424,14 +434,14 @@ RetrofitClient.getInstance().create(DemoApiService.class)
 	.demoGet()
 	.compose(RxUtils.bindToLifecycle(context)) //请求与View周期同步
 	.compose(RxUtils.schedulersTransformer()) //线程调度
-	.subscribe(new Action1<BaseResponse<DemoEntity>>() {
+	.subscribe(new Consumer<BaseResponse<DemoEntity>>() {
 		@Override
-		public void call(BaseResponse<DemoEntity> response) {
+		public void accept(BaseResponse<DemoEntity> response) throws Exception {
                        
 		}
-	}, new Action1<Throwable>() {
+	}, new Consumer<Throwable>() {
 		@Override
-		public void call(Throwable throwable) {
+		public void accept(Throwable throwable) throws Exception {
                         
 		}
 	});
@@ -458,9 +468,9 @@ private Subscription mSubscription;
 public void registerRxBus() {
 	super.registerRxBus();
 	mSubscription = RxBus.getDefault().toObservable(String.class)
-		.subscribe(new Action1<String>() {
+		.subscribe(new Consumer<String>() {
 			@Override
-			public void call(String s) {
+ 			public void accept(String s) throws Exception {
 
 			}
 		});
@@ -495,7 +505,7 @@ public static final String TOKEN_LOGINVIEWMODEL_REFRESH = "token_loginviewmodel_
 //参数1：接受人（上下文）
 //参数2：定义的token
 //参数3：执行的回调监听
-Messenger.getDefault().register(context, LoginViewModel.TOKEN_LOGINVIEWMODEL_REFRESH, new Action0() {
+Messenger.getDefault().register(context, LoginViewModel.TOKEN_LOGINVIEWMODEL_REFRESH, new BindingAction() {
 	@Override
 	public void call() {
 	
@@ -507,9 +517,9 @@ Messenger.getDefault().register(context, LoginViewModel.TOKEN_LOGINVIEWMODEL_REF
 //参数2：定义的token
 //参数3：实体的泛型约束
 //参数4：执行的回调监听
-Messenger.getDefault().register(context, LoginViewModel.TOKEN_LOGINVIEWMODEL_REFRESH, String.class, new Action1<String>() {
+Messenger.getDefault().register(context, LoginViewModel.TOKEN_LOGINVIEWMODEL_REFRESH, String.class, new Consumer<String>() {
 	@Override
-	public void call(String s) {
+ public void accept(String s) throws Exception {
                 
 	}
 });
@@ -599,9 +609,9 @@ if (mBundle != null) {
 //请求打开相机权限
 RxPermissions rxPermissions = new RxPermissions((Activity) context);
 rxPermissions.request(Manifest.permission.CAMERA)
-	.subscribe(new Action1<Boolean>() {
+	.subscribe(new Consumer<Boolean>() {
 		@Override
-		public void call(Boolean aBoolean) {
+		 public void accept(Boolean aBoolean) throws Exception {
 			if (aBoolean) {
 				ToastUtils.showShort("权限已经打开，直接跳入相机");
 			} else {
@@ -619,9 +629,9 @@ rxPermissions.request(Manifest.permission.CAMERA)
 RxJava的方式压缩单张图片，得到一个压缩后的图片文件对象
 ```java
 String filePath = "mnt/sdcard/1.png";
-ImageUtils.compressWithRx(filePath, new Action1<File>() {
+ImageUtils.compressWithRx(filePath, new Consumer<File>() {
 	@Override
-	public void call(File file) {
+	public void accept(File file) throws Exception {
 		//将文件放入RequestBody
 		...
 	}

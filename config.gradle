@@ -28,20 +28,20 @@ ext {
     //依赖第三方配置
     dependencies = [
             //rxjava
-            "rxjava"                               : "io.reactivex:rxjava:1.2.5",
-            "rxandroid"                            : "io.reactivex:rxandroid:1.2.1",
+            "rxjava"                               : "io.reactivex.rxjava2:rxjava:2.1.12",
+            "rxandroid"                            : "io.reactivex.rxjava2:rxandroid:2.0.2",
             //rx管理View的生命周期
-            "rxlifecycle"                          : "com.trello:rxlifecycle:1.0",
-            "rxlifecycle-components"               : "com.trello:rxlifecycle-components:1.0",
+            "rxlifecycle"                          : "com.trello.rxlifecycle2:rxlifecycle:2.2.1",
+            "rxlifecycle-components"               : "com.trello.rxlifecycle2:rxlifecycle-components:2.2.1",
             //rxbinding
-            "rxbinding"                            : "com.jakewharton.rxbinding:rxbinding:1.0.1",
+            "rxbinding"                            : "com.jakewharton.rxbinding2:rxbinding:2.1.1",
             //rx 6.0权限请求
-            "rxpermissions"                        : "com.tbruyelle.rxpermissions:rxpermissions:0.9.4@aar",
+            "rxpermissions"                        : "com.tbruyelle.rxpermissions2:rxpermissions:0.9.5@aar",
             //network
             "okhttp"                               : "com.squareup.okhttp3:okhttp:3.8.1",
             "retrofit"                             : "com.squareup.retrofit2:retrofit:2.3.0",
             "converter-gson"                       : "com.squareup.retrofit2:converter-gson:2.3.0",
-            "adapter-rxjava"                       : "com.squareup.retrofit2:adapter-rxjava:2.3.0",
+            "adapter-rxjava"                       : "com.squareup.retrofit2:adapter-rxjava2:2.4.0",
             //glide图片加载
             "glide"                                : "com.github.bumptech.glide:glide:4.4.0",
             "glide-compiler"                       : "com.github.bumptech.glide:compiler:4.4.0",

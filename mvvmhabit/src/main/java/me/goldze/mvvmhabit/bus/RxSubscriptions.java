@@ -1,25 +1,27 @@
 package me.goldze.mvvmhabit.bus;
 
-import rx.Subscription;
-import rx.subscriptions.CompositeSubscription;
+import org.reactivestreams.Subscription;
+
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.disposables.Disposable;
 
 /**
  * 管理 CompositeSubscription
  */
 public class RxSubscriptions {
-    private static CompositeSubscription mSubscriptions = new CompositeSubscription();
+    private static CompositeDisposable mSubscriptions = new CompositeDisposable ();
 
-    public static boolean isUnsubscribed() {
-        return mSubscriptions.isUnsubscribed();
+    public static boolean isDisposed() {
+        return mSubscriptions.isDisposed();
     }
 
-    public static void add(Subscription s) {
+    public static void add(Disposable s) {
         if (s != null) {
             mSubscriptions.add(s);
         }
     }
 
-    public static void remove(Subscription s) {
+    public static void remove(Disposable s) {
         if (s != null) {
             mSubscriptions.remove(s);
         }
@@ -29,11 +31,8 @@ public class RxSubscriptions {
         mSubscriptions.clear();
     }
 
-    public static void unsubscribe() {
-        mSubscriptions.unsubscribe();
+    public static void dispose() {
+        mSubscriptions.dispose();
     }
 
-    public static boolean hasSubscriptions() {
-        return mSubscriptions.hasSubscriptions();
-    }
 }

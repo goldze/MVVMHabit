@@ -28,6 +28,8 @@ import android.provider.MediaStore.MediaColumns;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
 
+import org.reactivestreams.Subscriber;
+
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.ByteArrayInputStream;
@@ -44,13 +46,14 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
+import io.reactivex.Observable;
+import io.reactivex.ObservableSource;
+import io.reactivex.Observer;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.functions.Consumer;
+import io.reactivex.functions.Function;
+import io.reactivex.schedulers.Schedulers;
 import me.goldze.mvvmhabit.utils.compression.Luban;
-import rx.Observable;
-import rx.Subscriber;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Action1;
-import rx.functions.Func1;
-import rx.schedulers.Schedulers;
 
 import static me.goldze.mvvmhabit.utils.Utils.getContext;
 
@@ -911,7 +914,7 @@ public class ImageUtils {
      * android图片压缩工具
      * 压缩多张图片 RxJava 方式
      */
-    public static void compressWithRx(List<String> files, Subscriber subscriber) {
+    public static void compressWithRx(List<String> files, Observer observer) {
 
         Luban.get(getContext())
                 .load(files)
@@ -919,26 +922,26 @@ public class ImageUtils {
                 .asListObservable()
                 .subscribeOn(Schedulers.computation())
                 .observeOn(AndroidSchedulers.mainThread())
-                .doOnError(new Action1<Throwable>() {
+                .doOnError(new Consumer<Throwable>() {
                     @Override
-                    public void call(Throwable throwable) {
+                    public void accept(Throwable throwable) throws Exception {
                         throwable.printStackTrace();
                     }
                 })
-                .onErrorResumeNext(new Func1<Throwable, Observable<? extends File>>() {
+                .onErrorResumeNext(new Function<Throwable, ObservableSource<? extends File>>() {
                     @Override
-                    public Observable<? extends File> call(Throwable throwable) {
+                    public ObservableSource<? extends File> apply(Throwable throwable) throws Exception {
                         return Observable.empty();
                     }
                 })
-                .subscribe(subscriber);
+                .subscribe(observer);
     }
 
     /**
      * android图片压缩工具
      * 压缩单张图片 RxJava 方式
      */
-    public static void compressWithRx(String url, Action1 action1) {
+    public static void compressWithRx(String url, Consumer consumer) {
 
         Luban.get(getContext())
                 .load(url)
@@ -946,20 +949,19 @@ public class ImageUtils {
                 .asObservable()
                 .subscribeOn(Schedulers.computation())
                 .observeOn(AndroidSchedulers.mainThread())
-                .doOnError(new Action1<Throwable>() {
+                .doOnError(new Consumer<Throwable>() {
                     @Override
-                    public void call(Throwable throwable) {
+                    public void accept(Throwable throwable) throws Exception {
                         throwable.printStackTrace();
                     }
                 })
-                .onErrorResumeNext(new Func1<Throwable, Observable<? extends File>>() {
+                .onErrorResumeNext(new Function<Throwable, ObservableSource<? extends File>>() {
                     @Override
-                    public Observable<? extends File> call(Throwable throwable) {
+                    public ObservableSource<? extends File> apply(Throwable throwable) throws Exception {
                         return Observable.empty();
                     }
                 })
-                .subscribe(action1);
-
+                .subscribe(consumer);
     }
 
 }

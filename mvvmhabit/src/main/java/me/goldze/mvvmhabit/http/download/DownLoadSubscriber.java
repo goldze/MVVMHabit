@@ -1,12 +1,12 @@
 package me.goldze.mvvmhabit.http.download;
 
-import rx.Subscriber;
+import io.reactivex.observers.DisposableObserver;
 
 /**
  * Created by goldze on 2017/5/11.
  */
 
-public class DownLoadSubscriber<T> extends Subscriber<T> {
+public class DownLoadSubscriber<T> extends DisposableObserver<T> {
     private ProgressCallBack fileCallBack;
 
     public DownLoadSubscriber(ProgressCallBack fileCallBack) {
@@ -21,7 +21,7 @@ public class DownLoadSubscriber<T> extends Subscriber<T> {
     }
 
     @Override
-    public void onCompleted() {
+    public void onComplete() {
         if (fileCallBack != null)
             fileCallBack.onCompleted();
     }

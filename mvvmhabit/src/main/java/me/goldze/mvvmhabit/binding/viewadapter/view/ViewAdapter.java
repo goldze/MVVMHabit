@@ -2,14 +2,13 @@ package me.goldze.mvvmhabit.binding.viewadapter.view;
 
 import android.databinding.BindingAdapter;
 import android.view.View;
-import android.widget.TextView;
 
-import com.jakewharton.rxbinding.view.RxView;
+import com.jakewharton.rxbinding2.view.RxView;
 
 import java.util.concurrent.TimeUnit;
 
+import io.reactivex.functions.Consumer;
 import me.goldze.mvvmhabit.binding.command.BindingCommand;
-import rx.functions.Action1;
 
 /**
  * Created by goldze on 2017/6/16.
@@ -29,9 +28,9 @@ public class ViewAdapter {
     public static void onClickCommand(View view, final BindingCommand clickCommand, final boolean isThrottleFirst) {
         if (isThrottleFirst) {
             RxView.clicks(view)
-                    .subscribe(new Action1<Void>() {
+                    .subscribe(new Consumer<Object>() {
                         @Override
-                        public void call(Void aVoid) {
+                        public void accept(Object object) throws Exception {
                             if (clickCommand != null) {
                                 clickCommand.execute();
                             }
@@ -40,9 +39,9 @@ public class ViewAdapter {
         } else {
             RxView.clicks(view)
                     .throttleFirst(CLICK_INTERVAL, TimeUnit.SECONDS)//1秒钟内只允许点击1次
-                    .subscribe(new Action1<Void>() {
+                    .subscribe(new Consumer<Object>() {
                         @Override
-                        public void call(Void aVoid) {
+                        public void accept(Object object) throws Exception {
                             if (clickCommand != null) {
                                 clickCommand.execute();
                             }
@@ -57,9 +56,9 @@ public class ViewAdapter {
     @BindingAdapter(value = {"onLongClickCommand"}, requireAll = false)
     public static void onLongClickCommand(View view, final BindingCommand clickCommand) {
         RxView.longClicks(view)
-                .subscribe(new Action1<Void>() {
+                .subscribe(new Consumer<Object>() {
                     @Override
-                    public void call(Void aVoid) {
+                    public void accept(Object object) throws Exception {
                         if (clickCommand != null) {
                             clickCommand.execute();
                         }

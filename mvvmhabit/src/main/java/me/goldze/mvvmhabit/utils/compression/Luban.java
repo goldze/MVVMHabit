@@ -16,11 +16,12 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import rx.Observable;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Action1;
-import rx.functions.Func1;
-import rx.schedulers.Schedulers;
+import io.reactivex.Observable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.functions.Consumer;
+import io.reactivex.functions.Function;
+import io.reactivex.functions.Predicate;
+import io.reactivex.schedulers.Schedulers;
 
 
 public class Luban {
@@ -62,7 +63,7 @@ public class Luban {
      * use to store
      * retrieved media and thumbnails.
      *
-     * @param context A context.
+     * @param context   A context.
      * @param cacheName The name of the subdirectory in which to store the cache.
      * @see #getPhotoCacheDir(Context)
      */
@@ -98,68 +99,66 @@ public class Luban {
         Preconditions.checkNotNull(mFile, "the image file cannot be null, please call .load() before this method!");
 
         if (compressListener != null) compressListener.onStart();
-
         if (gear == Luban.FIRST_GEAR)
             Observable.just(mFile)
-                    .map(new Func1<String, File>() {
+                    .map(new Function<String, File>() {
                         @Override
-                        public File call(String s) {
+                        public File apply(String s) throws Exception {
                             File file = new File(s);
                             return firstCompress(file);
                         }
                     })
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
-                    .doOnError(new Action1<Throwable>() {
+                    .doOnError(new Consumer<Throwable>() {
                         @Override
-                        public void call(Throwable throwable) {
+                        public void accept(Throwable throwable) throws Exception {
                             if (compressListener != null) compressListener.onError(throwable);
                         }
                     })
                     .onErrorResumeNext(Observable.<File>empty())
-                    .filter(new Func1<File, Boolean>() {
+                    .filter(new Predicate<File>() {
                         @Override
-                        public Boolean call(File file) {
+                        public boolean test(File file) throws Exception {
                             return file != null;
                         }
                     })
-                    .subscribe(new Action1<File>() {
+                    .subscribe(new Consumer<File>() {
                         @Override
-                        public void call(File file) {
+                        public void accept(File file) throws Exception {
                             if (compressListener != null) compressListener.onSuccess(file);
                         }
                     });
         else if (gear == Luban.THIRD_GEAR)
             Observable.just(mFile)
-                    .map(new Func1<String, File>() {
+                    .map(new Function<String, File>() {
                         @Override
-                        public File call(String s) {
+                        public File apply(String s) throws Exception {
                             File file = new File(s);
                             return thirdCompress(file);
                         }
                     })
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
-                    .doOnError(new Action1<Throwable>() {
+                    .doOnError(new Consumer<Throwable>() {
                         @Override
-                        public void call(Throwable throwable) {
+                        public void accept(Throwable throwable) throws Exception {
                             if (compressListener != null) compressListener.onError(throwable);
                         }
                     })
                     .onErrorResumeNext(Observable.<File>empty())
-                    .filter(new Func1<File, Boolean>() {
+                    .filter(new Predicate<File>() {
                         @Override
-                        public Boolean call(File file) {
+                        public boolean test(File file) throws Exception {
                             return file != null;
                         }
                     })
-                    .subscribe(new Action1<File>() {
+                    .subscribe(new Consumer<File>() {
                         @Override
-                        public void call(File file) {
+                        public void accept(File file) throws Exception {
                             if (compressListener != null) compressListener.onSuccess(file);
                         }
                     });
-
         return this;
     }
 
@@ -194,10 +193,9 @@ public class Luban {
 
     public Observable<File> asObservable() {
         if (gear == FIRST_GEAR)
-            return Observable.just(mFile).map(new Func1<String, File>() {
+            return Observable.just(mFile).map(new Function<String, File>() {
                 @Override
-                public File call(String s) {
-
+                public File apply(String s) throws Exception {
                     if (TextUtils.isEmpty(s) || s.contains("http")) {
                         return null;
                     } else {
@@ -208,13 +206,12 @@ public class Luban {
                             return null;
                         }
                     }
-
                 }
             });
         else if (gear == THIRD_GEAR)
-            return Observable.just(mFile).map(new Func1<String, File>() {
+            return Observable.just(mFile).map(new Function<String, File>() {
                 @Override
-                public File call(String s) {
+                public File apply(String s) throws Exception {
                     if (TextUtils.isEmpty(s) || s.contains("http")) {
                         return null;
                     } else {
@@ -225,7 +222,6 @@ public class Luban {
                             return null;
                         }
                     }
-
                 }
             });
         else return Observable.empty();
@@ -233,9 +229,9 @@ public class Luban {
 
     public Observable<File> asListObservable() {
         if (gear == FIRST_GEAR)
-            return Observable.from(mListFile).map(new Func1<String, File>() {
+            return Observable.fromIterable(mListFile).map(new Function<String, File>() {
                 @Override
-                public File call(String s) {
+                public File apply(String s) throws Exception {
                     if (TextUtils.isEmpty(s)) {
                         return null;
                     } else {
@@ -249,9 +245,9 @@ public class Luban {
                 }
             });
         else if (gear == THIRD_GEAR)
-            return Observable.from(mListFile).map(new Func1<String, File>() {
+            return Observable.fromIterable(mListFile).map(new Function<String, File>() {
                 @Override
-                public File call(String s) {
+                public File apply(String s) throws Exception {
                     if (TextUtils.isEmpty(s)) {
                         return null;
                     } else {
@@ -392,8 +388,8 @@ public class Luban {
      * obtain the thumbnail that specify the size
      *
      * @param imagePath the target image path
-     * @param width the width of thumbnail
-     * @param height the height of thumbnail
+     * @param width     the width of thumbnail
+     * @param height    the height of thumbnail
      * @return {@link Bitmap}
      */
     private Bitmap compress(String imagePath, int width, int height) {
@@ -465,11 +461,11 @@ public class Luban {
      * create the thumbnail with the true rotate angle
      *
      * @param largeImagePath the big image path
-     * @param thumbFilePath the thumbnail path
-     * @param width width of thumbnail
-     * @param height height of thumbnail
-     * @param angle rotation angle of thumbnail
-     * @param size the file size of image
+     * @param thumbFilePath  the thumbnail path
+     * @param width          width of thumbnail
+     * @param height         height of thumbnail
+     * @param angle          rotation angle of thumbnail
+     * @param size           the file size of image
      */
     private File compress(String largeImagePath, String thumbFilePath, int width, int height, int angle, long size) {
         Bitmap thbBitmap = compress(largeImagePath, width, height);
@@ -483,7 +479,7 @@ public class Luban {
      * 旋转图片
      * rotate the image with specified angle
      *
-     * @param angle the angle will be rotating 旋转的角度
+     * @param angle  the angle will be rotating 旋转的角度
      * @param bitmap target image               目标图片
      */
     private static Bitmap rotatingImage(int angle, Bitmap bitmap) {
@@ -500,8 +496,8 @@ public class Luban {
      * Save image with specified size
      *
      * @param filePath the image file save path 储存路径
-     * @param bitmap the image what be save   目标图片
-     * @param size the file size of image   期望大小
+     * @param bitmap   the image what be save   目标图片
+     * @param size     the file size of image   期望大小
      */
     private File saveImage(String filePath, Bitmap bitmap, long size) {
         Preconditions.checkNotNull(bitmap, TAG + "bitmap cannot be null");

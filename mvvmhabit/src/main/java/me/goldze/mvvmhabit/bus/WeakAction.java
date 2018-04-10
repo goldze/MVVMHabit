@@ -2,28 +2,29 @@ package me.goldze.mvvmhabit.bus;
 
 import java.lang.ref.WeakReference;
 
-import rx.functions.Action0;
-import rx.functions.Action1;
+import me.goldze.mvvmhabit.binding.command.BindingAction;
+import me.goldze.mvvmhabit.binding.command.BindingConsumer;
+
 
 /**
- * About : kelin的WeakAction
+ * About : kelin的WeakBindingAction
  */
 public class WeakAction<T> {
-    private Action0 action;
-    private Action1<T> action1;
+    private BindingAction action;
+    private BindingConsumer<T> consumer;
     private boolean isLive;
     private Object target;
     private WeakReference reference;
 
-    public WeakAction(Object target, Action0 action) {
+    public WeakAction(Object target, BindingAction action) {
         reference = new WeakReference(target);
         this.action = action;
 
     }
 
-    public WeakAction(Object target, Action1<T> action1) {
+    public WeakAction(Object target, BindingConsumer<T> consumer) {
         reference = new WeakReference(target);
-        this.action1 = action1;
+        this.consumer = consumer;
     }
 
     public void execute() {
@@ -33,9 +34,9 @@ public class WeakAction<T> {
     }
 
     public void execute(T parameter) {
-        if (action1 != null
+        if (consumer != null
                 && isLive()) {
-            action1.call(parameter);
+            consumer.call(parameter);
         }
     }
 
@@ -43,15 +44,15 @@ public class WeakAction<T> {
         reference.clear();
         reference = null;
         action = null;
-        action1 = null;
+        consumer = null;
     }
 
-    public Action0 getAction() {
+    public BindingAction getBindingAction() {
         return action;
     }
 
-    public Action1 getAction1() {
-        return action1;
+    public BindingConsumer getBindingConsumer() {
+        return consumer;
     }
 
     public boolean isLive() {

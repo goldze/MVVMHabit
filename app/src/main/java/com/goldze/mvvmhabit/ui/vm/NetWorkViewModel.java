@@ -4,6 +4,7 @@ import android.content.Context;
 import android.databinding.ObservableArrayList;
 import android.databinding.ObservableBoolean;
 import android.databinding.ObservableList;
+import android.os.Handler;
 
 import com.goldze.mvvmhabit.BR;
 import com.goldze.mvvmhabit.R;
@@ -11,20 +12,25 @@ import com.goldze.mvvmhabit.entity.DemoEntity;
 import com.goldze.mvvmhabit.service.DemoApiService;
 import com.goldze.mvvmhabit.utils.RetrofitClient;
 
+import io.reactivex.Observable;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Action;
+import io.reactivex.functions.Consumer;
 import me.goldze.mvvmhabit.base.BaseViewModel;
+import me.goldze.mvvmhabit.binding.command.BindingAction;
 import me.goldze.mvvmhabit.binding.command.BindingCommand;
+import me.goldze.mvvmhabit.bus.Messenger;
 import me.goldze.mvvmhabit.http.BaseResponse;
 import me.goldze.mvvmhabit.utils.RxUtils;
 import me.goldze.mvvmhabit.utils.ToastUtils;
 import me.tatarka.bindingcollectionadapter2.ItemBinding;
-import rx.functions.Action0;
-import rx.functions.Action1;
 
 /**
  * Created by goldze on 2017/7/17.
  */
 
 public class NetWorkViewModel extends BaseViewModel {
+    private int itemIndex = 0;
 
     public NetWorkViewModel(Context context) {
         super(context);
@@ -41,8 +47,10 @@ public class NetWorkViewModel extends BaseViewModel {
     public UIChangeObservable uc = new UIChangeObservable();
 
     public class UIChangeObservable {
-        //请求成功的观察者
-        public ObservableBoolean isRequestSuccess = new ObservableBoolean(false);
+        //下拉刷新完成的观察者
+        public ObservableBoolean isFinishRefreshing = new ObservableBoolean(false);
+        //上拉加载完成的观察者
+        public ObservableBoolean isFinishLoadmore = new ObservableBoolean(false);
     }
 
     //给RecyclerView添加ObservableList
@@ -51,52 +59,85 @@ public class NetWorkViewModel extends BaseViewModel {
     public ItemBinding<NetWorkItemViewModel> itemBinding = ItemBinding.of(BR.viewModel, R.layout.item_network);
 
     //下拉刷新
-    public BindingCommand onRefreshCommand = new BindingCommand(new Action0() {
+    public BindingCommand onRefreshCommand = new BindingCommand(new BindingAction() {
         @Override
         public void call() {
             ToastUtils.showShort("下拉刷新");
+            //模拟网络请求
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    //刷新完成收回
+                    uc.isFinishRefreshing.set(!uc.isFinishRefreshing.get());
+                }
+            }, 3000);
         }
     });
     //上拉加载
-    public BindingCommand onLoadMoreCommand = new BindingCommand(new Action0() {
+    public BindingCommand onLoadMoreCommand = new BindingCommand(new BindingAction() {
         @Override
         public void call() {
+            if (itemIndex > 50) {
+                ToastUtils.showLong("兄die，你太无聊啦~崩是不可能的~");
+                uc.isFinishLoadmore.set(!uc.isFinishLoadmore.get());
+                return;
+            }
             ToastUtils.showShort("上拉加载");
+            //模拟网络请求完成后收回
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    //刷新完成收回
+                    uc.isFinishLoadmore.set(!uc.isFinishLoadmore.get());
+                    //模拟一部分假数据
+                    for (int i = 0; i < 10; i++) {
+                        DemoEntity.ItemsEntity item = new DemoEntity.ItemsEntity();
+                        item.setName("模拟条目" + itemIndex++);
+                        //动态添加Item
+                        observableList.add(new NetWorkItemViewModel(context, item));
+                    }
+
+                }
+            }, 3000);
         }
     });
 
     private void requestNetWork() {
+        Messenger.getDefault().register(this, "", new BindingAction() {
+            @Override
+            public void call() {
+
+            }
+        });
         RetrofitClient.getInstance().create(DemoApiService.class)
                 .demoGet()
                 .compose(RxUtils.bindToLifecycle(context)) //请求与View周期同步
                 .compose(RxUtils.schedulersTransformer()) //线程调度
 //                .compose(RxUtils.exceptionTransformer()) // 请求code异常处理, 这里可以换成自己的ExceptionHandle
-                .doOnSubscribe(new Action0() {
+                .doOnSubscribe(new Consumer<Disposable>() {
                     @Override
-                    public void call() {
+                    public void accept(Disposable disposable) throws Exception {
                         showDialog();
                     }
                 })
-                .subscribe(new Action1<BaseResponse<DemoEntity>>() {
+                .subscribe(new Consumer<BaseResponse<DemoEntity>>() {
                     @Override
-                    public void call(BaseResponse<DemoEntity> response) {
+                    public void accept(BaseResponse<DemoEntity> response) throws Exception {
                         dismissDialog();
                         //请求成功
                         if (response.getCode() == 1) {
-                            //将实体赋给全局变量
+                            //将实体赋给全局变量，双向绑定动态添加Item
                             for (DemoEntity.ItemsEntity entity : response.getResult().getItems()) {
                                 observableList.add(new NetWorkItemViewModel(context, entity));
                             }
-                            //刷新界面
-//                            uc.isRequestSuccess.set(!uc.isRequestSuccess.get());
                         } else {
                             //code错误时也可以定义Observable回调到View层去处理
                             ToastUtils.showShort("数据错误");
                         }
                     }
-                }, new Action1<Throwable>() {
+                }, new Consumer<Throwable>() {
                     @Override
-                    public void call(Throwable throwable) {
+                    public void accept(Throwable throwable) throws Exception {
                         dismissDialog();
                         ToastUtils.showShort("请求异常");
                         throwable.printStackTrace();

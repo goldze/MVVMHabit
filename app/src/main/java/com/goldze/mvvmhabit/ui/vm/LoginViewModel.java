@@ -10,15 +10,13 @@ import android.view.View;
 
 import com.goldze.mvvmhabit.ui.activity.DemoActivity;
 
+import io.reactivex.functions.Action;
+import io.reactivex.functions.Consumer;
 import me.goldze.mvvmhabit.base.BaseViewModel;
+import me.goldze.mvvmhabit.binding.command.BindingAction;
 import me.goldze.mvvmhabit.binding.command.BindingCommand;
-import me.goldze.mvvmhabit.bus.Messenger;
-import me.goldze.mvvmhabit.bus.RxBus;
-import me.goldze.mvvmhabit.bus.RxSubscriptions;
+import me.goldze.mvvmhabit.binding.command.BindingConsumer;
 import me.goldze.mvvmhabit.utils.ToastUtils;
-import rx.Subscription;
-import rx.functions.Action0;
-import rx.functions.Action1;
 
 /**
  * Created by goldze on 2017/7/17.
@@ -44,14 +42,14 @@ public class LoginViewModel extends BaseViewModel {
     }
 
     //清除用户名的点击事件, 逻辑从View层转换到ViewModel层
-    public BindingCommand clearUserNameOnClickCommand = new BindingCommand(new Action0() {
+    public BindingCommand clearUserNameOnClickCommand = new BindingCommand(new BindingAction() {
         @Override
         public void call() {
             userName.set("");
         }
     });
     //密码显示开关  (你可以尝试着狂按这个按钮,会发现它有防多次点击的功能)
-    public BindingCommand passwordShowSwitchOnClickCommand = new BindingCommand(new Action0() {
+    public BindingCommand passwordShowSwitchOnClickCommand = new BindingCommand(new BindingAction() {
         @Override
         public void call() {
             //让观察者的数据改变,在View层的监听则会被调用
@@ -59,7 +57,7 @@ public class LoginViewModel extends BaseViewModel {
         }
     });
     //用户名输入框焦点改变的回调事件
-    public BindingCommand<Boolean> onFocusChangeCommand = new BindingCommand<>(new Action1<Boolean>() {
+    public BindingCommand<Boolean> onFocusChangeCommand = new BindingCommand<>(new BindingConsumer<Boolean>() {
         @Override
         public void call(Boolean hasFocus) {
             if (hasFocus) {
@@ -70,7 +68,7 @@ public class LoginViewModel extends BaseViewModel {
         }
     });
     //登录按钮的点击事件
-    public BindingCommand loginOnClickCommand = new BindingCommand(new Action0() {
+    public BindingCommand loginOnClickCommand = new BindingCommand(new BindingAction() {
         @Override
         public void call() {
             login();
