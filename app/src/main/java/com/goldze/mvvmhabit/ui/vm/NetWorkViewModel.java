@@ -63,14 +63,8 @@ public class NetWorkViewModel extends BaseViewModel {
         @Override
         public void call() {
             ToastUtils.showShort("下拉刷新");
-            //模拟网络请求
-            new Handler().postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    //刷新完成收回
-                    uc.isFinishRefreshing.set(!uc.isFinishRefreshing.get());
-                }
-            }, 3000);
+            //重新请求
+            requestNetWork();
         }
     });
     //上拉加载
@@ -92,23 +86,17 @@ public class NetWorkViewModel extends BaseViewModel {
                     //模拟一部分假数据
                     for (int i = 0; i < 10; i++) {
                         DemoEntity.ItemsEntity item = new DemoEntity.ItemsEntity();
+                        item.setId(-1);
                         item.setName("模拟条目" + itemIndex++);
                         //动态添加Item
                         observableList.add(new NetWorkItemViewModel(context, item));
                     }
-
                 }
             }, 3000);
         }
     });
 
     private void requestNetWork() {
-        Messenger.getDefault().register(this, "", new BindingAction() {
-            @Override
-            public void call() {
-
-            }
-        });
         RetrofitClient.getInstance().create(DemoApiService.class)
                 .demoGet()
                 .compose(RxUtils.bindToLifecycle(context)) //请求与View周期同步
@@ -124,6 +112,10 @@ public class NetWorkViewModel extends BaseViewModel {
                     @Override
                     public void accept(BaseResponse<DemoEntity> response) throws Exception {
                         dismissDialog();
+                        //清除列表
+                        observableList.clear();
+                        //刷新完成收回
+                        uc.isFinishRefreshing.set(!uc.isFinishRefreshing.get());
                         //请求成功
                         if (response.getCode() == 1) {
                             //将实体赋给全局变量，双向绑定动态添加Item

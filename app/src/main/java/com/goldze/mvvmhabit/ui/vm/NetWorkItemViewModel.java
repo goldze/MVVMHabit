@@ -33,7 +33,7 @@ public class NetWorkItemViewModel extends BaseViewModel {
         @Override
         public void call() {
             //这里可以通过一个标识,做出判断，已达到跳入不能界面的逻辑
-            if (entity.getId() == 0) {
+            if (entity.getId() == -1) {
                 ToastUtils.showShort("点击" + entity.getName());
             } else {
                 //跳转到详情界面,传入条目的实体对象
