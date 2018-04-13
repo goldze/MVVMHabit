@@ -54,8 +54,8 @@ dependencies {
     //json解析
     api rootProject.ext.dependencies.gson
     //material-dialogs
-    api (rootProject.ext.dependencies.core)
-    api (rootProject.ext.dependencies.commons)
+    api (rootProject.ext.dependencies["material-dialogs-core"])
+    api (rootProject.ext.dependencies["material-dialogs-commons"])
     //glide图片加载库
     api (rootProject.ext.dependencies.glide)
     annotationProcessor (rootProject.ext.dependencies["glide-compiler"])

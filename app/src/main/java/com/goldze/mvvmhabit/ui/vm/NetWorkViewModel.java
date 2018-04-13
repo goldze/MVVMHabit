@@ -12,14 +12,11 @@ import com.goldze.mvvmhabit.entity.DemoEntity;
 import com.goldze.mvvmhabit.service.DemoApiService;
 import com.goldze.mvvmhabit.utils.RetrofitClient;
 
-import io.reactivex.Observable;
 import io.reactivex.disposables.Disposable;
-import io.reactivex.functions.Action;
 import io.reactivex.functions.Consumer;
 import me.goldze.mvvmhabit.base.BaseViewModel;
 import me.goldze.mvvmhabit.binding.command.BindingAction;
 import me.goldze.mvvmhabit.binding.command.BindingCommand;
-import me.goldze.mvvmhabit.bus.Messenger;
 import me.goldze.mvvmhabit.http.BaseResponse;
 import me.goldze.mvvmhabit.utils.RxUtils;
 import me.goldze.mvvmhabit.utils.ToastUtils;
@@ -111,6 +108,8 @@ public class NetWorkViewModel extends BaseViewModel {
                 .subscribe(new Consumer<BaseResponse<DemoEntity>>() {
                     @Override
                     public void accept(BaseResponse<DemoEntity> response) throws Exception {
+                        itemIndex = 0;
+                        //关闭对话框
                         dismissDialog();
                         //清除列表
                         observableList.clear();
