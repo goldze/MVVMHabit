@@ -1,5 +1,6 @@
 package com.goldze.mvvmhabit.ui.vm;
 
+import android.app.Activity;
 import android.content.Context;
 import android.databinding.ObservableBoolean;
 import android.databinding.ObservableField;
@@ -92,7 +93,10 @@ public class LoginViewModel extends BaseViewModel {
             @Override
             public void run() {
                 dismissDialog();
+                //进入DemoActivity页面
                 startActivity(DemoActivity.class);
+                //关闭页面
+                ((Activity)context).finish();
             }
         }, 3 * 1000);
     }

@@ -23,12 +23,6 @@ dependencies {
 
     api fileTree(include: ['*.jar'], dir: 'libs')
     testCompile 'junit:junit:4.12'
-//    api rootProject.ext.support["support-v4"]
-//    api rootProject.ext.support["appcompat-v7"]
-//    api rootProject.ext.support["support-v13"]
-//    api rootProject.ext.support["recyclerview-v7"]
-//    api rootProject.ext.support["support-fragment"]
-//    api rootProject.ext.support["animated-vector-drawable"]
 
     api 'com.android.support:support-v4:' + rootProject.ext.version["support-version"]
     api 'com.android.support:appcompat-v7:' + rootProject.ext.version["support-version"]
