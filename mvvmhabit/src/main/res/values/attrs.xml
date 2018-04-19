@@ -22,9 +22,8 @@
     <attr name="onFocusChangeCommand" format="reference" />
     <attr name="isThrottleFirst" format="boolean" />
     <attr name="currentView" format="reference" />
-
+    <!-- require boolean value to decide whether requestFocus for view. -->
     <declare-styleable name="View">
-
         <!-- require BindingCommand {@link com.kelin.mvvmlight.command.BindingCommand } to deal with view click event. -->
         <attr name="onClickCommand" />
         <attr name="onLongClickCommand" />
@@ -58,14 +57,13 @@
     </declare-styleable>
 
     <declare-styleable name="TextView">
-        <!-- require boolean value to decide whether requestFocus for view. -->
-        <attr name="requestFocus" />
         <!--require BindingCommand<TextChangeDataWrapper> -->
         <attr name="beforeTextChangedCommand" format="reference" />
         <!--require BindingCommand<TextChangeDataWrapper> -->
         <attr name="onTextChangedCommand" format="reference" />
         <!--require BindingCommand<String> -->
         <attr name="afterTextChangedCommand" format="reference" />
+        <attr name="textChanged" format="reference" />
     </declare-styleable>
 
 
