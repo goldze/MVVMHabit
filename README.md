@@ -382,10 +382,10 @@ layoutManager控制是线性的还是网格的，lineManager是控制水平的�
 
 square出品的框架，用起来确实非常方便。**MVVMHabit**中引入了
 ```gradle
-compile "com.squareup.okhttp3:okhttp:3.8.1"
-compile "com.squareup.retrofit2:retrofit:2.3.0"
-compile "com.squareup.retrofit2:converter-gson:2.3.0"
-compile "com.squareup.retrofit2:adapter-rxjava:2.3.0"
+api "com.squareup.okhttp3:okhttp:3.10.0"
+api "com.squareup.retrofit2:retrofit:2.4.0"
+api "com.squareup.retrofit2:converter-gson:2.4.0"
+api "com.squareup.retrofit2:adapter-rxjava2:2.4.0"
 ```
 构建Retrofit时加入
 ```java
