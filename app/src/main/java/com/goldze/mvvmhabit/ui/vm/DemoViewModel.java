@@ -11,10 +11,15 @@ import com.goldze.mvvmhabit.ui.fragment.FormFragment;
 import com.goldze.mvvmhabit.ui.fragment.NetWorkFragment;
 import com.tbruyelle.rxpermissions2.RxPermissions;
 
+import org.reactivestreams.Subscription;
+
+import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
 import me.goldze.mvvmhabit.base.BaseViewModel;
 import me.goldze.mvvmhabit.binding.command.BindingAction;
 import me.goldze.mvvmhabit.binding.command.BindingCommand;
+import me.goldze.mvvmhabit.bus.RxBus;
+import me.goldze.mvvmhabit.bus.RxSubscriptions;
 import me.goldze.mvvmhabit.http.DownLoadManager;
 import me.goldze.mvvmhabit.http.download.ProgressCallBack;
 import me.goldze.mvvmhabit.utils.ToastUtils;
@@ -77,6 +82,7 @@ public class DemoViewModel extends BaseViewModel {
                             }
                         }
                     });
+
         }
     });
 

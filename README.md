@@ -462,7 +462,7 @@ RxBus并不是一个库，而是一种模式。相信大多数开发者都使用
 在ViewModel中重写registerRxBus()方法来注册RxBus，重写removeRxBus()方法来移除RxBus
 ```java
 //订阅者
-private Subscription mSubscription;
+private Disposable mSubscription;
 //注册RxBus
 @Override
 public void registerRxBus() {
