@@ -19,9 +19,9 @@ public class ViewAdapter {
     /**
      * 双向的SpinnerViewAdapter, 可以监听选中的条目,也可以回显选中的值
      *
-     * @param spinner 控件本身
-     * @param itemDatas 下拉条目的集合
-     * @param valueReply 回显的value
+     * @param spinner        控件本身
+     * @param itemDatas      下拉条目的集合
+     * @param valueReply     回显的value
      * @param bindingCommand 条目点击的监听
      */
     @BindingAdapter(value = {"itemDatas", "valueReply", "onItemSelectedCommand"}, requireAll = false)
@@ -53,9 +53,9 @@ public class ViewAdapter {
         if (!TextUtils.isEmpty(valueReply)) {
             for (int i = 0; i < itemDatas.size(); i++) {
                 IKeyAndValue iKeyAndValue = itemDatas.get(i);
-                if (iKeyAndValue.getValue().equals(valueReply)) {
+                if (valueReply.equals(iKeyAndValue.getValue())) {
                     spinner.setSelection(i);
-                    break;
+                    return;
                 }
             }
         }
