@@ -69,7 +69,7 @@ public class NetWorkViewModel extends BaseViewModel {
         @Override
         public void call() {
             if (itemIndex > 50) {
-                ToastUtils.showLong("兄die，你太无聊啦~崩是不可能的~");
+                ToastUtils.showLong("兄dei，你太无聊啦~崩是不可能的~");
                 uc.isFinishLoadmore.set(!uc.isFinishLoadmore.get());
                 return;
             }

@@ -43,8 +43,8 @@ public class FormViewModel extends BaseViewModel {
 
     @Override
     public void onCreate() {
+        //sexItemDatas 一般可以从本地Sqlite数据库中取出数据字典对象集合，让该对象实现IKeyAndValue接口
         sexItemDatas = new ArrayList<>();
-        //SpinnerItemData该实体可以是
         sexItemDatas.add(new SpinnerItemData("男", "1"));
         sexItemDatas.add(new SpinnerItemData("女", "2"));
     }
