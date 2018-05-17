@@ -1,6 +1,7 @@
 package me.goldze.mvvmhabit.utils;
 
 import android.content.Context;
+import android.support.v4.app.Fragment;
 
 
 import com.trello.rxlifecycle2.LifecycleProvider;
@@ -23,13 +24,26 @@ public class RxUtils {
     /**
      * 生命周期绑定
      *
-     * @param context Activity或者Fragment
+     * @param lifecycle Activity
      */
-    public static <T> LifecycleTransformer<T> bindToLifecycle(Context context) {
-        if (context instanceof LifecycleProvider) {
-            return ((LifecycleProvider) context).bindToLifecycle();
+    public static <T> LifecycleTransformer<T> bindToLifecycle(Context lifecycle) {
+        if (lifecycle instanceof LifecycleProvider) {
+            return ((LifecycleProvider) lifecycle).bindToLifecycle();
         } else {
             throw new IllegalArgumentException("context not the LifecycleProvider type");
+        }
+    }
+
+    /**
+     * 生命周期绑定
+     *
+     * @param lifecycle Fragment
+     */
+    public static <T> LifecycleTransformer<T> bindToLifecycle(Fragment lifecycle) {
+        if (lifecycle instanceof LifecycleProvider) {
+            return ((LifecycleProvider) lifecycle).bindToLifecycle();
+        } else {
+            throw new IllegalArgumentException("fragment not the LifecycleProvider type");
         }
     }
 

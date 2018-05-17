@@ -7,7 +7,6 @@ import android.support.v4.app.Fragment;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 
-import me.goldze.mvvmhabit.utils.KLog;
 import me.goldze.mvvmhabit.utils.MaterialDialogUtils;
 
 /**
@@ -15,7 +14,7 @@ import me.goldze.mvvmhabit.utils.MaterialDialogUtils;
  */
 public class BaseViewModel implements IBaseViewModel {
     protected Context context;
-
+    protected Fragment fragment;
     public BaseViewModel() {
     }
 
@@ -25,6 +24,7 @@ public class BaseViewModel implements IBaseViewModel {
 
     public BaseViewModel(Fragment fragment) {
         this(fragment.getContext());
+        this.fragment = fragment;
     }
 
     private MaterialDialog dialog;
