@@ -39,7 +39,7 @@
 	1. 全局的Activity堆栈式管理，在程序任何地方可以打开、结束指定的Activity，一键退出应用程序。
 	2. LoggingInterceptor全局拦截网络请求，打印Request和Response，格式化json、xml数据显示，方便与后台调试接口。
 	3. 全局Cookie，支持SharedPreferences和内存两种管理模式。
-	4. 全局的错误监听，根据不同的状态码或异常设置相应的message。
+	4. 通用的网络请求异常监听，根据不同的状态码或异常设置相应的message。
 	5. 全局的异常捕获，程序发生异常时不会崩溃，可跳入异常界面重启应用。
 	6. 全局事件回调，提供RxBus、Messenger两种回调方式。
 	7. 全局任意位置一行代码实现文件下载。
@@ -455,7 +455,7 @@ RetrofitClient.getInstance().create(DemoApiService.class)
 
 在使用Retrofit请求时，加入组合操作符`.compose(RxUtils.exceptionTransformer())`，当发生网络异常时，回调onError(ResponseThrowable)方法，可以拿到异常的code和message，做相应处理。<br>
 
-mvvmhabit中自定义了一个[ExceptionHandle](./mvvmhabit/src/main/java/me/goldze/mvvmhabit/http/ExceptionHandle.java)，已为你完成了大部分网络异常的判断，也可自行根据项目的具体需求调整逻辑。<br>
+> mvvmhabit中自定义了一个[ExceptionHandle](./mvvmhabit/src/main/java/me/goldze/mvvmhabit/http/ExceptionHandle.java)，已为你完成了大部分网络异常的判断，也可自行根据项目的具体需求调整逻辑。<br>
 
 **注意：** 这里的网络异常code，并非是与服务端协议约定的code。网络异常可以分为两部分，一部分是协议异常，即出现code = 404、500等，属于HttpException，另一部分为请求异常，即出现：连接超时、解析错误、证书验证失等。而与服务端约定的code规则，它不属于网络异常，它是属于一种业务异常。在请求中可以使用RxJava的filter(过滤器)，也可以自定义BaseSubscriber统一处理网络请求的业务逻辑异常。由于每个公司的业务协议不一样，所以具体需要你自己来处理该类异常。
 ## 3、辅助功能
