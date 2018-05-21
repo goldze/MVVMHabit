@@ -453,7 +453,9 @@ RetrofitClient.getInstance().create(DemoApiService.class)
 #### 2.3.5、网络异常处理
 网络异常在网络请求中非常常见，比如请求超时、解析错误、资源不存在、服务器内部错误等，在客户端则需要做相应的处理(当然，你可以把一部分异常甩锅给网络，比如当出现code 500时，提示：请求超时，请检查网络连接，此时偷偷将异常信息发送至后台(手动滑稽))。<br>
 
-在使用Retrofit请求时，加入组合操作符`.compose(RxUtils.exceptionTransformer())`，mvvmhabit中自定义了一个[ExceptionHandle](./mvvmhabit/src/main/java/me/goldze/mvvmhabit/http/ExceptionHandle.java)，为你完成了大部分网络异常的判断，也可自行根据项目的具体需求调整逻辑。<br>
+在使用Retrofit请求时，加入组合操作符`.compose(RxUtils.exceptionTransformer())`，当发生网络异常时，回调onError(ResponseThrowable)方法，可以拿到异常的code和message，做相应处理。<br>
+
+mvvmhabit中自定义了一个[ExceptionHandle](./mvvmhabit/src/main/java/me/goldze/mvvmhabit/http/ExceptionHandle.java)，已为你完成了大部分网络异常的判断，也可自行根据项目的具体需求调整逻辑。<br>
 
 **注意：** 这里的网络异常code，并非是与服务端协议约定的code。网络异常可以分为两部分，一部分是协议异常，即出现code = 404、500等，属于HttpException，另一部分为请求异常，即出现：连接超时、解析错误、证书验证失等。而与服务端约定的code规则，它不属于网络异常，它是属于一种业务异常。在请求中可以使用RxJava的filter(过滤器)，也可以自定义BaseSubscriber统一处理网络请求的业务逻辑异常。由于每个公司的业务协议不一样，所以具体需要你自己来处理该类异常。
 ## 3、辅助功能
