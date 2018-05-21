@@ -65,7 +65,9 @@ public class RxUtils {
         return new ObservableTransformer() {
             @Override
             public ObservableSource apply(Observable observable) {
-                return (observable).map(new HandleFuc<T>()).onErrorResumeNext(new HttpResponseFunc<T>());
+                return (observable)
+//                        .map(new HandleFuc<T>())  //这里可以取出BaseResponse中的Result
+                        .onErrorResumeNext(new HttpResponseFunc<T>());
             }
         };
     }

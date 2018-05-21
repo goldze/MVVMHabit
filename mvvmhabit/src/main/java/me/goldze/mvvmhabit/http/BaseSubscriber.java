@@ -26,10 +26,10 @@ public abstract class BaseSubscriber<T> extends DisposableObserver<T> {
         KLog.e(e.getMessage());
         // todo error somthing
 
-        if (e instanceof ExceptionHandle.ResponeThrowable) {
-            onError((ExceptionHandle.ResponeThrowable) e);
+        if (e instanceof ResponseThrowable) {
+            onError((ResponseThrowable) e);
         } else {
-            onError(new ExceptionHandle.ResponeThrowable(e, ExceptionHandle.ERROR.UNKNOWN));
+            onError(new ResponseThrowable(e, ExceptionHandle.ERROR.UNKNOWN));
         }
     }
 
@@ -56,7 +56,7 @@ public abstract class BaseSubscriber<T> extends DisposableObserver<T> {
     }
 
 
-    public abstract void onError(ExceptionHandle.ResponeThrowable e);
+    public abstract void onError(ResponseThrowable e);
 
     @Override
     public void onNext(Object o) {

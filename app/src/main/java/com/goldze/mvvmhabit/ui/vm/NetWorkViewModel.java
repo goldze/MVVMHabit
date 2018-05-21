@@ -18,6 +18,8 @@ import me.goldze.mvvmhabit.base.BaseViewModel;
 import me.goldze.mvvmhabit.binding.command.BindingAction;
 import me.goldze.mvvmhabit.binding.command.BindingCommand;
 import me.goldze.mvvmhabit.http.BaseResponse;
+import me.goldze.mvvmhabit.http.ExceptionHandle;
+import me.goldze.mvvmhabit.http.ResponseThrowable;
 import me.goldze.mvvmhabit.utils.RxUtils;
 import me.goldze.mvvmhabit.utils.ToastUtils;
 import me.tatarka.bindingcollectionadapter2.ItemBinding;
@@ -98,7 +100,7 @@ public class NetWorkViewModel extends BaseViewModel {
                 .demoGet()
                 .compose(RxUtils.bindToLifecycle(context)) //请求与View周期同步
                 .compose(RxUtils.schedulersTransformer()) //线程调度
-//                .compose(RxUtils.exceptionTransformer()) // 请求code异常处理, 这里可以换成自己的ExceptionHandle
+                .compose(RxUtils.exceptionTransformer()) // 网络错误的异常转换, 这里可以换成自己的ExceptionHandle
                 .doOnSubscribe(new Consumer<Disposable>() {
                     @Override
                     public void accept(Disposable disposable) throws Exception {
@@ -126,11 +128,11 @@ public class NetWorkViewModel extends BaseViewModel {
                             ToastUtils.showShort("数据错误");
                         }
                     }
-                }, new Consumer<Throwable>() {
+                }, new Consumer<ResponseThrowable>() {
                     @Override
-                    public void accept(Throwable throwable) throws Exception {
+                    public void accept(ResponseThrowable throwable) throws Exception {
                         dismissDialog();
-                        ToastUtils.showShort("请求异常");
+                        ToastUtils.showShort(throwable.message);
                         throwable.printStackTrace();
                     }
                 });

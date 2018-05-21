@@ -23,14 +23,4 @@ public interface DemoApiService {
     @FormUrlEncoded
     @POST("action/apiv2/banner?catalog=1")
     Observable<BaseResponse<DemoEntity>> demoPost(@Field("token") String token);
-
-    /**
-     * 下载文件
-     *
-     * @param fileUrl 文件下载路径
-     * @return
-     */
-    @Streaming
-    @GET
-    Observable<ResponseBody> downloadFile(@Url String fileUrl);
 }
