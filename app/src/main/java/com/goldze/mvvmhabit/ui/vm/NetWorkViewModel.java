@@ -5,7 +5,10 @@ import android.databinding.ObservableArrayList;
 import android.databinding.ObservableBoolean;
 import android.databinding.ObservableList;
 import android.os.Handler;
+import android.support.annotation.NonNull;
 
+import com.afollestad.materialdialogs.DialogAction;
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.goldze.mvvmhabit.BR;
 import com.goldze.mvvmhabit.R;
 import com.goldze.mvvmhabit.entity.DemoEntity;
@@ -17,9 +20,12 @@ import io.reactivex.functions.Consumer;
 import me.goldze.mvvmhabit.base.BaseViewModel;
 import me.goldze.mvvmhabit.binding.command.BindingAction;
 import me.goldze.mvvmhabit.binding.command.BindingCommand;
+import me.goldze.mvvmhabit.binding.command.BindingConsumer;
+import me.goldze.mvvmhabit.bus.Messenger;
 import me.goldze.mvvmhabit.http.BaseResponse;
 import me.goldze.mvvmhabit.http.ExceptionHandle;
 import me.goldze.mvvmhabit.http.ResponseThrowable;
+import me.goldze.mvvmhabit.utils.MaterialDialogUtils;
 import me.goldze.mvvmhabit.utils.RxUtils;
 import me.goldze.mvvmhabit.utils.ToastUtils;
 import me.tatarka.bindingcollectionadapter2.ItemBinding;
@@ -29,6 +35,7 @@ import me.tatarka.bindingcollectionadapter2.ItemBinding;
  */
 
 public class NetWorkViewModel extends BaseViewModel {
+    public static final String TOKEN_NETWORKVIEWMODEL_DELTE_ITEM = "token_networkviewmodel_delte_item";
     private int itemIndex = 0;
 
     public NetWorkViewModel(Context context) {
@@ -40,6 +47,32 @@ public class NetWorkViewModel extends BaseViewModel {
         super.onCreate();
         //请求网络数据
         requestNetWork();
+    }
+
+    @Override
+    public void registerRxBus() {
+        super.registerRxBus();
+        //使用context对象注册监听条目的删除，当界面销毁时, 会自动解除该事件
+        Messenger.getDefault().register(context, TOKEN_NETWORKVIEWMODEL_DELTE_ITEM, NetWorkItemViewModel.class, new BindingConsumer<NetWorkItemViewModel>() {
+            @Override
+            public void call(final NetWorkItemViewModel netWorkItemViewModel) {
+                int index = observableList.indexOf(netWorkItemViewModel);
+                //删除选择对话框
+                MaterialDialogUtils.showBasicDialog(context, "提示", "是否删除【" + netWorkItemViewModel.entity.getName() + "】？ 列表索引值：" + index)
+                        .onNegative(new MaterialDialog.SingleButtonCallback() {
+                            @Override
+                            public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                                ToastUtils.showShort("取消");
+                            }
+                        }).onPositive(new MaterialDialog.SingleButtonCallback() {
+                    @Override
+                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                        //点击确定，在 observableList 绑定中删除，界面立即刷新
+                        observableList.remove(netWorkItemViewModel);
+                    }
+                }).show();
+            }
+        });
     }
 
     //封装一个界面发生改变的观察者

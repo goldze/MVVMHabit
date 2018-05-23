@@ -18,7 +18,8 @@
         android:gravity="center_vertical"
         android:orientation="horizontal"
         android:padding="10dp"
-        binding:onClickCommand="@{viewModel.itemClick}">
+        binding:onClickCommand="@{viewModel.itemClick}"
+        binding:onLongClickCommand="@{viewModel.itemLongClick}">
 
         <ImageView
             android:layout_width="50dp"
