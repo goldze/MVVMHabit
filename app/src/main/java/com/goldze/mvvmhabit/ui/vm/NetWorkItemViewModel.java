@@ -3,12 +3,8 @@ package com.goldze.mvvmhabit.ui.vm;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
-import android.widget.TextView;
 
-import com.afollestad.materialdialogs.DialogAction;
-import com.afollestad.materialdialogs.MaterialDialog;
 import com.goldze.mvvmhabit.R;
 import com.goldze.mvvmhabit.entity.DemoEntity;
 import com.goldze.mvvmhabit.ui.fragment.DetailFragment;
@@ -16,9 +12,7 @@ import com.goldze.mvvmhabit.ui.fragment.DetailFragment;
 import me.goldze.mvvmhabit.base.BaseViewModel;
 import me.goldze.mvvmhabit.binding.command.BindingAction;
 import me.goldze.mvvmhabit.binding.command.BindingCommand;
-import me.goldze.mvvmhabit.binding.command.BindingConsumer;
 import me.goldze.mvvmhabit.bus.Messenger;
-import me.goldze.mvvmhabit.utils.MaterialDialogUtils;
 import me.goldze.mvvmhabit.utils.ToastUtils;
 
 /**
@@ -54,7 +48,7 @@ public class NetWorkItemViewModel extends BaseViewModel {
     public BindingCommand itemLongClick = new BindingCommand(new BindingAction() {
         @Override
         public void call() {
-
+            //使用Messenger发送事件，在NetWorkViewModel中完成删除逻辑
             Messenger.getDefault().send(NetWorkItemViewModel.this, NetWorkViewModel.TOKEN_NETWORKVIEWMODEL_DELTE_ITEM);
         }
     });

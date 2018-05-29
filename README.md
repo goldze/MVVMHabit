@@ -90,14 +90,6 @@ dependencies {
 apply from: "config.gradle"
 ```
 
-最后面加入：
-
-```gradle
-task clean(type: Delete) {
-	delete rootProject.buildDir
-}
-```
-
 **注意：** config.gradle中的 
 
 android = [] 是你的开发相关版本配置，可自行修改
@@ -365,10 +357,15 @@ ObservableList<>和ItemBinding<>的泛型是Item布局所对应的ItemViewModel
 	binding:layoutManager="@{LayoutManagers.linear()}"
 	binding:lineManager="@{LineManagers.horizontal()}" />
 ```
-layoutManager控制是线性的还是网格的，lineManager是控制水平的还是垂直的
-> layoutManager和lineManager需要导入
+layoutManager控制是线性(包含水平和垂直)排列还是网格排列，lineManager是设置分割线
+例如：</br>
+	网格布局的写法：`binding:layoutManager="@{LayoutManagers.grid(3)}`</br>
+	水平布局的写法：`binding:layoutManager="@{LayoutManagers.linear(LinearLayoutManager.HORIZONTAL,Boolean.FALSE)}"`</br>
+> 使用到相关类，则需要导入该类才能使用，和导入Java类相似
 > `<import type="me.tatarka.bindingcollectionadapter2.LayoutManagers" />`
 > `<import type="me.goldze.mvvmhabit.binding.viewadapter.recyclerview.LineManagers" />`
+> `<import type="android.support.v7.widget.LinearLayoutManager" />`
+
 
 这样绑定后，在ViewModel中调用ObservableList的add()方法，添加一个Item的ViewModel，界面上就会实时绘制出一个Item。在Item对应的ViewModel中，同样可以以绑定的形式完成逻辑
 > 可以在请求到数据后，循环添加`observableList.add(new NetWorkItemViewModel(context, entity));`详细可以参考例子程序中NetWorkViewModel类
