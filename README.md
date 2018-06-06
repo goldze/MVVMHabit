@@ -358,12 +358,14 @@ ObservableList<>和ItemBinding<>的泛型是Item布局所对应的ItemViewModel
 	binding:lineManager="@{LineManagers.horizontal()}" />
 ```
 layoutManager控制是线性(包含水平和垂直)排列还是网格排列，lineManager是设置分割线
-例如：</br>
-	网格布局的写法：`binding:layoutManager="@{LayoutManagers.grid(3)}`</br>
-	水平布局的写法：`binding:layoutManager="@{LayoutManagers.linear(LinearLayoutManager.HORIZONTAL,Boolean.FALSE)}"`</br>
-> 使用到相关类，则需要导入该类才能使用，和导入Java类相似
-> `<import type="me.tatarka.bindingcollectionadapter2.LayoutManagers" />`
-> `<import type="me.goldze.mvvmhabit.binding.viewadapter.recyclerview.LineManagers" />`
+
+网格布局的写法：`binding:layoutManager="@{LayoutManagers.grid(3)}`</br>
+水平布局的写法：`binding:layoutManager="@{LayoutManagers.linear(LinearLayoutManager.HORIZONTAL,Boolean.FALSE)}"`</br>
+
+使用到相关类，则需要导入该类才能使用，和导入Java类相似
+
+> `<import type="me.tatarka.bindingcollectionadapter2.LayoutManagers" />`</br>
+> `<import type="me.goldze.mvvmhabit.binding.viewadapter.recyclerview.LineManagers" />`</br>
 > `<import type="android.support.v7.widget.LinearLayoutManager" />`
 
 
@@ -688,7 +690,7 @@ ImageUtils.compressWithRx(filePaths, new Subscriber() {
 ##### 4.1.1、绑定错误
 绑定错误是一个很常见的错误，基本都会犯。比如TextView的 `android:text=""` ，本来要绑定的是一个String类型，结果你不小心，可能绑了一个Boolean上去，或者变量名写错了，这时候编辑器不会报红错，而是在点编译运行的时候，在AS的Messages中会出现错误提示，如下图：
 
-![](./img/error1.png) 
+<img src="./img/error1.png" width="640" hegiht="640" align=center />
 
 解决方法：把错误提示拉到最下面 (上面的提示找不到BR类这个不要管它)，看最后一个错误 ，这里会提示是哪个xml出了错，并且会定位到行数，按照提示找到对应位置，即可解决该编译错误的问题。
 
@@ -697,7 +699,7 @@ ImageUtils.compressWithRx(filePaths, new Subscriber() {
 
 在xml中需要导入ViewModel或者一些业务相关的类，假如在xml中导错了类，那一行则会报红，但是res/layout却没有错误提示，有一种场景，非常特殊，不容易找出错误位置。就是你写了一个xml，导入了一个类，比如XXXUtils，后来因为业务需求，把那个XXXUtils删了，这时候res/layout下不会出现任何错误，而你在编译运行的时候，才会出现错误日志。苦逼的是，不会像上面那样提示哪一个xml文件，哪一行出错了，最后一个错误只是一大片的报错报告。如下图：
 
-![](./img/error2.png) 
+<img src="./img/error2.png" width="640" hegiht="640" align=center />
 
 解决方法：同样找到最后一个错误提示，找到Cannot resolve type for **xxx**这一句 (xxx是类名)，然后使用全局搜索 (Ctrl+H) ，搜索哪个xml引用了这个类，跟踪点击进去，在xml就会出现一个红错，即可解析该编译错误的问题。
 
