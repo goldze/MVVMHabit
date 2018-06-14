@@ -413,12 +413,12 @@ OkHttpClient okHttpClient = new OkHttpClient.Builder()
 	.addInterceptor(mLoggingInterceptor)
 	.build();
 ```
-**CacheInterceptor：**缓存拦截器，当没有网络连接的时候自动读取缓存中的数据，缓存存放时间默认为3天。</br>
+**CacheInterceptor：** 缓存拦截器，当没有网络连接的时候自动读取缓存中的数据，缓存存放时间默认为3天。</br>
 创建缓存对象
 ```java
 //缓存时间
 int CACHE_TIMEOUT = 10 * 1024 * 1024
-//缓存存放目录
+//缓存存放的文件
 File httpCacheDirectory = new File(mContext.getCacheDir(), "goldze_cache");
 //缓存对象
 Cache cache = new Cache(httpCacheDirectory, CACHE_TIMEOUT);
