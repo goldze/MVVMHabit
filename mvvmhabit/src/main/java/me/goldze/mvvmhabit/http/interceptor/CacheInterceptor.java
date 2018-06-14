@@ -16,11 +16,11 @@ import okhttp3.Response;
  * Created by goldze on 2017/5/10.
  * 无网络状态下智能读取缓存的拦截器
  */
-public class CaheInterceptor implements Interceptor {
+public class CacheInterceptor implements Interceptor {
 
     private Context context;
 
-    public CaheInterceptor(Context context) {
+    public CacheInterceptor(Context context) {
         this.context = context;
     }
 
@@ -37,17 +37,12 @@ public class CaheInterceptor implements Interceptor {
                     .header("Cache-Control", "public, max-age=" + maxAge)
                     .build();
         } else {
-            ((Activity) context).runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    Toast.makeText(context, "当前无网络! 为你智能加载缓存", Toast.LENGTH_SHORT).show();
-                }
-            });
+            //读取缓存信息
             request = request.newBuilder()
                     .cacheControl(CacheControl.FORCE_CACHE)
                     .build();
             Response response = chain.proceed(request);
-            //set cahe times is 3 days
+            //set cache times is 3 days
             int maxStale = 60 * 60 * 24 * 3;
             return response.newBuilder()
                     .removeHeader("Pragma")

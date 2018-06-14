@@ -3,8 +3,6 @@ package com.goldze.mvvmhabit.utils;
 import android.content.Context;
 import android.text.TextUtils;
 
-import org.reactivestreams.Subscriber;
-
 import java.io.File;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
@@ -17,7 +15,7 @@ import me.goldze.mvvmhabit.BuildConfig;
 import me.goldze.mvvmhabit.http.cookie.CookieJarImpl;
 import me.goldze.mvvmhabit.http.cookie.store.PersistentCookieStore;
 import me.goldze.mvvmhabit.http.interceptor.BaseInterceptor;
-import me.goldze.mvvmhabit.http.interceptor.CaheInterceptor;
+import me.goldze.mvvmhabit.http.interceptor.CacheInterceptor;
 import me.goldze.mvvmhabit.http.interceptor.logging.Level;
 import me.goldze.mvvmhabit.http.interceptor.logging.LoggingInterceptor;
 import me.goldze.mvvmhabit.utils.KLog;
@@ -94,9 +92,9 @@ public class RetrofitClient {
         }
         okHttpClient = new OkHttpClient.Builder()
                 .cookieJar(new CookieJarImpl(new PersistentCookieStore(mContext)))
-//                .cache(cache)
+                .cache(cache)
                 .addInterceptor(new BaseInterceptor(headers))
-                .addInterceptor(new CaheInterceptor(mContext))
+                .addInterceptor(new CacheInterceptor(mContext))
                 .addInterceptor(new LoggingInterceptor
                         .Builder()//构建者模式
                         .loggable(true) //是否开启日志打印
