@@ -15,6 +15,7 @@ import me.goldze.mvvmhabit.utils.MaterialDialogUtils;
 public class BaseViewModel implements IBaseViewModel {
     protected Context context;
     protected Fragment fragment;
+
     public BaseViewModel() {
     }
 
@@ -66,7 +67,7 @@ public class BaseViewModel implements IBaseViewModel {
     public void startActivity(Class<?> clz, Bundle bundle) {
         Intent intent = new Intent(context, clz);
         if (bundle != null) {
-            intent.putExtra("bundle", bundle);
+            intent.putExtras(bundle);
         }
         context.startActivity(intent);
     }

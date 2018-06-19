@@ -2,9 +2,11 @@ package com.goldze.mvvmhabit.ui.vm;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.databinding.ObservableBoolean;
 import android.databinding.ObservableField;
 import android.databinding.ObservableInt;
+import android.os.Bundle;
 import android.os.Handler;
 import android.text.TextUtils;
 import android.view.View;
@@ -96,7 +98,7 @@ public class LoginViewModel extends BaseViewModel {
                 //进入DemoActivity页面
                 startActivity(DemoActivity.class);
                 //关闭页面
-                ((Activity)context).finish();
+                ((Activity) context).finish();
             }
         }, 3 * 1000);
     }
