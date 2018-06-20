@@ -23,7 +23,6 @@ import me.goldze.mvvmhabit.binding.command.BindingCommand;
 import me.goldze.mvvmhabit.binding.command.BindingConsumer;
 import me.goldze.mvvmhabit.bus.Messenger;
 import me.goldze.mvvmhabit.http.BaseResponse;
-import me.goldze.mvvmhabit.http.ExceptionHandle;
 import me.goldze.mvvmhabit.http.ResponseThrowable;
 import me.goldze.mvvmhabit.utils.MaterialDialogUtils;
 import me.goldze.mvvmhabit.utils.RxUtils;
