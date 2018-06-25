@@ -1,5 +1,7 @@
 package com.goldze.mvvmhabit.ui.activity;
 
+import android.os.Bundle;
+
 import com.goldze.mvvmhabit.BR;
 import com.goldze.mvvmhabit.R;
 import com.goldze.mvvmhabit.databinding.ActivityDemoBinding;
@@ -13,7 +15,7 @@ import me.goldze.mvvmhabit.base.BaseActivity;
 
 public class DemoActivity extends BaseActivity<ActivityDemoBinding, DemoViewModel> {
     @Override
-    public int initContentView() {
+    public int initContentView(Bundle savedInstanceState) {
         return R.layout.activity_demo;
     }
 

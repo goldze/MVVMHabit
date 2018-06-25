@@ -1,6 +1,9 @@
 package com.goldze.mvvmhabit.ui.fragment;
 
 import android.databinding.Observable;
+import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.ViewGroup;
 
 import com.goldze.mvvmhabit.BR;
 import com.goldze.mvvmhabit.R;
@@ -16,7 +19,7 @@ import me.goldze.mvvmhabit.base.BaseFragment;
 
 public class NetWorkFragment extends BaseFragment<FragmentNetworkBinding, NetWorkViewModel> {
     @Override
-    public int initContentView() {
+    public int initContentView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         return R.layout.fragment_network;
     }
 

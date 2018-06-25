@@ -1,6 +1,7 @@
 package com.goldze.mvvmhabit.ui.activity;
 
 import android.databinding.Observable;
+import android.os.Bundle;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
 
@@ -17,7 +18,7 @@ import me.goldze.mvvmhabit.base.BaseActivity;
 public class LoginActivity extends BaseActivity<ActivityLoginBinding, LoginViewModel> {
     //ActivityLoginBinding类是databinding框架自定生成的,对应activity_login.xml
     @Override
-    public int initContentView() {
+    public int initContentView(Bundle savedInstanceState) {
         return R.layout.activity_login;
     }
 
