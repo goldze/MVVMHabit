@@ -161,7 +161,7 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding, LoginViewM
 	....
 }
 ```
-> 保存activity_login.xml后databing会生成一个ActivityLoginBinding类。
+> 保存activity_login.xml后databinding会生成一个ActivityLoginBinding类。
 
 BaseActivity是一个抽象类，有两个泛型参数，一个是ViewDataBinding，另一个是BaseViewModel，上面的ActivityLoginBinding则是继承的ViewDataBinding作为第一个泛型参数，LoginViewModel继承BaseViewModel作为第二个泛型参数。
 
@@ -231,7 +231,7 @@ android:onClick="@{viewModel.loginOnClick}"
 ```
 这样一来，用户的点击事件直接被回调到ViewModel层了，更好的维护了业务逻辑
 
-这就是强大的databing框架双向绑定的特性，不用再给控件定义id，setText()，setOnClickListener()。
+这就是强大的databinding框架双向绑定的特性，不用再给控件定义id，setText()，setOnClickListener()。
 
 **但是，光有这些，完全满足不了我们复杂业务的需求啊！MVVMHabit闪亮登场：它有一套自定义的绑定规则，可以满足大部分的场景需求，请继续往下看。**
 
