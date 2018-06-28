@@ -51,7 +51,7 @@
 在主工程app的build.gradle的android {}中加入：
 ```gradle
 dataBinding {
-	enabled true
+    enabled true
 }
 ```
 ### 1.2、依赖Library
@@ -60,17 +60,17 @@ dataBinding {
 在根目录的build.gradle中加入
 ```gradle
 allprojects {
-	repositories {
-		...
-		maven { url 'https://jitpack.io' }
-	}
+    repositories {
+        ...
+        maven { url 'https://jitpack.io' }
+    }
 }
 ```
 在主项目app的build.gradle中依赖
 ```gradle
 dependencies {
-	...
-	api 'com.github.goldze:MVVMHabit:2.0.4'
+    ...
+    implementation 'com.github.goldze:MVVMHabit:2.0.4'
 }
 ```
 或
@@ -78,8 +78,8 @@ dependencies {
 下载例子程序，在主项目app的build.gradle中依赖例子程序中的**mvvmhabit**：
 ```gradle
 dependencies {	
-	...
-	api project(':mvvmhabit')
+    ...
+    implementation project(':mvvmhabit')
 }
 ```
 > 旧版本 api 'com.github.goldze:MVVMHabit:1.2.6.1'
@@ -116,17 +116,17 @@ dependencies = [] 是依赖第三方库的配置，可以加新库，但不要�
 KLog.init(true);
 //配置全局异常崩溃操作
 CaocConfig.Builder.create()
-	.backgroundMode(CaocConfig.BACKGROUND_MODE_SILENT) //背景模式,开启沉浸式
-	.enabled(true) //是否启动全局异常捕获
-	.showErrorDetails(true) //是否显示错误详细信息
-	.showRestartButton(true) //是否显示重启按钮
-	.trackActivities(true) //是否跟踪Activity
-	.minTimeBetweenCrashesMs(2000) //崩溃的间隔时间(毫秒)
-	.errorDrawable(R.mipmap.ic_launcher) //错误图标
-	.restartActivity(LoginActivity.class) //重新启动后的activity
-	//.errorActivity(YourCustomErrorActivity.class) //崩溃后的错误activity
-	//.eventListener(new YourCustomEventListener()) //崩溃后的错误监听
-	.apply();
+    .backgroundMode(CaocConfig.BACKGROUND_MODE_SILENT) //背景模式,开启沉浸式
+    .enabled(true) //是否启动全局异常捕获
+    .showErrorDetails(true) //是否显示错误详细信息
+    .showRestartButton(true) //是否显示重启按钮
+    .trackActivities(true) //是否跟踪Activity
+    .minTimeBetweenCrashesMs(2000) //崩溃的间隔时间(毫秒)
+    .errorDrawable(R.mipmap.ic_launcher) //错误图标
+    .restartActivity(LoginActivity.class) //重新启动后的activity
+    //.errorActivity(YourCustomErrorActivity.class) //崩溃后的错误activity
+    //.eventListener(new YourCustomEventListener()) //崩溃后的错误监听
+    .apply();
 ```
 
 ## 2、快速上手
@@ -138,15 +138,13 @@ CaocConfig.Builder.create()
 在activity_login.xml中关联LoginViewModel。
 ```xml
 <layout>
-
-	<data>
+    <data>
         <variable
-			type="com.goldze.mvvmhabit.ui.vm.LoginViewModel"
-			name="viewModel"
-            />
+            type="com.goldze.mvvmhabit.ui.vm.LoginViewModel"
+            name="viewModel"
+        />
     </data>
-
-		.....
+    .....
 
 </layout>
 ```
@@ -158,7 +156,7 @@ CaocConfig.Builder.create()
 LoginActivity继承BaseActivity
 ```java
 public class LoginActivity extends BaseActivity<ActivityLoginBinding, LoginViewModel> {
-	....
+    ....
 }
 ```
 > 保存activity_login.xml后databinding会生成一个ActivityLoginBinding类。
@@ -169,18 +167,18 @@ BaseActivity是一个抽象类，有两个泛型参数，一个是ViewDataBindin
 ```java
 @Override
 public int initContentView() {
-	return R.layout.activity_login;
+    return R.layout.activity_login;
 }
 
 @Override
 public int initVariableId() {
-	return BR.viewModel;
+    return BR.viewModel;
 }
 
 @Override
 public LoginViewModel initViewModel() {
-	//View持有ViewModel的引用 (考虑到框架适用性，这里暂时没有用Dagger2解耦)
-	return new LoginViewModel(this);
+    //View持有ViewModel的引用 (考虑到框架适用性，这里暂时没有用Dagger2解耦)
+    return new LoginViewModel(this);
 }
 ```
 initContentView() 返回界面layout的id<br>
@@ -190,7 +188,7 @@ initViewModel() 返回ViewModel对象
 LoginViewModel继承BaseViewModel
 ```java
 public LoginViewModel(Context context) {
-	super(context);
+    super(context);
 }
 ```
 在构造方法中调用super(context) 将上下文交给父类，即可使用父类的showDialog()、startActivity()等方法。在这个LoginViewModel中就可以尽情的写你的逻辑了！
@@ -219,10 +217,10 @@ android:text="@={viewModel.userName}"
 ```java
 //登录按钮的点击事件
 public View.OnClickListener loginOnClick = new View.OnClickListener() {
-	@Override
-	public void onClick(View v) {
+    @Override
+    public void onClick(View v) {
             
-	}
+    }
 };
 ```
 在登录按钮标签中绑定
@@ -242,10 +240,10 @@ android:onClick="@{viewModel.loginOnClick}"
 ```java
 //登录按钮的点击事件
 public BindingCommand loginOnClickCommand = new BindingCommand(new BindingAction() {
-	@Override
-	public void call() {
+    @Override
+    public void call() {
             
-	}
+    }
 });
 ```
 在activity_login中定义命名空间
@@ -273,28 +271,28 @@ public static final int CLICK_INTERVAL = 1;
 */
 @BindingAdapter(value = {"onClickCommand", "isThrottleFirst"}, requireAll = false)
 public static void onClickCommand(View view, final BindingCommand clickCommand, final boolean isThrottleFirst) {
-	if (isThrottleFirst) {
-		RxView.clicks(view)
-		.subscribe(new Consumer<Object>() {
-			@Override
-			public void accept(Object object) throws Exception {
-				if (clickCommand != null) {
-					clickCommand.execute();
-				}
-			}
-		});
-	} else {
-		RxView.clicks(view)
-		.throttleFirst(CLICK_INTERVAL, TimeUnit.SECONDS)//1秒钟内只允许点击1次
-		.subscribe(new Consumer<Object>() {
-			@Override
-			public void accept(Object object) throws Exception {
-				if (clickCommand != null) {
- 					clickCommand.execute();
-				}
-			}
-		});
-	}
+    if (isThrottleFirst) {
+        RxView.clicks(view)
+        .subscribe(new Consumer<Object>() {
+            @Override
+            public void accept(Object object) throws Exception {
+                if (clickCommand != null) {
+                    clickCommand.execute();
+                }
+            }
+        });
+    } else {
+        RxView.clicks(view)
+        .throttleFirst(CLICK_INTERVAL, TimeUnit.SECONDS)//1秒钟内只允许点击1次
+        .subscribe(new Consumer<Object>() {
+            @Override
+            public void accept(Object object) throws Exception {
+                if (clickCommand != null) {
+                    clickCommand.execute();
+                }
+            }
+        });
+    }
 }
 ```
 onClickCommand方法是自定义的，使用@BindingAdapter注解来标明这是一个绑定方法。在方法中使用了RxView来增强view的clicks事件，.throttleFirst()限制订阅者在指定的时间内重复执行，最后通过BindingCommand将事件回调出去，就好比有一种拦截器，在点击时先做一下判断，然后再把事件沿着他原有的方向传递。
@@ -323,13 +321,13 @@ BindingAdapter中的实现
 ```java
 @BindingAdapter(value = {"url", "placeholderRes"}, requireAll = false)
 public static void setImageUri(ImageView imageView, String url, int placeholderRes) {
-	if (!TextUtils.isEmpty(url)) {
-		//使用Glide框架加载图片
-		Glide.with(imageView.getContext())
-			.load(url)
-			.placeholder(placeholderRes)
-			.into(imageView);
-	}
+    if (!TextUtils.isEmpty(url)) {
+        //使用Glide框架加载图片
+        Glide.with(imageView.getContext())
+            .load(url)
+            .placeholder(placeholderRes)
+            .into(imageView);
+    }
 }
 ```
 很简单就自定义了一个ImageView图片加载的绑定，学会这种方式，可自定义扩展。
@@ -350,12 +348,12 @@ ObservableList<>和ItemBinding<>的泛型是Item布局所对应的ItemViewModel
 在xml中绑定
 ```xml
 <android.support.v7.widget.RecyclerView
-	android:layout_width="match_parent"
-	android:layout_height="match_parent"
-	binding:itemBinding="@{viewModel.itemBinding}"
-	binding:items="@{viewModel.observableList}"
-	binding:layoutManager="@{LayoutManagers.linear()}"
-	binding:lineManager="@{LineManagers.horizontal()}" />
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    binding:itemBinding="@{viewModel.itemBinding}"
+    binding:items="@{viewModel.observableList}"
+    binding:layoutManager="@{LayoutManagers.linear()}"
+    binding:lineManager="@{LineManagers.horizontal()}" />
 ```
 layoutManager控制是线性(包含水平和垂直)排列还是网格排列，lineManager是设置分割线
 
@@ -389,29 +387,29 @@ api "com.squareup.retrofit2:adapter-rxjava2:2.4.0"
 构建Retrofit时加入
 ```java
 Retrofit retrofit = new Retrofit.Builder()
-	.addConverterFactory(GsonConverterFactory.create())
-	.addCallAdapterFactory(RxJavaCallAdapterFactory.create())
-	.build();
+    .addConverterFactory(GsonConverterFactory.create())
+    .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
+    .build();
 ```
 或者直接使用例子程序中封装好的RetrofitClient
 #### 2.3.2、网络拦截器
 **LoggingInterceptor：** 全局拦截请求信息，格式化打印Request、Response，可以清晰的看到与后台接口对接的数据，
 ```java
 LoggingInterceptor mLoggingInterceptor = new LoggingInterceptor
-	.Builder()//构建者模式
-	.loggable(true) //是否开启日志打印
-	.setLevel(Level.BODY) //打印的等级
-	.log(Platform.INFO) // 打印类型
-	.request("Request") // request的Tag
-	.response("Response")// Response的Tag
-	.addHeader("version", BuildConfig.VERSION_NAME)//打印版本
-	.build()
+    .Builder()//构建者模式
+    .loggable(true) //是否开启日志打印
+    .setLevel(Level.BODY) //打印的等级
+    .log(Platform.INFO) // 打印类型
+    .request("Request") // request的Tag
+    .response("Response")// Response的Tag
+    .addHeader("version", BuildConfig.VERSION_NAME)//打印版本
+    .build()
 ```
 构建okhttp时加入
 ```java
 OkHttpClient okHttpClient = new OkHttpClient.Builder()
-	.addInterceptor(mLoggingInterceptor)
-	.build();
+    .addInterceptor(mLoggingInterceptor)
+    .build();
 ```
 **CacheInterceptor：** 缓存拦截器，当没有网络连接的时候自动读取缓存中的数据，缓存存放时间默认为3天。</br>
 创建缓存对象
@@ -426,42 +424,42 @@ Cache cache = new Cache(httpCacheDirectory, CACHE_TIMEOUT);
 构建okhttp时加入
 ```java
 OkHttpClient okHttpClient = new OkHttpClient.Builder()
-	.cache(cache)
- 	.addInterceptor(new CacheInterceptor(mContext))
-	.build();
+    .cache(cache)
+    .addInterceptor(new CacheInterceptor(mContext))
+    .build();
 ```
 #### 2.3.3、Cookie管理
 **MVVMHabit**提供两种CookieStore：**PersistentCookieStore** (SharedPreferences管理)和**MemoryCookieStore** (内存管理)，可以根据自己的业务需求，在构建okhttp时加入相应的cookieJar
 ```java
 OkHttpClient okHttpClient = new OkHttpClient.Builder()
-	.cookieJar(new CookieJarImpl(new PersistentCookieStore(mContext)))
-	.build();
+    .cookieJar(new CookieJarImpl(new PersistentCookieStore(mContext)))
+    .build();
 ```
 或者
 ```java
 OkHttpClient okHttpClient = new OkHttpClient.Builder()
-	.cookieJar(new CookieJarImpl(new MemoryCookieStore()))
-	.build();
+    .cookieJar(new CookieJarImpl(new MemoryCookieStore()))
+    .build();
 ```
 #### 2.3.4、绑定生命周期
 请求在ViewModel层，且持有View的引用，所以可以直接在ViewModel中绑定请求的生命周期，View与请求共存亡。
 ```java
 RetrofitClient.getInstance().create(DemoApiService.class)
-	.demoGet()
-	.compose(RxUtils.bindToLifecycle(context)) // 请求与View周期同步
-	.compose(RxUtils.schedulersTransformer())  // 线程调度
-	.compose(RxUtils.exceptionTransformer())   // 网络错误的异常转换
-	.subscribe(new Consumer<BaseResponse<DemoEntity>>() {
-		@Override
-		public void accept(BaseResponse<DemoEntity> response) throws Exception {
+    .demoGet()
+    .compose(RxUtils.bindToLifecycle(context)) // 请求与View周期同步
+    .compose(RxUtils.schedulersTransformer())  // 线程调度
+    .compose(RxUtils.exceptionTransformer())   // 网络错误的异常转换
+    .subscribe(new Consumer<BaseResponse<DemoEntity>>() {
+        @Override
+        public void accept(BaseResponse<DemoEntity> response) throws Exception {
                        
-		}
-	}, new Consumer<ResponseThrowable>() {
-		@Override
-		public void accept(ResponseThrowable throwable) throws Exception {
+        }
+    }, new Consumer<ResponseThrowable>() {
+        @Override
+        public void accept(ResponseThrowable throwable) throws Exception {
                         
-		}
-	});
+        }
+    });
 
 ```
 在请求时关键需要加入组合操作符`.compose(RxUtils.bindToLifecycle(context))`<br>
@@ -490,24 +488,24 @@ private Disposable mSubscription;
 //注册RxBus
 @Override
 public void registerRxBus() {
-	super.registerRxBus();
-	mSubscription = RxBus.getDefault().toObservable(String.class)
-		.subscribe(new Consumer<String>() {
-			@Override
- 			public void accept(String s) throws Exception {
+    super.registerRxBus();
+    mSubscription = RxBus.getDefault().toObservable(String.class)
+        .subscribe(new Consumer<String>() {
+            @Override
+            public void accept(String s) throws Exception {
 
-			}
-		});
-	//将订阅者加入管理站
-	RxSubscriptions.add(mSubscription);
+            }
+        });
+    //将订阅者加入管理站
+    RxSubscriptions.add(mSubscription);
 }
 
 //移除RxBus
 @Override
 public void removeRxBus() {
-	super.removeRxBus();
-	//将订阅者从管理站中移除
-	RxSubscriptions.remove(mSubscription);
+    super.removeRxBus();
+    //将订阅者从管理站中移除
+    RxSubscriptions.remove(mSubscription);
 }
 ```
 在需要执行回调的地方发送
@@ -530,10 +528,10 @@ public static final String TOKEN_LOGINVIEWMODEL_REFRESH = "token_loginviewmodel_
 //参数2：定义的token
 //参数3：执行的回调监听
 Messenger.getDefault().register(context, LoginViewModel.TOKEN_LOGINVIEWMODEL_REFRESH, new BindingAction() {
-	@Override
-	public void call() {
+    @Override
+    public void call() {
 	
-	}
+    }
 });
 
 //注册一个带数据回调的消息监听 
@@ -542,10 +540,10 @@ Messenger.getDefault().register(context, LoginViewModel.TOKEN_LOGINVIEWMODEL_REF
 //参数3：实体的泛型约束
 //参数4：执行的回调监听
 Messenger.getDefault().register(context, LoginViewModel.TOKEN_LOGINVIEWMODEL_REFRESH, String.class, new Consumer<String>() {
-	@Override
- public void accept(String s) throws Exception {
+    @Override
+    public void accept(String s) throws Exception {
                 
-	}
+    }
 });
 ```
 在需要回调的地方使用token发送消息
@@ -574,30 +572,30 @@ String loadUrl = "你的文件下载路径";
 String destFileDir = context.getCacheDir().getPath();  //文件存放的路径
 String destFileName = System.currentTimeMillis() + ".apk";//文件存放的名称
 DownLoadManager.getInstance().load(loadUrl, new ProgressCallBack<ResponseBody>(destFileDir, destFileName) {
-	@Override
-	public void onStart() {
-		//RxJava的onStart()
-	}
+    @Override
+    public void onStart() {
+        //RxJava的onStart()
+    }
 
-	@Override
-	public void onCompleted() {
-		//RxJava的onCompleted()
-	}
+    @Override
+    public void onCompleted() {
+        //RxJava的onCompleted()
+    }
 
-	@Override
-	public void onSuccess(ResponseBody responseBody) {
-		//下载成功的回调
-	}
+    @Override
+    public void onSuccess(ResponseBody responseBody) {
+        //下载成功的回调
+    }
 
-	@Override
-	public void progress(final long progress, final long total) {
-		//下载中的回调 progress：当前进度 ，total：文件总大小
-	}
+    @Override
+    public void progress(final long progress, final long total) {
+        //下载中的回调 progress：当前进度 ，total：文件总大小
+    }
 
-	@Override
-	public void onError(Throwable e) {
-		//下载错误回调
-	}
+    @Override
+    public void onError(Throwable e) {
+        //下载错误回调
+    }
 });
 ```
 > 在ProgressResponseBody中使用了RxBus，发送下载进度信息到ProgressCallBack中，继承ProgressCallBack就可以监听到下载状态。回调方法全部执行在主线程，方便UI的更新，详情请参考例子程序。
@@ -620,7 +618,7 @@ startContainerActivity(你的Fragment类名.class.getCanonicalName(), mBundle);
 ```
 Bundle mBundle = getArguments();
 if (mBundle != null) {
-	entity = mBundle.getParcelable("entity");
+    entity = mBundle.getParcelable("entity");
 }
 ```
 ### 3.4、6.0权限申请
@@ -633,16 +631,16 @@ if (mBundle != null) {
 //请求打开相机权限
 RxPermissions rxPermissions = new RxPermissions((Activity) context);
 rxPermissions.request(Manifest.permission.CAMERA)
-	.subscribe(new Consumer<Boolean>() {
-		@Override
-		 public void accept(Boolean aBoolean) throws Exception {
-			if (aBoolean) {
-				ToastUtils.showShort("权限已经打开，直接跳入相机");
-			} else {
-				ToastUtils.showShort("权限被拒绝");
-			}
-		}
-	});
+    .subscribe(new Consumer<Boolean>() {
+        @Override
+        public void accept(Boolean aBoolean) throws Exception {
+            if (aBoolean) {
+                ToastUtils.showShort("权限已经打开，直接跳入相机");
+            } else {
+                ToastUtils.showShort("权限被拒绝");
+            }
+        }
+    });
 ```
 更多权限申请方式请参考[RxPermissions原项目地址](https://github.com/tbruyelle/RxPermissions)
 ### 3.5、图片压缩
@@ -654,11 +652,11 @@ RxJava的方式压缩单张图片，得到一个压缩后的图片文件对象
 ```java
 String filePath = "mnt/sdcard/1.png";
 ImageUtils.compressWithRx(filePath, new Consumer<File>() {
-	@Override
-	public void accept(File file) throws Exception {
-		//将文件放入RequestBody
-		...
-	}
+    @Override
+    public void accept(File file) throws Exception {
+        //将文件放入RequestBody
+        ...
+    }
 });
 ```
 RxJava的方式压缩多张图片，按集合顺序每压缩成功一张，都将在onNext方法中得到一个压缩后的图片文件对象
@@ -667,20 +665,20 @@ List<String> filePaths = new ArrayList<>();
 filePaths.add("mnt/sdcard/1.png");
 filePaths.add("mnt/sdcard/2.png");
 ImageUtils.compressWithRx(filePaths, new Subscriber() {
-	@Override
-	public void onCompleted() {
+    @Override
+    public void onCompleted() {
 	
-	}
+    }
 	
-	@Override
-	public void onError(Throwable e) {
+    @Override
+    public void onError(Throwable e) {
 	
-	}
+    }
 	
-	@Override
-	public void onNext(File file) {
+    @Override
+    public void onNext(File file) {
 
-	}
+    }
 });
 ```
 ### 3.6、其他辅助类
@@ -728,16 +726,16 @@ ImageUtils.compressWithRx(filePaths, new Subscriber() {
 **QQ群**：84692105
 ## License
 
-	 Copyright 2017 goldze(曾宪泽)
+    Copyright 2017 goldze(曾宪泽)
  
-	 Licensed under the Apache License, Version 2.0 (the "License");
-	 you may not use this file except in compliance with the License.
-	 You may obtain a copy of the License at
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
  
-	    http://www.apache.org/licenses/LICENSE-2.0
+        http://www.apache.org/licenses/LICENSE-2.0
  
-	 Unless required by applicable law or agreed to in writing, software
-	 distributed under the License is distributed on an "AS IS" BASIS,
-	 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-	 See the License for the specific language governing permissions and
-	 limitations under the License.
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
