@@ -44,6 +44,7 @@ public abstract class BaseActivity<V extends ViewDataBinding, VM extends BaseVie
         viewModel.removeRxBus();
         viewModel.onDestroy();
         viewModel = null;
+        binding.unbind();
     }
 
     /**
