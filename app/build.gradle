@@ -32,5 +32,5 @@ dependencies {
     //下拉刷新,上拉加载
     api rootProject.ext.dependencies.tkrefreshlayout
     api project(':mvvmhabit')
-//    api 'com.github.goldze:MVVMHabit:2.0.0'
+//    api 'com.github.goldze:MVVMHabit:2.0.4'
 }
