@@ -29,7 +29,7 @@ public final class ViewAdapter {
             public void onScrollStateChanged(AbsListView view, int scrollState) {
                 this.scrollState = scrollState;
                 if (onScrollStateChangedCommand != null) {
-                    onScrollChangeCommand.equals(scrollState);
+                    onScrollStateChangedCommand.execute(scrollState);
                 }
             }
 
