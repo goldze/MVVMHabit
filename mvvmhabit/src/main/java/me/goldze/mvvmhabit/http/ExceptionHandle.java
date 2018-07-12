@@ -76,6 +76,10 @@ public class ExceptionHandle {
             ex = new ResponseThrowable(e, ERROR.TIMEOUT_ERROR);
             ex.message = "连接超时";
             return ex;
+        } else if (e instanceof java.net.UnknownHostException) {
+            ex = new ResponseThrowable(e, ERROR.TIMEOUT_ERROR);
+            ex.message = "主机地址未知";
+            return ex;
         } else {
             ex = new ResponseThrowable(e, ERROR.UNKNOWN);
             ex.message = "未知错误";

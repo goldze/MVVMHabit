@@ -38,7 +38,7 @@ public class RetrofitClient {
     //缓存时间
     private static final int CACHE_TIMEOUT = 10 * 1024 * 1024;
     //服务端根路径
-    public static String baseUrl = "http://www.oschina.net/";
+    public static String baseUrl = "https://www.oschina.net/";
 
     private static Context mContext = Utils.getContext();
 
@@ -90,11 +90,13 @@ public class RetrofitClient {
         } catch (Exception e) {
             KLog.e("Could not create http cache", e);
         }
+        HttpsUtils.SSLParams sslParams = HttpsUtils.getSslSocketFactory();
         okHttpClient = new OkHttpClient.Builder()
                 .cookieJar(new CookieJarImpl(new PersistentCookieStore(mContext)))
-                .cache(cache)
+//                .cache(cache)
                 .addInterceptor(new BaseInterceptor(headers))
                 .addInterceptor(new CacheInterceptor(mContext))
+                .sslSocketFactory(sslParams.sSLSocketFactory, sslParams.trustManager)
                 .addInterceptor(new LoggingInterceptor
                         .Builder()//构建者模式
                         .loggable(true) //是否开启日志打印
@@ -136,7 +138,7 @@ public class RetrofitClient {
      * For example:
      * MyApiService service =
      * RetrofitClient.getInstance(MainActivity.this).create(MyApiService.class);
-     *
+     * <p>
      * RetrofitClient.getInstance(MainActivity.this)
      * .execute(service.lgon("name", "password"), subscriber)
      * * @param subscriber
