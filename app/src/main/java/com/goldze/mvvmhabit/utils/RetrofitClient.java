@@ -56,21 +56,8 @@ public class RetrofitClient {
         return SingletonHolder.INSTANCE;
     }
 
-    public static RetrofitClient getInstance(String url) {
-
-        return new RetrofitClient(url);
-    }
-
-    public static RetrofitClient getInstance(String url, Map<String, String> headers) {
-        return new RetrofitClient(url, headers);
-    }
-
     private RetrofitClient() {
         this(baseUrl, null);
-    }
-
-    private RetrofitClient(String url) {
-        this(url, null);
     }
 
     private RetrofitClient(String url, Map<String, String> headers) {
