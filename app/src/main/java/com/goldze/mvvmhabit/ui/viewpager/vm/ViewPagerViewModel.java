@@ -6,6 +6,7 @@ import android.databinding.ObservableBoolean;
 import android.databinding.ObservableList;
 import android.os.Handler;
 import android.support.annotation.NonNull;
+import android.widget.Toast;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
@@ -60,4 +61,11 @@ public class ViewPagerViewModel extends BaseViewModel {
             return "条目" + position;
         }
     };
+    //ViewPager切换监听
+    public BindingCommand<Integer> onPageSelectedCommand = new BindingCommand<>(new BindingConsumer<Integer>() {
+        @Override
+        public void call(Integer index) {
+            ToastUtils.showShort("ViewPager切换：" + index);
+        }
+    });
 }

@@ -37,6 +37,7 @@
             android:layout_weight="1"
             binding:itemBinding="@{viewModel.itemBinding}"
             binding:items="@{viewModel.items}"
+            binding:onPageSelectedCommand="@{viewModel.onPageSelectedCommand}"
             binding:pageTitles="@{viewModel.pageTitles}" />
     </LinearLayout>
 </layout>

@@ -129,7 +129,7 @@ public class NetWorkViewModel extends BaseViewModel {
 
     private void requestNetWork() {
         RetrofitClient.getInstance().create(DemoApiService.class)
-                .demoPost("")
+                .demoGet()
                 .compose(RxUtils.bindToLifecycle(context)) //请求与View周期同步
                 .compose(RxUtils.schedulersTransformer()) //线程调度
                 .compose(RxUtils.exceptionTransformer()) // 网络错误的异常转换, 这里可以换成自己的ExceptionHandle
