@@ -7,3 +7,5 @@
 /build
 /captures
 .externalNativeBuild
+/app/release
+/mvvmhabit/bintray.gradle

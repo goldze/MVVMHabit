@@ -4,20 +4,19 @@ import android.Manifest;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 
 import com.goldze.mvvmhabit.entity.FormEntity;
 import com.goldze.mvvmhabit.ui.fragment.FormFragment;
 import com.goldze.mvvmhabit.ui.fragment.NetWorkFragment;
+import com.goldze.mvvmhabit.ui.viewpager.fragment.ViewPagerFragment;
+import com.goldze.mvvmhabit.ui.tab_bar.activity.TabBarActivity;
 import com.tbruyelle.rxpermissions2.RxPermissions;
 
 import io.reactivex.functions.Consumer;
 import me.goldze.mvvmhabit.base.BaseViewModel;
-import me.goldze.mvvmhabit.base.ContainerActivity;
 import me.goldze.mvvmhabit.binding.command.BindingAction;
 import me.goldze.mvvmhabit.binding.command.BindingCommand;
-import me.goldze.mvvmhabit.bus.Messenger;
 import me.goldze.mvvmhabit.http.DownLoadManager;
 import me.goldze.mvvmhabit.http.download.ProgressCallBack;
 import me.goldze.mvvmhabit.utils.ToastUtils;
@@ -38,6 +37,20 @@ public class DemoViewModel extends BaseViewModel {
         @Override
         public void call() {
             startContainerActivity(NetWorkFragment.class.getCanonicalName());
+        }
+    });
+    //进入TabBarActivity
+    public BindingCommand startTabBarClick = new BindingCommand(new BindingAction() {
+        @Override
+        public void call() {
+            startActivity(TabBarActivity.class);
+        }
+    });
+    //ViewPager绑定
+    public BindingCommand viewPagerBindingClick = new BindingCommand(new BindingAction() {
+        @Override
+        public void call() {
+            startContainerActivity(ViewPagerFragment.class.getCanonicalName());
         }
     });
     //表单提交点击事件

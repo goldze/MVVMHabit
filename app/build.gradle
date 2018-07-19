@@ -13,7 +13,7 @@ android {
     }
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
         debug {
@@ -27,10 +27,15 @@ android {
 }
 
 dependencies {
-    api fileTree(include: ['*.jar'], dir: 'libs')
-    testCompile 'junit:junit:4.12'
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    testImplementation 'junit:junit:4.12'
+    //support
+    implementation rootProject.ext.support["design"]
     //下拉刷新,上拉加载
-    api rootProject.ext.dependencies.tkrefreshlayout
-    api project(':mvvmhabit')
-//    api 'com.github.goldze:MVVMHabit:2.0.4'
+    implementation 'com.lcodecorex:tkrefreshlayout:1.0.7'
+    //底部tabBar
+    implementation 'me.majiajie:pager-bottom-tab-strip:2.2.5'
+    //MVVMHabit
+    implementation project(':mvvmhabit')
+//    implementation 'com.github.goldze:MVVMHabit:2.0.4'
 }

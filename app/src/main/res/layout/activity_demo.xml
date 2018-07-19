@@ -14,38 +14,55 @@
         xmlns:binding="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="#202020"
         android:orientation="vertical">
 
         <Button
-            binding:onClickCommand="@{viewModel.netWorkClick}"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="网络访问" />
+            android:text="网络访问"
+            binding:onClickCommand="@{viewModel.netWorkClick}" />
 
         <Button
-            binding:onClickCommand="@{viewModel.formSbmClick}"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="表单提交" />
+            android:text="底部Tab按钮"
+            binding:onClickCommand="@{viewModel.startTabBarClick}" />
+
         <Button
-            binding:onClickCommand="@{viewModel.formModifyClick}"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="表单编辑" />
+            android:text="ViewPager绑定"
+            binding:onClickCommand="@{viewModel.viewPagerBindingClick}" />
+
         <Button
-            binding:onClickCommand="@{viewModel.permissionsClick}"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="权限申请" />
+            android:text="表单提交"
+            binding:onClickCommand="@{viewModel.formSbmClick}" />
+
         <Button
-            binding:onClickCommand="@{viewModel.exceptionClick}"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="全局异常捕获" />
+            android:text="表单编辑"
+            binding:onClickCommand="@{viewModel.formModifyClick}" />
+
         <Button
-            binding:onClickCommand="@{viewModel.fileDownLoadClick}"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="文件下载" />
+            android:text="权限申请"
+            binding:onClickCommand="@{viewModel.permissionsClick}" />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="全局异常捕获"
+            binding:onClickCommand="@{viewModel.exceptionClick}" />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="文件下载"
+            binding:onClickCommand="@{viewModel.fileDownLoadClick}" />
     </LinearLayout>
 </layout>

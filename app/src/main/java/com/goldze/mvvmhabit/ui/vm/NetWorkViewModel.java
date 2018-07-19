@@ -86,7 +86,7 @@ public class NetWorkViewModel extends BaseViewModel {
 
     //给RecyclerView添加ObservableList
     public ObservableList<NetWorkItemViewModel> observableList = new ObservableArrayList<>();
-    //给RecyclerView添加ItemView
+    //给RecyclerView添加ItemBinding
     public ItemBinding<NetWorkItemViewModel> itemBinding = ItemBinding.of(BR.viewModel, R.layout.item_network);
 
     //下拉刷新
