@@ -79,7 +79,7 @@ allprojects {
 ```gradle
 dependencies {
     ...
-    implementation 'com.github.goldze:MVVMHabit:2.0.6'
+    implementation 'com.github.goldze:MVVMHabit:2.0.6.1'
 }
 ```
 或
