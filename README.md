@@ -1,4 +1,11 @@
 ## 更新日志
+**v2.0.6：2018年7月19日**
+
+- 优化框架性能、基类逻辑；
+- 补充例子程序及注释；
+- 升级/修改第三方依赖库；
+- 补充文档说明。
+***
 **v2.0.0：2018年4月10日**
 
 - 全面升级RxJava2；
@@ -72,7 +79,7 @@ allprojects {
 ```gradle
 dependencies {
     ...
-    implementation 'com.github.goldze:MVVMHabit:2.0.4'
+    implementation 'com.github.goldze:MVVMHabit:2.0.6'
 }
 ```
 或

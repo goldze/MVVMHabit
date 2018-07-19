@@ -46,8 +46,9 @@ public class TabBarActivity extends BaseActivity<ActivityTabBarBinding, BaseView
 
     @Override
     public void initData() {
+        //初始化Fragment
         initFragment();
-
+        //初始化底部Button
         initBottomTab();
     }
 
@@ -57,7 +58,7 @@ public class TabBarActivity extends BaseActivity<ActivityTabBarBinding, BaseView
         mFragments.add(new TabBar2Fragment());
         mFragments.add(new TabBar3Fragment());
         mFragments.add(new TabBar4Fragment());
-
+        //默认选中第一个
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.add(R.id.frameLayout, mFragments.get(0));
         transaction.commitAllowingStateLoss();
@@ -71,7 +72,7 @@ public class TabBarActivity extends BaseActivity<ActivityTabBarBinding, BaseView
                 .addItem(R.mipmap.wode_select, "我的")
                 .setDefaultColor(ContextCompat.getColor(this, R.color.textColorVice))
                 .build();
-        //也可以设置Item选中事件的监听
+        //底部按钮的点击事件监听
         navigationController.addTabItemSelectedListener(new OnTabItemSelectedListener() {
             @Override
             public void onSelected(int index, int old) {
