@@ -3,6 +3,8 @@ package com.goldze.mvvmhabit.ui.vm;
 import android.app.DatePickerDialog;
 import android.databinding.ObservableBoolean;
 import android.support.v4.app.Fragment;
+import android.text.TextUtils;
+import android.view.View;
 import android.widget.DatePicker;
 
 import com.goldze.mvvmhabit.entity.FormEntity;
@@ -19,6 +21,7 @@ import me.goldze.mvvmhabit.binding.command.BindingCommand;
 import me.goldze.mvvmhabit.binding.command.BindingConsumer;
 import me.goldze.mvvmhabit.binding.viewadapter.spinner.IKeyAndValue;
 import me.goldze.mvvmhabit.utils.MaterialDialogUtils;
+import me.goldze.mvvmhabit.utils.ToastUtils;
 
 /**
  * Created by goldze on 2017/7/17.
@@ -34,14 +37,37 @@ public class FormViewModel extends BaseViewModel {
         //刷新界面的观察者
         public ObservableBoolean refreshUIObservable = new ObservableBoolean(false);
     }
+    //include绑定一个通用的TitleViewModel
+    public TitleViewModel titleViewModel;
 
     public FormViewModel(Fragment fragment, FormEntity entity) {
         super(fragment);
         this.entity = entity;
+        titleViewModel = new TitleViewModel(context);
+
     }
 
     @Override
     public void onCreate() {
+        //初始化标题栏
+        titleViewModel.rightTextVisibility.set(View.VISIBLE);
+        titleViewModel.rightText.set("更多");
+        //右边文字的点击事件
+        titleViewModel.rightTextOnClickCommand = new BindingCommand(new BindingAction() {
+            @Override
+            public void call() {
+                ToastUtils.showShort("更多");
+            }
+        });
+        //改变标题文字
+        if (TextUtils.isEmpty(entity.getId())) {
+            //ID为空是新增
+            titleViewModel.titleText.set("表单提交");
+        } else {
+            //ID不为空是修改
+            titleViewModel.titleText.set("表单编辑");
+        }
+
         //sexItemDatas 一般可以从本地Sqlite数据库中取出数据字典对象集合，让该对象实现IKeyAndValue接口
         sexItemDatas = new ArrayList<>();
         sexItemDatas.add(new SpinnerItemData("男", "1"));

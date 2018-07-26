@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:binding="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import type="com.goldze.mvvmhabit.ui.vm.TitleViewModel" />
+
+        <variable
+            name="titleViewModel"
+            type="TitleViewModel" />
+    </data>
+
+    <android.support.v7.widget.Toolbar xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:background="@color/white"
+        app:contentInsetStart="0dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/iv_back"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:background="?selectableItemBackground"
+                android:padding="12dp"
+                android:src="@mipmap/back"
+                binding:onClickCommand="@{titleViewModel.backOnClickCommand}" />
+
+            <TextView
+                android:id="@+id/tv_title"
+                style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:gravity="center"
+                android:maxEms="12"
+                android:text="@{titleViewModel.titleText}"
+                android:textColor="@color/textColor"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/tv_right_text"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:background="?selectableItemBackground"
+                android:gravity="center"
+                android:padding="12dp"
+                android:text="@{titleViewModel.rightText}"
+                android:textColor="@color/textColor"
+                android:textSize="18sp"
+                android:visibility="@{titleViewModel.rightTextVisibility}"
+                binding:onClickCommand="@{titleViewModel.rightTextOnClickCommand}" />
+
+            <View
+                style="@style/ViewLineStyle"
+                android:layout_alignParentBottom="true" />
+        </RelativeLayout>
+    </android.support.v7.widget.Toolbar>
+</layout>
+

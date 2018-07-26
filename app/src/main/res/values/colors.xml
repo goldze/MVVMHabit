@@ -6,4 +6,5 @@
     <color name="textColor">#202020</color>
     <color name="textColorHint">#A0A0A0</color>
     <color name="textColorVice">#6C6C6C</color>
+    <color name="viewLineColor">#F0F0F0</color>
 </resources>

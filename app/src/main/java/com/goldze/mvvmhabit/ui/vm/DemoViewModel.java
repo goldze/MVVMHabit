@@ -66,6 +66,7 @@ public class DemoViewModel extends BaseViewModel {
         public void call() {
             //模拟一个修改的实体数据
             FormEntity entity = new FormEntity();
+            entity.setId("12345678");
             entity.setName("goldze");
             entity.setSex("1");
             entity.setBir("xxxx年xx月xx日");

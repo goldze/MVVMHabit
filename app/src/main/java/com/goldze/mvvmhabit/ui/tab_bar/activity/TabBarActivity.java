@@ -23,6 +23,7 @@ import me.majiajie.pagerbottomtabstrip.listener.OnTabItemSelectedListener;
 
 /**
  * 底部tab按钮的例子
+ * 所有例子仅做参考,理解如何使用才最重要。
  * Created by goldze on 2018/7/18.
  */
 

@@ -2,6 +2,7 @@ package com.goldze.mvvmhabit.ui.fragment;
 
 import android.databinding.Observable;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
@@ -10,6 +11,7 @@ import com.goldze.mvvmhabit.R;
 import com.goldze.mvvmhabit.databinding.FragmentFormBinding;
 import com.goldze.mvvmhabit.entity.FormEntity;
 import com.goldze.mvvmhabit.ui.vm.FormViewModel;
+import com.goldze.mvvmhabit.ui.vm.TitleViewModel;
 
 import me.goldze.mvvmhabit.base.BaseFragment;
 
@@ -44,6 +46,12 @@ public class FormFragment extends BaseFragment<FragmentFormBinding, FormViewMode
     @Override
     public FormViewModel initViewModel() {
         return new FormViewModel(this, entity);
+    }
+
+    @Override
+    public void initData() {
+        //通过binding拿到toolbar控件, 设置给Activity
+        ((AppCompatActivity) getActivity()).setSupportActionBar(binding.include.toolbar);
     }
 
     @Override

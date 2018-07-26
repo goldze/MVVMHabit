@@ -52,7 +52,7 @@ public class LoginViewModel extends BaseViewModel {
     public BindingCommand passwordShowSwitchOnClickCommand = new BindingCommand(new BindingAction() {
         @Override
         public void call() {
-            //让观察者的数据改变,在View层的监听则会被调用
+            //让观察者的数据改变,逻辑从ViewModel层转到View层，在View层的监听则会被调用
             uc.pSwitchObservable.set(!uc.pSwitchObservable.get());
         }
     });

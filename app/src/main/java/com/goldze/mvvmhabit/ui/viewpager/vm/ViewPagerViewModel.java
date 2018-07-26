@@ -33,6 +33,7 @@ import me.tatarka.bindingcollectionadapter2.BindingViewPagerAdapter;
 import me.tatarka.bindingcollectionadapter2.ItemBinding;
 
 /**
+ * 所有例子仅做参考,理解如何使用才最重要。
  * Created by goldze on 2018/7/18.
  */
 

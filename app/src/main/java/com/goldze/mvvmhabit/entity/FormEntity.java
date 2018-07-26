@@ -10,11 +10,21 @@ import java.util.List;
  */
 
 public class FormEntity implements Parcelable {
+    private String id;
     private String name;
     private String sex;
     private String Bir;
     private String hobby;
     private Boolean isMarry;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
     public String getName() {
         return name;
     }
@@ -65,6 +75,7 @@ public class FormEntity implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.id);
         dest.writeString(this.name);
         dest.writeString(this.sex);
         dest.writeString(this.Bir);
@@ -73,6 +84,7 @@ public class FormEntity implements Parcelable {
     }
 
     protected FormEntity(Parcel in) {
+        this.id = in.readString();
         this.name = in.readString();
         this.sex = in.readString();
         this.Bir = in.readString();

@@ -125,7 +125,7 @@ public class AppManager {
      *
      * @author kymjs
      */
-    public static Activity getActivity(Class<?> cls) {
+    public Activity getActivity(Class<?> cls) {
         if (activityStack != null)
             for (Activity activity : activityStack) {
                 if (activity.getClass().equals(cls)) {

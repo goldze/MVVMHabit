@@ -83,23 +83,5 @@ public class ContainerActivity extends RxAppCompatActivity {
         } else {
             super.onBackPressed();
         }
-//        if (mFragment != null && mFragment.get() != null
-//                && mFragment.get() instanceof BaseFragment) {
-//            BaseFragment bf = (BaseFragment) mFragment.get();
-//            if (!bf.onBackPressed()) {
-//                super.onBackPressed();
-//            }
-//        } else {
-//            super.onBackPressed();
-//        }
     }
-
-//    @Override
-//    public boolean onKeyDown(int keyCode, KeyEvent event) {
-//        if (keyCode == KeyEvent.KEYCODE_BACK
-//                && mFragment.get() instanceof BaseFragment) {
-//            ((BaseFragment) mFragment.get()).onBackPressed();
-//        }
-//        return super.onKeyDown(keyCode, event);
-//    }
 }
