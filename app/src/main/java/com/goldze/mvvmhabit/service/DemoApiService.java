@@ -19,5 +19,5 @@ public interface DemoApiService {
 
     @FormUrlEncoded
     @POST("action/apiv2/banner?catalog=1")
-    Observable<BaseResponse<DemoEntity>> demoPost(@Field("token") String token);
+    Observable<BaseResponse<DemoEntity>> demoPost(@Field("id") String id);
 }

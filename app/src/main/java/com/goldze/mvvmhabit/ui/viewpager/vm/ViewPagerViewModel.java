@@ -2,32 +2,15 @@ package com.goldze.mvvmhabit.ui.viewpager.vm;
 
 import android.content.Context;
 import android.databinding.ObservableArrayList;
-import android.databinding.ObservableBoolean;
 import android.databinding.ObservableList;
-import android.os.Handler;
-import android.support.annotation.NonNull;
-import android.widget.Toast;
 
-import com.afollestad.materialdialogs.DialogAction;
-import com.afollestad.materialdialogs.MaterialDialog;
 import com.goldze.mvvmhabit.BR;
 import com.goldze.mvvmhabit.R;
-import com.goldze.mvvmhabit.entity.DemoEntity;
-import com.goldze.mvvmhabit.service.DemoApiService;
-import com.goldze.mvvmhabit.ui.vm.NetWorkItemViewModel;
-import com.goldze.mvvmhabit.utils.RetrofitClient;
+import com.goldze.mvvmhabit.ui.tab_bar.fragment.TabBar1Fragment;
 
-import io.reactivex.disposables.Disposable;
-import io.reactivex.functions.Consumer;
 import me.goldze.mvvmhabit.base.BaseViewModel;
-import me.goldze.mvvmhabit.binding.command.BindingAction;
 import me.goldze.mvvmhabit.binding.command.BindingCommand;
 import me.goldze.mvvmhabit.binding.command.BindingConsumer;
-import me.goldze.mvvmhabit.bus.Messenger;
-import me.goldze.mvvmhabit.http.BaseResponse;
-import me.goldze.mvvmhabit.http.ResponseThrowable;
-import me.goldze.mvvmhabit.utils.MaterialDialogUtils;
-import me.goldze.mvvmhabit.utils.RxUtils;
 import me.goldze.mvvmhabit.utils.ToastUtils;
 import me.tatarka.bindingcollectionadapter2.BindingViewPagerAdapter;
 import me.tatarka.bindingcollectionadapter2.ItemBinding;
@@ -62,6 +45,7 @@ public class ViewPagerViewModel extends BaseViewModel {
             return "条目" + position;
         }
     };
+    public final BindingViewPagerAdapter<TabBar1Fragment> vp = new BindingViewPagerAdapter<>();
     //ViewPager切换监听
     public BindingCommand<Integer> onPageSelectedCommand = new BindingCommand<>(new BindingConsumer<Integer>() {
         @Override

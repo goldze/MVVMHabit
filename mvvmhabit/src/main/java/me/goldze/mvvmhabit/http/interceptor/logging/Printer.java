@@ -1,6 +1,7 @@
 package me.goldze.mvvmhabit.http.interceptor.logging;
 
 import android.text.TextUtils;
+import android.util.Log;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -9,6 +10,7 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.util.List;
 
+import okhttp3.FormBody;
 import okhttp3.Request;
 import okio.Buffer;
 
@@ -57,6 +59,15 @@ class Printer {
             I.log(builder.getType(), tag, REQUEST_UP_LINE);
         logLines(builder.getType(), tag, new String[]{URL_TAG + request.url()}, builder.getLogger(), false);
         logLines(builder.getType(), tag, getRequest(request, builder.getLevel()), builder.getLogger(), true);
+        if (request.body() instanceof FormBody) {
+            StringBuilder formBody = new StringBuilder();
+            FormBody body = (FormBody) request.body();
+            for (int i = 0; i < body.size(); i++) {
+                formBody.append(body.encodedName(i) + "=" + body.encodedValue(i) + ",");
+            }
+            formBody.delete(formBody.length() - 1, formBody.length());
+            logLines(builder.getType(), tag, new String[]{formBody.toString()}, builder.getLogger(), true);
+        }
         if (builder.getLevel() == Level.BASIC || builder.getLevel() == Level.BODY) {
             logLines(builder.getType(), tag, requestBody.split(LINE_SEPARATOR), builder.getLogger(), true);
         }
@@ -86,6 +97,15 @@ class Printer {
             I.log(builder.getType(), tag, REQUEST_UP_LINE);
         logLines(builder.getType(), tag, new String[]{URL_TAG + request.url()}, builder.getLogger(), false);
         logLines(builder.getType(), tag, getRequest(request, builder.getLevel()), builder.getLogger(), true);
+        if (request.body() instanceof FormBody) {
+            StringBuilder formBody = new StringBuilder();
+            FormBody body = (FormBody) request.body();
+            for (int i = 0; i < body.size(); i++) {
+                formBody.append(body.encodedName(i) + "=" + body.encodedValue(i) + ",");
+            }
+            formBody.delete(formBody.length() - 1, formBody.length());
+            logLines(builder.getType(), tag, new String[]{formBody.toString()}, builder.getLogger(), true);
+        }
         if (builder.getLevel() == Level.BASIC || builder.getLevel() == Level.BODY) {
             logLines(builder.getType(), tag, OMITTED_REQUEST, builder.getLogger(), true);
         }
