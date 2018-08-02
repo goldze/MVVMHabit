@@ -1,6 +1,7 @@
 package com.goldze.mvvmhabit.ui.vm;
 
 import android.content.Context;
+import android.databinding.ObservableField;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
@@ -22,7 +23,6 @@ import me.goldze.mvvmhabit.utils.ToastUtils;
 public class NetWorkItemViewModel extends BaseViewModel {
     public DemoEntity.ItemsEntity entity;
     public Drawable drawableImg;
-
     public NetWorkItemViewModel(Context context, DemoEntity.ItemsEntity entity) {
         super(context);
         this.entity = entity;

@@ -63,7 +63,7 @@ class Printer {
             StringBuilder formBody = new StringBuilder();
             FormBody body = (FormBody) request.body();
             for (int i = 0; i < body.size(); i++) {
-                formBody.append(body.encodedName(i) + "=" + body.encodedValue(i) + ",");
+                formBody.append(body.encodedName(i) + "=" + body.encodedValue(i) + "&");
             }
             formBody.delete(formBody.length() - 1, formBody.length());
             logLines(builder.getType(), tag, new String[]{formBody.toString()}, builder.getLogger(), true);
@@ -101,7 +101,7 @@ class Printer {
             StringBuilder formBody = new StringBuilder();
             FormBody body = (FormBody) request.body();
             for (int i = 0; i < body.size(); i++) {
-                formBody.append(body.encodedName(i) + "=" + body.encodedValue(i) + ",");
+                formBody.append(body.encodedName(i) + "=" + body.encodedValue(i) + "&");
             }
             formBody.delete(formBody.length() - 1, formBody.length());
             logLines(builder.getType(), tag, new String[]{formBody.toString()}, builder.getLogger(), true);

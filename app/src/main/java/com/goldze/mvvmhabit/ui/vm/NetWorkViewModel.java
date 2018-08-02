@@ -4,8 +4,11 @@ import android.content.Context;
 import android.databinding.ObservableArrayList;
 import android.databinding.ObservableBoolean;
 import android.databinding.ObservableList;
+import android.databinding.ViewDataBinding;
 import android.os.Handler;
 import android.support.annotation.NonNull;
+import android.support.v7.widget.RecyclerView;
+import android.view.View;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
@@ -24,9 +27,11 @@ import me.goldze.mvvmhabit.binding.command.BindingConsumer;
 import me.goldze.mvvmhabit.bus.Messenger;
 import me.goldze.mvvmhabit.http.BaseResponse;
 import me.goldze.mvvmhabit.http.ResponseThrowable;
+import me.goldze.mvvmhabit.utils.KLog;
 import me.goldze.mvvmhabit.utils.MaterialDialogUtils;
 import me.goldze.mvvmhabit.utils.RxUtils;
 import me.goldze.mvvmhabit.utils.ToastUtils;
+import me.tatarka.bindingcollectionadapter2.BindingRecyclerViewAdapter;
 import me.tatarka.bindingcollectionadapter2.ItemBinding;
 
 /**
