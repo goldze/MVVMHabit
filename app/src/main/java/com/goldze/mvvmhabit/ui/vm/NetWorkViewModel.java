@@ -33,6 +33,7 @@ import me.goldze.mvvmhabit.utils.RxUtils;
 import me.goldze.mvvmhabit.utils.ToastUtils;
 import me.tatarka.bindingcollectionadapter2.BindingRecyclerViewAdapter;
 import me.tatarka.bindingcollectionadapter2.ItemBinding;
+import me.tatarka.bindingcollectionadapter2.OnItemBind;
 
 /**
  * Created by goldze on 2017/7/17.
@@ -93,6 +94,18 @@ public class NetWorkViewModel extends BaseViewModel {
     public ObservableList<NetWorkItemViewModel> observableList = new ObservableArrayList<>();
     //给RecyclerView添加ItemBinding
     public ItemBinding<NetWorkItemViewModel> itemBinding = ItemBinding.of(BR.viewModel, R.layout.item_network);
+    //RecyclerView多布局写法
+//    public ItemBinding<Object> itemBinding = ItemBinding.of(new OnItemBind<Object>() {
+//        @Override
+//        public void onItemBind(ItemBinding itemBinding, int position, Object item) {
+//            if (position == 0) {
+//                //设置头布局
+//                itemBinding.set(BR.viewModel, R.layout.head_netword);
+//            } else {
+//                itemBinding.set(BR.viewModel, R.layout.item_network);
+//            }
+//        }
+//    });
 
     //下拉刷新
     public BindingCommand onRefreshCommand = new BindingCommand(new BindingAction() {
