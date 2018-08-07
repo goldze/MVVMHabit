@@ -56,6 +56,8 @@ ext {
             "bindingcollectionadapter-recyclerview": "me.tatarka.bindingcollectionadapter2:bindingcollectionadapter-recyclerview:2.2.0",
             //Google新组件
             "lifecycle-extensions"                 : "android.arch.lifecycle:extensions:1.0.0",
+            //MVVMHabit
+            "MVVMHabit"                            : "com.github.goldze:MVVMHabit:2.0.7",
     ]
 }
 
