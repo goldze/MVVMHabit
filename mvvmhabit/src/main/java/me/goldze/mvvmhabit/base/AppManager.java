@@ -64,7 +64,7 @@ public class AppManager {
      */
     public boolean isActivity() {
         if (activityStack != null) {
-            return activityStack.isEmpty();
+            return !activityStack.isEmpty();
         }
         return false;
     }
@@ -161,7 +161,7 @@ public class AppManager {
      */
     public boolean isFragment() {
         if (fragmentStack != null) {
-            return fragmentStack.isEmpty();
+            return !fragmentStack.isEmpty();
         }
         return false;
     }
