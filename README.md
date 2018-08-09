@@ -618,13 +618,13 @@ DownLoadManager.getInstance().load(loadUrl, new ProgressCallBack<ResponseBody>(d
 startContainerActivity(你的Fragment类名.class.getCanonicalName())
 ```
 在ViewModel中调用BaseViewModel的方法，携带一个序列化实体打开一个Fragment
-```
+```java
 Bundle mBundle = new Bundle();
 mBundle.putParcelable("entity", entity);
 startContainerActivity(你的Fragment类名.class.getCanonicalName(), mBundle);
 ```
 在你的Fragment中取出实体
-```
+```java
 Bundle mBundle = getArguments();
 if (mBundle != null) {
     entity = mBundle.getParcelable("entity");
