@@ -16,6 +16,7 @@ import com.goldze.mvvmhabit.BR;
 import com.goldze.mvvmhabit.R;
 import com.goldze.mvvmhabit.entity.DemoEntity;
 import com.goldze.mvvmhabit.service.DemoApiService;
+import com.goldze.mvvmhabit.ui.viewpager.vm.ViewPagerItemViewModel;
 import com.goldze.mvvmhabit.utils.RetrofitClient;
 
 import io.reactivex.disposables.Disposable;
@@ -32,6 +33,7 @@ import me.goldze.mvvmhabit.utils.MaterialDialogUtils;
 import me.goldze.mvvmhabit.utils.RxUtils;
 import me.goldze.mvvmhabit.utils.ToastUtils;
 import me.tatarka.bindingcollectionadapter2.BindingRecyclerViewAdapter;
+import me.tatarka.bindingcollectionadapter2.BindingViewPagerAdapter;
 import me.tatarka.bindingcollectionadapter2.ItemBinding;
 import me.tatarka.bindingcollectionadapter2.OnItemBind;
 
@@ -106,7 +108,8 @@ public class NetWorkViewModel extends BaseViewModel {
 //            }
 //        }
 //    });
-
+    //给RecyclerView添加Adpter，请使用自定义的Adapter继承BindingRecyclerViewAdapter，重写onBindBinding方法
+    public final BindingRecyclerViewAdapter<NetWorkItemViewModel> adapter = new BindingRecyclerViewAdapter<>();
     //下拉刷新
     public BindingCommand onRefreshCommand = new BindingCommand(new BindingAction() {
         @Override
