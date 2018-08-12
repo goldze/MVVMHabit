@@ -1,7 +1,6 @@
 package com.goldze.mvvmhabit.ui.vm;
 
 import android.content.Context;
-import android.databinding.ObservableField;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;

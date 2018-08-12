@@ -7,7 +7,6 @@ import android.view.ViewGroup;
 
 import com.goldze.mvvmhabit.BR;
 import com.goldze.mvvmhabit.R;
-import com.goldze.mvvmhabit.databinding.FragmentTabBar3Binding;
 
 import me.goldze.mvvmhabit.base.BaseFragment;
 import me.goldze.mvvmhabit.base.BaseViewModel;

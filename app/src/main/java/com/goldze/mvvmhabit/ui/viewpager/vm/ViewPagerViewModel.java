@@ -3,15 +3,9 @@ package com.goldze.mvvmhabit.ui.viewpager.vm;
 import android.content.Context;
 import android.databinding.ObservableArrayList;
 import android.databinding.ObservableList;
-import android.databinding.ViewDataBinding;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 
 import com.goldze.mvvmhabit.BR;
 import com.goldze.mvvmhabit.R;
-import com.goldze.mvvmhabit.databinding.ItemViewpagerBinding;
-import com.goldze.mvvmhabit.ui.tab_bar.fragment.TabBar1Fragment;
 
 import me.goldze.mvvmhabit.base.BaseViewModel;
 import me.goldze.mvvmhabit.binding.command.BindingCommand;

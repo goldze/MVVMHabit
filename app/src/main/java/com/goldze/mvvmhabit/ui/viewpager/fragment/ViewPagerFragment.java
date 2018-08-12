@@ -2,7 +2,6 @@ package com.goldze.mvvmhabit.ui.viewpager.fragment;
 
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
-import android.support.v4.view.PagerAdapter;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 

@@ -1,7 +1,6 @@
 package com.goldze.mvvmhabit.ui.fragment;
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 

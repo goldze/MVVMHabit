@@ -9,8 +9,8 @@ import android.os.Bundle;
 import com.goldze.mvvmhabit.entity.FormEntity;
 import com.goldze.mvvmhabit.ui.fragment.FormFragment;
 import com.goldze.mvvmhabit.ui.fragment.NetWorkFragment;
-import com.goldze.mvvmhabit.ui.viewpager.fragment.ViewPagerFragment;
 import com.goldze.mvvmhabit.ui.tab_bar.activity.TabBarActivity;
+import com.goldze.mvvmhabit.ui.viewpager.fragment.ViewPagerFragment;
 import com.tbruyelle.rxpermissions2.RxPermissions;
 
 import io.reactivex.functions.Consumer;

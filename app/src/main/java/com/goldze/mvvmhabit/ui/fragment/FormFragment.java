@@ -11,7 +11,6 @@ import com.goldze.mvvmhabit.R;
 import com.goldze.mvvmhabit.databinding.FragmentFormBinding;
 import com.goldze.mvvmhabit.entity.FormEntity;
 import com.goldze.mvvmhabit.ui.vm.FormViewModel;
-import com.goldze.mvvmhabit.ui.vm.TitleViewModel;
 
 import me.goldze.mvvmhabit.base.BaseFragment;
 

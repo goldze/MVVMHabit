@@ -6,13 +6,9 @@ import android.databinding.ObservableField;
 import android.databinding.ObservableInt;
 import android.view.View;
 
-import com.google.gson.Gson;
-
 import me.goldze.mvvmhabit.base.BaseViewModel;
 import me.goldze.mvvmhabit.binding.command.BindingAction;
 import me.goldze.mvvmhabit.binding.command.BindingCommand;
-import me.goldze.mvvmhabit.utils.MaterialDialogUtils;
-import me.goldze.mvvmhabit.utils.ToastUtils;
 
 /**
  * 对应include标题的ViewModel
