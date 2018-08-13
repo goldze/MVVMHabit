@@ -728,6 +728,13 @@ ImageUtils.compressWithRx(filePaths, new Subscriber() {
 <img src="./img/error2.png" width="640" hegiht="640" align=center />
 
 解决方法：同样找到最后一个错误提示，找到Cannot resolve type for **xxx**这一句 (xxx是类名)，然后使用全局搜索 (Ctrl+H) ，搜索哪个xml引用了这个类，跟踪点击进去，在xml就会出现一个红错，即可解析该编译错误的问题。
+##### 4.1.3、build错误
+构建多module工程时，如出现【4.1.1、绑定错误】，且你能确定这个绑定是没有问题的，经过修改后出现下图错误：
+
+<img src="./img/error3.png" width="640" hegiht="640" align=center />
+
+解决方法：
+这种是databinding比较大的坑，清理、重构和删build都不起作用，网上很难找到方法。经过试验，解决办法是手动创建异常中提到的文件夹，或者拷贝上一个没有报错的版本中对应的文件夹，可以解决这个异常
 
 ## 混淆
 例子程序中给出了最新的【MVVMHabit混淆规则】，包含MVVMHabit中依赖的所有第三方library，可以将规则直接拷贝到自己app的混淆规则中。在此基础上你只需要关注自己业务代码以及自己引入第三方的混淆，【MVVMHabit混淆规则】请参考app目录下的[proguard-rules.pro](./app/proguard-rules.pro)文件。
