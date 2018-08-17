@@ -3,7 +3,6 @@ package me.goldze.mvvmhabit.utils;
 import android.content.Context;
 import android.support.v4.app.Fragment;
 
-
 import com.trello.rxlifecycle2.LifecycleProvider;
 import com.trello.rxlifecycle2.LifecycleTransformer;
 
@@ -11,6 +10,7 @@ import io.reactivex.Observable;
 import io.reactivex.ObservableSource;
 import io.reactivex.ObservableTransformer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.annotations.NonNull;
 import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
 import me.goldze.mvvmhabit.http.BaseResponse;
@@ -26,12 +26,13 @@ public class RxUtils {
      *
      * @param lifecycle Activity
      */
-    public static <T> LifecycleTransformer<T> bindToLifecycle(Context lifecycle) {
+    public static LifecycleTransformer bindToLifecycle(@NonNull Context lifecycle) {
         if (lifecycle instanceof LifecycleProvider) {
             return ((LifecycleProvider) lifecycle).bindToLifecycle();
         } else {
             throw new IllegalArgumentException("context not the LifecycleProvider type");
         }
+
     }
 
     /**
@@ -39,7 +40,7 @@ public class RxUtils {
      *
      * @param lifecycle Fragment
      */
-    public static <T> LifecycleTransformer<T> bindToLifecycle(Fragment lifecycle) {
+    public static <T> LifecycleTransformer bindToLifecycle(@NonNull Fragment lifecycle) {
         if (lifecycle instanceof LifecycleProvider) {
             return ((LifecycleProvider) lifecycle).bindToLifecycle();
         } else {
@@ -62,10 +63,10 @@ public class RxUtils {
 
     public static <T> ObservableTransformer<BaseResponse<T>, T> exceptionTransformer() {
 
-        return new ObservableTransformer() {
+        return new ObservableTransformer<BaseResponse<T>, T>() {
             @Override
-            public ObservableSource apply(Observable observable) {
-                return (observable)
+            public ObservableSource<T> apply(Observable observable) {
+                return observable
 //                        .map(new HandleFuc<T>())  //这里可以取出BaseResponse中的Result
                         .onErrorResumeNext(new HttpResponseFunc<T>());
             }
@@ -83,7 +84,7 @@ public class RxUtils {
         @Override
         public T apply(BaseResponse<T> response) {
             if (!response.isOk())
-                throw new RuntimeException(response.getCode() + "" + response.getMessage() != null ? response.getMessage() : "");
+                throw new RuntimeException(!"".equals(response.getCode() + "" + response.getMessage()) ? response.getMessage() : "");
             return response.getResult();
         }
     }
