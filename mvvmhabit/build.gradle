@@ -23,10 +23,9 @@ dependencies {
 
     api fileTree(include: ['*.jar'], dir: 'libs')
     testCompile 'junit:junit:4.12'
-    api 'com.android.support:appcompat-v7:27.0.2'
     //support
     api rootProject.ext.support["support-v4"]
-//    api rootProject.ext.support["appcompat-v7"]
+    api rootProject.ext.support["appcompat-v7"]
     api rootProject.ext.support["recyclerview-v7"]
     //rxjava
     api rootProject.ext.dependencies.rxjava
