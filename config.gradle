@@ -57,7 +57,7 @@ ext {
             //Google新组件
             "lifecycle-extensions"                 : "android.arch.lifecycle:extensions:1.0.0",
             //MVVMHabit
-            "MVVMHabit"                            : "com.github.goldze:MVVMHabit:2.0.7",
+            "MVVMHabit"                            : "com.github.goldze:MVVMHabit:2.0.8",
     ]
 }
 
