@@ -23,9 +23,11 @@ dependencies {
 
     api fileTree(include: ['*.jar'], dir: 'libs')
     testCompile 'junit:junit:4.12'
+    api 'com.android.support:appcompat-v7:27.0.2'
     //support
     api rootProject.ext.support["support-v4"]
-    api rootProject.ext.support["appcompat-v7"]
+//    api rootProject.ext.support["appcompat-v7"]
+    api rootProject.ext.support["recyclerview-v7"]
     //rxjava
     api rootProject.ext.dependencies.rxjava
     api rootProject.ext.dependencies.rxandroid
@@ -44,14 +46,20 @@ dependencies {
     //json解析
     api rootProject.ext.dependencies.gson
     //material-dialogs
-    api rootProject.ext.dependencies["material-dialogs-core"]
-    api rootProject.ext.dependencies["material-dialogs-commons"]
+    api(rootProject.ext.dependencies["material-dialogs-core"]) {
+        exclude group: 'com.android.support'
+    }
+    api(rootProject.ext.dependencies["material-dialogs-commons"]) {
+        exclude group: 'com.android.support'
+    }
     //glide图片加载库
     api rootProject.ext.dependencies.glide
     annotationProcessor rootProject.ext.dependencies["glide-compiler"]
     //recyclerview的databinding套装
     api rootProject.ext.dependencies.bindingcollectionadapter
-    api rootProject.ext.dependencies["bindingcollectionadapter-recyclerview"]
+    api(rootProject.ext.dependencies["bindingcollectionadapter-recyclerview"]) {
+        exclude group: 'com.android.support'
+    }
     //Google LiveData和ViewModel组件
     //api rootProject.ext.dependencies["lifecycle-extensions"]
 }
