@@ -34,9 +34,10 @@ public class FormViewModel extends BaseViewModel {
     public List<IKeyAndValue> sexItemDatas;
 
     public class UIChangeObservable {
-        //刷新界面的观察者
-        public ObservableBoolean refreshUIObservable = new ObservableBoolean(false);
+        //显示日期对话框
+        public ObservableBoolean showDateDialogObservable = new ObservableBoolean(false);
     }
+
     //include绑定一个通用的TitleViewModel
     public TitleViewModel titleViewModel;
 
@@ -44,7 +45,6 @@ public class FormViewModel extends BaseViewModel {
         super(fragment);
         this.entity = entity;
         titleViewModel = new TitleViewModel(context);
-
     }
 
     @Override
@@ -85,21 +85,8 @@ public class FormViewModel extends BaseViewModel {
     public BindingCommand onBirClickCommand = new BindingCommand(new BindingAction() {
         @Override
         public void call() {
-            final Calendar calendar = Calendar.getInstance();
-            int year = calendar.get(Calendar.YEAR);
-            int month = calendar.get(Calendar.MONTH);
-            int day = calendar.get(Calendar.DAY_OF_MONTH);
-            DatePickerDialog datePickerDialog = new DatePickerDialog(context, new DatePickerDialog.OnDateSetListener() {
-                @Override
-                public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                    //设置数据到实体中
-                    entity.setBir(year + "年" + (month + 1) + "月" + dayOfMonth + "日");
-                    //回调到Fragment中刷新界面
-                    uc.refreshUIObservable.set(!uc.refreshUIObservable.get());
-                }
-            }, year, month, day);
-            datePickerDialog.setMessage("生日选择");
-            datePickerDialog.show();
+            //回调到view层(Fragment)中显示日期对话框
+            uc.showDateDialogObservable.set(!uc.showDateDialogObservable.get());
         }
     });
     //是否已婚Switch点状态改变回调

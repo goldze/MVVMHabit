@@ -1,16 +1,20 @@
 package com.goldze.mvvmhabit.ui.fragment;
 
+import android.app.DatePickerDialog;
 import android.databinding.Observable;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
+import android.widget.DatePicker;
 
 import com.goldze.mvvmhabit.BR;
 import com.goldze.mvvmhabit.R;
 import com.goldze.mvvmhabit.databinding.FragmentFormBinding;
 import com.goldze.mvvmhabit.entity.FormEntity;
 import com.goldze.mvvmhabit.ui.vm.FormViewModel;
+
+import java.util.Calendar;
 
 import me.goldze.mvvmhabit.base.BaseFragment;
 
@@ -55,12 +59,25 @@ public class FormFragment extends BaseFragment<FragmentFormBinding, FormViewMode
 
     @Override
     public void initViewObservable() {
-        //监听刷新界面
-        viewModel.uc.refreshUIObservable.addOnPropertyChangedCallback(new Observable.OnPropertyChangedCallback() {
+        //监听日期选择
+        viewModel.uc.showDateDialogObservable.addOnPropertyChangedCallback(new Observable.OnPropertyChangedCallback() {
             @Override
             public void onPropertyChanged(Observable sender, int propertyId) {
-                //调用父类的刷新方法
-                refreshLayout();
+                final Calendar calendar = Calendar.getInstance();
+                int year = calendar.get(Calendar.YEAR);
+                int month = calendar.get(Calendar.MONTH);
+                int day = calendar.get(Calendar.DAY_OF_MONTH);
+                DatePickerDialog datePickerDialog = new DatePickerDialog(getContext(), new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                        //设置数据到实体中
+                        entity.setBir(year + "年" + (month + 1) + "月" + dayOfMonth + "日");
+                        //刷新页面
+                        refreshLayout();
+                    }
+                }, year, month, day);
+                datePickerDialog.setMessage("生日选择");
+                datePickerDialog.show();
             }
         });
     }
