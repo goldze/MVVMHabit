@@ -170,7 +170,7 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding, LoginViewM
     ....
 }
 ```
-> 保存activity_login.xml后databinding会生成一个ActivityLoginBinding类。
+> 保存activity_login.xml后databinding会生成一个ActivityLoginBinding类。（如果没有生成，试着点击Build->Clean Project）
 
 BaseActivity是一个抽象类，有两个泛型参数，一个是ViewDataBinding，另一个是BaseViewModel，上面的ActivityLoginBinding则是继承的ViewDataBinding作为第一个泛型参数，LoginViewModel继承BaseViewModel作为第二个泛型参数。
 
