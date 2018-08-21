@@ -43,6 +43,12 @@ public abstract class BaseActivity<V extends ViewDataBinding, VM extends BaseVie
         Messenger.getDefault().unregister(this);
         viewModel.removeRxBus();
         viewModel.onDestroy();
+        if (viewModel.context != null) {
+            viewModel.context = null;
+        }
+        if (viewModel.fragment != null) {
+            viewModel.fragment = null;
+        }
         viewModel = null;
         binding.unbind();
     }
