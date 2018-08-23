@@ -25,6 +25,7 @@ public class NetWorkItemViewModel extends BaseViewModel {
     public NetWorkItemViewModel(Context context, DemoEntity.ItemsEntity entity) {
         super(context);
         this.entity = entity;
+        //ImageView的占位图片，可以解决RecyclerView中图片错误问题
         drawableImg = ContextCompat.getDrawable(context, R.mipmap.ic_launcher);
     }
 
