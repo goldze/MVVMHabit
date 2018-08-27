@@ -197,7 +197,7 @@ public class NetWorkViewModel extends BaseViewModel {
         observableList.clear();
         observableList = null;
         if (loadMoreHandler != null) {
-            //界面销毁时移除Handler，实际网络请求时不需要手动取消请求，在请求时加入.compose(RxUtils.bindToLifecycle(context))绑定生命周期，在界面销毁时会自动取消网络访问，避免界面销毁时子线程还存在而引发的逻辑异常
+            //界面销毁时移除Runnable，实际网络请求时不需要手动取消请求，在请求时加入.compose(RxUtils.bindToLifecycle(context))绑定生命周期，在界面销毁时会自动取消网络访问，避免界面销毁时子线程还存在而引发的逻辑异常
             loadMoreHandler.removeCallbacks(loadMoreRunnable);
         }
     }
