@@ -42,6 +42,10 @@ public class NetWorkViewModel extends BaseViewModel {
         super(context);
     }
 
+    //模拟上拉加载子线程
+    public Runnable loadMoreRunnable;
+    public Handler loadMoreHandler;
+
     @Override
     public void onCreate() {
         super.onCreate();
@@ -122,13 +126,11 @@ public class NetWorkViewModel extends BaseViewModel {
                 return;
             }
             ToastUtils.showShort("上拉加载");
-            //模拟网络请求完成后收回
-            new Handler().postDelayed(new Runnable() {
+
+            //模拟网络上拉加载更多
+            loadMoreRunnable = new Runnable() {
                 @Override
                 public void run() {
-                    if (context == null) {
-                        return;
-                    }
                     //刷新完成收回
                     uc.isFinishLoadmore.set(!uc.isFinishLoadmore.get());
                     //模拟一部分假数据
@@ -140,7 +142,9 @@ public class NetWorkViewModel extends BaseViewModel {
                         observableList.add(new NetWorkItemViewModel(context, item));
                     }
                 }
-            }, 3000);
+            };
+            loadMoreHandler = new Handler();
+            loadMoreHandler.postDelayed(loadMoreRunnable, 3000);
         }
     });
 
@@ -192,5 +196,9 @@ public class NetWorkViewModel extends BaseViewModel {
         super.onDestroy();
         observableList.clear();
         observableList = null;
+        if (loadMoreHandler != null) {
+            //界面销毁时移除Handler，实际网络请求时不需要手动取消请求，在请求时加入.compose(RxUtils.bindToLifecycle(context))绑定生命周期，在界面销毁时会自动取消网络访问，避免界面销毁时子线程还存在而引发的逻辑异常
+            loadMoreHandler.removeCallbacks(loadMoreRunnable);
+        }
     }
 }
