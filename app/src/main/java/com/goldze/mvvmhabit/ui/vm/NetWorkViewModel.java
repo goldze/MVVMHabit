@@ -126,6 +126,9 @@ public class NetWorkViewModel extends BaseViewModel {
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
+                    if (context == null) {
+                        return;
+                    }
                     //刷新完成收回
                     uc.isFinishLoadmore.set(!uc.isFinishLoadmore.get());
                     //模拟一部分假数据

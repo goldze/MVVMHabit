@@ -91,6 +91,9 @@ public class LoginViewModel extends BaseViewModel {
             @Override
             public void run() {
                 dismissDialog();
+                if (context == null) {
+                    return;
+                }
                 //进入DemoActivity页面
                 startActivity(DemoActivity.class);
                 //关闭页面
