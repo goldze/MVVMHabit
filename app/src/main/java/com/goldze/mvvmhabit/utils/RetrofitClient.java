@@ -91,7 +91,7 @@ public class RetrofitClient {
                         .log(Platform.INFO) // 打印类型
                         .request("Request") // request的Tag
                         .response("Response")// Response的Tag
-                        .addHeader("日志请求头", "我是日志请求头") // 添加请求头
+                        .addHeader("log-header", "I am the log request header.") // 添加请求头, 注意 key 和 value 都不能是中文
                         .build()
                 )
                 .connectTimeout(DEFAULT_TIMEOUT, TimeUnit.SECONDS)
