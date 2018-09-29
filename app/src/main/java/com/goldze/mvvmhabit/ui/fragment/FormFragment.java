@@ -73,7 +73,7 @@ public class FormFragment extends BaseFragment<FragmentFormBinding, FormViewMode
                         //设置数据到实体中
                         entity.setBir(year + "年" + (month + 1) + "月" + dayOfMonth + "日");
                         //刷新页面
-                        refreshLayout();
+                        viewModel.notifyChange();
                     }
                 }, year, month, day);
                 datePickerDialog.setMessage("生日选择");

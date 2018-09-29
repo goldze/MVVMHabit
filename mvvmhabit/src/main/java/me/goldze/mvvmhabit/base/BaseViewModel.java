@@ -2,6 +2,7 @@ package me.goldze.mvvmhabit.base;
 
 import android.content.Context;
 import android.content.Intent;
+import android.databinding.BaseObservable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 
@@ -12,7 +13,7 @@ import me.goldze.mvvmhabit.utils.MaterialDialogUtils;
 /**
  * Created by goldze on 2017/6/15.
  */
-public class BaseViewModel implements IBaseViewModel {
+public class BaseViewModel extends BaseObservable implements IBaseViewModel {
     protected Context context;
     protected Fragment fragment;
 
