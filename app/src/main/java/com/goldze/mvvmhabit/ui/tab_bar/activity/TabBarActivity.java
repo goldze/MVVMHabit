@@ -1,5 +1,6 @@
 package com.goldze.mvvmhabit.ui.tab_bar.activity;
 
+import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -12,6 +13,7 @@ import com.goldze.mvvmhabit.ui.tab_bar.fragment.TabBar1Fragment;
 import com.goldze.mvvmhabit.ui.tab_bar.fragment.TabBar2Fragment;
 import com.goldze.mvvmhabit.ui.tab_bar.fragment.TabBar3Fragment;
 import com.goldze.mvvmhabit.ui.tab_bar.fragment.TabBar4Fragment;
+import com.goldze.mvvmhabit.ui.viewpager.vm.ViewPagerViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,11 +40,6 @@ public class TabBarActivity extends BaseActivity<ActivityTabBarBinding, BaseView
     @Override
     public int initVariableId() {
         return BR.viewModel;
-    }
-
-    @Override
-    public BaseViewModel initViewModel() {
-        return new BaseViewModel();
     }
 
     @Override

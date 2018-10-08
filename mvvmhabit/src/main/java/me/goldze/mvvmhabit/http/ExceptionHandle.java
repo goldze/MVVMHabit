@@ -64,7 +64,7 @@ public class ExceptionHandle {
             ex = new ResponseThrowable(e, ERROR.NETWORD_ERROR);
             ex.message = "连接失败";
             return ex;
-        } else if (e instanceof javax.net.ssl.SSLHandshakeException) {
+        } else if (e instanceof javax.net.ssl.SSLException) {
             ex = new ResponseThrowable(e, ERROR.SSL_ERROR);
             ex.message = "证书验证失败";
             return ex;

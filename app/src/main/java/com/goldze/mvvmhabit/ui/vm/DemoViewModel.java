@@ -1,35 +1,36 @@
 package com.goldze.mvvmhabit.ui.vm;
 
-import android.Manifest;
-import android.app.Activity;
-import android.app.ProgressDialog;
-import android.content.Context;
+import android.app.Application;
+import android.arch.lifecycle.MutableLiveData;
+import android.databinding.ObservableBoolean;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 
 import com.goldze.mvvmhabit.entity.FormEntity;
 import com.goldze.mvvmhabit.ui.fragment.FormFragment;
 import com.goldze.mvvmhabit.ui.fragment.NetWorkFragment;
 import com.goldze.mvvmhabit.ui.tab_bar.activity.TabBarActivity;
 import com.goldze.mvvmhabit.ui.viewpager.fragment.ViewPagerFragment;
-import com.tbruyelle.rxpermissions2.RxPermissions;
 
-import io.reactivex.functions.Consumer;
 import me.goldze.mvvmhabit.base.BaseViewModel;
 import me.goldze.mvvmhabit.binding.command.BindingAction;
 import me.goldze.mvvmhabit.binding.command.BindingCommand;
-import me.goldze.mvvmhabit.http.DownLoadManager;
-import me.goldze.mvvmhabit.http.download.ProgressCallBack;
-import me.goldze.mvvmhabit.utils.ToastUtils;
-import okhttp3.ResponseBody;
 
 /**
  * Created by goldze on 2017/7/17.
  */
 
 public class DemoViewModel extends BaseViewModel {
-    public DemoViewModel(Context context) {
-        //要使用父类的context相关方法,记得加上这一句
-        super(context);
+    //使用Observable
+    public ObservableBoolean requestCameraPermissions = new ObservableBoolean(false);
+    //使用LiveData
+    public MutableLiveData<Boolean> downFileUrlLiveData = new MutableLiveData();
+    public String loadUrl;
+    public String destFileDir;
+    public String destFileName;
+
+    public DemoViewModel(@NonNull Application application) {
+        super(application);
     }
 
     //网络访问点击事件
@@ -81,20 +82,7 @@ public class DemoViewModel extends BaseViewModel {
     public BindingCommand permissionsClick = new BindingCommand(new BindingAction() {
         @Override
         public void call() {
-            //请求打开相机权限
-            RxPermissions rxPermissions = new RxPermissions((Activity) context);
-            rxPermissions.request(Manifest.permission.CAMERA)
-                    .subscribe(new Consumer<Boolean>() {
-                        @Override
-                        public void accept(Boolean aBoolean) throws Exception {
-                            if (aBoolean) {
-                                ToastUtils.showShort("相机权限已经打开，直接跳入相机");
-                            } else {
-                                ToastUtils.showShort("权限被拒绝");
-                            }
-                        }
-                    });
-
+            requestCameraPermissions.set(!requestCameraPermissions.get());
         }
     });
 
@@ -103,7 +91,7 @@ public class DemoViewModel extends BaseViewModel {
         @Override
         public void call() {
             //伪造一个异常
-            Integer.parseInt("a");
+            Integer.parseInt("goldze");
         }
     });
     //文件下载
@@ -115,42 +103,12 @@ public class DemoViewModel extends BaseViewModel {
     });
 
     public void downloadFile() {
-        final ProgressDialog progressDialog = new ProgressDialog(context);
-        progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
-        progressDialog.setTitle("正在下载...");
-        progressDialog.setCancelable(false);
-        progressDialog.show();
-
-        String loadUrl = "http://a.gdown.baidu.com/data/wisegame/2828a29ba864e167/neihanduanzi_660.apk?from=a1101";
-        String destFileDir = context.getCacheDir().getPath();  //文件存放的路径
-        String destFileName = System.currentTimeMillis() + ".apk";//文件存放的名称
-        DownLoadManager.getInstance().load(loadUrl, new ProgressCallBack<ResponseBody>(destFileDir, destFileName) {
-            @Override
-            public void onStart() {
-                super.onStart();
-            }
-
-            @Override
-            public void onCompleted() {
-                progressDialog.dismiss();
-            }
-
-            @Override
-            public void onSuccess(ResponseBody responseBody) {
-                ToastUtils.showShort("文件下载完成！");
-            }
-
-            @Override
-            public void progress(final long progress, final long total) {
-                progressDialog.setMax((int) total);
-                progressDialog.setProgress((int) progress);
-            }
-
-            @Override
-            public void onError(Throwable e) {
-                e.printStackTrace();
-                ToastUtils.showShort("文件下载失败！");
-            }
-        });
+        loadUrl = "http://gdown.baidu.com/data/wisegame/a2cd8828b227b9f9/neihanduanzi_692.apk";
+        //文件存放的路径
+        destFileDir = getApplication().getCacheDir().getPath();
+        //文件存放的名称
+        destFileName = System.currentTimeMillis() + ".apk";
+        //改变LiveData
+        downFileUrlLiveData.setValue(true);
     }
 }

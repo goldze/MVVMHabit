@@ -1,5 +1,6 @@
 package com.goldze.mvvmhabit.ui.tab_bar.fragment;
 
+import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -24,10 +25,5 @@ public class TabBar4Fragment extends BaseFragment {
     @Override
     public int initVariableId() {
         return BR.viewModel;
-    }
-
-    @Override
-    public BaseViewModel initViewModel() {
-        return new BaseViewModel();
     }
 }

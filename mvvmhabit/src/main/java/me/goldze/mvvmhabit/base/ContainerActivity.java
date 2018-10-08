@@ -77,7 +77,7 @@ public class ContainerActivity extends RxAppCompatActivity {
     public void onBackPressed() {
         Fragment fragment = getSupportFragmentManager().findFragmentById(mianLayout.getId());
         if (fragment instanceof BaseFragment) {
-            if (!((BaseFragment) fragment).onBackPressed()) {
+            if (!((BaseFragment) fragment).isBackPressed()) {
                 super.onBackPressed();
             }
         } else {

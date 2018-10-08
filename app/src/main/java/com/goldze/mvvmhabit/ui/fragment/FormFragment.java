@@ -1,8 +1,11 @@
 package com.goldze.mvvmhabit.ui.fragment;
 
 import android.app.DatePickerDialog;
+import android.arch.lifecycle.Observer;
+import android.arch.lifecycle.ViewModelProviders;
 import android.databinding.Observable;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
@@ -13,10 +16,12 @@ import com.goldze.mvvmhabit.R;
 import com.goldze.mvvmhabit.databinding.FragmentFormBinding;
 import com.goldze.mvvmhabit.entity.FormEntity;
 import com.goldze.mvvmhabit.ui.vm.FormViewModel;
+import com.goldze.mvvmhabit.ui.vm.TitleViewModel;
 
 import java.util.Calendar;
 
 import me.goldze.mvvmhabit.base.BaseFragment;
+import me.goldze.mvvmhabit.utils.MaterialDialogUtils;
 
 /**
  * Created by goldze on 2017/7/17.
@@ -47,14 +52,13 @@ public class FormFragment extends BaseFragment<FragmentFormBinding, FormViewMode
     }
 
     @Override
-    public FormViewModel initViewModel() {
-        return new FormViewModel(this, entity);
-    }
-
-    @Override
     public void initData() {
         //通过binding拿到toolbar控件, 设置给Activity
         ((AppCompatActivity) getActivity()).setSupportActionBar(binding.include.toolbar);
+        //创建TitleViewModel
+        TitleViewModel titleViewModel = createViewModel(getActivity(), TitleViewModel.class);
+        //View层传参到ViewModel层
+        viewModel.initData(entity, titleViewModel);
     }
 
     @Override
@@ -70,14 +74,19 @@ public class FormFragment extends BaseFragment<FragmentFormBinding, FormViewMode
                 DatePickerDialog datePickerDialog = new DatePickerDialog(getContext(), new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                        //设置数据到实体中
-                        entity.setBir(year + "年" + (month + 1) + "月" + dayOfMonth + "日");
+                        viewModel.setBir(year,month,dayOfMonth);
                         //刷新页面
-                        viewModel.notifyChange();
+                        refreshLayout();
                     }
                 }, year, month, day);
                 datePickerDialog.setMessage("生日选择");
                 datePickerDialog.show();
+            }
+        });
+        viewModel.entityJsonLiveData.observe(this, new Observer<String>() {
+            @Override
+            public void onChanged(@Nullable String submitJson) {
+                MaterialDialogUtils.showBasicDialog(getContext(), "提交的json实体数据：\r\n" + submitJson).show();
             }
         });
     }

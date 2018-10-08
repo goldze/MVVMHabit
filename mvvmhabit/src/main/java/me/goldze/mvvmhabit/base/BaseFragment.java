@@ -1,16 +1,28 @@
 package me.goldze.mvvmhabit.base;
 
+import android.arch.lifecycle.Observer;
+import android.arch.lifecycle.ViewModel;
+import android.arch.lifecycle.ViewModelProviders;
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.databinding.ViewDataBinding;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.FragmentActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.trello.rxlifecycle2.components.support.RxFragment;
 
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
+import java.util.Map;
+
+import me.goldze.mvvmhabit.base.BaseViewModel.ParameterField;
 import me.goldze.mvvmhabit.bus.Messenger;
+import me.goldze.mvvmhabit.utils.MaterialDialogUtils;
 
 /**
  * Created by goldze on 2017/6/15.
@@ -18,6 +30,7 @@ import me.goldze.mvvmhabit.bus.Messenger;
 public abstract class BaseFragment<V extends ViewDataBinding, VM extends BaseViewModel> extends RxFragment implements IBaseActivity {
     protected V binding;
     protected VM viewModel;
+    private MaterialDialog dialog;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -28,15 +41,8 @@ public abstract class BaseFragment<V extends ViewDataBinding, VM extends BaseVie
     @Override
     public void onDestroy() {
         super.onDestroy();
-        Messenger.getDefault().unregister(this.getContext());
+        Messenger.getDefault().unregister(viewModel);
         viewModel.removeRxBus();
-        viewModel.onDestroy();
-        if (viewModel.context != null) {
-            viewModel.context = null;
-        }
-        if (viewModel.fragment != null) {
-            viewModel.fragment = null;
-        }
         viewModel = null;
         binding.unbind();
     }
@@ -44,8 +50,22 @@ public abstract class BaseFragment<V extends ViewDataBinding, VM extends BaseVie
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        viewModel = initViewModel();
+        if (viewModel == null) {
+            Class modelClass;
+            Type type = getClass().getGenericSuperclass();
+            if (type instanceof ParameterizedType) {
+                modelClass = (Class) ((ParameterizedType) type).getActualTypeArguments()[1];
+            } else {
+                //如果没有指定泛型参数，则默认使用BaseViewModel
+                modelClass = BaseViewModel.class;
+            }
+            viewModel = (VM) createViewModel(getActivity(), modelClass);
+        }
         binding = DataBindingUtil.inflate(inflater, initContentView(inflater, container, savedInstanceState), container, false);
-        binding.setVariable(initVariableId(), viewModel = initViewModel());
+        binding.setVariable(initVariableId(), viewModel);
+        //让ViewModel拥有View的生命周期感应
+        getLifecycle().addObserver(viewModel);
         return binding.getRoot();
     }
 
@@ -57,26 +77,148 @@ public abstract class BaseFragment<V extends ViewDataBinding, VM extends BaseVie
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        //私有的ViewModel与View的契约事件回调逻辑
+        registorUIChangeLiveDataCallBack();
 
         initData();
 
         initViewObservable();
 
-        viewModel.onCreate();
-
         viewModel.registerRxBus();
     }
 
-    @Override
-    public void initParam() {
 
+    /**
+     * =====================================================================
+     **/
+    //注册ViewModel与View的契约UI回调事件
+    private void registorUIChangeLiveDataCallBack() {
+        //加载对话框显示
+        viewModel.uc.showDialogLiveData.observe(this, new Observer<String>() {
+            @Override
+            public void onChanged(@Nullable String title) {
+                showDialog(title);
+            }
+        });
+        //加载对话框消失
+        viewModel.uc.dismissDialogLiveData.observe(this, new Observer<Boolean>() {
+            @Override
+            public void onChanged(@Nullable Boolean aBoolean) {
+                dismissDialog();
+            }
+        });
+        //跳入新页面
+        viewModel.uc.startActivityLiveData.observe(this, new Observer<Map<String, Object>>() {
+            @Override
+            public void onChanged(@Nullable Map<String, Object> params) {
+                Class<?> clz = (Class<?>) params.get(ParameterField.CLASS);
+                Bundle bundle = (Bundle) params.get(ParameterField.BUNDLE);
+                startActivity(clz, bundle);
+            }
+        });
+        //跳入ContainerActivity
+        viewModel.uc.startContainerActivityLiveData.observe(this, new Observer<Map<String, Object>>() {
+            @Override
+            public void onChanged(@Nullable Map<String, Object> params) {
+                String canonicalName = (String) params.get(ParameterField.CANONICALNAME);
+                Bundle bundle = (Bundle) params.get(ParameterField.BUNDLE);
+                startContainerActivity(canonicalName, bundle);
+            }
+        });
+        //关闭界面
+        viewModel.uc.finishLiveData.observe(this, new Observer<Boolean>() {
+            @Override
+            public void onChanged(@Nullable Boolean aBoolean) {
+                getActivity().finish();
+            }
+        });
+        //关闭上一层
+        viewModel.uc.onBackPressedLiveData.observe(this, new Observer<Boolean>() {
+            @Override
+            public void onChanged(@Nullable Boolean aBoolean) {
+                getActivity().onBackPressed();
+            }
+        });
     }
+
+    public void showDialog(String title) {
+        if (dialog != null) {
+            dialog.show();
+        } else {
+            MaterialDialog.Builder builder = MaterialDialogUtils.showIndeterminateProgressDialog(getActivity(), title, true);
+            dialog = builder.show();
+        }
+    }
+
+    public void dismissDialog() {
+        if (dialog != null && dialog.isShowing()) {
+            dialog.dismiss();
+        }
+    }
+
+    /**
+     * 跳转页面
+     *
+     * @param clz 所跳转的目的Activity类
+     */
+    public void startActivity(Class<?> clz) {
+        startActivity(new Intent(getContext(), clz));
+    }
+
+    /**
+     * 跳转页面
+     *
+     * @param clz    所跳转的目的Activity类
+     * @param bundle 跳转所携带的信息
+     */
+    public void startActivity(Class<?> clz, Bundle bundle) {
+        Intent intent = new Intent(getContext(), clz);
+        if (bundle != null) {
+            intent.putExtras(bundle);
+        }
+        startActivity(intent);
+    }
+
+    /**
+     * 跳转容器页面
+     *
+     * @param canonicalName 规范名 : Fragment.class.getCanonicalName()
+     * @param bundle        跳转所携带的信息
+     */
+    public void startContainerActivity(String canonicalName, Bundle bundle) {
+        Intent intent = new Intent(getContext(), ContainerActivity.class);
+        intent.putExtra(ContainerActivity.FRAGMENT, canonicalName);
+        if (bundle != null) {
+            intent.putExtra(ContainerActivity.BUNDLE, bundle);
+        }
+        startActivity(intent);
+    }
+
+    /**
+     * 跳转容器页面
+     *
+     * @param canonicalName 规范名 : Fragment.class.getCanonicalName()
+     */
+    public void startContainerActivity(String canonicalName) {
+        Intent intent = new Intent(getContext(), ContainerActivity.class);
+        intent.putExtra(ContainerActivity.FRAGMENT, canonicalName);
+        startActivity(intent);
+    }
+
+    /**
+     * =====================================================================
+     **/
 
     //刷新布局
     public void refreshLayout() {
         if (viewModel != null) {
             binding.setVariable(initVariableId(), viewModel);
         }
+    }
+
+    @Override
+    public void initParam() {
+
     }
 
     /**
@@ -98,7 +240,9 @@ public abstract class BaseFragment<V extends ViewDataBinding, VM extends BaseVie
      *
      * @return 继承BaseViewModel的ViewModel
      */
-    public abstract VM initViewModel();
+    public VM initViewModel() {
+        return null;
+    }
 
     @Override
     public void initData() {
@@ -110,7 +254,18 @@ public abstract class BaseFragment<V extends ViewDataBinding, VM extends BaseVie
 
     }
 
-    public boolean onBackPressed() {
+    public boolean isBackPressed() {
         return false;
+    }
+
+    /**
+     * 创建ViewModel
+     *
+     * @param cls
+     * @param <T>
+     * @return
+     */
+    public static <T extends ViewModel> T createViewModel(FragmentActivity activity, Class<T> cls) {
+        return ViewModelProviders.of(activity).get(cls);
     }
 }

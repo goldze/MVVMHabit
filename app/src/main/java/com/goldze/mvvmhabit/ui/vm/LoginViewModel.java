@@ -1,11 +1,13 @@
 package com.goldze.mvvmhabit.ui.vm;
 
 import android.app.Activity;
+import android.app.Application;
 import android.content.Context;
 import android.databinding.ObservableBoolean;
 import android.databinding.ObservableField;
 import android.databinding.ObservableInt;
 import android.os.Handler;
+import android.support.annotation.NonNull;
 import android.text.TextUtils;
 import android.view.View;
 
@@ -36,8 +38,11 @@ public class LoginViewModel extends BaseViewModel {
         public ObservableBoolean pSwitchObservable = new ObservableBoolean(false);
     }
 
-    public LoginViewModel(Context context) {
-        super(context);
+    private Handler loginHandler;
+    private Runnable loginRunnable;
+
+    public LoginViewModel(@NonNull Application application) {
+        super(application);
     }
 
     //清除用户名的点击事件, 逻辑从View层转换到ViewModel层
@@ -87,18 +92,27 @@ public class LoginViewModel extends BaseViewModel {
             return;
         }
         showDialog();
-        new Handler().postDelayed(new Runnable() {
+        //进入DemoActivity页面
+        loginRunnable = new Runnable() {
             @Override
             public void run() {
                 dismissDialog();
-                if (context == null) {
-                    return;
-                }
                 //进入DemoActivity页面
                 startActivity(DemoActivity.class);
                 //关闭页面
-                ((Activity) context).finish();
+                finish();
             }
-        }, 3 * 1000);
+        };
+        loginHandler = new Handler();
+        loginHandler.postDelayed(loginRunnable, 3 * 1000);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if (loginHandler != null) {
+            //界面销毁时移除Runnable，实际网络请求时不需要手动取消请求，在请求时加入.compose(RxUtils.bindToLifecycle(context))绑定生命周期，在界面销毁时会自动取消网络访问，避免界面销毁时子线程还存在而引发的逻辑异常
+            loginHandler.removeCallbacks(loginRunnable);
+        }
     }
 }

@@ -1,8 +1,10 @@
 package com.goldze.mvvmhabit.ui.viewpager.vm;
 
+import android.app.Application;
 import android.content.Context;
 import android.databinding.ObservableArrayList;
 import android.databinding.ObservableList;
+import android.support.annotation.NonNull;
 
 import com.goldze.mvvmhabit.BR;
 import com.goldze.mvvmhabit.R;
@@ -21,15 +23,15 @@ import me.tatarka.bindingcollectionadapter2.ItemBinding;
 
 public class ViewPagerViewModel extends BaseViewModel {
 
-    public ViewPagerViewModel(Context context) {
-        super(context);
+    public ViewPagerViewModel(@NonNull Application application) {
+        super(application);
     }
 
-    @Override
-    public void onCreate() {
+    public void addPage() {
         //模拟3个ViewPager页面
         for (int i = 1; i <= 3; i++) {
-            items.add(new ViewPagerItemViewModel(context, "第" + i + "个页面"));
+            ViewPagerItemViewModel itemViewModel = new ViewPagerItemViewModel(this, "第" + i + "个页面");
+            items.add(itemViewModel);
         }
     }
 

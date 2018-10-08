@@ -1,4 +1,12 @@
 ## 更新日志
+**v3.0.0：2018年10月8日**
+
+- 全面升级AAC，引入谷歌lifecycle组件；
+- 修改Base基类，满足新一套模式；
+- 升级第三方依赖库；
+- 修改例子程序；
+- 修改文档说明。
+***
 **v2.0.6：2018年7月19日**
 
 - 优化框架性能、基类逻辑，新增绑定命令；
@@ -20,7 +28,7 @@
 <a target="_blank" href="//shang.qq.com/wpa/qunwpa?idkey=a8db5d8f95bc432606fd79c3d6e494e8a97401671c27de4a8fe975382a441a3e"><img border="0" src="http://pub.idqqimg.com/wpa/images/group.png" alt="MVVMHabit-Family" title="MVVMHabit-Family"></a>
 # MVVMHabit
 ##
-目前，android流行的MVC、MVP模式的开发框架很多，然而一款基于MVVM模式开发框架却很少。**MVVMHabit则是一款以谷歌的databinding为基础，整合Okhttp+RxJava+Retrofit+Glide等流行模块，加上各种原生控件自定义的BindingAdapter，让事件与数据源完美绑定的一款容易上瘾的实用性快速开发框架**。从此告别findViewById()，告别setText()，告别setOnClickListener()...
+目前，android流行的MVC、MVP模式的开发框架很多，然而一款基于MVVM模式开发框架却很少。**MVVMHabit则是一款以谷歌的AAC框架为基础，整合Okhttp+RxJava+Retrofit+Glide等流行模块，加上各种原生控件自定义的BindingAdapter，让事件与数据源完美绑定的一款容易上瘾的实用性快速开发框架**。从此告别findViewById()，告别setText()，告别setOnClickListener()...
 
 ## 框架流程
 ![](./img/fc.png) 
@@ -57,7 +65,7 @@
 
 
 ## 1、准备工作
-> 网上的很多有关MVVM的资料，在此就不再阐述什么是MVVM了，不清楚的朋友可以先去了解一下。
+> 网上的很多有关MVVM的资料，在此就不再阐述什么是MVVM了，不清楚的朋友可以先去了解一下。[todo-mvvm-live](https://github.com/googlesamples/android-architecture/tree/todo-mvvm-live)
 ### 1.1、启用databinding
 在主工程app的build.gradle的android {}中加入：
 ```gradle
@@ -72,7 +80,9 @@ dataBinding {
 ```gradle
 allprojects {
     repositories {
-        ...
+		...
+        google()
+        jcenter()
         maven { url 'https://jitpack.io' }
     }
 }
@@ -93,7 +103,8 @@ dependencies {
     implementation project(':mvvmhabit')
 }
 ```
-> 旧版本 api 'com.github.goldze:MVVMHabit:1.2.6.1'
+> 2.0最后版本 implementation 'com.github.goldze:MVVMHabit:2.0.10'</br>
+> 1.0最后版本 implementation 'com.github.goldze:MVVMHabit:1.2.6.1'
 ### 1.3、配置config.gradle
 如果不是远程依赖，而是下载的例子程序，那么还需要将例子程序中的config.gradle放入你的主项目根目录中，然后在根目录build.gradle的第一行加入：
 
@@ -166,43 +177,56 @@ CaocConfig.Builder.create()
 
 LoginActivity继承BaseActivity
 ```java
+
 public class LoginActivity extends BaseActivity<ActivityLoginBinding, LoginViewModel> {
-    ....
+    //ActivityLoginBinding类是databinding框架自定生成的,对activity_login.xml
+    @Override
+    public int initContentView(Bundle savedInstanceState) {
+        return R.layout.activity_login;
+    }
+
+    @Override
+    public int initVariableId() {
+        return BR.viewModel;
+    }
+
+    @Override
+    public LoginViewModel initViewModel() {
+        //View持有ViewModel的引用，如果没有特殊业务处理，这个方法可以不重写
+        return ViewModelProviders.of(this).get(LoginViewModel.class);
+    }
 }
 ```
 > 保存activity_login.xml后databinding会生成一个ActivityLoginBinding类。（如果没有生成，试着点击Build->Clean Project）
 
-BaseActivity是一个抽象类，有两个泛型参数，一个是ViewDataBinding，另一个是BaseViewModel，上面的ActivityLoginBinding则是继承的ViewDataBinding作为第一个泛型参数，LoginViewModel继承BaseViewModel作为第二个泛型参数。
+BaseActivity是一个抽象类，有两个泛型参数，一个是ViewDataBinding，另一个是BaseViewModel，上面的ActivityLoginBinding则是继承的ViewDataBinding作为第一个泛型约束，LoginViewModel继承BaseViewModel作为第二个泛型约束。
 
-重写BaseActivity的三个抽象方法
+重写BaseActivity的二个抽象方法
+
+initContentView() 返回界面layout的id<br>
+initVariableId() 返回变量的id，对应activity_login中name="viewModel"，就像一个控件的id，可以使用R.id.xxx，这里的BR跟R文件一样，由系统生成，使用BR.xxx找到这个ViewModel的id。<br>
+
+选择性重写initViewModel()方法，返回ViewModel对象
 ```java
 @Override
-public int initContentView() {
-    return R.layout.activity_login;
-}
-
-@Override
-public int initVariableId() {
-    return BR.viewModel;
-}
-
-@Override
 public LoginViewModel initViewModel() {
-    //View持有ViewModel的引用 (考虑到框架适用性，这里暂时没有用Dagger2解耦)
-    return new LoginViewModel(this);
+    //View持有ViewModel的引用，如果没有特殊业务处理，这个方法可以不重写
+    return ViewModelProviders.of(this).get(LoginViewModel.class);
 }
 ```
-initContentView() 返回界面layout的id<br>
-initVariableId() 返回变量的id，对应activity_login中variable - name：变量名，就像一个控件的id，可以使用R.id.xxx，这里的BR跟R文件一样，由系统生成，使用BR.xxx找到这个ViewModel的id。<br>
-initViewModel() 返回ViewModel对象
+
+**注意：** 不重写initViewModel()，默认会创建LoginActivity中第二个泛型约束的LoginViewModel，如果没有指定第二个泛型，则会创建BaseViewModel
 
 LoginViewModel继承BaseViewModel
 ```java
-public LoginViewModel(Context context) {
-    super(context);
+public class LoginViewModel extends BaseViewModel {
+    public LoginViewModel(@NonNull Application application) {
+        super(application);
+    }
+    ....
 }
 ```
-在构造方法中调用super(context) 将上下文交给父类，即可使用父类的showDialog()、startActivity()等方法。在这个LoginViewModel中就可以尽情的写你的逻辑了！
+BaseViewModel与BaseActivity通过LiveData来处理常用UI逻辑，即可在ViewModel中使用父类的showDialog()、startActivity()等方法。在这个LoginViewModel中就可以尽情的写你的逻辑了！
 > BaseFragment的使用和BaseActivity一样，详情参考Demo。
 
 ### 2.2、数据绑定
@@ -378,8 +402,10 @@ layoutManager控制是线性(包含水平和垂直)排列还是网格排列，li
 > `<import type="android.support.v7.widget.LinearLayoutManager" />`
 
 
-这样绑定后，在ViewModel中调用ObservableList的add()方法，添加一个Item的ViewModel，界面上就会实时绘制出一个Item。在Item对应的ViewModel中，同样可以以绑定的形式完成逻辑
-> 可以在请求到数据后，循环添加`observableList.add(new NetWorkItemViewModel(context, entity));`详细可以参考例子程序中NetWorkViewModel类
+这样绑定后，在ViewModel中调用ObservableList的add()方法，添加一个ItemViewModel，界面上就会实时绘制出一个Item。在Item对应的ViewModel中，同样可以以绑定的形式完成逻辑
+> 可以在请求到数据后，循环添加`observableList.add(new NetWorkItemViewModel(NetWorkViewModel.this, entity));`详细可以参考例子程序中NetWorkViewModel类。
+
+**注意：** 在以前的版本中，ItemViewModel是继承BaseViewModel，传入Context，新版本3.0+中可继承ItemViewModel，传入当前页面的ViewModel
 
 更多RecyclerView、ListView、ViewPager等绑定方式，请参考 [https://github.com/evant/binding-collection-adapter](https://github.com/evant/binding-collection-adapter)
 

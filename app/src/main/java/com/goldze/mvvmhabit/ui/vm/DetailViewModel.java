@@ -1,5 +1,8 @@
 package com.goldze.mvvmhabit.ui.vm;
 
+import android.app.Application;
+import android.support.annotation.NonNull;
+
 import com.goldze.mvvmhabit.entity.DemoEntity;
 
 import me.goldze.mvvmhabit.base.BaseViewModel;
@@ -11,7 +14,11 @@ import me.goldze.mvvmhabit.base.BaseViewModel;
 public class DetailViewModel extends BaseViewModel {
     public DemoEntity.ItemsEntity entity;
 
-    public DetailViewModel(DemoEntity.ItemsEntity entity) {
+    public DetailViewModel(@NonNull Application application) {
+        super(application);
+    }
+
+    public void setDemoEntity(DemoEntity.ItemsEntity entity) {
         this.entity = entity;
     }
 

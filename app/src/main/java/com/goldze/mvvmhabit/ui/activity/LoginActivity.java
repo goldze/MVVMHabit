@@ -1,5 +1,6 @@
 package com.goldze.mvvmhabit.ui.activity;
 
+import android.arch.lifecycle.ViewModelProviders;
 import android.databinding.Observable;
 import android.os.Bundle;
 import android.text.method.HideReturnsTransformationMethod;
@@ -29,8 +30,8 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding, LoginViewM
 
     @Override
     public LoginViewModel initViewModel() {
-        //View持有ViewModel的引用 (这里暂时没有用Dagger2解耦)
-        return new LoginViewModel(this);
+        //View持有ViewModel的引用，如果没有特殊业务处理，这个方法可以不重写
+        return ViewModelProviders.of(this).get(LoginViewModel.class);
     }
 
     @Override

@@ -1,5 +1,6 @@
 package com.goldze.mvvmhabit.ui.viewpager.fragment;
 
+import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.view.LayoutInflater;
@@ -8,7 +9,9 @@ import android.view.ViewGroup;
 import com.goldze.mvvmhabit.BR;
 import com.goldze.mvvmhabit.R;
 import com.goldze.mvvmhabit.databinding.FragmentViewpagerBinding;
+import com.goldze.mvvmhabit.ui.viewpager.vm.ViewPagerItemViewModel;
 import com.goldze.mvvmhabit.ui.viewpager.vm.ViewPagerViewModel;
+import com.goldze.mvvmhabit.ui.vm.NetWorkViewModel;
 
 import me.goldze.mvvmhabit.base.BaseFragment;
 
@@ -29,15 +32,16 @@ public class ViewPagerFragment extends BaseFragment<FragmentViewpagerBinding, Vi
         return BR.viewModel;
     }
 
-    @Override
-    public ViewPagerViewModel initViewModel() {
-        return new ViewPagerViewModel(getContext());
-    }
 
     @Override
     public void initData() {
         // 使用 TabLayout 和 ViewPager 相关联
         binding.tabs.setupWithViewPager(binding.viewPager);
         binding.viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(binding.tabs));
+    }
+
+    @Override
+    public void initViewObservable() {
+        viewModel.addPage();
     }
 }
