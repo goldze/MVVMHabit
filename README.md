@@ -21,7 +21,7 @@
 - 升级第三方依赖库；
 - 微调例子程序。
 
-**注：v1.x已停止维护，建议使用v2.x。**
+**注：v1.x、2.x已停止维护，建议使用v3.x。**
 
 > **原文地址：** [https://github.com/goldze/MVVMHabit](https://github.com/goldze/MVVMHabit)
 
@@ -91,7 +91,7 @@ allprojects {
 ```gradle
 dependencies {
     ...
-    implementation 'com.github.goldze:MVVMHabit:2.0.10'
+    implementation 'com.github.goldze:MVVMHabit:3.0.0'
 }
 ```
 或
@@ -405,7 +405,7 @@ layoutManager控制是线性(包含水平和垂直)排列还是网格排列，li
 这样绑定后，在ViewModel中调用ObservableList的add()方法，添加一个ItemViewModel，界面上就会实时绘制出一个Item。在Item对应的ViewModel中，同样可以以绑定的形式完成逻辑
 > 可以在请求到数据后，循环添加`observableList.add(new NetWorkItemViewModel(NetWorkViewModel.this, entity));`详细可以参考例子程序中NetWorkViewModel类。
 
-**注意：** 在以前的版本中，ItemViewModel是继承BaseViewModel，传入Context，新版本3.0+中可继承ItemViewModel，传入当前页面的ViewModel
+**注意：** 在以前的版本中，ItemViewModel是继承BaseViewModel，传入Context，新版本3.x中可继承ItemViewModel，传入当前页面的ViewModel
 
 更多RecyclerView、ListView、ViewPager等绑定方式，请参考 [https://github.com/evant/binding-collection-adapter](https://github.com/evant/binding-collection-adapter)
 
