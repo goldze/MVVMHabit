@@ -21,7 +21,7 @@
 - 升级第三方依赖库；
 - 微调例子程序。
 
-**注：v1.x、2.x已停止维护，建议使用v3.x。**
+**注：1.x（最后版本1.2.6.1）、2.x（最后版本2.0.10）已停止维护，建议使用v3.x。**
 
 > **原文地址：** [https://github.com/goldze/MVVMHabit](https://github.com/goldze/MVVMHabit)
 
@@ -103,8 +103,7 @@ dependencies {
     implementation project(':mvvmhabit')
 }
 ```
-> 2.0最后版本 implementation 'com.github.goldze:MVVMHabit:2.0.10'</br>
-> 1.0最后版本 implementation 'com.github.goldze:MVVMHabit:1.2.6.1'
+
 ### 1.3、配置config.gradle
 如果不是远程依赖，而是下载的例子程序，那么还需要将例子程序中的config.gradle放入你的主项目根目录中，然后在根目录build.gradle的第一行加入：
 
