@@ -1,8 +1,6 @@
 package com.goldze.mvvmhabit.ui.vm;
 
-import android.app.Activity;
 import android.app.Application;
-import android.content.Context;
 import android.databinding.ObservableBoolean;
 import android.databinding.ObservableField;
 import android.databinding.ObservableInt;

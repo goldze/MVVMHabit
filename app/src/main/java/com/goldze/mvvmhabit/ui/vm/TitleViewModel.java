@@ -1,17 +1,13 @@
 package com.goldze.mvvmhabit.ui.vm;
 
-import android.app.Activity;
 import android.app.Application;
 import android.arch.lifecycle.AndroidViewModel;
-import android.content.Context;
 import android.databinding.ObservableField;
 import android.databinding.ObservableInt;
 import android.support.annotation.NonNull;
 import android.view.View;
 
 import me.goldze.mvvmhabit.base.AppManager;
-import me.goldze.mvvmhabit.base.BaseViewModel;
-import me.goldze.mvvmhabit.base.ItemViewModel;
 import me.goldze.mvvmhabit.binding.command.BindingAction;
 import me.goldze.mvvmhabit.binding.command.BindingCommand;
 
