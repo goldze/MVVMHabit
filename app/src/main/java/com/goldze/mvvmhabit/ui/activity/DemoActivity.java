@@ -1,7 +1,6 @@
 package com.goldze.mvvmhabit.ui.activity;
 
 import android.Manifest;
-import android.app.Activity;
 import android.app.ProgressDialog;
 import android.arch.lifecycle.Observer;
 import android.databinding.Observable;

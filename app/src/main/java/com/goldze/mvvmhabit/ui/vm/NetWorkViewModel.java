@@ -2,7 +2,6 @@ package com.goldze.mvvmhabit.ui.vm;
 
 import android.app.Application;
 import android.arch.lifecycle.MutableLiveData;
-import android.content.Context;
 import android.databinding.ObservableArrayList;
 import android.databinding.ObservableBoolean;
 import android.databinding.ObservableList;
@@ -10,30 +9,20 @@ import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 
-import com.afollestad.materialdialogs.DialogAction;
-import com.afollestad.materialdialogs.MaterialDialog;
 import com.goldze.mvvmhabit.BR;
 import com.goldze.mvvmhabit.R;
 import com.goldze.mvvmhabit.entity.DemoEntity;
 import com.goldze.mvvmhabit.service.DemoApiService;
 import com.goldze.mvvmhabit.utils.RetrofitClient;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Action;
 import io.reactivex.functions.Consumer;
-import me.goldze.mvvmhabit.base.BaseActivity;
 import me.goldze.mvvmhabit.base.BaseViewModel;
-import me.goldze.mvvmhabit.base.ViewModelFactory;
 import me.goldze.mvvmhabit.binding.command.BindingAction;
 import me.goldze.mvvmhabit.binding.command.BindingCommand;
-import me.goldze.mvvmhabit.binding.command.BindingConsumer;
-import me.goldze.mvvmhabit.bus.Messenger;
 import me.goldze.mvvmhabit.http.BaseResponse;
 import me.goldze.mvvmhabit.http.ResponseThrowable;
-import me.goldze.mvvmhabit.utils.MaterialDialogUtils;
 import me.goldze.mvvmhabit.utils.RxUtils;
 import me.goldze.mvvmhabit.utils.ToastUtils;
 import me.tatarka.bindingcollectionadapter2.BindingRecyclerViewAdapter;

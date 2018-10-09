@@ -2,7 +2,6 @@ package com.goldze.mvvmhabit.ui.fragment;
 
 import android.app.DatePickerDialog;
 import android.arch.lifecycle.Observer;
-import android.arch.lifecycle.ViewModelProviders;
 import android.databinding.Observable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;

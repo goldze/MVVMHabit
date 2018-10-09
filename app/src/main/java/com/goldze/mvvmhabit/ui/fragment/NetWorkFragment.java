@@ -1,7 +1,6 @@
 package com.goldze.mvvmhabit.ui.fragment;
 
 import android.arch.lifecycle.Observer;
-import android.arch.lifecycle.ViewModelProviders;
 import android.databinding.Observable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -14,14 +13,10 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.goldze.mvvmhabit.BR;
 import com.goldze.mvvmhabit.R;
 import com.goldze.mvvmhabit.databinding.FragmentNetworkBinding;
-import com.goldze.mvvmhabit.entity.DemoEntity;
-import com.goldze.mvvmhabit.ui.vm.DemoViewModel;
-import com.goldze.mvvmhabit.ui.vm.FormViewModel;
 import com.goldze.mvvmhabit.ui.vm.NetWorkItemViewModel;
 import com.goldze.mvvmhabit.ui.vm.NetWorkViewModel;
 
 import me.goldze.mvvmhabit.base.BaseFragment;
-import me.goldze.mvvmhabit.base.ViewModelFactory;
 import me.goldze.mvvmhabit.utils.MaterialDialogUtils;
 import me.goldze.mvvmhabit.utils.ToastUtils;
 
