@@ -21,7 +21,7 @@
 - 升级第三方依赖库；
 - 微调例子程序。
 
-**注：[1.x-废弃版（最后版本1.2.6.1）](https://github.com/goldze/MVVMHabit/tree/1.2.6.1)、[2.x-顺手版（最后版本2.0.10）](https://github.com/goldze/MVVMHabit/tree/2.0.10)已停止维护，建议使用当前v3.x-健壮版。**
+**注：[1.x-废弃版（最后版本1.2.6.1）](https://github.com/goldze/MVVMHabit/tree/1.2.6.1)、[2.x-顺手版（最后版本2.0.10）](https://github.com/goldze/MVVMHabit/tree/2.0.10)已停止维护，建议使用当前[v3.x-健壮版](https://github.com/goldze/MVVMHabit)。**
 
 > **原文地址：** [https://github.com/goldze/MVVMHabit](https://github.com/goldze/MVVMHabit)
 
