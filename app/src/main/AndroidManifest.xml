@@ -27,6 +27,7 @@
         </activity>
         <activity android:name=".ui.activity.DemoActivity"></activity>
         <activity android:name=".ui.tab_bar.activity.TabBarActivity"></activity>
+        <activity android:name=".ui.viewpager.activity.ViewPagerActivity"></activity>
     </application>
 
 </manifest>

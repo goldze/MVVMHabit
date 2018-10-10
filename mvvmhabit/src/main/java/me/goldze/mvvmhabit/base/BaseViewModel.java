@@ -16,20 +16,10 @@ import java.util.Map;
  * Created by goldze on 2017/6/15.
  */
 public class BaseViewModel extends AndroidViewModel implements IBaseViewModel {
+    public UIChangeLiveData uc = new UIChangeLiveData();
 
     public BaseViewModel(@NonNull Application application) {
         super(application);
-    }
-
-    public UIChangeLiveData uc = new UIChangeLiveData();
-
-    public class UIChangeLiveData extends LiveData {
-        public MutableLiveData<String> showDialogLiveData = new MutableLiveData();
-        public MutableLiveData<Boolean> dismissDialogLiveData = new MutableLiveData();
-        public MutableLiveData<Map<String, Object>> startActivityLiveData = new MutableLiveData();
-        public MutableLiveData<Map<String, Object>> startContainerActivityLiveData = new MutableLiveData();
-        public MutableLiveData<Boolean> finishLiveData = new MutableLiveData();
-        public MutableLiveData<Boolean> onBackPressedLiveData = new MutableLiveData();
     }
 
     public void showDialog() {
@@ -140,6 +130,15 @@ public class BaseViewModel extends AndroidViewModel implements IBaseViewModel {
 
     @Override
     public void removeRxBus() {
+    }
+
+    public class UIChangeLiveData extends LiveData {
+        public MutableLiveData<String> showDialogLiveData = new MutableLiveData();
+        public MutableLiveData<Boolean> dismissDialogLiveData = new MutableLiveData();
+        public MutableLiveData<Map<String, Object>> startActivityLiveData = new MutableLiveData();
+        public MutableLiveData<Map<String, Object>> startContainerActivityLiveData = new MutableLiveData();
+        public MutableLiveData<Boolean> finishLiveData = new MutableLiveData();
+        public MutableLiveData<Boolean> onBackPressedLiveData = new MutableLiveData();
     }
 
     public static class ParameterField {

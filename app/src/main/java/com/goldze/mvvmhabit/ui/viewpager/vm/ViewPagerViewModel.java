@@ -27,6 +27,7 @@ public class ViewPagerViewModel extends BaseViewModel {
     }
 
     public void addPage() {
+        items.clear();
         //模拟3个ViewPager页面
         for (int i = 1; i <= 3; i++) {
             ViewPagerItemViewModel itemViewModel = new ViewPagerItemViewModel(this, "第" + i + "个页面");

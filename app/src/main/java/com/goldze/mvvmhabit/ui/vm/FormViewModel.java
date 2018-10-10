@@ -42,6 +42,7 @@ public class FormViewModel extends BaseViewModel {
 
     public FormViewModel(@NonNull Application application) {
         super(application);
+        uc = new UIChangeObservable();
     }
 
     public void initData(FormEntity entity, TitleViewModel titleViewModel) {

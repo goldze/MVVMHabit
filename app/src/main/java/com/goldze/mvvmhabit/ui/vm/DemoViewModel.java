@@ -10,7 +10,7 @@ import com.goldze.mvvmhabit.entity.FormEntity;
 import com.goldze.mvvmhabit.ui.fragment.FormFragment;
 import com.goldze.mvvmhabit.ui.fragment.NetWorkFragment;
 import com.goldze.mvvmhabit.ui.tab_bar.activity.TabBarActivity;
-import com.goldze.mvvmhabit.ui.viewpager.fragment.ViewPagerFragment;
+import com.goldze.mvvmhabit.ui.viewpager.activity.ViewPagerActivity;
 
 import me.goldze.mvvmhabit.base.BaseViewModel;
 import me.goldze.mvvmhabit.binding.command.BindingAction;
@@ -51,7 +51,7 @@ public class DemoViewModel extends BaseViewModel {
     public BindingCommand viewPagerBindingClick = new BindingCommand(new BindingAction() {
         @Override
         public void call() {
-            startContainerActivity(ViewPagerFragment.class.getCanonicalName());
+            startActivity(ViewPagerActivity.class);
         }
     });
     //表单提交点击事件
