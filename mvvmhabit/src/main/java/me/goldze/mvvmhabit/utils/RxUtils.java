@@ -32,7 +32,6 @@ public class RxUtils {
         } else {
             throw new IllegalArgumentException("context not the LifecycleProvider type");
         }
-
     }
 
     /**
@@ -46,6 +45,15 @@ public class RxUtils {
         } else {
             throw new IllegalArgumentException("fragment not the LifecycleProvider type");
         }
+    }
+
+    /**
+     * 生命周期绑定
+     *
+     * @param lifecycle Fragment
+     */
+    public static <T> LifecycleTransformer bindToLifecycle(@NonNull LifecycleProvider lifecycle) {
+        return lifecycle.bindToLifecycle();
     }
 
     /**
