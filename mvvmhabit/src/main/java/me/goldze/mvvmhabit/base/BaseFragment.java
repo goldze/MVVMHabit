@@ -8,6 +8,7 @@ import android.databinding.DataBindingUtil;
 import android.databinding.ViewDataBinding;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -41,7 +42,10 @@ public abstract class BaseFragment<V extends ViewDataBinding, VM extends BaseVie
     @Override
     public void onDestroy() {
         super.onDestroy();
+        //解除Messenger注册
         Messenger.getDefault().unregister(viewModel);
+        //解除ViewModel生命周期感应
+        getLifecycle().removeObserver(viewModel);
         viewModel.removeRxBus();
         viewModel = null;
         binding.unbind();
@@ -60,7 +64,7 @@ public abstract class BaseFragment<V extends ViewDataBinding, VM extends BaseVie
                 //如果没有指定泛型参数，则默认使用BaseViewModel
                 modelClass = BaseViewModel.class;
             }
-            viewModel = (VM) createViewModel(getActivity(), modelClass);
+            viewModel = (VM) createViewModel(this, modelClass);
         }
         binding = DataBindingUtil.inflate(inflater, initContentView(inflater, container, savedInstanceState), container, false);
         binding.setVariable(initVariableId(), viewModel);
@@ -265,7 +269,7 @@ public abstract class BaseFragment<V extends ViewDataBinding, VM extends BaseVie
      * @param <T>
      * @return
      */
-    public static <T extends ViewModel> T createViewModel(FragmentActivity activity, Class<T> cls) {
-        return ViewModelProviders.of(activity).get(cls);
+    public <T extends ViewModel> T createViewModel(Fragment fragment, Class<T> cls) {
+        return ViewModelProviders.of(fragment).get(cls);
     }
 }

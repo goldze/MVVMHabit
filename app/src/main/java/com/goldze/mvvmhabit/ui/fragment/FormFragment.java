@@ -55,7 +55,7 @@ public class FormFragment extends BaseFragment<FragmentFormBinding, FormViewMode
         //通过binding拿到toolbar控件, 设置给Activity
         ((AppCompatActivity) getActivity()).setSupportActionBar(binding.include.toolbar);
         //创建TitleViewModel
-        TitleViewModel titleViewModel = createViewModel(getActivity(), TitleViewModel.class);
+        TitleViewModel titleViewModel = createViewModel(this, TitleViewModel.class);
         //View层传参到ViewModel层
         viewModel.initData(entity, titleViewModel);
     }
