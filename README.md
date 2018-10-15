@@ -764,9 +764,9 @@ ImageUtils.compressWithRx(filePaths, new Subscriber() {
 这种是databinding比较大的坑，清理、重构和删build都不起作用，网上很难找到方法。经过试验，解决办法是手动创建异常中提到的文件夹，或者拷贝上一个没有报错的版本中对应的文件夹，可以解决这个异常
 
 ##### 4.1.4、自动生成类错误
-有时候在写完xml时，databinding没有自动生成对应的Binding类及属性。比如新建了一个activity_login.xml，按照databinding的写法加入```<layout> <variable>```后，理论上会自动对应生成ActivityLoginBinding.java类和variable的属性，可能是as对databding的支持还不够吧，有时候偏偏就不生成，导致BR.xxx报红。
+有时候在写完xml时，databinding没有自动生成对应的Binding类及属性。比如新建了一个activity_login.xml，按照databinding的写法加入```<layout> <variable>```后，理论上会自动对应生成ActivityLoginBinding.java类和variable的属性，可能是as对databding的支持还不够吧，有时候偏偏就不生成，导致BR.xxx报红等一些莫名的错误。
 
-解决方法：其实确保自己的写法没有问题，是可以直接运行的，报红不一定是你写的有问题。或者使用下面的办法</br>
+解决方法：其实确保自己的写法没有问题，是可以直接运行的，报红不一定是你写的有问题，也有可能是编译器抽风了。或者使用下面的办法</br>
 第一招：Build->Clean Project；</br>第二招：Build->Rebuild Project；</br>第三招：重启大法。
 
 ## 混淆
