@@ -478,11 +478,11 @@ OkHttpClient okHttpClient = new OkHttpClient.Builder()
     .build();
 ```
 #### 2.3.4、绑定生命周期
-请求在ViewModel层，且持有View的引用，所以可以直接在ViewModel中绑定请求的生命周期，View与请求共存亡。
+请求在ViewModel层。通过view层传入LifecycleProvider对象，用于绑定请求的生命周期，View与请求共存亡。
 ```java
 RetrofitClient.getInstance().create(DemoApiService.class)
     .demoGet()
-    .compose(RxUtils.bindToLifecycle(context)) // 请求与View周期同步
+    .compose(RxUtils.bindToLifecycle(lifecycle)) // 请求与View周期同步
     .compose(RxUtils.schedulersTransformer())  // 线程调度
     .compose(RxUtils.exceptionTransformer())   // 网络错误的异常转换
     .subscribe(new Consumer<BaseResponse<DemoEntity>>() {
@@ -498,8 +498,8 @@ RetrofitClient.getInstance().create(DemoApiService.class)
     });
 
 ```
-在请求时关键需要加入组合操作符`.compose(RxUtils.bindToLifecycle(context))`<br>
-**注意：** 如果你没有使用 **mvvmabit** 里面的BaseActivity或BaseFragment，使用自己定义Base，那么需要让你自己的Activity继承RxAppCompatActivity、Fragment继承RxFragment才能用`RxUtils.bindToLifecycle(context)`方法。
+在请求时关键需要加入组合操作符`.compose(RxUtils.bindToLifecycle(lifecycle))`<br>
+**注意：** 由于BaseActivity/BaseFragment都实现了LifecycleProvider接口，所以在View层调用请求方法时可以直接传this。如果你没有使用 **mvvmabit** 里面的BaseActivity或BaseFragment，使用自己定义的Base，那么需要让你自己的Activity继承RxAppCompatActivity、Fragment继承RxFragment才能用`RxUtils.bindToLifecycle(lifecycle)`方法。
 #### 2.3.5、网络异常处理
 网络异常在网络请求中非常常见，比如请求超时、解析错误、资源不存在、服务器内部错误等，在客户端则需要做相应的处理(当然，你可以把一部分异常甩锅给网络，比如当出现code 500时，提示：请求超时，请检查网络连接，此时偷偷将异常信息发送至后台(手动滑稽))。<br>
 
