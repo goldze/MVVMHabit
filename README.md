@@ -753,7 +753,7 @@ ImageUtils.compressWithRx(filePaths, new Subscriber() {
 
 <img src="./img/error2.png" width="640" hegiht="640" align=center />
 
-解决方法：同样找到最后一个错误提示，找到Cannot resolve type for **xxx**这一句 (xxx是类名)，然后使用全局搜索 (Ctrl+H) ，搜索哪个xml引用了这个类，跟踪点击进去，在xml就会出现一个红错，即可解析该编译错误的问题。
+解决方法：同样找到最后一个错误提示，找到Cannot resolve type for **xxx**这一句 (xxx是类名)，然后使用全局搜索 (Ctrl+H) ，搜索哪个xml引用了这个类，跟踪点击进去，在xml就会出现一个红错，看到错误你就会明白了，这样就可解决该编译错误的问题。
 
 ##### 4.1.3、build错误
 构建多module工程时，如出现【4.1.1、绑定错误】，且你能确定这个绑定是没有问题的，经过修改后出现下图错误：

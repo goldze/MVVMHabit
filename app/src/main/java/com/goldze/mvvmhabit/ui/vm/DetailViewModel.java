@@ -1,6 +1,7 @@
 package com.goldze.mvvmhabit.ui.vm;
 
 import android.app.Application;
+import android.databinding.ObservableField;
 import android.support.annotation.NonNull;
 
 import com.goldze.mvvmhabit.entity.DemoEntity;
@@ -12,14 +13,14 @@ import me.goldze.mvvmhabit.base.BaseViewModel;
  */
 
 public class DetailViewModel extends BaseViewModel {
-    public DemoEntity.ItemsEntity entity;
+    public ObservableField<DemoEntity.ItemsEntity> entity = new ObservableField();
 
     public DetailViewModel(@NonNull Application application) {
         super(application);
     }
 
     public void setDemoEntity(DemoEntity.ItemsEntity entity) {
-        this.entity = entity;
+        this.entity.set(entity);
     }
 
     @Override
