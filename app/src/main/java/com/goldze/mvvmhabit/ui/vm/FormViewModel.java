@@ -27,14 +27,25 @@ import me.goldze.mvvmhabit.utils.ToastUtils;
 
 public class FormViewModel extends BaseViewModel {
     public FormEntity entity;
-    //封装一个界面发生改变的观察者
-    public UIChangeObservable uc = new UIChangeObservable();
+
     public List<IKeyAndValue> sexItemDatas;
     public MutableLiveData<String> entityJsonLiveData = new MutableLiveData<>();
+    //封装一个界面发生改变的观察者
+    public UIChangeObservable uc;
+
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        uc = new UIChangeObservable();
+    }
 
     public class UIChangeObservable {
         //显示日期对话框
-        public ObservableBoolean showDateDialogObservable = new ObservableBoolean(false);
+        public ObservableBoolean showDateDialogObservable;
+
+        public UIChangeObservable() {
+            showDateDialogObservable = new ObservableBoolean(false);
+        }
     }
 
     //include绑定一个通用的TitleViewModel
@@ -42,7 +53,6 @@ public class FormViewModel extends BaseViewModel {
 
     public FormViewModel(@NonNull Application application) {
         super(application);
-        uc = new UIChangeObservable();
     }
 
     public void initData(FormEntity entity, TitleViewModel titleViewModel) {

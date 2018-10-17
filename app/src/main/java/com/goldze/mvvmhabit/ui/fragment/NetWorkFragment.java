@@ -39,20 +39,11 @@ public class NetWorkFragment extends BaseFragment<FragmentNetworkBinding, NetWor
     @Override
     public void initData() {
         super.initData();
-        //请求数据
-        viewModel.requestNetWork(this);
+        viewModel.requestNetWork();
     }
 
     @Override
     public void initViewObservable() {
-        //监听下拉刷新
-        viewModel.uc.onRefreshing.addOnPropertyChangedCallback(new Observable.OnPropertyChangedCallback() {
-            @Override
-            public void onPropertyChanged(Observable observable, int i) {
-                //重新请求数据
-                viewModel.requestNetWork(NetWorkFragment.this);
-            }
-        });
         //监听下拉刷新完成
         viewModel.uc.finishRefreshing.addOnPropertyChangedCallback(new Observable.OnPropertyChangedCallback() {
             @Override
@@ -89,16 +80,5 @@ public class NetWorkFragment extends BaseFragment<FragmentNetworkBinding, NetWor
                 }).show();
             }
         });
-    }
-
-    @Override
-    public void onSaveInstanceState(@NonNull Bundle outState) {
-        super.onSaveInstanceState(outState);
-
-    }
-
-    @Override
-    public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
-        super.onViewStateRestored(savedInstanceState);
     }
 }

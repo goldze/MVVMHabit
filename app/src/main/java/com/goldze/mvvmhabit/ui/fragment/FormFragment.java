@@ -73,7 +73,7 @@ public class FormFragment extends BaseFragment<FragmentFormBinding, FormViewMode
                 DatePickerDialog datePickerDialog = new DatePickerDialog(getContext(), new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                        viewModel.setBir(year,month,dayOfMonth);
+                        viewModel.setBir(year, month, dayOfMonth);
                         //刷新页面
                         refreshLayout();
                     }

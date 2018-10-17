@@ -85,6 +85,8 @@ public abstract class BaseActivity<V extends ViewDataBinding, VM extends BaseVie
         binding.setVariable(initVariableId(), viewModel);
         //让ViewModel拥有View的生命周期感应
         getLifecycle().addObserver(viewModel);
+        //注入RxLifecycle生命周期
+        viewModel.injectLifecycleProvider(this);
     }
 
     //刷新布局
@@ -101,21 +103,21 @@ public abstract class BaseActivity<V extends ViewDataBinding, VM extends BaseVie
     //注册ViewModel与View的契约UI回调事件
     private void registorUIChangeLiveDataCallBack() {
         //加载对话框显示
-        viewModel.uc.showDialogLiveData.observe(this, new Observer<String>() {
+        viewModel.getUC().getShowDialogLiveData().observe(this, new Observer<String>() {
             @Override
             public void onChanged(@Nullable String title) {
                 showDialog(title);
             }
         });
         //加载对话框消失
-        viewModel.uc.dismissDialogLiveData.observe(this, new Observer<Boolean>() {
+        viewModel.getUC().getDismissDialogLiveData().observe(this, new Observer<Boolean>() {
             @Override
             public void onChanged(@Nullable Boolean aBoolean) {
                 dismissDialog();
             }
         });
         //跳入新页面
-        viewModel.uc.startActivityLiveData.observe(this, new Observer<Map<String, Object>>() {
+        viewModel.getUC().getStartActivityLiveData().observe(this, new Observer<Map<String, Object>>() {
             @Override
             public void onChanged(@Nullable Map<String, Object> params) {
                 Class<?> clz = (Class<?>) params.get(ParameterField.CLASS);
@@ -124,7 +126,7 @@ public abstract class BaseActivity<V extends ViewDataBinding, VM extends BaseVie
             }
         });
         //跳入ContainerActivity
-        viewModel.uc.startContainerActivityLiveData.observe(this, new Observer<Map<String, Object>>() {
+        viewModel.getUC().getStartContainerActivityLiveData().observe(this, new Observer<Map<String, Object>>() {
             @Override
             public void onChanged(@Nullable Map<String, Object> params) {
                 String canonicalName = (String) params.get(ParameterField.CANONICALNAME);
@@ -133,14 +135,14 @@ public abstract class BaseActivity<V extends ViewDataBinding, VM extends BaseVie
             }
         });
         //关闭界面
-        viewModel.uc.finishLiveData.observe(this, new Observer<Boolean>() {
+        viewModel.getUC().getFinishLiveData().observe(this, new Observer<Boolean>() {
             @Override
             public void onChanged(@Nullable Boolean aBoolean) {
                 finish();
             }
         });
         //关闭上一层
-        viewModel.uc.onBackPressedLiveData.observe(this, new Observer<Boolean>() {
+        viewModel.getUC().getOnBackPressedLiveData().observe(this, new Observer<Boolean>() {
             @Override
             public void onChanged(@Nullable Boolean aBoolean) {
                 onBackPressed();
@@ -260,7 +262,7 @@ public abstract class BaseActivity<V extends ViewDataBinding, VM extends BaseVie
      * @param <T>
      * @return
      */
-    public static <T extends ViewModel> T createViewModel(FragmentActivity activity, Class<T> cls) {
+    public <T extends ViewModel> T createViewModel(FragmentActivity activity, Class<T> cls) {
         return ViewModelProviders.of(activity).get(cls);
     }
 }

@@ -9,6 +9,8 @@ import android.arch.lifecycle.MutableLiveData;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 
+import com.trello.rxlifecycle2.LifecycleProvider;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -16,10 +18,31 @@ import java.util.Map;
  * Created by goldze on 2017/6/15.
  */
 public class BaseViewModel extends AndroidViewModel implements IBaseViewModel {
-    public UIChangeLiveData uc = new UIChangeLiveData();
+    private UIChangeLiveData uc;
+    private LifecycleProvider lifecycle;
 
     public BaseViewModel(@NonNull Application application) {
         super(application);
+    }
+
+    /**
+     * 注入RxLifecycle生命周期
+     *
+     * @param lifecycle
+     */
+    public void injectLifecycleProvider(LifecycleProvider lifecycle) {
+        this.lifecycle = lifecycle;
+    }
+
+    public LifecycleProvider getLifecycleProvider() {
+        return lifecycle;
+    }
+
+    public UIChangeLiveData getUC() {
+        if (uc == null) {
+            uc = new UIChangeLiveData();
+        }
+        return uc;
     }
 
     public void showDialog() {
@@ -133,12 +156,43 @@ public class BaseViewModel extends AndroidViewModel implements IBaseViewModel {
     }
 
     public class UIChangeLiveData extends LiveData {
-        public MutableLiveData<String> showDialogLiveData = new MutableLiveData();
-        public MutableLiveData<Boolean> dismissDialogLiveData = new MutableLiveData();
-        public MutableLiveData<Map<String, Object>> startActivityLiveData = new MutableLiveData();
-        public MutableLiveData<Map<String, Object>> startContainerActivityLiveData = new MutableLiveData();
-        public MutableLiveData<Boolean> finishLiveData = new MutableLiveData();
-        public MutableLiveData<Boolean> onBackPressedLiveData = new MutableLiveData();
+        private MutableLiveData<String> showDialogLiveData;
+        private MutableLiveData<Boolean> dismissDialogLiveData;
+        private MutableLiveData<Map<String, Object>> startActivityLiveData;
+        private MutableLiveData<Map<String, Object>> startContainerActivityLiveData;
+        private MutableLiveData<Boolean> finishLiveData;
+        private MutableLiveData<Boolean> onBackPressedLiveData;
+
+        public MutableLiveData<String> getShowDialogLiveData() {
+            return showDialogLiveData = createLiveData(showDialogLiveData);
+        }
+
+        public MutableLiveData<Boolean> getDismissDialogLiveData() {
+            return dismissDialogLiveData = createLiveData(dismissDialogLiveData);
+        }
+
+        public MutableLiveData<Map<String, Object>> getStartActivityLiveData() {
+            return startActivityLiveData = createLiveData(startActivityLiveData);
+        }
+
+        public MutableLiveData<Map<String, Object>> getStartContainerActivityLiveData() {
+            return startContainerActivityLiveData = createLiveData(startContainerActivityLiveData);
+        }
+
+        public MutableLiveData<Boolean> getFinishLiveData() {
+            return finishLiveData = createLiveData(finishLiveData);
+        }
+
+        public MutableLiveData<Boolean> getOnBackPressedLiveData() {
+            return onBackPressedLiveData = createLiveData(onBackPressedLiveData);
+        }
+
+        private MutableLiveData createLiveData(MutableLiveData liveData) {
+            if (liveData == null) {
+                liveData = new MutableLiveData();
+            }
+            return liveData;
+        }
     }
 
     public static class ParameterField {

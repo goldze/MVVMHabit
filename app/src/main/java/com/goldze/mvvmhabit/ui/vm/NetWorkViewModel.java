@@ -43,8 +43,6 @@ public class NetWorkViewModel extends BaseViewModel {
     public UIChangeObservable uc = new UIChangeObservable();
 
     public class UIChangeObservable {
-        //下拉刷新
-        public ObservableBoolean onRefreshing = new ObservableBoolean(false);
         //下拉刷新完成
         public ObservableBoolean finishRefreshing = new ObservableBoolean(false);
         //上拉加载完成
@@ -78,7 +76,7 @@ public class NetWorkViewModel extends BaseViewModel {
         @Override
         public void call() {
             ToastUtils.showShort("下拉刷新");
-            uc.onRefreshing.set(!uc.onRefreshing.get());
+            requestNetWork();
         }
     });
     //上拉加载
@@ -115,13 +113,11 @@ public class NetWorkViewModel extends BaseViewModel {
 
     /**
      * 网络请求方法，在ViewModel中调用，Retrofit+RxJava充当Repository，即可视为Model层
-     *
-     * @param lifecycle 用于RxLifecycle2绑定生命周期
      */
-    public void requestNetWork(LifecycleProvider lifecycle) {
+    public void requestNetWork() {
         RetrofitClient.getInstance().create(DemoApiService.class)
                 .demoGet()
-                .compose(RxUtils.bindToLifecycle(lifecycle)) //请求与View周期同步
+                .compose(RxUtils.bindToLifecycle(getLifecycleProvider())) //请求与View周期同步
                 .compose(RxUtils.schedulersTransformer()) //线程调度
                 .compose(RxUtils.exceptionTransformer()) // 网络错误的异常转换, 这里可以换成自己的ExceptionHandle
                 .doOnSubscribe(new Consumer<Disposable>() {
