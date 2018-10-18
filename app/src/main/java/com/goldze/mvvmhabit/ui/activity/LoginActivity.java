@@ -54,4 +54,9 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding, LoginViewM
             }
         });
     }
+
+    @Override
+    public boolean supportSlideBack() {
+        return false;
+    }
 }

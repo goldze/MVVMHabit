@@ -108,5 +108,12 @@ public class DemoActivity extends BaseActivity<ActivityDemoBinding, DemoViewMode
                 progressDialog.dismiss();
             }
         });
+
     }
+
+    @Override
+    public boolean supportSlideBack() {
+        return false;
+    }
+
 }

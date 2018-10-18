@@ -13,6 +13,7 @@ ext {
     versions = [
             "support-version": "27.0.2",
             "junit-version"  : "4.12",
+            "kt-version":"1.2.70",
     ]
     //support配置
     support = [
@@ -25,6 +26,7 @@ ext {
             'design'                  : "com.android.support:design:${versions["support-version"]}",
             'animated-vector-drawable': "com.android.support:animated-vector-drawable:${versions["support-version"]}",
             'junit'                   : "junit:junit:${versions["junit-version"]}",
+            'kotlinjdk' : "org.jetbrains.kotlin:kotlin-stdlib-jdk7:${versions["kt-version"]}",
     ]
     //依赖第三方配置
     dependencies = [
