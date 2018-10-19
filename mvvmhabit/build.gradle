@@ -66,4 +66,5 @@ dependencies {
     //Google LiveData和ViewModel组件
     api rootProject.ext.dependencies["lifecycle-extensions"]
     annotationProcessor rootProject.ext.dependencies["lifecycle-compiler"]
+    kapt 'com.android.databinding:compiler:3.0.0'
 }

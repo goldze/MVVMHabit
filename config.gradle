@@ -13,7 +13,7 @@ ext {
     versions = [
             "support-version": "27.0.2",
             "junit-version"  : "4.12",
-            "kt-version":"1.2.70",
+            "kt-version":"1.2.61",
     ]
     //support配置
     support = [

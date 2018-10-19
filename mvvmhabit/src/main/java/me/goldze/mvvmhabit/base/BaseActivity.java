@@ -13,7 +13,6 @@ import android.support.v4.app.FragmentActivity;
 import android.view.MotionEvent;
 
 import com.afollestad.materialdialogs.MaterialDialog;
-import com.google.gson.Gson;
 import com.trello.rxlifecycle2.components.support.RxAppCompatActivity;
 
 import org.jetbrains.annotations.NotNull;
@@ -22,10 +21,9 @@ import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.Map;
 
-import me.goldze.mvvmhabit.bus.Messenger;
-import me.goldze.mvvmhabit.utils.KLog;
-import me.goldze.mvvmhabit.utils.MaterialDialogUtils;
 import me.goldze.mvvmhabit.base.BaseViewModel.ParameterField;
+import me.goldze.mvvmhabit.bus.Messenger;
+import me.goldze.mvvmhabit.utils.MaterialDialogUtils;
 import me.goldze.mvvmhabit.utils.swipehelper.SwipeWindowHelper;
 
 
@@ -56,14 +54,7 @@ public abstract class BaseActivity<V extends ViewDataBinding, VM extends BaseVie
         initViewObservable();
         //注册RxBus
         viewModel.registerRxBus();
-        //侧滑
-        initSwipe();
-    }
-
-    protected void initSwipe() {
         mSwipeWindowHelper = new SwipeWindowHelper(this);
-
-        AppManager.getAppManager().addActivity(this);
     }
 
     @Override
@@ -76,7 +67,6 @@ public abstract class BaseActivity<V extends ViewDataBinding, VM extends BaseVie
         viewModel.removeRxBus();
         viewModel = null;
         binding.unbind();
-        AppManager.getAppManager().finishActivity(this);
     }
 
     /**

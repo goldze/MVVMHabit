@@ -21,6 +21,7 @@ import android.view.animation.DecelerateInterpolator
 import android.view.animation.Interpolator
 import android.view.inputmethod.InputMethodManager
 import android.widget.FrameLayout
+import me.goldze.mvvmhabit.base.AppManager
 import me.goldze.mvvmhabit.binding.viewadapter.recyclerview.DividerLine
 
 class SwipeWindowHelper() : Handler() {
@@ -60,7 +61,7 @@ class SwipeWindowHelper() : Handler() {
     private var mEdgeSize: Int = 0
 
     constructor(slideBackManager: SlideBackManager) : this() {
-        if (slideBackManager == null || slideBackManager.getSlideActivity() == null) {
+        if ( slideBackManager.getSlideActivity() == null) {
             throw RuntimeException("Neither SlideBackManager nor the method 'getSlideActivity()' can be null!")
         }
         mActivity = slideBackManager.getSlideActivity()
@@ -73,7 +74,7 @@ class SwipeWindowHelper() : Handler() {
     }
 
     private fun getContentView(mActivity: Activity): FrameLayout {
-        return mActivity.findViewById(Window.ID_ANDROID_CONTENT)
+        return mActivity.findViewById<FrameLayout>(Window.ID_ANDROID_CONTENT)
     }
 
 
@@ -374,7 +375,7 @@ class SwipeWindowHelper() : Handler() {
                 mPreviousContentView = null
                 return false
             }
-            mPreviousActivity = AppManager.instance.getPreActivity()
+            mPreviousActivity = AppManager.getAppManager().preActivity
 
             if (mPreviousActivity == null) {
                 mPreviousActivity = null
@@ -389,7 +390,7 @@ class SwipeWindowHelper() : Handler() {
             }
 
             var preActivityContainer: ViewGroup = getContentView(mPreviousActivity!!)
-            if (preActivityContainer == null || preActivityContainer.childCount == 0) {
+            if (preActivityContainer.childCount == 0) {
                 mPreviousActivity = null
                 mPreviousContentView = null
                 return false

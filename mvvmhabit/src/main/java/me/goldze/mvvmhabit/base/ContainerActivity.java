@@ -1,17 +1,23 @@
 package me.goldze.mvvmhabit.base;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.view.MotionEvent;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.LinearLayout;
 
 import com.trello.rxlifecycle2.components.support.RxAppCompatActivity;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.lang.ref.WeakReference;
+
+import me.goldze.mvvmhabit.utils.swipehelper.SwipeWindowHelper;
 
 import static android.view.View.generateViewId;
 
@@ -20,11 +26,12 @@ import static android.view.View.generateViewId;
  * 盛装Fragment的一个容器(代理)Activity
  * 普通界面只需要编写Fragment,使用此Activity盛装,这样就不需要每个界面都在AndroidManifest中注册一遍
  */
-public class ContainerActivity extends RxAppCompatActivity {
+public class ContainerActivity extends RxAppCompatActivity implements SwipeWindowHelper.SlideBackManager {
     public static final String FRAGMENT = "fragment";
     public static final String BUNDLE = "bundle";
     protected WeakReference<Fragment> mFragment;
     private ViewGroup mianLayout;
+    private SwipeWindowHelper mSwipeWindowHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +47,8 @@ public class ContainerActivity extends RxAppCompatActivity {
         if (fragment == null) {
             initFromIntent(getIntent());
         }
+
+        mSwipeWindowHelper = new SwipeWindowHelper(this);
     }
 
     protected void initFromIntent(Intent data) {
@@ -83,5 +92,30 @@ public class ContainerActivity extends RxAppCompatActivity {
         } else {
             super.onBackPressed();
         }
+    }
+
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent ev) {
+        if (!supportSlideBack() || mSwipeWindowHelper == null) {
+            return super.dispatchTouchEvent(ev);
+        } else {
+            return mSwipeWindowHelper.processTouchEvent(ev) || super.dispatchTouchEvent(ev);
+        }
+    }
+
+    @NotNull
+    @Override
+    public Activity getSlideActivity() {
+        return this;
+    }
+
+    @Override
+    public boolean supportSlideBack() {
+        return true;
+    }
+
+    @Override
+    public boolean canBeSlideBack() {
+        return true;
     }
 }
