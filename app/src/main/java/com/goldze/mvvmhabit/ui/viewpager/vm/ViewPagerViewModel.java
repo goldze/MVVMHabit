@@ -16,7 +16,7 @@ import me.tatarka.bindingcollectionadapter2.BindingViewPagerAdapter;
 import me.tatarka.bindingcollectionadapter2.ItemBinding;
 
 /**
- * 所有例子仅做参考,理解如何使用才最重要。
+ * 所有例子仅做参考,千万不要把它当成一种标准,毕竟主打的不是例子,业务场景繁多,理解如何使用才最重要。
  * Created by goldze on 2018/7/18.
  */
 

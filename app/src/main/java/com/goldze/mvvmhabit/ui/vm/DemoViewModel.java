@@ -86,7 +86,7 @@ public class DemoViewModel extends BaseViewModel {
         }
     });
 
-    //异常全局异常捕获
+    //全局异常捕获
     public BindingCommand exceptionClick = new BindingCommand(new BindingAction() {
         @Override
         public void call() {
