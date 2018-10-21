@@ -24,10 +24,7 @@ public class DemoViewModel extends BaseViewModel {
     //使用Observable
     public ObservableBoolean requestCameraPermissions = new ObservableBoolean(false);
     //使用LiveData
-    public MutableLiveData<Boolean> downFileUrlLiveData = new MutableLiveData();
-    public String loadUrl;
-    public String destFileDir;
-    public String destFileName;
+    public MutableLiveData<String> loadUrl = new MutableLiveData();
 
     public DemoViewModel(@NonNull Application application) {
         super(application);
@@ -98,17 +95,7 @@ public class DemoViewModel extends BaseViewModel {
     public BindingCommand fileDownLoadClick = new BindingCommand(new BindingAction() {
         @Override
         public void call() {
-            downloadFile();
+            loadUrl.setValue("http://gdown.baidu.com/data/wisegame/a2cd8828b227b9f9/neihanduanzi_692.apk");
         }
     });
-
-    public void downloadFile() {
-        loadUrl = "http://gdown.baidu.com/data/wisegame/a2cd8828b227b9f9/neihanduanzi_692.apk";
-        //文件存放的路径
-        destFileDir = getApplication().getCacheDir().getPath();
-        //文件存放的名称
-        destFileName = System.currentTimeMillis() + ".apk";
-        //改变LiveData
-        downFileUrlLiveData.setValue(true);
-    }
 }

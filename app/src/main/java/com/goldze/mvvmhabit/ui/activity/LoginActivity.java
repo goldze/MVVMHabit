@@ -11,6 +11,7 @@ import com.goldze.mvvmhabit.BR;
 import com.goldze.mvvmhabit.R;
 import com.goldze.mvvmhabit.databinding.ActivityLoginBinding;
 import com.goldze.mvvmhabit.ui.vm.LoginViewModel;
+import com.goldze.mvvmhabit.ui.vm.NetWorkViewModel;
 import com.tbruyelle.rxpermissions2.RxPermissions;
 
 import io.reactivex.functions.Consumer;

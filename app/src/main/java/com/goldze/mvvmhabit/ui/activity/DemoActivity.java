@@ -46,10 +46,10 @@ public class DemoActivity extends BaseActivity<ActivityDemoBinding, DemoViewMode
             }
         });
         //注册文件下载的监听
-        viewModel.downFileUrlLiveData.observe(this, new Observer<Boolean>() {
+        viewModel.loadUrl.observe(this, new Observer<String>() {
             @Override
-            public void onChanged(@Nullable Boolean aBoolean) {
-                downFile();
+            public void onChanged(@Nullable String url) {
+                downFile(url);
             }
         });
     }
@@ -73,13 +73,15 @@ public class DemoActivity extends BaseActivity<ActivityDemoBinding, DemoViewMode
                 });
     }
 
-    private void downFile() {
+    private void downFile(String url) {
+        String destFileDir = getApplication().getCacheDir().getPath();
+        String destFileName = System.currentTimeMillis() + ".apk";
         final ProgressDialog progressDialog = new ProgressDialog(this);
         progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
         progressDialog.setTitle("正在下载...");
         progressDialog.setCancelable(false);
         progressDialog.show();
-        DownLoadManager.getInstance().load(viewModel.loadUrl, new ProgressCallBack<ResponseBody>(viewModel.destFileDir, viewModel.destFileName) {
+        DownLoadManager.getInstance().load(url, new ProgressCallBack<ResponseBody>(destFileDir, destFileName) {
             @Override
             public void onStart() {
                 super.onStart();
