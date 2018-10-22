@@ -32,7 +32,7 @@ public class FormFragment extends BaseFragment<FragmentFormBinding, FormViewMode
     private FormEntity entity = new FormEntity();
 
     @Override
-    public void initParam() {
+    public void initParams() {
         //获取列表传入的实体
         Bundle mBundle = getArguments();
         if (mBundle != null) {

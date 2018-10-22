@@ -4,10 +4,11 @@ import android.app.Application;
 import android.arch.lifecycle.AndroidViewModel;
 import android.arch.lifecycle.Lifecycle;
 import android.arch.lifecycle.LifecycleOwner;
-import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.annotation.UiThread;
 
 import com.trello.rxlifecycle2.LifecycleProvider;
 
@@ -50,11 +51,12 @@ public class BaseViewModel extends AndroidViewModel implements IBaseViewModel {
     }
 
     public void showDialog(String title) {
-        uc.showDialogLiveData.postValue(title);
+        uc.showLoadingLiveData.postValue(title);
     }
 
+    @UiThread
     public void dismissDialog() {
-        uc.dismissDialogLiveData.postValue(uc.dismissDialogLiveData.getValue() == null ? false : !uc.dismissDialogLiveData.getValue());
+        uc.dismissLoadingLiveData.call();
     }
 
     /**
@@ -72,8 +74,8 @@ public class BaseViewModel extends AndroidViewModel implements IBaseViewModel {
      * @param clz    所跳转的目的Activity类
      * @param bundle 跳转所携带的信息
      */
-    public void startActivity(Class<?> clz, Bundle bundle) {
-        Map<String, Object> params = new HashMap();
+    public void startActivity(@NonNull Class<?> clz, @Nullable Bundle bundle) {
+        Map<String, Object> params = new HashMap<>();
         params.put(ParameterField.CLASS, clz);
         if (bundle != null) {
             params.put(ParameterField.BUNDLE, bundle);
@@ -86,7 +88,7 @@ public class BaseViewModel extends AndroidViewModel implements IBaseViewModel {
      *
      * @param canonicalName 规范名 : Fragment.class.getCanonicalName()
      */
-    public void startContainerActivity(String canonicalName) {
+    public void startContainerActivity(@NonNull String canonicalName) {
         startContainerActivity(canonicalName, null);
     }
 
@@ -96,9 +98,9 @@ public class BaseViewModel extends AndroidViewModel implements IBaseViewModel {
      * @param canonicalName 规范名 : Fragment.class.getCanonicalName()
      * @param bundle        跳转所携带的信息
      */
-    public void startContainerActivity(String canonicalName, Bundle bundle) {
-        Map<String, Object> params = new HashMap();
-        params.put(ParameterField.CANONICALNAME, canonicalName);
+    public void startContainerActivity(@NonNull String canonicalName, @Nullable Bundle bundle) {
+        Map<String, Object> params = new HashMap<>();
+        params.put(ParameterField.CANONICAL_NAME, canonicalName);
         if (bundle != null) {
             params.put(ParameterField.BUNDLE, bundle);
         }
@@ -108,15 +110,25 @@ public class BaseViewModel extends AndroidViewModel implements IBaseViewModel {
     /**
      * 关闭界面
      */
+    @UiThread
     public void finish() {
-        uc.finishLiveData.postValue(uc.finishLiveData.getValue() == null ? false : !uc.finishLiveData.getValue());
+        uc.finishLiveData.call();
+    }
+
+    /**
+     * 显示toast或者SnackBar
+     */
+    @UiThread
+    public void showTips(@NonNull String msg) {
+        uc.tipsLiveData.setValue(msg);
     }
 
     /**
      * 返回上一层
      */
+    @UiThread
     public void onBackPressed() {
-        uc.onBackPressedLiveData.postValue(uc.onBackPressedLiveData.getValue() == null ? false : !uc.onBackPressedLiveData.getValue());
+        uc.onBackPressedLiveData.call();
     }
 
     @Override
@@ -155,49 +167,48 @@ public class BaseViewModel extends AndroidViewModel implements IBaseViewModel {
     public void removeRxBus() {
     }
 
-    public class UIChangeLiveData extends LiveData {
-        private MutableLiveData<String> showDialogLiveData;
-        private MutableLiveData<Boolean> dismissDialogLiveData;
-        private MutableLiveData<Map<String, Object>> startActivityLiveData;
-        private MutableLiveData<Map<String, Object>> startContainerActivityLiveData;
-        private MutableLiveData<Boolean> finishLiveData;
-        private MutableLiveData<Boolean> onBackPressedLiveData;
+    public static final class UIChangeLiveData {
+        // 实际项目中，对话框可能有很多种样式，这里showDialogLiveData和dismissDialogLiveData只能显示loading对话框
+        private MutableLiveData<String> showLoadingLiveData = new MutableLiveData<>();
+        private SingleLiveEvent<Void> dismissLoadingLiveData = new SingleLiveEvent<>();
+        private SingleLiveEvent<String> tipsLiveData = new SingleLiveEvent<>();
+        private SingleLiveEvent<Void> finishLiveData = new SingleLiveEvent<>();
+        private SingleLiveEvent<Void> onBackPressedLiveData = new SingleLiveEvent<>();
+        private MutableLiveData<Map<String, Object>> startActivityLiveData = new MutableLiveData<>();
+        private MutableLiveData<Map<String, Object>> startContainerActivityLiveData = new MutableLiveData<>();
 
-        public MutableLiveData<String> getShowDialogLiveData() {
-            return showDialogLiveData = createLiveData(showDialogLiveData);
+        public MutableLiveData<String> getShowLoadingLiveData() {
+            return showLoadingLiveData;
         }
 
-        public MutableLiveData<Boolean> getDismissDialogLiveData() {
-            return dismissDialogLiveData = createLiveData(dismissDialogLiveData);
+        public MutableLiveData<Void> getDismissLoadingLiveData() {
+            return dismissLoadingLiveData;
         }
 
         public MutableLiveData<Map<String, Object>> getStartActivityLiveData() {
-            return startActivityLiveData = createLiveData(startActivityLiveData);
+            return startActivityLiveData;
+        }
+
+        public SingleLiveEvent<String> getTipsLiveData() {
+            return tipsLiveData;
         }
 
         public MutableLiveData<Map<String, Object>> getStartContainerActivityLiveData() {
-            return startContainerActivityLiveData = createLiveData(startContainerActivityLiveData);
+            return startContainerActivityLiveData;
         }
 
-        public MutableLiveData<Boolean> getFinishLiveData() {
-            return finishLiveData = createLiveData(finishLiveData);
+        public MutableLiveData<Void> getFinishLiveData() {
+            return finishLiveData;
         }
 
-        public MutableLiveData<Boolean> getOnBackPressedLiveData() {
-            return onBackPressedLiveData = createLiveData(onBackPressedLiveData);
-        }
-
-        private MutableLiveData createLiveData(MutableLiveData liveData) {
-            if (liveData == null) {
-                liveData = new MutableLiveData();
-            }
-            return liveData;
+        public MutableLiveData<Void> getOnBackPressedLiveData() {
+            return onBackPressedLiveData;
         }
     }
 
-    public static class ParameterField {
+    public static final class ParameterField {
         public static String CLASS = "CLASS";
-        public static String CANONICALNAME = "CANONICALNAME";
+        public static String CANONICAL_NAME = "CANONICAL_NAME";
         public static String BUNDLE = "BUNDLE";
     }
 }

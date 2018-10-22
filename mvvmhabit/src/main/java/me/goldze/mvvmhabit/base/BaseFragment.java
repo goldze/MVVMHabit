@@ -1,5 +1,7 @@
 package me.goldze.mvvmhabit.base;
 
+import android.app.Activity;
+import android.app.Dialog;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModel;
 import android.arch.lifecycle.ViewModelProviders;
@@ -7,15 +9,14 @@ import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.databinding.ViewDataBinding;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.afollestad.materialdialogs.MaterialDialog;
-import com.trello.rxlifecycle2.LifecycleProvider;
 import com.trello.rxlifecycle2.components.support.RxFragment;
 
 import java.lang.reflect.ParameterizedType;
@@ -25,6 +26,7 @@ import java.util.Map;
 import me.goldze.mvvmhabit.base.BaseViewModel.ParameterField;
 import me.goldze.mvvmhabit.bus.Messenger;
 import me.goldze.mvvmhabit.utils.MaterialDialogUtils;
+import me.goldze.mvvmhabit.utils.ToastUtils;
 
 /**
  * Created by goldze on 2017/6/15.
@@ -32,12 +34,12 @@ import me.goldze.mvvmhabit.utils.MaterialDialogUtils;
 public abstract class BaseFragment<V extends ViewDataBinding, VM extends BaseViewModel> extends RxFragment implements IBaseActivity {
     protected V binding;
     protected VM viewModel;
-    private MaterialDialog dialog;
+    private Dialog dialog;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        initParam();
+        initParams();
     }
 
     @Override
@@ -54,7 +56,7 @@ public abstract class BaseFragment<V extends ViewDataBinding, VM extends BaseVie
 
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         viewModel = initViewModel();
         if (viewModel == null) {
             Class modelClass;
@@ -85,7 +87,7 @@ public abstract class BaseFragment<V extends ViewDataBinding, VM extends BaseVie
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         //私有的ViewModel与View的契约事件回调逻辑
-        registorUIChangeLiveDataCallBack();
+        registerUIChangeLiveDataCallBack();
 
         initData();
 
@@ -99,19 +101,33 @@ public abstract class BaseFragment<V extends ViewDataBinding, VM extends BaseVie
      * =====================================================================
      **/
     //注册ViewModel与View的契约UI回调事件
-    private void registorUIChangeLiveDataCallBack() {
+    private void registerUIChangeLiveDataCallBack() {
         //加载对话框显示
-        viewModel.getUC().getShowDialogLiveData().observe(this, new Observer<String>() {
+        viewModel.getUC().getShowLoadingLiveData().observe(this, new Observer<String>() {
             @Override
             public void onChanged(@Nullable String title) {
                 showDialog(title);
             }
         });
         //加载对话框消失
-        viewModel.getUC().getDismissDialogLiveData().observe(this, new Observer<Boolean>() {
+        viewModel.getUC().getDismissLoadingLiveData().observe(this, new Observer<Void>() {
             @Override
-            public void onChanged(@Nullable Boolean aBoolean) {
+            public void onChanged(@Nullable Void aVoid) {
                 dismissDialog();
+            }
+        });
+        // 显示提示信息，根据实际情况用Toast或者SnackBar
+        viewModel.getUC().getTipsLiveData().observe(this, new Observer<String>() {
+            @Override
+            public void onChanged(@Nullable String string) {
+                if (string == null || string.length() == 0) {
+                    return;
+                }
+                if (string.length() > 10) {
+                    ToastUtils.showLong(string);
+                } else {
+                    ToastUtils.showShort(string);
+                }
             }
         });
         //跳入新页面
@@ -127,25 +143,40 @@ public abstract class BaseFragment<V extends ViewDataBinding, VM extends BaseVie
         viewModel.getUC().getStartContainerActivityLiveData().observe(this, new Observer<Map<String, Object>>() {
             @Override
             public void onChanged(@Nullable Map<String, Object> params) {
-                String canonicalName = (String) params.get(ParameterField.CANONICALNAME);
+                String canonicalName = (String) params.get(ParameterField.CANONICAL_NAME);
                 Bundle bundle = (Bundle) params.get(ParameterField.BUNDLE);
                 startContainerActivity(canonicalName, bundle);
             }
         });
         //关闭界面
-        viewModel.getUC().getFinishLiveData().observe(this, new Observer<Boolean>() {
+        viewModel.getUC().getFinishLiveData().observe(this, new Observer<Void>() {
             @Override
-            public void onChanged(@Nullable Boolean aBoolean) {
-                getActivity().finish();
+            public void onChanged(@Nullable Void aVoid) {
+                Activity containerActivity;
+                if ((containerActivity = getActivity()) != null) {
+                    containerActivity.finish();
+                }
             }
         });
         //关闭上一层
-        viewModel.getUC().getOnBackPressedLiveData().observe(this, new Observer<Boolean>() {
+        viewModel.getUC().getOnBackPressedLiveData().observe(this, new Observer<Void>() {
             @Override
-            public void onChanged(@Nullable Boolean aBoolean) {
-                getActivity().onBackPressed();
+            public void onChanged(@Nullable Void aVoid) {
+                Activity containerActivity;
+                if ((containerActivity = getActivity()) != null) {
+                    containerActivity.onBackPressed();
+                }
             }
         });
+    }
+
+    /**
+     * 设置加载对话框
+     *
+     * @param loadingDialog loading
+     */
+    public void setLoadingDialog(@NonNull Dialog loadingDialog) {
+        this.dialog = loadingDialog;
     }
 
     public void showDialog(String title) {
@@ -224,7 +255,7 @@ public abstract class BaseFragment<V extends ViewDataBinding, VM extends BaseVie
     }
 
     @Override
-    public void initParam() {
+    public void initParams() {
 
     }
 

@@ -8,7 +8,7 @@ public interface IBaseActivity{
     /**
      * 初始化界面传递参数
      */
-    void initParam();
+    void initParams();
     /**
      * 初始化数据
      */

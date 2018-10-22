@@ -24,19 +24,20 @@ public class ContainerActivity extends RxAppCompatActivity {
     public static final String FRAGMENT = "fragment";
     public static final String BUNDLE = "bundle";
     protected WeakReference<Fragment> mFragment;
-    private ViewGroup mianLayout;
+    private ViewGroup mainLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
         super.onCreate(savedInstanceState);
-        mianLayout = new LinearLayout(this);
-        mianLayout.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
+        mainLayout = new LinearLayout(this);
+        mainLayout.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.MATCH_PARENT));
         //generateViewId()生成不重复的id
-        mianLayout.setId(generateViewId());
-        setContentView(mianLayout);
+        mainLayout.setId(generateViewId());
+        setContentView(mainLayout);
         FragmentManager fm = getSupportFragmentManager();
-        Fragment fragment = fm.findFragmentById(mianLayout.getId());
+        Fragment fragment = fm.findFragmentById(mainLayout.getId());
         if (fragment == null) {
             initFromIntent(getIntent());
         }
@@ -61,7 +62,7 @@ public class ContainerActivity extends RxAppCompatActivity {
             }
             FragmentTransaction trans = getSupportFragmentManager()
                     .beginTransaction();
-            trans.replace(mianLayout.getId(), fragment);
+            trans.replace(mainLayout.getId(), fragment);
             trans.commitAllowingStateLoss();
             mFragment = new WeakReference<Fragment>(fragment);
         } catch (ClassNotFoundException e) {
@@ -75,7 +76,7 @@ public class ContainerActivity extends RxAppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        Fragment fragment = getSupportFragmentManager().findFragmentById(mianLayout.getId());
+        Fragment fragment = getSupportFragmentManager().findFragmentById(mainLayout.getId());
         if (fragment instanceof BaseFragment) {
             if (!((BaseFragment) fragment).isBackPressed()) {
                 super.onBackPressed();
