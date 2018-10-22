@@ -1,5 +1,6 @@
 package me.goldze.mvvmhabit.base;
 
+import android.app.Activity;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModel;
 import android.arch.lifecycle.ViewModelProviders;
@@ -9,19 +10,21 @@ import android.databinding.ViewDataBinding;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentActivity;
+import android.view.MotionEvent;
 
 import com.afollestad.materialdialogs.MaterialDialog;
-import com.google.gson.Gson;
 import com.trello.rxlifecycle2.components.support.RxAppCompatActivity;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.Map;
 
-import me.goldze.mvvmhabit.bus.Messenger;
-import me.goldze.mvvmhabit.utils.KLog;
-import me.goldze.mvvmhabit.utils.MaterialDialogUtils;
 import me.goldze.mvvmhabit.base.BaseViewModel.ParameterField;
+import me.goldze.mvvmhabit.bus.Messenger;
+import me.goldze.mvvmhabit.utils.MaterialDialogUtils;
+import me.goldze.mvvmhabit.utils.swipehelper.SwipeWindowHelper;
 
 
 /**
@@ -30,10 +33,11 @@ import me.goldze.mvvmhabit.base.BaseViewModel.ParameterField;
  * 这里根据项目业务可以换成你自己熟悉的BaseActivity, 但是需要继承RxAppCompatActivity,方便LifecycleProvider管理生命周期
  */
 
-public abstract class BaseActivity<V extends ViewDataBinding, VM extends BaseViewModel> extends RxAppCompatActivity implements IBaseActivity {
+public abstract class BaseActivity<V extends ViewDataBinding, VM extends BaseViewModel> extends RxAppCompatActivity implements IBaseActivity, SwipeWindowHelper.SlideBackManager {
     protected V binding;
     protected VM viewModel;
     private MaterialDialog dialog;
+    private SwipeWindowHelper mSwipeWindowHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +54,7 @@ public abstract class BaseActivity<V extends ViewDataBinding, VM extends BaseVie
         initViewObservable();
         //注册RxBus
         viewModel.registerRxBus();
+        mSwipeWindowHelper = new SwipeWindowHelper(this);
     }
 
     @Override
@@ -213,6 +218,32 @@ public abstract class BaseActivity<V extends ViewDataBinding, VM extends BaseVie
         intent.putExtra(ContainerActivity.FRAGMENT, canonicalName);
         startActivity(intent);
     }
+
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent ev) {
+        if (!supportSlideBack() || mSwipeWindowHelper == null) {
+            return super.dispatchTouchEvent(ev);
+        } else {
+            return mSwipeWindowHelper.processTouchEvent(ev) || super.dispatchTouchEvent(ev);
+        }
+    }
+
+    @NotNull
+    @Override
+    public Activity getSlideActivity() {
+        return this;
+    }
+
+    @Override
+    public boolean supportSlideBack() {
+        return true;
+    }
+
+    @Override
+    public boolean canBeSlideBack() {
+        return true;
+    }
+
 
     /**
      * =====================================================================

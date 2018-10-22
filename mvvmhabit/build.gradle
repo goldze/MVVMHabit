@@ -1,4 +1,8 @@
 apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
+
 android {
     compileSdkVersion rootProject.ext.android.compileSdkVersion
     buildToolsVersion rootProject.ext.android.buildToolsVersion
@@ -58,7 +62,9 @@ dependencies {
     api(rootProject.ext.dependencies["bindingcollectionadapter-recyclerview"]) {
         exclude group: 'com.android.support'
     }
+    api rootProject.ext.support.kotlinjdk
     //Google LiveData和ViewModel组件
     api rootProject.ext.dependencies["lifecycle-extensions"]
     annotationProcessor rootProject.ext.dependencies["lifecycle-compiler"]
+    kapt 'com.android.databinding:compiler:3.0.0'
 }

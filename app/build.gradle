@@ -1,4 +1,7 @@
 apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
 
 android {
     compileSdkVersion rootProject.ext.android.compileSdkVersion
@@ -41,4 +44,5 @@ dependencies {
     //内存泄漏测试
     debugImplementation 'com.squareup.leakcanary:leakcanary-android:1.6.2'
     debugImplementation 'com.squareup.leakcanary:leakcanary-support-fragment:1.6.2'
+    kapt 'com.android.databinding:compiler:3.0.0'
 }

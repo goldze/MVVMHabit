@@ -13,6 +13,7 @@
         <!--colorAccent 对应EditText编辑时、RadioButton选中、CheckBox等选中时的颜色。-->
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:windowBackground">@color/white</item>
+        <item name="android:windowIsTranslucent">true</item>
     </style>
 
     <style name="ViewLineStyle">

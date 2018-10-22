@@ -196,4 +196,14 @@ public class AppManager {
             e.printStackTrace();
         }
     }
+
+    public Activity getPreActivity() {
+        int size = activityStack.size();
+        if (size < 2) {
+            return null;
+        } else {
+            return activityStack.elementAt(size - 2);
+        }
+    }
+
 }
