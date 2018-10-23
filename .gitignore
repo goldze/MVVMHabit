@@ -11,3 +11,4 @@ key.jks
 /app/release
 /app/debug
 /mvvmhabit/bintray.gradle
+.idea
