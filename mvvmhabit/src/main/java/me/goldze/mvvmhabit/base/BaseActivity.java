@@ -11,17 +11,15 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentActivity;
 
 import com.afollestad.materialdialogs.MaterialDialog;
-import com.google.gson.Gson;
 import com.trello.rxlifecycle2.components.support.RxAppCompatActivity;
 
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.Map;
 
-import me.goldze.mvvmhabit.bus.Messenger;
-import me.goldze.mvvmhabit.utils.KLog;
-import me.goldze.mvvmhabit.utils.MaterialDialogUtils;
 import me.goldze.mvvmhabit.base.BaseViewModel.ParameterField;
+import me.goldze.mvvmhabit.bus.Messenger;
+import me.goldze.mvvmhabit.utils.MaterialDialogUtils;
 
 
 /**
@@ -29,7 +27,6 @@ import me.goldze.mvvmhabit.base.BaseViewModel.ParameterField;
  * 一个拥有DataBinding框架的基Activity
  * 这里根据项目业务可以换成你自己熟悉的BaseActivity, 但是需要继承RxAppCompatActivity,方便LifecycleProvider管理生命周期
  */
-
 public abstract class BaseActivity<V extends ViewDataBinding, VM extends BaseViewModel> extends RxAppCompatActivity implements IBaseActivity {
     protected V binding;
     protected VM viewModel;
