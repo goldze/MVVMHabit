@@ -125,7 +125,7 @@ public abstract class BaseFragment<V extends ViewDataBinding, VM extends BaseVie
         viewModel.getUC().getStartContainerActivityLiveData().observe(this, new Observer<Map<String, Object>>() {
             @Override
             public void onChanged(@Nullable Map<String, Object> params) {
-                String canonicalName = (String) params.get(ParameterField.CANONICALNAME);
+                String canonicalName = (String) params.get(ParameterField.CANONICAL_NAME);
                 Bundle bundle = (Bundle) params.get(ParameterField.BUNDLE);
                 startContainerActivity(canonicalName, bundle);
             }

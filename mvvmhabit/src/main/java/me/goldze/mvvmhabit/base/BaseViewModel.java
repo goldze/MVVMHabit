@@ -98,7 +98,7 @@ public class BaseViewModel extends AndroidViewModel implements IBaseViewModel {
      */
     public void startContainerActivity(String canonicalName, Bundle bundle) {
         Map<String, Object> params = new HashMap();
-        params.put(ParameterField.CANONICALNAME, canonicalName);
+        params.put(ParameterField.CANONICAL_NAME, canonicalName);
         if (bundle != null) {
             params.put(ParameterField.BUNDLE, bundle);
         }
@@ -197,7 +197,7 @@ public class BaseViewModel extends AndroidViewModel implements IBaseViewModel {
 
     public static class ParameterField {
         public static String CLASS = "CLASS";
-        public static String CANONICALNAME = "CANONICALNAME";
+        public static String CANONICAL_NAME = "CANONICAL_NAME";
         public static String BUNDLE = "BUNDLE";
     }
 }
