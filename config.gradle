@@ -31,7 +31,7 @@ ext {
             //rxjava
             "rxjava"                               : "io.reactivex.rxjava2:rxjava:2.1.12",
             "rxandroid"                            : "io.reactivex.rxjava2:rxandroid:2.0.2",
-            //rx管理View的生命周期
+            //rx系列与View生命周期同步
             "rxlifecycle"                          : "com.trello.rxlifecycle2:rxlifecycle:2.2.1",
             "rxlifecycle-components"               : "com.trello.rxlifecycle2:rxlifecycle-components:2.2.1",
             //rxbinding
