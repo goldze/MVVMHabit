@@ -1,6 +1,5 @@
 package com.goldze.mvvmhabit.ui.activity;
 
-import android.Manifest;
 import android.arch.lifecycle.ViewModelProviders;
 import android.databinding.Observable;
 import android.os.Bundle;
@@ -11,12 +10,8 @@ import com.goldze.mvvmhabit.BR;
 import com.goldze.mvvmhabit.R;
 import com.goldze.mvvmhabit.databinding.ActivityLoginBinding;
 import com.goldze.mvvmhabit.ui.vm.LoginViewModel;
-import com.goldze.mvvmhabit.ui.vm.NetWorkViewModel;
-import com.tbruyelle.rxpermissions2.RxPermissions;
 
-import io.reactivex.functions.Consumer;
 import me.goldze.mvvmhabit.base.BaseActivity;
-import me.goldze.mvvmhabit.utils.ToastUtils;
 
 /**
  * 一个MVVM模式的登陆界面
