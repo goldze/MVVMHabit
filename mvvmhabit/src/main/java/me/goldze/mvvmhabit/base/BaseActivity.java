@@ -100,21 +100,21 @@ public abstract class BaseActivity<V extends ViewDataBinding, VM extends BaseVie
     //注册ViewModel与View的契约UI回调事件
     private void registorUIChangeLiveDataCallBack() {
         //加载对话框显示
-        viewModel.getUC().getShowDialogLiveData().observe(this, new Observer<String>() {
+        viewModel.getUC().getShowDialogEvent().observe(this, new Observer<String>() {
             @Override
             public void onChanged(@Nullable String title) {
                 showDialog(title);
             }
         });
         //加载对话框消失
-        viewModel.getUC().getDismissDialogLiveData().observe(this, new Observer<Boolean>() {
+        viewModel.getUC().getDismissDialogEvent().observe(this, new Observer<Boolean>() {
             @Override
             public void onChanged(@Nullable Boolean aBoolean) {
                 dismissDialog();
             }
         });
         //跳入新页面
-        viewModel.getUC().getStartActivityLiveData().observe(this, new Observer<Map<String, Object>>() {
+        viewModel.getUC().getStartActivityEvent().observe(this, new Observer<Map<String, Object>>() {
             @Override
             public void onChanged(@Nullable Map<String, Object> params) {
                 Class<?> clz = (Class<?>) params.get(ParameterField.CLASS);
@@ -123,7 +123,7 @@ public abstract class BaseActivity<V extends ViewDataBinding, VM extends BaseVie
             }
         });
         //跳入ContainerActivity
-        viewModel.getUC().getStartContainerActivityLiveData().observe(this, new Observer<Map<String, Object>>() {
+        viewModel.getUC().getStartContainerActivityEvent().observe(this, new Observer<Map<String, Object>>() {
             @Override
             public void onChanged(@Nullable Map<String, Object> params) {
                 String canonicalName = (String) params.get(ParameterField.CANONICAL_NAME);
@@ -132,14 +132,14 @@ public abstract class BaseActivity<V extends ViewDataBinding, VM extends BaseVie
             }
         });
         //关闭界面
-        viewModel.getUC().getFinishLiveData().observe(this, new Observer<Boolean>() {
+        viewModel.getUC().getFinishEvent().observe(this, new Observer<Boolean>() {
             @Override
             public void onChanged(@Nullable Boolean aBoolean) {
                 finish();
             }
         });
         //关闭上一层
-        viewModel.getUC().getOnBackPressedLiveData().observe(this, new Observer<Boolean>() {
+        viewModel.getUC().getOnBackPressedEvent().observe(this, new Observer<Boolean>() {
             @Override
             public void onChanged(@Nullable Boolean aBoolean) {
                 onBackPressed();

@@ -6,13 +6,17 @@ import android.arch.lifecycle.Lifecycle;
 import android.arch.lifecycle.LifecycleOwner;
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
+import android.arch.lifecycle.Observer;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 
 import com.trello.rxlifecycle2.LifecycleProvider;
 
 import java.util.HashMap;
 import java.util.Map;
+
+import me.goldze.mvvmhabit.bus.event.SingleLiveEvent;
 
 /**
  * Created by goldze on 2017/6/15.
@@ -50,11 +54,11 @@ public class BaseViewModel extends AndroidViewModel implements IBaseViewModel {
     }
 
     public void showDialog(String title) {
-        uc.showDialogLiveData.postValue(title);
+        uc.showDialogEvent.postValue(title);
     }
 
     public void dismissDialog() {
-        uc.dismissDialogLiveData.postValue(uc.dismissDialogLiveData.getValue() == null ? false : !uc.dismissDialogLiveData.getValue());
+        uc.dismissDialogEvent.call();
     }
 
     /**
@@ -78,7 +82,7 @@ public class BaseViewModel extends AndroidViewModel implements IBaseViewModel {
         if (bundle != null) {
             params.put(ParameterField.BUNDLE, bundle);
         }
-        uc.startActivityLiveData.postValue(params);
+        uc.startActivityEvent.postValue(params);
     }
 
     /**
@@ -102,21 +106,21 @@ public class BaseViewModel extends AndroidViewModel implements IBaseViewModel {
         if (bundle != null) {
             params.put(ParameterField.BUNDLE, bundle);
         }
-        uc.startContainerActivityLiveData.postValue(params);
+        uc.startContainerActivityEvent.postValue(params);
     }
 
     /**
      * 关闭界面
      */
     public void finish() {
-        uc.finishLiveData.postValue(uc.finishLiveData.getValue() == null ? false : !uc.finishLiveData.getValue());
+        uc.finishEvent.call();
     }
 
     /**
      * 返回上一层
      */
     public void onBackPressed() {
-        uc.onBackPressedLiveData.postValue(uc.onBackPressedLiveData.getValue() == null ? false : !uc.onBackPressedLiveData.getValue());
+        uc.onBackPressedEvent.call();
     }
 
     @Override
@@ -155,43 +159,48 @@ public class BaseViewModel extends AndroidViewModel implements IBaseViewModel {
     public void removeRxBus() {
     }
 
-    public class UIChangeLiveData extends LiveData {
-        private MutableLiveData<String> showDialogLiveData;
-        private MutableLiveData<Boolean> dismissDialogLiveData;
-        private MutableLiveData<Map<String, Object>> startActivityLiveData;
-        private MutableLiveData<Map<String, Object>> startContainerActivityLiveData;
-        private MutableLiveData<Boolean> finishLiveData;
-        private MutableLiveData<Boolean> onBackPressedLiveData;
+    public class UIChangeLiveData extends SingleLiveEvent {
+        private SingleLiveEvent<String> showDialogEvent;
+        private SingleLiveEvent dismissDialogEvent;
+        private SingleLiveEvent<Map<String, Object>> startActivityEvent;
+        private SingleLiveEvent<Map<String, Object>> startContainerActivityEvent;
+        private SingleLiveEvent finishEvent;
+        private SingleLiveEvent onBackPressedEvent;
 
-        public MutableLiveData<String> getShowDialogLiveData() {
-            return showDialogLiveData = createLiveData(showDialogLiveData);
+        public SingleLiveEvent<String> getShowDialogEvent() {
+            return showDialogEvent = createLiveData(showDialogEvent);
         }
 
-        public MutableLiveData<Boolean> getDismissDialogLiveData() {
-            return dismissDialogLiveData = createLiveData(dismissDialogLiveData);
+        public SingleLiveEvent getDismissDialogEvent() {
+            return dismissDialogEvent = createLiveData(dismissDialogEvent);
         }
 
-        public MutableLiveData<Map<String, Object>> getStartActivityLiveData() {
-            return startActivityLiveData = createLiveData(startActivityLiveData);
+        public SingleLiveEvent<Map<String, Object>> getStartActivityEvent() {
+            return startActivityEvent = createLiveData(startActivityEvent);
         }
 
-        public MutableLiveData<Map<String, Object>> getStartContainerActivityLiveData() {
-            return startContainerActivityLiveData = createLiveData(startContainerActivityLiveData);
+        public SingleLiveEvent<Map<String, Object>> getStartContainerActivityEvent() {
+            return startContainerActivityEvent = createLiveData(startContainerActivityEvent);
         }
 
-        public MutableLiveData<Boolean> getFinishLiveData() {
-            return finishLiveData = createLiveData(finishLiveData);
+        public SingleLiveEvent getFinishEvent() {
+            return finishEvent = createLiveData(finishEvent);
         }
 
-        public MutableLiveData<Boolean> getOnBackPressedLiveData() {
-            return onBackPressedLiveData = createLiveData(onBackPressedLiveData);
+        public SingleLiveEvent getOnBackPressedEvent() {
+            return onBackPressedEvent = createLiveData(onBackPressedEvent);
         }
 
-        private MutableLiveData createLiveData(MutableLiveData liveData) {
+        private SingleLiveEvent createLiveData(SingleLiveEvent liveData) {
             if (liveData == null) {
-                liveData = new MutableLiveData();
+                liveData = new SingleLiveEvent();
             }
             return liveData;
+        }
+
+        @Override
+        public void observe(LifecycleOwner owner, Observer observer) {
+            super.observe(owner, observer);
         }
     }
 

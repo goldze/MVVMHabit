@@ -7,6 +7,7 @@ import android.support.annotation.NonNull;
 
 import com.goldze.mvvmhabit.BR;
 import com.goldze.mvvmhabit.R;
+import com.goldze.mvvmhabit.ui.viewpager.adapter.ViewPagerBindingAdapter;
 
 import me.goldze.mvvmhabit.base.BaseViewModel;
 import me.goldze.mvvmhabit.binding.command.BindingCommand;
@@ -46,8 +47,8 @@ public class ViewPagerViewModel extends BaseViewModel {
             return "条目" + position;
         }
     };
-    //给ViewPager添加Adpter，请使用自定义的Adapter继承BindingViewPagerAdapter，重写onBindBinding方法
-    public final BindingViewPagerAdapter<ViewPagerItemViewModel> adapter = new BindingViewPagerAdapter<>();
+    //给ViewPager添加Adpter，使用自定义的Adapter继承BindingViewPagerAdapter，重写onBindBinding方法
+    public final ViewPagerBindingAdapter adapter = new ViewPagerBindingAdapter();
     //ViewPager切换监听
     public BindingCommand<Integer> onPageSelectedCommand = new BindingCommand<>(new BindingConsumer<Integer>() {
         @Override
