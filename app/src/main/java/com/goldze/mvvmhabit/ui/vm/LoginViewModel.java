@@ -11,10 +11,16 @@ import android.view.View;
 
 import com.goldze.mvvmhabit.ui.activity.DemoActivity;
 
+import java.util.concurrent.TimeUnit;
+
+import io.reactivex.Observable;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Consumer;
 import me.goldze.mvvmhabit.base.BaseViewModel;
 import me.goldze.mvvmhabit.binding.command.BindingAction;
 import me.goldze.mvvmhabit.binding.command.BindingCommand;
 import me.goldze.mvvmhabit.binding.command.BindingConsumer;
+import me.goldze.mvvmhabit.utils.RxUtils;
 import me.goldze.mvvmhabit.utils.ToastUtils;
 
 /**
@@ -35,9 +41,6 @@ public class LoginViewModel extends BaseViewModel {
         //密码开关观察者
         public ObservableBoolean pSwitchObservable = new ObservableBoolean(false);
     }
-
-    private Handler loginHandler;
-    private Runnable loginRunnable;
 
     public LoginViewModel(@NonNull Application application) {
         super(application);
@@ -89,28 +92,31 @@ public class LoginViewModel extends BaseViewModel {
             ToastUtils.showShort("请输入密码！");
             return;
         }
-        showDialog();
-        //进入DemoActivity页面
-        loginRunnable = new Runnable() {
-            @Override
-            public void run() {
-                dismissDialog();
-                //进入DemoActivity页面
-                startActivity(DemoActivity.class);
-                //关闭页面
-                finish();
-            }
-        };
-        loginHandler = new Handler();
-        loginHandler.postDelayed(loginRunnable, 3 * 1000);
+        //RaJava模拟一个延迟操作
+        Observable.just("")
+                .delay(3, TimeUnit.SECONDS) //延迟3秒
+                .compose(RxUtils.bindToLifecycle(getLifecycleProvider()))//界面关闭自动取消
+                .compose(RxUtils.schedulersTransformer()) //线程调度
+                .doOnSubscribe(new Consumer<Disposable>() {
+                    @Override
+                    public void accept(Disposable disposable) throws Exception {
+                        showDialog();
+                    }
+                })
+                .subscribe(new Consumer() {
+                    @Override
+                    public void accept(Object o) throws Exception {
+                        dismissDialog();
+                        //进入DemoActivity页面
+                        startActivity(DemoActivity.class);
+                        //关闭页面
+                        finish();
+                    }
+                });
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        if (loginHandler != null) {
-            //界面销毁时移除Runnable，实际网络请求时不需要手动取消请求，在请求时加入.compose(RxUtils.bindToLifecycle(context))绑定生命周期，在界面销毁时会自动取消网络访问，避免界面销毁时子线程还存在而引发的逻辑异常
-            loginHandler.removeCallbacks(loginRunnable);
-        }
     }
 }

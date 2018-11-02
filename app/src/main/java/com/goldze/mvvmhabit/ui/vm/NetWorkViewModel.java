@@ -13,9 +13,13 @@ import com.goldze.mvvmhabit.BR;
 import com.goldze.mvvmhabit.R;
 import com.goldze.mvvmhabit.entity.DemoEntity;
 import com.goldze.mvvmhabit.service.DemoApiService;
+import com.goldze.mvvmhabit.ui.activity.DemoActivity;
 import com.goldze.mvvmhabit.utils.RetrofitClient;
 import com.trello.rxlifecycle2.LifecycleProvider;
 
+import java.util.concurrent.TimeUnit;
+
+import io.reactivex.Observable;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Action;
 import io.reactivex.functions.Consumer;
@@ -35,9 +39,6 @@ import me.tatarka.bindingcollectionadapter2.ItemBinding;
 
 public class NetWorkViewModel extends BaseViewModel {
     private int itemIndex = 0;
-    //模拟上拉加载子线程
-    public Runnable loadMoreRunnable;
-    public Handler loadMoreHandler;
     public MutableLiveData<NetWorkItemViewModel> deleteItemLiveData = new MutableLiveData();
     //封装一个界面发生改变的观察者
     public UIChangeObservable uc = new UIChangeObservable();
@@ -88,26 +89,33 @@ public class NetWorkViewModel extends BaseViewModel {
                 uc.finishLoadmore.set(!uc.finishLoadmore.get());
                 return;
             }
-            ToastUtils.showShort("上拉加载");
             //模拟网络上拉加载更多
-            loadMoreRunnable = new Runnable() {
-                @Override
-                public void run() {
-                    //刷新完成收回
-                    uc.finishLoadmore.set(!uc.finishLoadmore.get());
-                    //模拟一部分假数据
-                    for (int i = 0; i < 10; i++) {
-                        DemoEntity.ItemsEntity item = new DemoEntity.ItemsEntity();
-                        item.setId(-1);
-                        item.setName("模拟条目" + itemIndex++);
-                        NetWorkItemViewModel itemViewModel = new NetWorkItemViewModel(NetWorkViewModel.this, item);
-                        //双向绑定动态添加Item
-                        observableList.add(itemViewModel);
-                    }
-                }
-            };
-            loadMoreHandler = new Handler();
-            loadMoreHandler.postDelayed(loadMoreRunnable, 3000);
+            Observable.just("")
+                    .delay(3, TimeUnit.SECONDS) //延迟3秒
+                    .compose(RxUtils.bindToLifecycle(getLifecycleProvider()))//界面关闭自动取消
+                    .compose(RxUtils.schedulersTransformer()) //线程调度
+                    .doOnSubscribe(new Consumer<Disposable>() {
+                        @Override
+                        public void accept(Disposable disposable) throws Exception {
+                            ToastUtils.showShort("上拉加载");
+                        }
+                    })
+                    .subscribe(new Consumer() {
+                        @Override
+                        public void accept(Object o) throws Exception {
+                            //刷新完成收回
+                            uc.finishLoadmore.set(!uc.finishLoadmore.get());
+                            //模拟一部分假数据
+                            for (int i = 0; i < 10; i++) {
+                                DemoEntity.ItemsEntity item = new DemoEntity.ItemsEntity();
+                                item.setId(-1);
+                                item.setName("模拟条目" + itemIndex++);
+                                NetWorkItemViewModel itemViewModel = new NetWorkItemViewModel(NetWorkViewModel.this, item);
+                                //双向绑定动态添加Item
+                                observableList.add(itemViewModel);
+                            }
+                        }
+                    });
         }
     });
 
@@ -192,9 +200,5 @@ public class NetWorkViewModel extends BaseViewModel {
         super.onDestroy();
         observableList.clear();
         observableList = null;
-        if (loadMoreHandler != null) {
-            //界面销毁时移除Runnable，实际网络请求时不需要手动取消请求，在请求时加入.compose(RxUtils.bindToLifecycle(context))绑定生命周期，在界面销毁时会自动取消网络访问，避免界面销毁时子线程还存在而引发的逻辑异常
-            loadMoreHandler.removeCallbacks(loadMoreRunnable);
-        }
     }
 }
