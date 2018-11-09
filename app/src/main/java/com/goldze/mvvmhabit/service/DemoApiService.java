@@ -4,6 +4,8 @@ import com.goldze.mvvmhabit.entity.DemoEntity;
 
 import io.reactivex.Observable;
 import me.goldze.mvvmhabit.http.BaseResponse;
+import okhttp3.RequestBody;
+import retrofit2.http.Body;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
@@ -18,6 +20,6 @@ public interface DemoApiService {
     Observable<BaseResponse<DemoEntity>> demoGet();
 
     @FormUrlEncoded
-    @POST("action/apiv2/banner?catalog=1")
-    Observable<BaseResponse<DemoEntity>> demoPost(@Field("id") String id);
+    @POST("action/apiv2/banner")
+    Observable<BaseResponse<DemoEntity>> demoPost(@Field("catalog") String catalog);
 }

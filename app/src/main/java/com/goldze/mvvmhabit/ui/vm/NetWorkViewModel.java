@@ -32,6 +32,8 @@ import me.goldze.mvvmhabit.utils.RxUtils;
 import me.goldze.mvvmhabit.utils.ToastUtils;
 import me.tatarka.bindingcollectionadapter2.BindingRecyclerViewAdapter;
 import me.tatarka.bindingcollectionadapter2.ItemBinding;
+import okhttp3.MediaType;
+import okhttp3.RequestBody;
 
 /**
  * Created by goldze on 2017/7/17.
@@ -162,7 +164,6 @@ public class NetWorkViewModel extends BaseViewModel {
                         uc.finishRefreshing.set(!uc.finishRefreshing.get());
                         ToastUtils.showShort(throwable.message);
                         throwable.printStackTrace();
-
                     }
                 }, new Action() {
                     @Override
