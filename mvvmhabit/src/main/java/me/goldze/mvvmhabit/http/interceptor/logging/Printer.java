@@ -62,11 +62,13 @@ class Printer {
         if (request.body() instanceof FormBody) {
             StringBuilder formBody = new StringBuilder();
             FormBody body = (FormBody) request.body();
-            for (int i = 0; i < body.size(); i++) {
-                formBody.append(body.encodedName(i) + "=" + body.encodedValue(i) + "&");
+            if (body != null && body.size() != 0) {
+                for (int i = 0; i < body.size(); i++) {
+                    formBody.append(body.encodedName(i) + "=" + body.encodedValue(i) + "&");
+                }
+                formBody.delete(formBody.length() - 1, formBody.length());
+                logLines(builder.getType(), tag, new String[]{formBody.toString()}, builder.getLogger(), true);
             }
-            formBody.delete(formBody.length() - 1, formBody.length());
-            logLines(builder.getType(), tag, new String[]{formBody.toString()}, builder.getLogger(), true);
         }
         if (builder.getLevel() == Level.BASIC || builder.getLevel() == Level.BODY) {
             logLines(builder.getType(), tag, requestBody.split(LINE_SEPARATOR), builder.getLogger(), true);
@@ -100,11 +102,13 @@ class Printer {
         if (request.body() instanceof FormBody) {
             StringBuilder formBody = new StringBuilder();
             FormBody body = (FormBody) request.body();
-            for (int i = 0; i < body.size(); i++) {
-                formBody.append(body.encodedName(i) + "=" + body.encodedValue(i) + "&");
+            if (body != null && body.size() != 0) {
+                for (int i = 0; i < body.size(); i++) {
+                    formBody.append(body.encodedName(i) + "=" + body.encodedValue(i) + "&");
+                }
+                formBody.delete(formBody.length() - 1, formBody.length());
+                logLines(builder.getType(), tag, new String[]{formBody.toString()}, builder.getLogger(), true);
             }
-            formBody.delete(formBody.length() - 1, formBody.length());
-            logLines(builder.getType(), tag, new String[]{formBody.toString()}, builder.getLogger(), true);
         }
         if (builder.getLevel() == Level.BASIC || builder.getLevel() == Level.BODY) {
             logLines(builder.getType(), tag, OMITTED_REQUEST, builder.getLogger(), true);

@@ -5,17 +5,13 @@ import android.arch.lifecycle.MutableLiveData;
 import android.databinding.ObservableArrayList;
 import android.databinding.ObservableBoolean;
 import android.databinding.ObservableList;
-import android.os.Handler;
 import android.support.annotation.NonNull;
-import android.support.v4.app.Fragment;
 
 import com.goldze.mvvmhabit.BR;
 import com.goldze.mvvmhabit.R;
 import com.goldze.mvvmhabit.entity.DemoEntity;
 import com.goldze.mvvmhabit.service.DemoApiService;
-import com.goldze.mvvmhabit.ui.activity.DemoActivity;
 import com.goldze.mvvmhabit.utils.RetrofitClient;
-import com.trello.rxlifecycle2.LifecycleProvider;
 
 import java.util.concurrent.TimeUnit;
 
@@ -32,8 +28,6 @@ import me.goldze.mvvmhabit.utils.RxUtils;
 import me.goldze.mvvmhabit.utils.ToastUtils;
 import me.tatarka.bindingcollectionadapter2.BindingRecyclerViewAdapter;
 import me.tatarka.bindingcollectionadapter2.ItemBinding;
-import okhttp3.MediaType;
-import okhttp3.RequestBody;
 
 /**
  * Created by goldze on 2017/7/17.
