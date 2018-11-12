@@ -115,6 +115,8 @@ public class FormViewModel extends BaseViewModel {
     public void setBir(int year, int month, int dayOfMonth) {
         //设置数据到实体中，自动刷新界面
         entity.setBir(year + "年" + (month + 1) + "月" + dayOfMonth + "日");
+        //刷新实体,驱动界面更新
+        entity.notifyChange();
     }
 
     @Override

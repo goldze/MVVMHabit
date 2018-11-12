@@ -1,5 +1,6 @@
 package com.goldze.mvvmhabit.entity;
 
+import android.databinding.BaseObservable;
 import android.os.Parcel;
 import android.os.Parcelable;
 
@@ -9,7 +10,7 @@ import java.util.List;
  * Created by goldze on 2017/7/17.
  */
 
-public class FormEntity implements Parcelable {
+public class FormEntity extends BaseObservable implements Parcelable {
     private String id;
     private String name;
     private String sex;
