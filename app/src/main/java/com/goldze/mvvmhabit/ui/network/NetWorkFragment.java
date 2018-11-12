@@ -1,4 +1,4 @@
-package com.goldze.mvvmhabit.ui.fragment;
+package com.goldze.mvvmhabit.ui.network;
 
 import android.arch.lifecycle.Observer;
 import android.databinding.Observable;
@@ -13,8 +13,6 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.goldze.mvvmhabit.BR;
 import com.goldze.mvvmhabit.R;
 import com.goldze.mvvmhabit.databinding.FragmentNetworkBinding;
-import com.goldze.mvvmhabit.ui.vm.NetWorkItemViewModel;
-import com.goldze.mvvmhabit.ui.vm.NetWorkViewModel;
 
 import me.goldze.mvvmhabit.base.BaseFragment;
 import me.goldze.mvvmhabit.utils.MaterialDialogUtils;

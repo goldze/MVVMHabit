@@ -1,4 +1,4 @@
-package com.goldze.mvvmhabit.ui.vm;
+package com.goldze.mvvmhabit.ui.network;
 
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -7,7 +7,7 @@ import android.support.v4.content.ContextCompat;
 
 import com.goldze.mvvmhabit.R;
 import com.goldze.mvvmhabit.entity.DemoEntity;
-import com.goldze.mvvmhabit.ui.fragment.DetailFragment;
+import com.goldze.mvvmhabit.ui.network.detail.DetailFragment;
 
 import me.goldze.mvvmhabit.base.ItemViewModel;
 import me.goldze.mvvmhabit.binding.command.BindingAction;

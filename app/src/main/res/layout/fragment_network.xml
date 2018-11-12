@@ -3,11 +3,11 @@
 
     <data>
 
-        <import type="com.goldze.mvvmhabit.ui.vm.NetWorkViewModel" />
+        <import type="com.goldze.mvvmhabit.ui.network.NetWorkViewModel" />
 
         <variable
             name="viewModel"
-            type="NetWorkViewModel" />
+            type="com.goldze.mvvmhabit.ui.network.NetWorkViewModel" />
 
         <import type="me.tatarka.bindingcollectionadapter2.LayoutManagers" />
 

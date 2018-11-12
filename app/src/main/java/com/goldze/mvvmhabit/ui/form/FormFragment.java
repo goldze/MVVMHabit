@@ -1,4 +1,4 @@
-package com.goldze.mvvmhabit.ui.fragment;
+package com.goldze.mvvmhabit.ui.form;
 
 import android.app.DatePickerDialog;
 import android.arch.lifecycle.Observer;
@@ -14,8 +14,7 @@ import com.goldze.mvvmhabit.BR;
 import com.goldze.mvvmhabit.R;
 import com.goldze.mvvmhabit.databinding.FragmentFormBinding;
 import com.goldze.mvvmhabit.entity.FormEntity;
-import com.goldze.mvvmhabit.ui.vm.FormViewModel;
-import com.goldze.mvvmhabit.ui.vm.TitleViewModel;
+import com.goldze.mvvmhabit.ui.base.TitleViewModel;
 
 import java.util.Calendar;
 
@@ -54,10 +53,11 @@ public class FormFragment extends BaseFragment<FragmentFormBinding, FormViewMode
     public void initData() {
         //通过binding拿到toolbar控件, 设置给Activity
         ((AppCompatActivity) getActivity()).setSupportActionBar(binding.include.toolbar);
+        //View层传参到ViewModel层
+        viewModel.setFormEntity(entity);
         //创建TitleViewModel
         TitleViewModel titleViewModel = createViewModel(this, TitleViewModel.class);
-        //View层传参到ViewModel层
-        viewModel.initData(entity, titleViewModel);
+        viewModel.setTitleViewModel(titleViewModel);
     }
 
     @Override

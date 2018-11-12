@@ -1,4 +1,4 @@
-package com.goldze.mvvmhabit.ui.fragment;
+package com.goldze.mvvmhabit.ui.network.detail;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -8,7 +8,6 @@ import com.goldze.mvvmhabit.BR;
 import com.goldze.mvvmhabit.R;
 import com.goldze.mvvmhabit.databinding.FragmentDetailBinding;
 import com.goldze.mvvmhabit.entity.DemoEntity;
-import com.goldze.mvvmhabit.ui.vm.DetailViewModel;
 
 import me.goldze.mvvmhabit.base.BaseFragment;
 

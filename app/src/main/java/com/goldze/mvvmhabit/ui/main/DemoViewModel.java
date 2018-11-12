@@ -1,4 +1,4 @@
-package com.goldze.mvvmhabit.ui.vm;
+package com.goldze.mvvmhabit.ui.main;
 
 import android.app.Application;
 import android.arch.lifecycle.MutableLiveData;
@@ -7,8 +7,8 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 
 import com.goldze.mvvmhabit.entity.FormEntity;
-import com.goldze.mvvmhabit.ui.fragment.FormFragment;
-import com.goldze.mvvmhabit.ui.fragment.NetWorkFragment;
+import com.goldze.mvvmhabit.ui.form.FormFragment;
+import com.goldze.mvvmhabit.ui.network.NetWorkFragment;
 import com.goldze.mvvmhabit.ui.tab_bar.activity.TabBarActivity;
 import com.goldze.mvvmhabit.ui.viewpager.activity.ViewPagerActivity;
 

@@ -1,4 +1,4 @@
-package com.goldze.mvvmhabit.ui.activity;
+package com.goldze.mvvmhabit.ui.login;
 
 import android.arch.lifecycle.ViewModelProviders;
 import android.databinding.Observable;
@@ -9,7 +9,6 @@ import android.text.method.PasswordTransformationMethod;
 import com.goldze.mvvmhabit.BR;
 import com.goldze.mvvmhabit.R;
 import com.goldze.mvvmhabit.databinding.ActivityLoginBinding;
-import com.goldze.mvvmhabit.ui.vm.LoginViewModel;
 
 import me.goldze.mvvmhabit.base.BaseActivity;
 

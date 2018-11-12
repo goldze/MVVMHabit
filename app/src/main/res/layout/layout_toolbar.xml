@@ -4,11 +4,11 @@
 
     <data>
 
-        <import type="com.goldze.mvvmhabit.ui.vm.TitleViewModel" />
+        <import type="com.goldze.mvvmhabit.ui.base.TitleViewModel" />
 
         <variable
             name="titleViewModel"
-            type="TitleViewModel" />
+            type="com.goldze.mvvmhabit.ui.base.TitleViewModel" />
     </data>
 
     <android.support.v7.widget.Toolbar xmlns:app="http://schemas.android.com/apk/res-auto"

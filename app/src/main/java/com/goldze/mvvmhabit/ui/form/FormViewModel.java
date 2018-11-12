@@ -1,4 +1,4 @@
-package com.goldze.mvvmhabit.ui.vm;
+package com.goldze.mvvmhabit.ui.form;
 
 import android.app.Application;
 import android.arch.lifecycle.MutableLiveData;
@@ -9,6 +9,7 @@ import android.view.View;
 
 import com.goldze.mvvmhabit.entity.FormEntity;
 import com.goldze.mvvmhabit.entity.SpinnerItemData;
+import com.goldze.mvvmhabit.ui.base.TitleViewModel;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
@@ -33,12 +34,6 @@ public class FormViewModel extends BaseViewModel {
     //封装一个界面发生改变的观察者
     public UIChangeObservable uc;
 
-    @Override
-    public void onCreate() {
-        super.onCreate();
-        uc = new UIChangeObservable();
-    }
-
     public class UIChangeObservable {
         //显示日期对话框
         public ObservableBoolean showDateDialogObservable;
@@ -55,8 +50,17 @@ public class FormViewModel extends BaseViewModel {
         super(application);
     }
 
-    public void initData(FormEntity entity, TitleViewModel titleViewModel) {
-        this.entity = entity;
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        uc = new UIChangeObservable();
+        //sexItemDatas 一般可以从本地Sqlite数据库中取出数据字典对象集合，让该对象实现IKeyAndValue接口
+        sexItemDatas = new ArrayList<>();
+        sexItemDatas.add(new SpinnerItemData("男", "1"));
+        sexItemDatas.add(new SpinnerItemData("女", "2"));
+    }
+
+    public void setTitleViewModel(TitleViewModel titleViewModel) {
         this.titleViewModel = titleViewModel;
         //初始化标题栏
         titleViewModel.rightTextVisibility.set(View.VISIBLE);
@@ -75,10 +79,10 @@ public class FormViewModel extends BaseViewModel {
                 ToastUtils.showShort("更多");
             }
         });
-        //sexItemDatas 一般可以从本地Sqlite数据库中取出数据字典对象集合，让该对象实现IKeyAndValue接口
-        sexItemDatas = new ArrayList<>();
-        sexItemDatas.add(new SpinnerItemData("男", "1"));
-        sexItemDatas.add(new SpinnerItemData("女", "2"));
+    }
+
+    public void setFormEntity(FormEntity entity) {
+        this.entity = entity;
     }
 
     //性别选择的监听

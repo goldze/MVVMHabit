@@ -1,15 +1,14 @@
-package com.goldze.mvvmhabit.ui.vm;
+package com.goldze.mvvmhabit.ui.login;
 
 import android.app.Application;
 import android.databinding.ObservableBoolean;
 import android.databinding.ObservableField;
 import android.databinding.ObservableInt;
-import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
 import android.view.View;
 
-import com.goldze.mvvmhabit.ui.activity.DemoActivity;
+import com.goldze.mvvmhabit.ui.main.DemoActivity;
 
 import java.util.concurrent.TimeUnit;
 

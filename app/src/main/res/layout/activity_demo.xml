@@ -3,7 +3,7 @@
 
     <data>
 
-        <import type="com.goldze.mvvmhabit.ui.vm.DemoViewModel" />
+        <import type="com.goldze.mvvmhabit.ui.main.DemoViewModel" />
 
         <variable
             name="viewModel"

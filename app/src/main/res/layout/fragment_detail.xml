@@ -3,11 +3,11 @@
 
     <data>
 
-        <import type="com.goldze.mvvmhabit.ui.vm.DetailViewModel" />
+        <import type="com.goldze.mvvmhabit.ui.network.detail.DetailViewModel" />
 
         <variable
                 name="viewModel"
-                type="DetailViewModel"
+                type="com.goldze.mvvmhabit.ui.network.detail.DetailViewModel"
                 />
         <import type="com.goldze.mvvmhabit.R" />
     </data>

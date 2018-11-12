@@ -1,4 +1,4 @@
-package com.goldze.mvvmhabit.ui.vm;
+package com.goldze.mvvmhabit.ui.network;
 
 import android.app.Application;
 import android.arch.lifecycle.MutableLiveData;

@@ -161,7 +161,7 @@ CaocConfig.Builder.create()
 <layout>
     <data>
         <variable
-            type="com.goldze.mvvmhabit.ui.vm.LoginViewModel"
+            type="com.goldze.mvvmhabit.ui.login.LoginViewModel"
             name="viewModel"
         />
     </data>

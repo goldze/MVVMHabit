@@ -2,7 +2,7 @@ package com.goldze.mvvmhabit.app;
 
 import com.goldze.mvvmhabit.BuildConfig;
 import com.goldze.mvvmhabit.R;
-import com.goldze.mvvmhabit.ui.activity.LoginActivity;
+import com.goldze.mvvmhabit.ui.login.LoginActivity;
 
 import me.goldze.mvvmhabit.base.BaseApplication;
 import me.goldze.mvvmhabit.crash.CaocConfig;

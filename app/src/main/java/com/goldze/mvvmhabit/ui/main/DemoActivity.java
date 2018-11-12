@@ -1,4 +1,4 @@
-package com.goldze.mvvmhabit.ui.activity;
+package com.goldze.mvvmhabit.ui.main;
 
 import android.Manifest;
 import android.app.ProgressDialog;
@@ -10,7 +10,6 @@ import android.support.annotation.Nullable;
 import com.goldze.mvvmhabit.BR;
 import com.goldze.mvvmhabit.R;
 import com.goldze.mvvmhabit.databinding.ActivityDemoBinding;
-import com.goldze.mvvmhabit.ui.vm.DemoViewModel;
 import com.tbruyelle.rxpermissions2.RxPermissions;
 
 import io.reactivex.functions.Consumer;

@@ -1,4 +1,4 @@
-package com.goldze.mvvmhabit.ui.vm;
+package com.goldze.mvvmhabit.ui.network.detail;
 
 import android.app.Application;
 import android.databinding.ObservableField;
