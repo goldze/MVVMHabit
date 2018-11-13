@@ -25,7 +25,7 @@ public class BaseApplication extends Application {
      *
      * @param application
      */
-    public static void setApplication(@NonNull Application application) {
+    public static synchronized void setApplication(@NonNull Application application) {
         sInstance = application;
         //初始化工具类
         Utils.init(application);
