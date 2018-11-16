@@ -36,7 +36,7 @@ public class NetWorkFragment extends BaseFragment<FragmentNetworkBinding, NetWor
 
     @Override
     public void initData() {
-        super.initData();
+        //请求网络数据
         viewModel.requestNetWork();
     }
 

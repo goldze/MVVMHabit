@@ -84,11 +84,11 @@ public abstract class BaseFragment<V extends ViewDataBinding, VM extends BaseVie
         super.onViewCreated(view, savedInstanceState);
         //私有的ViewModel与View的契约事件回调逻辑
         registorUIChangeLiveDataCallBack();
-
+        //页面数据初始化方法
         initData();
-
+        //页面事件监听的方法，一般用于ViewModel层转到View层的事件注册
         initViewObservable();
-
+        //注册RxBus
         viewModel.registerRxBus();
     }
 
@@ -188,6 +188,15 @@ public abstract class BaseFragment<V extends ViewDataBinding, VM extends BaseVie
      * 跳转容器页面
      *
      * @param canonicalName 规范名 : Fragment.class.getCanonicalName()
+     */
+    public void startContainerActivity(String canonicalName) {
+        startContainerActivity(canonicalName, null);
+    }
+
+    /**
+     * 跳转容器页面
+     *
+     * @param canonicalName 规范名 : Fragment.class.getCanonicalName()
      * @param bundle        跳转所携带的信息
      */
     public void startContainerActivity(String canonicalName, Bundle bundle) {
@@ -196,17 +205,6 @@ public abstract class BaseFragment<V extends ViewDataBinding, VM extends BaseVie
         if (bundle != null) {
             intent.putExtra(ContainerActivity.BUNDLE, bundle);
         }
-        startActivity(intent);
-    }
-
-    /**
-     * 跳转容器页面
-     *
-     * @param canonicalName 规范名 : Fragment.class.getCanonicalName()
-     */
-    public void startContainerActivity(String canonicalName) {
-        Intent intent = new Intent(getContext(), ContainerActivity.class);
-        intent.putExtra(ContainerActivity.FRAGMENT, canonicalName);
         startActivity(intent);
     }
 

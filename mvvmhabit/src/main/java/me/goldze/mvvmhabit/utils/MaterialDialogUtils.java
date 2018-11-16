@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.text.InputType;
 import android.text.TextUtils;
+import android.util.TypedValue;
 import android.view.KeyEvent;
 import android.view.View;
 
@@ -86,7 +87,6 @@ public class MaterialDialogUtils {
                 .progress(true, 0)
                 .progressIndeterminateStyle(horizontal)
                 .canceledOnTouchOutside(false)
-                .widgetColorRes(R.color.colorPrimary)
                 .backgroundColorRes(R.color.white)
                 .keyListener(new DialogInterface.OnKeyListener() {
                     @Override
