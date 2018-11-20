@@ -172,7 +172,7 @@ CaocConfig.Builder.create()
 
 > variable - type：类的全路径 <br>variable - name：变量名
 
-##### 2.1.2、继承Base
+##### 2.1.2、继承BaseActivity
 
 LoginActivity继承BaseActivity
 ```java
@@ -215,6 +215,8 @@ public LoginViewModel initViewModel() {
 ```
 
 **注意：** 不重写initViewModel()，默认会创建LoginActivity中第二个泛型约束的LoginViewModel，如果没有指定第二个泛型，则会创建BaseViewModel
+
+##### 2.1.3、继承BaseViewModel
 
 LoginViewModel继承BaseViewModel
 ```java
