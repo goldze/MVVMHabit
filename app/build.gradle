@@ -37,7 +37,7 @@ dependencies {
     implementation 'me.majiajie:pager-bottom-tab-strip:2.2.5'
     //MVVMHabit
     implementation project(':mvvmhabit')
-    //    implementation rootProject.ext.dependencies.MVVMHabit
+//    implementation rootProject.ext.dependencies.MVVMHabit
     //内存泄漏测试
     debugImplementation 'com.squareup.leakcanary:leakcanary-android:1.6.2'
     debugImplementation 'com.squareup.leakcanary:leakcanary-support-fragment:1.6.2'
