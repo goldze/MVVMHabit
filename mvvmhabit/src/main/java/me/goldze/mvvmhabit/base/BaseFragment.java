@@ -30,6 +30,7 @@ import me.goldze.mvvmhabit.utils.MaterialDialogUtils;
 public abstract class BaseFragment<V extends ViewDataBinding, VM extends BaseViewModel> extends RxFragment implements IBaseActivity {
     protected V binding;
     protected VM viewModel;
+    protected int viewModelId;
     private MaterialDialog dialog;
 
     @Override
@@ -53,6 +54,8 @@ public abstract class BaseFragment<V extends ViewDataBinding, VM extends BaseVie
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        binding = DataBindingUtil.inflate(inflater, initContentView(inflater, container, savedInstanceState), container, false);
+        viewModelId = initVariableId();
         viewModel = initViewModel();
         if (viewModel == null) {
             Class modelClass;
@@ -65,8 +68,7 @@ public abstract class BaseFragment<V extends ViewDataBinding, VM extends BaseVie
             }
             viewModel = (VM) createViewModel(this, modelClass);
         }
-        binding = DataBindingUtil.inflate(inflater, initContentView(inflater, container, savedInstanceState), container, false);
-        binding.setVariable(initVariableId(), viewModel);
+        binding.setVariable(viewModelId, viewModel);
         //让ViewModel拥有View的生命周期感应
         getLifecycle().addObserver(viewModel);
         //注入RxLifecycle生命周期
@@ -215,7 +217,7 @@ public abstract class BaseFragment<V extends ViewDataBinding, VM extends BaseVie
     //刷新布局
     public void refreshLayout() {
         if (viewModel != null) {
-            binding.setVariable(initVariableId(), viewModel);
+            binding.setVariable(viewModelId, viewModel);
         }
     }
 
