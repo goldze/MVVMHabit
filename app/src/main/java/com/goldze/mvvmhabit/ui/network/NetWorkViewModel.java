@@ -96,7 +96,7 @@ public class NetWorkViewModel extends BaseViewModel {
                             ToastUtils.showShort("上拉加载");
                         }
                     })
-                    .subscribe(new Consumer() {
+                    .subscribe(new Consumer<Object>() {
                         @Override
                         public void accept(Object o) throws Exception {
                             //刷新完成收回

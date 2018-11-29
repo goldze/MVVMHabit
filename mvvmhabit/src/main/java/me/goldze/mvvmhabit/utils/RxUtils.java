@@ -26,7 +26,7 @@ public class RxUtils {
      *
      * @param lifecycle Activity
      */
-    public static LifecycleTransformer bindToLifecycle(@NonNull Context lifecycle) {
+    public static <T> LifecycleTransformer<T> bindToLifecycle(@NonNull Context lifecycle) {
         if (lifecycle instanceof LifecycleProvider) {
             return ((LifecycleProvider) lifecycle).bindToLifecycle();
         } else {
@@ -39,7 +39,7 @@ public class RxUtils {
      *
      * @param lifecycle Fragment
      */
-    public static <T> LifecycleTransformer bindToLifecycle(@NonNull Fragment lifecycle) {
+    public static LifecycleTransformer bindToLifecycle(@NonNull Fragment lifecycle) {
         if (lifecycle instanceof LifecycleProvider) {
             return ((LifecycleProvider) lifecycle).bindToLifecycle();
         } else {
@@ -52,7 +52,7 @@ public class RxUtils {
      *
      * @param lifecycle Fragment
      */
-    public static <T> LifecycleTransformer bindToLifecycle(@NonNull LifecycleProvider lifecycle) {
+    public static LifecycleTransformer bindToLifecycle(@NonNull LifecycleProvider lifecycle) {
         return lifecycle.bindToLifecycle();
     }
 
@@ -69,14 +69,14 @@ public class RxUtils {
         };
     }
 
-    public static <T> ObservableTransformer<BaseResponse<T>, T> exceptionTransformer() {
+    public static ObservableTransformer exceptionTransformer() {
 
-        return new ObservableTransformer<BaseResponse<T>, T>() {
+        return new ObservableTransformer() {
             @Override
-            public ObservableSource<T> apply(Observable observable) {
+            public ObservableSource apply(Observable observable) {
                 return observable
 //                        .map(new HandleFuc<T>())  //这里可以取出BaseResponse中的Result
-                        .onErrorResumeNext(new HttpResponseFunc<T>());
+                        .onErrorResumeNext(new HttpResponseFunc());
             }
         };
     }

@@ -130,7 +130,14 @@ dependencies = [] 是依赖第三方库的配置，可以加新库，但不要�
 ```
 配置Application：
 
-继承**mvvmhabit**中的BaseApplication，在你的自己AppApplication中配置
+继承**mvvmhabit**中的BaseApplication，或者调用
+
+```java
+BaseApplication.setApplication(this);
+```
+来初始化你的Application
+
+可以在你的自己AppApplication中配置
 
 ```java
 //是否开启日志打印

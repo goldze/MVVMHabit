@@ -102,7 +102,7 @@ public class LoginViewModel extends BaseViewModel {
                         showDialog();
                     }
                 })
-                .subscribe(new Consumer() {
+                .subscribe(new Consumer<Object>() {
                     @Override
                     public void accept(Object o) throws Exception {
                         dismissDialog();
