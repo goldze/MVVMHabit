@@ -124,18 +124,6 @@ public class DividerLine extends RecyclerView.ItemDecoration {
      */
     private void drawHorizontal(Canvas c, RecyclerView parent, RecyclerView.State state) {
         int childCount = parent.getChildCount();
-//        try {
-//            //水平绘制的时候查找是否存在RefreshRecyclerView
-//            Class viewClass = Class.forName("cn.com.gz01.smartcity.ui.widget.LoadMoreRecyclerView");
-//            if (viewClass != null) {
-//                if (viewClass == parent.getClass()){
-//                    //存在这个类并使用了这个类,就去掉footer的绘制分割线
-//                    childCount = childCount - 1;
-//                }
-//            }
-//        } catch (ClassNotFoundException e) {
-//            KLog.e(e.getMessage());
-//        }
         for (int i = 0; i < childCount; i++) {
             //分别为每个item绘制分隔线,首先要计算出item的边缘在哪里,给分隔线定位,定界
             final View child = parent.getChildAt(i);
