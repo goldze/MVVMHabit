@@ -40,6 +40,4 @@ public class LineManagers {
             }
         };
     }
-
-
 }
