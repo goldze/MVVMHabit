@@ -3,6 +3,7 @@ package com.goldze.mvvmhabit.ui.main;
 import android.Manifest;
 import android.app.ProgressDialog;
 import android.arch.lifecycle.Observer;
+import android.content.Context;
 import android.databinding.Observable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;

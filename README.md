@@ -784,6 +784,7 @@ ImageUtils.compressWithRx(filePaths, new Subscriber() {
 **goldze：** 本人喜欢尝试新的技术，以后发现有好用的东西，我将会在企业项目中实战，没有问题了就会把它引入到**MVVMHabit**中，一直维护着这套框架，谢谢各位朋友的支持。如果觉得这套框架不错的话，麻烦点个 **star**，你的支持则是我前进的动力！
 
 **QQ群**：84692105
+
 ## License
 
     Copyright 2017 goldze(曾宪泽)
