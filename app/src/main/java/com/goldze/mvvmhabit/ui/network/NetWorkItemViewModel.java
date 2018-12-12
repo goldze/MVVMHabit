@@ -33,7 +33,7 @@ public class NetWorkItemViewModel extends ItemViewModel<NetWorkViewModel> {
     public BindingCommand itemClick = new BindingCommand(new BindingAction() {
         @Override
         public void call() {
-            //这里可以通过一个标识,做出判断，已达到跳入不能界面的逻辑
+            //这里可以通过一个标识,做出判断，已达到跳入不同界面的逻辑
             if (entity.getId() == -1) {
                 ToastUtils.showShort(entity.getName());
             } else {
