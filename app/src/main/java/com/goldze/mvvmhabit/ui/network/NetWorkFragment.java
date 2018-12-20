@@ -64,7 +64,7 @@ public class NetWorkFragment extends BaseFragment<FragmentNetworkBinding, NetWor
             public void onChanged(@Nullable final NetWorkItemViewModel netWorkItemViewModel) {
                 int index = viewModel.getPosition(netWorkItemViewModel);
                 //删除选择对话框
-                MaterialDialogUtils.showBasicDialog(getContext(), "提示", "是否删除【" + netWorkItemViewModel.entity.getName() + "】？ 列表索引值：" + index)
+                MaterialDialogUtils.showBasicDialog(getContext(), "提示", "是否删除【" + netWorkItemViewModel.entity.get().getName() + "】？ 列表索引值：" + index)
                         .onNegative(new MaterialDialog.SingleButtonCallback() {
                             @Override
                             public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
