@@ -1,9 +1,6 @@
 package me.goldze.mvvmhabit.http.download;
 
-import android.os.Handler;
 import android.util.Log;
-
-import org.reactivestreams.Subscription;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -11,9 +8,9 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
+import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
-import io.reactivex.observers.DisposableObserver;
 import me.goldze.mvvmhabit.bus.RxBus;
 import me.goldze.mvvmhabit.bus.RxSubscriptions;
 import okhttp3.ResponseBody;
@@ -27,12 +24,10 @@ public abstract class ProgressCallBack<T> {
     private String destFileDir; // 本地文件存放路径
     private String destFileName; // 文件名
     private Disposable mSubscription;
-    private final Handler handler;
 
     public ProgressCallBack(String destFileDir, String destFileName) {
         this.destFileDir = destFileDir;
         this.destFileName = destFileName;
-        handler = new Handler();
         subscribeLoadProgress();
     }
 
@@ -86,16 +81,11 @@ public abstract class ProgressCallBack<T> {
      */
     public void subscribeLoadProgress() {
         mSubscription = RxBus.getDefault().toObservable(DownLoadStateBean.class)
+                .observeOn(AndroidSchedulers.mainThread()) //回调到主线程更新UI
                 .subscribe(new Consumer<DownLoadStateBean>() {
                     @Override
                     public void accept(final DownLoadStateBean progressLoadBean) throws Exception {
-                        // 回调到主线程更新UI
-                        handler.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                progress(progressLoadBean.getBytesLoaded(), progressLoadBean.getTotal());
-                            }
-                        });
+                        progress(progressLoadBean.getBytesLoaded(), progressLoadBean.getTotal());
                     }
                 });
         //将订阅者加入管理站
