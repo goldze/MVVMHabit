@@ -108,9 +108,9 @@ public abstract class BaseFragment<V extends ViewDataBinding, VM extends BaseVie
             }
         });
         //加载对话框消失
-        viewModel.getUC().getDismissDialogEvent().observe(this, new Observer<Boolean>() {
+        viewModel.getUC().getDismissDialogEvent().observe(this, new Observer<Void>() {
             @Override
-            public void onChanged(@Nullable Boolean aBoolean) {
+            public void onChanged(@Nullable Void v) {
                 dismissDialog();
             }
         });
@@ -133,16 +133,16 @@ public abstract class BaseFragment<V extends ViewDataBinding, VM extends BaseVie
             }
         });
         //关闭界面
-        viewModel.getUC().getFinishEvent().observe(this, new Observer<Boolean>() {
+        viewModel.getUC().getFinishEvent().observe(this, new Observer<Void>() {
             @Override
-            public void onChanged(@Nullable Boolean aBoolean) {
+            public void onChanged(@Nullable Void v) {
                 getActivity().finish();
             }
         });
         //关闭上一层
-        viewModel.getUC().getOnBackPressedEvent().observe(this, new Observer<Boolean>() {
+        viewModel.getUC().getOnBackPressedEvent().observe(this, new Observer<Void>() {
             @Override
-            public void onChanged(@Nullable Boolean aBoolean) {
+            public void onChanged(@Nullable Void v) {
                 getActivity().onBackPressed();
             }
         });
