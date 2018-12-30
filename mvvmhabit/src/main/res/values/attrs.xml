@@ -93,6 +93,7 @@
 
     <declare-styleable name="RecyclerView" parent="AdapterView">
         <attr name="lineManager" format="reference" />
+        <attr name="itemBinding" format="reference" />
     </declare-styleable>
     <declare-styleable name="RadioGroup">
         <attr name="onCheckedChangedCommand" format="reference" />
