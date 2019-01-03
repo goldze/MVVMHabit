@@ -14,7 +14,6 @@ import com.goldze.mvvmhabit.BR;
 import com.goldze.mvvmhabit.R;
 import com.goldze.mvvmhabit.databinding.FragmentFormBinding;
 import com.goldze.mvvmhabit.entity.FormEntity;
-import com.goldze.mvvmhabit.ui.base.TitleViewModel;
 
 import java.util.Calendar;
 
@@ -55,9 +54,8 @@ public class FormFragment extends BaseFragment<FragmentFormBinding, FormViewMode
         ((AppCompatActivity) getActivity()).setSupportActionBar(binding.include.toolbar);
         //View层传参到ViewModel层
         viewModel.setFormEntity(entity);
-        //创建TitleViewModel
-        TitleViewModel titleViewModel = createViewModel(this, TitleViewModel.class);
-        viewModel.setTitleViewModel(titleViewModel);
+        //初始化标题
+        viewModel.initToolbar();
     }
 
     @Override

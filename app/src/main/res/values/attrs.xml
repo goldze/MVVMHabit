@@ -10,5 +10,7 @@
         <attr name="tr_show_overlay_refreshview" format="boolean" />
         <attr name="tr_headerView" format="dimension" />
         <attr name="tr_bottomView" format="dimension" />
+        <attr name="onRefreshCommand" format="reference" />
+        <attr name="onLoadMoreCommand" format="reference" />
     </declare-styleable>
 </resources>

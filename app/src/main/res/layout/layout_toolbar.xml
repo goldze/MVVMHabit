@@ -4,19 +4,17 @@
 
     <data>
 
-        <import type="com.goldze.mvvmhabit.ui.base.TitleViewModel" />
-
         <variable
-            name="titleViewModel"
-            type="com.goldze.mvvmhabit.ui.base.TitleViewModel" />
+            name="toolbarViewModel"
+            type="com.goldze.mvvmhabit.ui.base.ToolbarViewModel" />
     </data>
 
-    <android.support.v7.widget.Toolbar xmlns:app="http://schemas.android.com/apk/res-auto"
+    <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="56dp"
         android:background="@color/white"
-        app:contentInsetStart="0dp">
+        binding:contentInsetStart="0dp">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -31,7 +29,7 @@
                 android:background="?selectableItemBackground"
                 android:padding="12dp"
                 android:src="@mipmap/back"
-                binding:onClickCommand="@{titleViewModel.backOnClickCommand}" />
+                binding:onClickCommand="@{toolbarViewModel.backOnClick}" />
 
             <TextView
                 android:id="@+id/tv_title"
@@ -41,7 +39,7 @@
                 android:layout_centerInParent="true"
                 android:gravity="center"
                 android:maxEms="12"
-                android:text="@{titleViewModel.titleText}"
+                android:text="@{toolbarViewModel.titleText}"
                 android:textColor="@color/textColor"
                 android:textSize="18sp" />
 
@@ -54,11 +52,24 @@
                 android:background="?selectableItemBackground"
                 android:gravity="center"
                 android:padding="12dp"
-                android:text="@{titleViewModel.rightText}"
+                android:text="@{toolbarViewModel.rightText}"
                 android:textColor="@color/textColor"
                 android:textSize="18sp"
-                android:visibility="@{titleViewModel.rightTextVisibility}"
-                binding:onClickCommand="@{titleViewModel.rightTextOnClickCommand}" />
+                android:visibility="@{toolbarViewModel.rightTextVisibleObservable}"
+                binding:onClickCommand="@{toolbarViewModel.rightTextOnClick}" />
+
+            <ImageView
+                android:id="@+id/iv_right_icon"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:background="?selectableItemBackground"
+                android:gravity="center"
+                android:padding="12dp"
+                android:src="@mipmap/toolbar_more"
+                android:visibility="@{toolbarViewModel.rightIconVisibleObservable}"
+                binding:onClickCommand="@{toolbarViewModel.rightIconOnClick}" />
 
             <View
                 style="@style/ViewLineStyle"
