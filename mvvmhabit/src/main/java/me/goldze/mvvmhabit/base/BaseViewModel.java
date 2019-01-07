@@ -159,7 +159,7 @@ public class BaseViewModel extends AndroidViewModel implements IBaseViewModel {
     public void removeRxBus() {
     }
 
-    public class UIChangeLiveData extends SingleLiveEvent {
+    public final class UIChangeLiveData extends SingleLiveEvent {
         private SingleLiveEvent<String> showDialogEvent;
         private SingleLiveEvent<Void> dismissDialogEvent;
         private SingleLiveEvent<Map<String, Object>> startActivityEvent;
@@ -204,7 +204,7 @@ public class BaseViewModel extends AndroidViewModel implements IBaseViewModel {
         }
     }
 
-    public static class ParameterField {
+    public static final class ParameterField {
         public static String CLASS = "CLASS";
         public static String CANONICAL_NAME = "CANONICAL_NAME";
         public static String BUNDLE = "BUNDLE";

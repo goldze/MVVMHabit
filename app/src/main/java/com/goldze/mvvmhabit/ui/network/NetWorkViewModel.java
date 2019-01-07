@@ -55,9 +55,9 @@ public class NetWorkViewModel extends BaseViewModel {
     //给RecyclerView添加ItemBinding
     public ItemBinding<NetWorkItemViewModel> itemBinding = ItemBinding.of(BR.viewModel, R.layout.item_network);
     //RecyclerView多布局写法
-//    public ItemBinding<Object> itemBinding = ItemBinding.of(new OnItemBind<Object>() {
+//    public ItemBinding<ItemViewModel> itemBinding = ItemBinding.of(new OnItemBind<ItemViewModel>() {
 //        @Override
-//        public void onItemBind(ItemBinding itemBinding, int position, Object item) {
+//        public void onItemBind(ItemBinding itemBinding, int position, ItemViewModel item) {
 //            if (position == 0) {
 //                //设置头布局
 //                itemBinding.set(BR.viewModel, R.layout.head_netword);
