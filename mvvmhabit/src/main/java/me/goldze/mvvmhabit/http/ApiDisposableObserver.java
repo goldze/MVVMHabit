@@ -9,7 +9,7 @@ import me.goldze.mvvmhabit.utils.Utils;
 
 /**
  * Created by goldze on 2017/5/10.
- * 该类仅供参考，实际业务Code, 根据需求来定义，
+ * 统一的Code封装处理。该类仅供参考，实际业务逻辑, 根据需求来定义，
  */
 
 public abstract class ApiDisposableObserver<T> extends DisposableObserver<T> {
@@ -37,7 +37,6 @@ public abstract class ApiDisposableObserver<T> extends DisposableObserver<T> {
     public void onStart() {
         super.onStart();
         ToastUtils.showShort("http is start");
-        // todo some common as show loadding  and check netWork is NetworkAvailable
         // if  NetworkAvailable no !   must to call onCompleted
         if (!NetworkUtil.isNetworkAvailable(Utils.getContext())) {
             ToastUtils.showShort("无网络，读取缓存数据");
