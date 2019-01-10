@@ -30,7 +30,7 @@ import me.goldze.mvvmhabit.utils.MaterialDialogUtils;
 public abstract class BaseActivity<V extends ViewDataBinding, VM extends BaseViewModel> extends RxAppCompatActivity implements IBaseActivity {
     protected V binding;
     protected VM viewModel;
-    protected int viewModelId;
+    private int viewModelId;
     private MaterialDialog dialog;
 
     @Override
