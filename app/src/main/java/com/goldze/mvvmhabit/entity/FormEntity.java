@@ -4,8 +4,6 @@ import android.databinding.BaseObservable;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import java.util.List;
-
 /**
  * Created by goldze on 2017/7/17.
  */
