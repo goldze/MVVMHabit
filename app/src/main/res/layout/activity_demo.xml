@@ -26,6 +26,12 @@
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:text="RecycleView多布局"
+            binding:onClickCommand="@{viewModel.rvMultiClick}" />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:text="底部Tab按钮"
             binding:onClickCommand="@{viewModel.startTabBarClick}" />
 

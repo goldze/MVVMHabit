@@ -9,6 +9,7 @@ import android.support.annotation.NonNull;
 import com.goldze.mvvmhabit.entity.FormEntity;
 import com.goldze.mvvmhabit.ui.form.FormFragment;
 import com.goldze.mvvmhabit.ui.network.NetWorkFragment;
+import com.goldze.mvvmhabit.ui.rv_multi.MultiRecycleViewFragment;
 import com.goldze.mvvmhabit.ui.tab_bar.activity.TabBarActivity;
 import com.goldze.mvvmhabit.ui.viewpager.activity.ViewPagerActivity;
 import com.goldze.mvvmhabit.ui.vp_frg.ViewPagerGroupFragment;
@@ -36,6 +37,13 @@ public class DemoViewModel extends BaseViewModel {
         @Override
         public void call() {
             startContainerActivity(NetWorkFragment.class.getCanonicalName());
+        }
+    });
+    //RecycleView多布局
+    public BindingCommand rvMultiClick = new BindingCommand(new BindingAction() {
+        @Override
+        public void call() {
+            startContainerActivity(MultiRecycleViewFragment.class.getCanonicalName());
         }
     });
     //进入TabBarActivity

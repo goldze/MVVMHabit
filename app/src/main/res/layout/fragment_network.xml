@@ -7,7 +7,7 @@
 
         <variable
             name="viewModel"
-            type="com.goldze.mvvmhabit.ui.network.NetWorkViewModel" />
+            type="NetWorkViewModel" />
 
         <import type="me.tatarka.bindingcollectionadapter2.LayoutManagers" />
 

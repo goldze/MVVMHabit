@@ -14,8 +14,8 @@ import java.util.List;
 
 /**
  * Create Author：goldze
- * Create Date：2018/09/11
- * Description：
+ * Create Date：2019/01/25
+ * Description：ViewPager+Fragment的实现
  */
 
 public class ViewPagerGroupFragment extends BasePagerFragment {
