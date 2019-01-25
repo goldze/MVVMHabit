@@ -21,7 +21,6 @@ android {
 
 dependencies {
     api fileTree(include: ['*.jar'], dir: 'libs')
-    testImplementation 'junit:junit:4.12'
     //support
     api rootProject.ext.support["support-v4"]
     api rootProject.ext.support["appcompat-v7"]
@@ -30,12 +29,20 @@ dependencies {
     api rootProject.ext.dependencies.rxjava
     api rootProject.ext.dependencies.rxandroid
     //rx管理View的生命周期
-    api rootProject.ext.dependencies.rxlifecycle
-    api rootProject.ext.dependencies["rxlifecycle-components"]
+    api(rootProject.ext.dependencies.rxlifecycle) {
+        exclude group: 'com.android.support'
+    }
+    api(rootProject.ext.dependencies["rxlifecycle-components"]) {
+        exclude group: 'com.android.support'
+    }
     //rxbinding
-    api rootProject.ext.dependencies.rxbinding
+    api(rootProject.ext.dependencies.rxbinding) {
+        exclude group: 'com.android.support'
+    }
     //rx权限请求
-    api rootProject.ext.dependencies.rxpermissions
+    api(rootProject.ext.dependencies.rxpermissions) {
+        exclude group: 'com.android.support'
+    }
     //network
     api rootProject.ext.dependencies.okhttp
     api rootProject.ext.dependencies.retrofit
@@ -51,10 +58,14 @@ dependencies {
         exclude group: 'com.android.support'
     }
     //glide图片加载库
-    api rootProject.ext.dependencies.glide
+    api (rootProject.ext.dependencies.glide){
+        exclude group: 'com.android.support'
+    }
     annotationProcessor rootProject.ext.dependencies["glide-compiler"]
     //recyclerview的databinding套装
-    api rootProject.ext.dependencies.bindingcollectionadapter
+    api(rootProject.ext.dependencies.bindingcollectionadapter) {
+        exclude group: 'com.android.support'
+    }
     api(rootProject.ext.dependencies["bindingcollectionadapter-recyclerview"]) {
         exclude group: 'com.android.support'
     }

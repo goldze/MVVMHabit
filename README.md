@@ -1,15 +1,15 @@
 ## 最新日志
-**v3.0.0：2018年10月8日**
+**v3.0.7：2019年1月25日**
 
-- 全面升级AAC，引入谷歌lifecycle组件；
-- 修改Base基类，满足新一套模式；
+- 优化框架代码，解决已知Bug；
+- 新增ViewPager+Fragment例子；
+- 新增RecycleView多布局例子；
 - 升级第三方依赖库；
-- 修改例子程序；
 - 修改文档说明。
-***
 #### [更多日志](./UpdateLog.md)
+***
 
-**注：[1.x-废弃版（最后版本：1.2.6.1）](https://github.com/goldze/MVVMHabit/tree/1.2.6.1)、[2.x-顺手版（最后版本：2.0.10）](https://github.com/goldze/MVVMHabit/tree/2.0.10)已停止维护，建议使用当前[3.x-健壮版（最后版本：3.0.6）](https://github.com/goldze/MVVMHabit)。**
+**注：[1.x-废弃版（最后版本：1.2.6.1）](https://github.com/goldze/MVVMHabit/tree/1.2.6.1)、[2.x-顺手版（最后版本：2.0.10）](https://github.com/goldze/MVVMHabit/tree/2.0.10)已停止维护，建议使用当前[3.x-健壮版（最后版本：3.0.7）](https://github.com/goldze/MVVMHabit)。**
 
 > **原文地址：** [https://github.com/goldze/MVVMHabit](https://github.com/goldze/MVVMHabit)
 
@@ -49,7 +49,7 @@
 	4. 通用的网络请求异常监听，根据不同的状态码或异常设置相应的message。
 	5. 全局的异常捕获，程序发生异常时不会崩溃，可跳入异常界面重启应用。
 	6. 全局事件回调，提供RxBus、Messenger两种回调方式。
-	7. 全局任意位置一行代码实现文件下载。
+	7. 全局任意位置一行代码实现文件进度下载监听（暂不支持多文件进度监听）。
 
 
 ## 1、准备工作

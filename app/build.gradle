@@ -2,7 +2,6 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion rootProject.ext.android.compileSdkVersion
-    buildToolsVersion rootProject.ext.android.buildToolsVersion
     defaultConfig {
         applicationId rootProject.ext.android.applicationId
         minSdkVersion rootProject.ext.android.minSdkVersion
@@ -28,13 +27,14 @@ android {
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-    testImplementation 'junit:junit:4.12'
     //support
     implementation rootProject.ext.support["design"]
     //下拉刷新,上拉加载
     implementation 'com.lcodecorex:tkrefreshlayout:1.0.7'
     //底部tabBar
-    implementation 'me.majiajie:pager-bottom-tab-strip:2.2.5'
+    implementation ('me.majiajie:pager-bottom-tab-strip:2.2.5'){
+        exclude group: 'com.android.support'
+    }
     //MVVMHabit
     implementation project(':mvvmhabit')
 //    implementation rootProject.ext.dependencies.MVVMHabit

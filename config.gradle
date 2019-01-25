@@ -29,25 +29,25 @@ ext {
     //依赖第三方配置
     dependencies = [
             //rxjava
-            "rxjava"                               : "io.reactivex.rxjava2:rxjava:2.1.12",
-            "rxandroid"                            : "io.reactivex.rxjava2:rxandroid:2.0.2",
+            "rxjava"                               : "io.reactivex.rxjava2:rxjava:2.2.3",
+            "rxandroid"                            : "io.reactivex.rxjava2:rxandroid:2.1.0",
             //rx系列与View生命周期同步
-            "rxlifecycle"                          : "com.trello.rxlifecycle2:rxlifecycle:2.2.1",
-            "rxlifecycle-components"               : "com.trello.rxlifecycle2:rxlifecycle-components:2.2.1",
+            "rxlifecycle"                          : "com.trello.rxlifecycle2:rxlifecycle:2.2.2",
+            "rxlifecycle-components"               : "com.trello.rxlifecycle2:rxlifecycle-components:2.2.2",
             //rxbinding
             "rxbinding"                            : "com.jakewharton.rxbinding2:rxbinding:2.1.1",
             //rx 6.0权限请求
-            "rxpermissions"                        : "com.tbruyelle.rxpermissions2:rxpermissions:0.9.5@aar",
+            "rxpermissions"                        : "com.github.tbruyelle:rxpermissions:0.10.2",
             //network
             "okhttp"                               : "com.squareup.okhttp3:okhttp:3.10.0",
             "retrofit"                             : "com.squareup.retrofit2:retrofit:2.4.0",
             "converter-gson"                       : "com.squareup.retrofit2:converter-gson:2.4.0",
             "adapter-rxjava"                       : "com.squareup.retrofit2:adapter-rxjava2:2.4.0",
             //glide图片加载
-            "glide"                                : "com.github.bumptech.glide:glide:4.6.1",
-            "glide-compiler"                       : "com.github.bumptech.glide:compiler:4.6.1",
+            "glide"                                : "com.github.bumptech.glide:glide:4.8.0",
+            "glide-compiler"                       : "com.github.bumptech.glide:compiler:4.8.0",
             //json解析
-            "gson"                                 : "com.google.code.gson:gson:2.8.2",
+            "gson"                                 : "com.google.code.gson:gson:2.8.5",
             //material-dialogs
             "material-dialogs-core"                : "com.afollestad.material-dialogs:core:0.9.4.5",
             "material-dialogs-commons"             : "com.afollestad.material-dialogs:commons:0.9.4.5",

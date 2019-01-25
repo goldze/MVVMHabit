@@ -7,6 +7,7 @@ import android.support.annotation.NonNull;
 
 import com.goldze.mvvmhabit.BR;
 import com.goldze.mvvmhabit.R;
+
 import me.goldze.mvvmhabit.base.MultiItemViewModel;
 
 import me.goldze.mvvmhabit.base.BaseViewModel;
