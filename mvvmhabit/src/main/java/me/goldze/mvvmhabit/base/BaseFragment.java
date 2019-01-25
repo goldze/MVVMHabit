@@ -49,7 +49,9 @@ public abstract class BaseFragment<V extends ViewDataBinding, VM extends BaseVie
         if (viewModel != null) {
             viewModel.removeRxBus();
         }
-        binding.unbind();
+        if(binding != null){
+            binding.unbind();
+        }
     }
 
     @Nullable
