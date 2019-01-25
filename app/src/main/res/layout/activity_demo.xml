@@ -38,6 +38,12 @@
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:text="ViewPager+Fragment"
+            binding:onClickCommand="@{viewModel.viewPagerGroupBindingClick}" />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:text="表单提交"
             binding:onClickCommand="@{viewModel.formSbmClick}" />
 

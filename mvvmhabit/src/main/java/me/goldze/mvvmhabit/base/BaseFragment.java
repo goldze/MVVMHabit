@@ -46,8 +46,9 @@ public abstract class BaseFragment<V extends ViewDataBinding, VM extends BaseVie
         Messenger.getDefault().unregister(viewModel);
         //解除ViewModel生命周期感应
         getLifecycle().removeObserver(viewModel);
-        viewModel.removeRxBus();
-        viewModel = null;
+        if (viewModel != null) {
+            viewModel.removeRxBus();
+        }
         binding.unbind();
     }
 

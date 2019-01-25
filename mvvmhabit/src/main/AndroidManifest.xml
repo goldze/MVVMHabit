@@ -4,7 +4,9 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <application>
-        <activity android:name=".base.ContainerActivity"></activity>
+        <activity
+            android:name=".base.ContainerActivity"
+            android:configChanges="orientation|keyboardHidden"></activity>
         <activity
             android:name=".crash.DefaultErrorActivity"
             android:process=":error_activity" />

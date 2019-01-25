@@ -9,13 +9,12 @@ import android.view.View;
 
 import com.goldze.mvvmhabit.entity.FormEntity;
 import com.goldze.mvvmhabit.entity.SpinnerItemData;
-import com.goldze.mvvmhabit.ui.base.ToolbarViewModel;
+import com.goldze.mvvmhabit.ui.base.viewmodel.ToolbarViewModel;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import me.goldze.mvvmhabit.base.BaseViewModel;
 import me.goldze.mvvmhabit.binding.command.BindingAction;
 import me.goldze.mvvmhabit.binding.command.BindingCommand;
 import me.goldze.mvvmhabit.binding.command.BindingConsumer;
@@ -127,9 +126,5 @@ public class FormViewModel extends ToolbarViewModel {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        entity = null;
-        uc = null;
-        sexItemDatas.clear();
-        sexItemDatas = null;
     }
 }
