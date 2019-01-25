@@ -1,4 +1,4 @@
-## 更新日志
+## 最新日志
 **v3.0.0：2018年10月8日**
 
 - 全面升级AAC，引入谷歌lifecycle组件；
@@ -7,6 +7,7 @@
 - 修改例子程序；
 - 修改文档说明。
 ***
+#### [更多日志](./UpdateLog.md)
 
 **注：[1.x-废弃版（最后版本：1.2.6.1）](https://github.com/goldze/MVVMHabit/tree/1.2.6.1)、[2.x-顺手版（最后版本：2.0.10）](https://github.com/goldze/MVVMHabit/tree/2.0.10)已停止维护，建议使用当前[3.x-健壮版（最后版本：3.0.6）](https://github.com/goldze/MVVMHabit)。**
 
