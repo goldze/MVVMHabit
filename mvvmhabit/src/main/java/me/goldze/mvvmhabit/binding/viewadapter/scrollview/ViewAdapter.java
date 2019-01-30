@@ -32,11 +32,10 @@ public final class ViewAdapter {
             @Override
             public void onScrollChanged() {
                 if (onScrollChangeCommand != null) {
-                    onScrollChangeCommand.execute(new ScrollDataWrapper(scrollView.getScaleX(), scrollView.getScrollY()));
+                    onScrollChangeCommand.execute(new ScrollDataWrapper(scrollView.getScrollX(), scrollView.getScrollY()));
                 }
             }
         });
-
     }
 
     public static class ScrollDataWrapper {
