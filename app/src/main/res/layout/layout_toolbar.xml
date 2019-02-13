@@ -37,8 +37,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
+                android:ellipsize="end"
                 android:gravity="center"
                 android:maxEms="12"
+                android:singleLine="true"
                 android:text="@{toolbarViewModel.titleText}"
                 android:textColor="@color/textColor"
                 android:textSize="18sp" />
