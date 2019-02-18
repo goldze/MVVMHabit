@@ -94,6 +94,7 @@
     <declare-styleable name="RecyclerView" parent="AdapterView">
         <attr name="lineManager" format="reference" />
         <attr name="itemBinding" format="reference" />
+        <attr name="layoutManager" format="reference" />
     </declare-styleable>
     <declare-styleable name="RadioGroup">
         <attr name="onCheckedChangedCommand" format="reference" />
@@ -102,6 +103,8 @@
     <declare-styleable name="Spinner">
         <attr name="itemDatas" format="reference" />
         <attr name="valueReply" format="string" />
+        <attr name="resource" format="integer" />
+        <attr name="dropDownResource" format="integer" />
         <attr name="onItemSelectedCommand" format="reference" />
     </declare-styleable>
 

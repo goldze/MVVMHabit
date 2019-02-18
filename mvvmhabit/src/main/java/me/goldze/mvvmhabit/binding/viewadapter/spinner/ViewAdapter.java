@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
+import android.widget.SpinnerAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,8 +25,8 @@ public class ViewAdapter {
      * @param valueReply     回显的value
      * @param bindingCommand 条目点击的监听
      */
-    @BindingAdapter(value = {"itemDatas", "valueReply", "onItemSelectedCommand"}, requireAll = false)
-    public static void onItemSelectedCommand(final Spinner spinner, final List<IKeyAndValue> itemDatas, String valueReply, final BindingCommand<IKeyAndValue> bindingCommand) {
+    @BindingAdapter(value = {"itemDatas", "valueReply", "resource", "dropDownResource", "onItemSelectedCommand"}, requireAll = false)
+    public static void onItemSelectedCommand(final Spinner spinner, final List<IKeyAndValue> itemDatas, String valueReply, int resource, int dropDownResource, final BindingCommand<IKeyAndValue> bindingCommand) {
         if (itemDatas == null) {
             throw new NullPointerException("this itemDatas parameter is null");
         }
@@ -33,8 +34,14 @@ public class ViewAdapter {
         for (IKeyAndValue iKeyAndValue : itemDatas) {
             lists.add(iKeyAndValue.getKey());
         }
-        ArrayAdapter<String> adapter = new ArrayAdapter(spinner.getContext(), android.R.layout.simple_spinner_item, lists);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        if (resource == 0) {
+            resource = android.R.layout.simple_spinner_item;
+        }
+        if (dropDownResource == 0) {
+            dropDownResource = android.R.layout.simple_spinner_dropdown_item;
+        }
+        ArrayAdapter<String> adapter = new ArrayAdapter(spinner.getContext(), resource, lists);
+        adapter.setDropDownViewResource(dropDownResource);
         spinner.setAdapter(adapter);
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
