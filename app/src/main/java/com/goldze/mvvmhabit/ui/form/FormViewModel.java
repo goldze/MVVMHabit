@@ -72,13 +72,8 @@ public class FormViewModel extends ToolbarViewModel {
     }
 
     @Override
-    public BindingCommand rightTextOnClick() {
-        return new BindingCommand(new BindingAction() {
-            @Override
-            public void call() {
-                ToastUtils.showShort("更多");
-            }
-        });
+    public void rightTextOnClick() {
+        ToastUtils.showShort("更多");
     }
 
     public void setFormEntity(FormEntity entity) {

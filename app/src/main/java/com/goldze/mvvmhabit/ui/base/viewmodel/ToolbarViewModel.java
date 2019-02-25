@@ -78,25 +78,28 @@ public class ToolbarViewModel extends BaseViewModel {
         }
     });
 
+    public BindingCommand rightTextOnClick = new BindingCommand(new BindingAction() {
+        @Override
+        public void call() {
+            rightTextOnClick();
+        }
+    });
+    public BindingCommand rightIconOnClick = new BindingCommand(new BindingAction() {
+        @Override
+        public void call() {
+            rightIconOnClick();
+        }
+    });
+
     /**
      * 右边文字的点击事件，子类可重写
      */
-    public BindingCommand rightTextOnClick() {
-        return new BindingCommand(new BindingAction() {
-            @Override
-            public void call() {
-            }
-        });
+    protected void rightTextOnClick() {
     }
 
     /**
      * 右边图标的点击事件，子类可重写
      */
-    public BindingCommand rightIconOnClick() {
-        return new BindingCommand(new BindingAction() {
-            @Override
-            public void call() {
-            }
-        });
+    protected void rightIconOnClick() {
     }
 }
