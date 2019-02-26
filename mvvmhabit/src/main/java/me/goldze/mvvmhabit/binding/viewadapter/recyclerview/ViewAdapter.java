@@ -56,6 +56,11 @@ public class ViewAdapter {
 
     }
 
+    @BindingAdapter("itemAnimator")
+    public static void setItemAnimator(RecyclerView recyclerView, RecyclerView.ItemAnimator animator) {
+        recyclerView.setItemAnimator(animator);
+    }
+
     public static class OnScrollListener extends RecyclerView.OnScrollListener {
 
         private PublishSubject<Integer> methodInvoke = PublishSubject.create();
