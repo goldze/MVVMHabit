@@ -1,6 +1,7 @@
 package com.goldze.mvvmhabit.ui.login;
 
 import android.app.Application;
+import android.arch.lifecycle.MediatorLiveData;
 import android.databinding.ObservableBoolean;
 import android.databinding.ObservableField;
 import android.databinding.ObservableInt;
@@ -19,6 +20,7 @@ import me.goldze.mvvmhabit.base.BaseViewModel;
 import me.goldze.mvvmhabit.binding.command.BindingAction;
 import me.goldze.mvvmhabit.binding.command.BindingCommand;
 import me.goldze.mvvmhabit.binding.command.BindingConsumer;
+import me.goldze.mvvmhabit.bus.event.SingleLiveEvent;
 import me.goldze.mvvmhabit.utils.RxUtils;
 import me.goldze.mvvmhabit.utils.ToastUtils;
 
@@ -38,7 +40,7 @@ public class LoginViewModel extends BaseViewModel {
 
     public class UIChangeObservable {
         //密码开关观察者
-        public ObservableBoolean pSwitchObservable = new ObservableBoolean(false);
+        public SingleLiveEvent<Boolean> pSwitchEvent = new SingleLiveEvent<>();
     }
 
     public LoginViewModel(@NonNull Application application) {
@@ -57,7 +59,7 @@ public class LoginViewModel extends BaseViewModel {
         @Override
         public void call() {
             //让观察者的数据改变,逻辑从ViewModel层转到View层，在View层的监听则会被调用
-            uc.pSwitchObservable.set(!uc.pSwitchObservable.get());
+            uc.pSwitchEvent.setValue(uc.pSwitchEvent.getValue() == null ? true : !uc.pSwitchEvent.getValue());
         }
     });
     //用户名输入框焦点改变的回调事件

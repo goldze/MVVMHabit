@@ -40,9 +40,9 @@ public class DemoActivity extends BaseActivity<ActivityDemoBinding, DemoViewMode
     @Override
     public void initViewObservable() {
         //注册监听相机权限的请求
-        viewModel.requestCameraPermissions.addOnPropertyChangedCallback(new Observable.OnPropertyChangedCallback() {
+        viewModel.requestCameraPermissions.observe(this, new Observer<Boolean>() {
             @Override
-            public void onPropertyChanged(Observable observable, int i) {
+            public void onChanged(@Nullable Boolean aBoolean) {
                 requestCameraPermissions();
             }
         });

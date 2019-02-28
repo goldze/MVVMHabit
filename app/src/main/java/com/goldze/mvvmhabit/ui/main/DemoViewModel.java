@@ -17,6 +17,7 @@ import com.goldze.mvvmhabit.ui.vp_frg.ViewPagerGroupFragment;
 import me.goldze.mvvmhabit.base.BaseViewModel;
 import me.goldze.mvvmhabit.binding.command.BindingAction;
 import me.goldze.mvvmhabit.binding.command.BindingCommand;
+import me.goldze.mvvmhabit.bus.event.SingleLiveEvent;
 
 /**
  * Created by goldze on 2017/7/17.
@@ -24,7 +25,7 @@ import me.goldze.mvvmhabit.binding.command.BindingCommand;
 
 public class DemoViewModel extends BaseViewModel {
     //使用Observable
-    public ObservableBoolean requestCameraPermissions = new ObservableBoolean(false);
+    public SingleLiveEvent<Boolean> requestCameraPermissions = new SingleLiveEvent();
     //使用LiveData
     public MutableLiveData<String> loadUrl = new MutableLiveData();
 
@@ -95,7 +96,7 @@ public class DemoViewModel extends BaseViewModel {
     public BindingCommand permissionsClick = new BindingCommand(new BindingAction() {
         @Override
         public void call() {
-            requestCameraPermissions.set(!requestCameraPermissions.get());
+            requestCameraPermissions.call();
         }
     });
 

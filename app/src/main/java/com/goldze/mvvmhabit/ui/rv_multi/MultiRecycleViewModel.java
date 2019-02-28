@@ -29,13 +29,8 @@ public class MultiRecycleViewModel extends BaseViewModel {
 
     public MultiRecycleViewModel(@NonNull Application application) {
         super(application);
-    }
-
-    @Override
-    public void onCreate() {
-        super.onCreate();
         //模拟10个条目，数据源可以来自网络
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < 20; i++) {
             if (i == 0) {
                 MultiItemViewModel item = new MultiRecycleHeadViewModel(this);
                 //条目类型为头布局

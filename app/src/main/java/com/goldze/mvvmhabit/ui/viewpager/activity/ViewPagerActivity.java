@@ -34,7 +34,6 @@ public class ViewPagerActivity extends BaseActivity<FragmentViewpagerBinding, Vi
         // 使用 TabLayout 和 ViewPager 相关联
         binding.tabs.setupWithViewPager(binding.viewPager);
         binding.viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(binding.tabs));
-        viewModel.addPage();
     }
 
     @Override
