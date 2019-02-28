@@ -1,6 +1,7 @@
 package com.goldze.mvvmhabit.ui.network;
 
 import android.arch.lifecycle.Observer;
+import android.content.pm.ActivityInfo;
 import android.databinding.Observable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -24,6 +25,12 @@ import me.goldze.mvvmhabit.utils.ToastUtils;
  */
 
 public class NetWorkFragment extends BaseFragment<FragmentNetworkBinding, NetWorkViewModel> {
+    @Override
+    public void initParam() {
+        super.initParam();
+        getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+    }
+
     @Override
     public int initContentView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         return R.layout.fragment_network;
