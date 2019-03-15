@@ -24,5 +24,4 @@ public class TabBar1Fragment extends BaseFragment {
     public int initVariableId() {
         return BR.viewModel;
     }
-
 }

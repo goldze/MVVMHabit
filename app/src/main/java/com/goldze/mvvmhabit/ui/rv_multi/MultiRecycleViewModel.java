@@ -8,10 +8,8 @@ import android.support.annotation.NonNull;
 import com.goldze.mvvmhabit.BR;
 import com.goldze.mvvmhabit.R;
 
-import me.goldze.mvvmhabit.base.MultiItemViewModel;
-
 import me.goldze.mvvmhabit.base.BaseViewModel;
-import me.goldze.mvvmhabit.base.ItemViewModel;
+import me.goldze.mvvmhabit.base.MultiItemViewModel;
 import me.tatarka.bindingcollectionadapter2.BindingRecyclerViewAdapter;
 import me.tatarka.bindingcollectionadapter2.ItemBinding;
 import me.tatarka.bindingcollectionadapter2.OnItemBind;

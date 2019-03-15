@@ -19,6 +19,7 @@ import me.goldze.mvvmhabit.binding.command.BindingAction;
 import me.goldze.mvvmhabit.binding.command.BindingCommand;
 import me.goldze.mvvmhabit.binding.command.BindingConsumer;
 import me.goldze.mvvmhabit.binding.viewadapter.spinner.IKeyAndValue;
+import me.goldze.mvvmhabit.bus.event.SingleLiveEvent;
 import me.goldze.mvvmhabit.utils.ToastUtils;
 
 /**
@@ -29,7 +30,7 @@ public class FormViewModel extends ToolbarViewModel {
     public FormEntity entity;
 
     public List<IKeyAndValue> sexItemDatas;
-    public MutableLiveData<String> entityJsonLiveData = new MutableLiveData<>();
+    public SingleLiveEvent<String> entityJsonLiveData = new SingleLiveEvent<>();
     //封装一个界面发生改变的观察者
     public UIChangeObservable uc;
 
@@ -77,7 +78,9 @@ public class FormViewModel extends ToolbarViewModel {
     }
 
     public void setFormEntity(FormEntity entity) {
-        this.entity = entity;
+        if (this.entity == null) {
+            this.entity = entity;
+        }
     }
 
     //性别选择的监听

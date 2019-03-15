@@ -23,12 +23,6 @@ public class ViewPagerBindingAdapter extends BindingViewPagerAdapter<ViewPagerIt
         super.onBindBinding(binding, variableId, layoutRes, position, item);
         //这里可以强转成ViewPagerItemViewModel对应的ViewDataBinding，
         ItemViewpagerBinding _binding = (ItemViewpagerBinding) binding;
-        item.clickEvent.observe((LifecycleOwner) _binding.getRoot().getContext(), new Observer<String>() {
-            @Override
-            public void onChanged(@Nullable String s) {
-                ToastUtils.showShort("position：" + position);
-            }
-        });
     }
 
     @Override

@@ -12,6 +12,7 @@ import com.goldze.mvvmhabit.ui.viewpager.adapter.ViewPagerBindingAdapter;
 import me.goldze.mvvmhabit.base.BaseViewModel;
 import me.goldze.mvvmhabit.binding.command.BindingCommand;
 import me.goldze.mvvmhabit.binding.command.BindingConsumer;
+import me.goldze.mvvmhabit.bus.event.SingleLiveEvent;
 import me.goldze.mvvmhabit.utils.ToastUtils;
 import me.tatarka.bindingcollectionadapter2.BindingViewPagerAdapter;
 import me.tatarka.bindingcollectionadapter2.ItemBinding;
@@ -22,7 +23,7 @@ import me.tatarka.bindingcollectionadapter2.ItemBinding;
  */
 
 public class ViewPagerViewModel extends BaseViewModel {
-
+    public SingleLiveEvent<String> itemClickEvent = new SingleLiveEvent();
     public ViewPagerViewModel(@NonNull Application application) {
         super(application);
         //模拟3个ViewPager页面

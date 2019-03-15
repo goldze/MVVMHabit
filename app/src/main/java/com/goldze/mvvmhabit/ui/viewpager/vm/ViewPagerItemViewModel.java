@@ -13,11 +13,10 @@ import me.goldze.mvvmhabit.bus.event.SingleLiveEvent;
  * Created by goldze on 2018/7/18.
  */
 
-public class ViewPagerItemViewModel extends ItemViewModel {
+public class ViewPagerItemViewModel extends ItemViewModel<ViewPagerViewModel> {
     public String text;
-    public SingleLiveEvent<String> clickEvent = new SingleLiveEvent();
 
-    public ViewPagerItemViewModel(@NonNull BaseViewModel viewModel, String text) {
+    public ViewPagerItemViewModel(@NonNull ViewPagerViewModel viewModel, String text) {
         super(viewModel);
         this.text = text;
     }
@@ -25,8 +24,8 @@ public class ViewPagerItemViewModel extends ItemViewModel {
     public BindingCommand onItemClick = new BindingCommand(new BindingAction() {
         @Override
         public void call() {
-            //点击之后将逻辑转到adapter中处理
-            clickEvent.setValue(text);
+            //点击之后将逻辑转到activity中处理
+            viewModel.itemClickEvent.setValue(text);
         }
     });
 }
