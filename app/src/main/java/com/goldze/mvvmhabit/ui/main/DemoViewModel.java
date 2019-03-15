@@ -25,9 +25,9 @@ import me.goldze.mvvmhabit.bus.event.SingleLiveEvent;
 
 public class DemoViewModel extends BaseViewModel {
     //使用Observable
-    public SingleLiveEvent<Boolean> requestCameraPermissions = new SingleLiveEvent();
+    public SingleLiveEvent<Boolean> requestCameraPermissions = new SingleLiveEvent<>();
     //使用LiveData
-    public MutableLiveData<String> loadUrl = new MutableLiveData();
+    public MutableLiveData<String> loadUrl = new MutableLiveData<>();
 
     public DemoViewModel(@NonNull Application application) {
         super(application);

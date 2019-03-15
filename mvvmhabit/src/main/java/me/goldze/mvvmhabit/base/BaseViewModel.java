@@ -77,7 +77,7 @@ public class BaseViewModel extends AndroidViewModel implements IBaseViewModel {
      * @param bundle 跳转所携带的信息
      */
     public void startActivity(Class<?> clz, Bundle bundle) {
-        Map<String, Object> params = new HashMap();
+        Map<String, Object> params = new HashMap<>();
         params.put(ParameterField.CLASS, clz);
         if (bundle != null) {
             params.put(ParameterField.BUNDLE, bundle);
@@ -101,7 +101,7 @@ public class BaseViewModel extends AndroidViewModel implements IBaseViewModel {
      * @param bundle        跳转所携带的信息
      */
     public void startContainerActivity(String canonicalName, Bundle bundle) {
-        Map<String, Object> params = new HashMap();
+        Map<String, Object> params = new HashMap<>();
         params.put(ParameterField.CANONICAL_NAME, canonicalName);
         if (bundle != null) {
             params.put(ParameterField.BUNDLE, bundle);

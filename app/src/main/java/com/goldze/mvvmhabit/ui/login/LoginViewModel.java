@@ -59,7 +59,7 @@ public class LoginViewModel extends BaseViewModel {
         @Override
         public void call() {
             //让观察者的数据改变,逻辑从ViewModel层转到View层，在View层的监听则会被调用
-            uc.pSwitchEvent.setValue(uc.pSwitchEvent.getValue() == null ? true : !uc.pSwitchEvent.getValue());
+            uc.pSwitchEvent.setValue(uc.pSwitchEvent.getValue() == null || !uc.pSwitchEvent.getValue());
         }
     });
     //用户名输入框焦点改变的回调事件

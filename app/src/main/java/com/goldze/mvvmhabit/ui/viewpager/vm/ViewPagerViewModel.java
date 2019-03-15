@@ -23,7 +23,7 @@ import me.tatarka.bindingcollectionadapter2.ItemBinding;
  */
 
 public class ViewPagerViewModel extends BaseViewModel {
-    public SingleLiveEvent<String> itemClickEvent = new SingleLiveEvent();
+    public SingleLiveEvent<String> itemClickEvent = new SingleLiveEvent<>();
     public ViewPagerViewModel(@NonNull Application application) {
         super(application);
         //模拟3个ViewPager页面
