@@ -27,7 +27,7 @@ public class DemoViewModel extends BaseViewModel {
     //使用Observable
     public SingleLiveEvent<Boolean> requestCameraPermissions = new SingleLiveEvent<>();
     //使用LiveData
-    public MutableLiveData<String> loadUrl = new MutableLiveData<>();
+    public SingleLiveEvent<String> loadUrlEvent = new SingleLiveEvent<>();
 
     public DemoViewModel(@NonNull Application application) {
         super(application);
@@ -112,7 +112,7 @@ public class DemoViewModel extends BaseViewModel {
     public BindingCommand fileDownLoadClick = new BindingCommand(new BindingAction() {
         @Override
         public void call() {
-            loadUrl.setValue("http://gdown.baidu.com/data/wisegame/a2cd8828b227b9f9/neihanduanzi_692.apk");
+            loadUrlEvent.setValue("http://gdown.baidu.com/data/wisegame/a2cd8828b227b9f9/neihanduanzi_692.apk");
         }
     });
 }
