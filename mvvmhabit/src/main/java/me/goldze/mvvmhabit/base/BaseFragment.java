@@ -48,6 +48,43 @@ public abstract class BaseFragment<V extends ViewDataBinding, VM extends BaseVie
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = DataBindingUtil.inflate(inflater, initContentView(inflater, container, savedInstanceState), container, false);
+        return binding.getRoot();
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        //解除Messenger注册
+        Messenger.getDefault().unregister(viewModel);
+        //解除ViewModel生命周期感应
+        getLifecycle().removeObserver(viewModel);
+        if (viewModel != null) {
+            viewModel.removeRxBus();
+        }
+        if (binding != null) {
+            binding.unbind();
+        }
+    }
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        //私有的初始化Databinding和ViewModel方法
+        initViewDataBinding();
+        //私有的ViewModel与View的契约事件回调逻辑
+        registorUIChangeLiveDataCallBack();
+        //页面数据初始化方法
+        initData();
+        //页面事件监听的方法，一般用于ViewModel层转到View层的事件注册
+        initViewObservable();
+        //注册RxBus
+        viewModel.registerRxBus();
+    }
+
+    /**
+     * 注入绑定
+     */
+    private void initViewDataBinding() {
         viewModelId = initVariableId();
         viewModel = initViewModel();
         if (viewModel == null) {
@@ -66,37 +103,7 @@ public abstract class BaseFragment<V extends ViewDataBinding, VM extends BaseVie
         getLifecycle().addObserver(viewModel);
         //注入RxLifecycle生命周期
         viewModel.injectLifecycleProvider(this);
-        return binding.getRoot();
     }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        //解除Messenger注册
-        Messenger.getDefault().unregister(viewModel);
-        //解除ViewModel生命周期感应
-        getLifecycle().removeObserver(viewModel);
-        if (viewModel != null) {
-            viewModel.removeRxBus();
-        }
-        if(binding != null){
-            binding.unbind();
-        }
-    }
-
-    @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        //私有的ViewModel与View的契约事件回调逻辑
-        registorUIChangeLiveDataCallBack();
-        //页面数据初始化方法
-        initData();
-        //页面事件监听的方法，一般用于ViewModel层转到View层的事件注册
-        initViewObservable();
-        //注册RxBus
-        viewModel.registerRxBus();
-    }
-
 
     /**
      * =====================================================================
