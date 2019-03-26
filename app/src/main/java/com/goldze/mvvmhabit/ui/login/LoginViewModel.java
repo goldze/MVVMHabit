@@ -9,6 +9,7 @@ import android.support.annotation.NonNull;
 import android.text.TextUtils;
 import android.view.View;
 
+import com.goldze.mvvmhabit.data.DemoRepository;
 import com.goldze.mvvmhabit.ui.main.DemoActivity;
 
 import java.util.concurrent.TimeUnit;
@@ -28,7 +29,7 @@ import me.goldze.mvvmhabit.utils.ToastUtils;
  * Created by goldze on 2017/7/17.
  */
 
-public class LoginViewModel extends BaseViewModel {
+public class LoginViewModel extends BaseViewModel<DemoRepository> {
     //用户名的绑定
     public ObservableField<String> userName = new ObservableField<>("");
     //密码的绑定
@@ -43,8 +44,11 @@ public class LoginViewModel extends BaseViewModel {
         public SingleLiveEvent<Boolean> pSwitchEvent = new SingleLiveEvent<>();
     }
 
-    public LoginViewModel(@NonNull Application application) {
-        super(application);
+    public LoginViewModel(@NonNull Application application, DemoRepository repository) {
+        super(application, repository);
+        //从本地取得数据绑定到View层
+        userName.set(model.getUserName());
+        password.set(model.getPassword());
     }
 
     //清除用户名的点击事件, 逻辑从View层转换到ViewModel层
@@ -94,9 +98,8 @@ public class LoginViewModel extends BaseViewModel {
             return;
         }
         //RaJava模拟一个延迟操作
-        Observable.just("")
+        addSubscribe(Observable.just("")
                 .delay(3, TimeUnit.SECONDS) //延迟3秒
-                .compose(RxUtils.bindToLifecycle(getLifecycleProvider()))//界面关闭自动取消
                 .compose(RxUtils.schedulersTransformer()) //线程调度
                 .doOnSubscribe(new Consumer<Disposable>() {
                     @Override
@@ -108,12 +111,16 @@ public class LoginViewModel extends BaseViewModel {
                     @Override
                     public void accept(Object o) throws Exception {
                         dismissDialog();
+                        //保存账号密码
+                        model.saveUserName(userName.get());
+                        model.savePassword(password.get());
                         //进入DemoActivity页面
                         startActivity(DemoActivity.class);
                         //关闭页面
                         finish();
                     }
-                });
+                }));
+
     }
 
     @Override

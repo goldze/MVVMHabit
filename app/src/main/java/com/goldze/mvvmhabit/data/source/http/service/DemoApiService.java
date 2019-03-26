@@ -1,4 +1,4 @@
-package com.goldze.mvvmhabit.service;
+package com.goldze.mvvmhabit.data.source.http.service;
 
 import com.goldze.mvvmhabit.entity.DemoEntity;
 

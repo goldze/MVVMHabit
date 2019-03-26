@@ -9,8 +9,9 @@ import android.support.annotation.NonNull;
 
 import com.goldze.mvvmhabit.BR;
 import com.goldze.mvvmhabit.R;
+import com.goldze.mvvmhabit.data.DemoRepository;
 import com.goldze.mvvmhabit.entity.DemoEntity;
-import com.goldze.mvvmhabit.service.DemoApiService;
+import com.goldze.mvvmhabit.data.source.http.service.DemoApiService;
 import com.goldze.mvvmhabit.utils.RetrofitClient;
 
 import java.util.concurrent.TimeUnit;
@@ -33,7 +34,7 @@ import me.tatarka.bindingcollectionadapter2.ItemBinding;
  * Created by goldze on 2017/7/17.
  */
 
-public class NetWorkViewModel extends BaseViewModel {
+public class NetWorkViewModel extends BaseViewModel<DemoRepository> {
     private int itemIndex = 0;
     public MutableLiveData<NetWorkItemViewModel> deleteItemLiveData = new MutableLiveData();
     //封装一个界面发生改变的观察者
@@ -46,8 +47,8 @@ public class NetWorkViewModel extends BaseViewModel {
         public ObservableBoolean finishLoadmore = new ObservableBoolean(false);
     }
 
-    public NetWorkViewModel(@NonNull Application application) {
-        super(application);
+    public NetWorkViewModel(@NonNull Application application, DemoRepository repository) {
+        super(application, repository);
     }
 
     //给RecyclerView添加ObservableList
@@ -74,9 +75,8 @@ public class NetWorkViewModel extends BaseViewModel {
                 return;
             }
             //模拟网络上拉加载更多
-            Observable.just("")
+            addSubscribe(Observable.just("")
                     .delay(3, TimeUnit.SECONDS) //延迟3秒
-                    .compose(RxUtils.bindToLifecycle(getLifecycleProvider()))//界面关闭自动取消
                     .compose(RxUtils.schedulersTransformer()) //线程调度
                     .doOnSubscribe(new Consumer<Disposable>() {
                         @Override
@@ -99,17 +99,18 @@ public class NetWorkViewModel extends BaseViewModel {
                                 observableList.add(itemViewModel);
                             }
                         }
-                    });
+                    }));
         }
     });
 
     /**
-     * 网络请求方法，在ViewModel中调用，Retrofit+RxJava充当Repository，即可视为Model层
+     * 网络请求方法，在ViewModel中调用Model层，通过Okhttp+Retrofit+RxJava发起请求
      */
     public void requestNetWork() {
-        RetrofitClient.getInstance().create(DemoApiService.class)
-                .demoGet()
-                .compose(RxUtils.bindToLifecycle(getLifecycleProvider())) //请求与View周期同步
+        //建议使用addSubscribe()套一层，请求与View周期同步
+        //addSubscribe();
+        model.demoGet()
+                .compose(RxUtils.bindToLifecycle(getLifecycleProvider())) //请求与View周期同步（过度期，尽量少使用）
                 .compose(RxUtils.schedulersTransformer()) //线程调度
                 .compose(RxUtils.exceptionTransformer()) // 网络错误的异常转换, 这里可以换成自己的ExceptionHandle
                 .doOnSubscribe(new Consumer<Disposable>() {

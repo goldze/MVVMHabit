@@ -13,18 +13,22 @@ import android.support.annotation.Nullable;
 
 import com.trello.rxlifecycle2.LifecycleProvider;
 
+import java.lang.ref.WeakReference;
 import java.util.HashMap;
 import java.util.Map;
 
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.disposables.Disposable;
 import me.goldze.mvvmhabit.bus.event.SingleLiveEvent;
 
 /**
  * Created by goldze on 2017/6/15.
  */
 public class BaseViewModel<M extends BaseModel> extends AndroidViewModel implements IBaseViewModel {
-    private M model;
+    protected M model;
     private UIChangeLiveData uc;
-    private LifecycleProvider lifecycle;
+    //弱引用持有
+    private WeakReference<LifecycleProvider> lifecycle;
 
     public BaseViewModel(@NonNull Application application) {
         super(application);
@@ -35,17 +39,21 @@ public class BaseViewModel<M extends BaseModel> extends AndroidViewModel impleme
         this.model = model;
     }
 
+    protected void addSubscribe(Disposable disposable) {
+        model.addSubscribe(disposable);
+    }
+
     /**
      * 注入RxLifecycle生命周期
      *
      * @param lifecycle
      */
     public void injectLifecycleProvider(LifecycleProvider lifecycle) {
-        this.lifecycle = lifecycle;
+        this.lifecycle = new WeakReference<>(lifecycle);
     }
 
     public LifecycleProvider getLifecycleProvider() {
-        return lifecycle;
+        return lifecycle.get();
     }
 
     public UIChangeLiveData getUC() {

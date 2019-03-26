@@ -1,6 +1,7 @@
 package com.goldze.mvvmhabit.ui.network;
 
 import android.arch.lifecycle.Observer;
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.pm.ActivityInfo;
 import android.databinding.Observable;
 import android.os.Bundle;
@@ -13,7 +14,9 @@ import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.goldze.mvvmhabit.BR;
 import com.goldze.mvvmhabit.R;
+import com.goldze.mvvmhabit.app.AppViewModelFactory;
 import com.goldze.mvvmhabit.databinding.FragmentNetworkBinding;
+import com.goldze.mvvmhabit.ui.login.LoginViewModel;
 
 import me.goldze.mvvmhabit.base.BaseFragment;
 import me.goldze.mvvmhabit.utils.MaterialDialogUtils;
@@ -39,6 +42,12 @@ public class NetWorkFragment extends BaseFragment<FragmentNetworkBinding, NetWor
     @Override
     public int initVariableId() {
         return BR.viewModel;
+    }
+
+    @Override
+    public NetWorkViewModel initViewModel() {
+        AppViewModelFactory factory = AppViewModelFactory.getInstance(getActivity().getApplication());
+        return ViewModelProviders.of(this, factory).get(NetWorkViewModel.class);
     }
 
     @Override

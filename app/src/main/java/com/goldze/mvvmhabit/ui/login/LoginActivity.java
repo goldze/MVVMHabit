@@ -9,7 +9,9 @@ import android.text.method.PasswordTransformationMethod;
 
 import com.goldze.mvvmhabit.BR;
 import com.goldze.mvvmhabit.R;
+import com.goldze.mvvmhabit.app.AppViewModelFactory;
 import com.goldze.mvvmhabit.databinding.ActivityLoginBinding;
+import com.goldze.mvvmhabit.ui.network.NetWorkViewModel;
 
 import me.goldze.mvvmhabit.base.BaseActivity;
 
@@ -31,7 +33,8 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding, LoginViewM
     @Override
     public LoginViewModel initViewModel() {
         //View持有ViewModel的引用，如果没有特殊业务处理，这个方法可以不重写
-        return ViewModelProviders.of(this).get(LoginViewModel.class);
+        AppViewModelFactory factory = AppViewModelFactory.getInstance(getApplication());
+        return ViewModelProviders.of(this, factory).get(LoginViewModel.class);
     }
 
     @Override
