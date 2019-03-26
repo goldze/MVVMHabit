@@ -11,8 +11,6 @@ import com.goldze.mvvmhabit.BR;
 import com.goldze.mvvmhabit.R;
 import com.goldze.mvvmhabit.data.DemoRepository;
 import com.goldze.mvvmhabit.entity.DemoEntity;
-import com.goldze.mvvmhabit.data.source.http.service.DemoApiService;
-import com.goldze.mvvmhabit.utils.RetrofitClient;
 
 import java.util.concurrent.TimeUnit;
 
