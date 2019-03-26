@@ -27,7 +27,7 @@ import me.goldze.mvvmhabit.utils.MaterialDialogUtils;
 /**
  * Created by goldze on 2017/6/15.
  */
-public abstract class BaseFragment<V extends ViewDataBinding, VM extends BaseViewModel> extends RxFragment implements IBaseActivity {
+public abstract class BaseFragment<V extends ViewDataBinding, VM extends BaseViewModel> extends RxFragment implements IBaseView {
     protected V binding;
     protected VM viewModel;
     private int viewModelId;

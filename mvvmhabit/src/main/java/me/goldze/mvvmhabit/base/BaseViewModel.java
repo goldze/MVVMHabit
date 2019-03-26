@@ -21,12 +21,18 @@ import me.goldze.mvvmhabit.bus.event.SingleLiveEvent;
 /**
  * Created by goldze on 2017/6/15.
  */
-public class BaseViewModel extends AndroidViewModel implements IBaseViewModel {
+public class BaseViewModel<M extends BaseModel> extends AndroidViewModel implements IBaseViewModel {
+    private M model;
     private UIChangeLiveData uc;
     private LifecycleProvider lifecycle;
 
     public BaseViewModel(@NonNull Application application) {
         super(application);
+    }
+
+    public BaseViewModel(@NonNull Application application, M model) {
+        super(application);
+        this.model = model;
     }
 
     /**
@@ -157,6 +163,14 @@ public class BaseViewModel extends AndroidViewModel implements IBaseViewModel {
 
     @Override
     public void removeRxBus() {
+    }
+
+    @Override
+    protected void onCleared() {
+        super.onCleared();
+        if (model != null) {
+            model.onCleared();
+        }
     }
 
     public final class UIChangeLiveData extends SingleLiveEvent {
