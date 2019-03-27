@@ -1,18 +1,12 @@
 package com.goldze.mvvmhabit.app;
 
-import android.annotation.SuppressLint;
-import android.content.Context;
-
 import com.goldze.mvvmhabit.data.DemoRepository;
+import com.goldze.mvvmhabit.data.source.HttpDataSource;
 import com.goldze.mvvmhabit.data.source.LocalDataSource;
 import com.goldze.mvvmhabit.data.source.http.HttpDataSourceImpl;
 import com.goldze.mvvmhabit.data.source.http.service.DemoApiService;
 import com.goldze.mvvmhabit.data.source.local.LocalDataSourceImpl;
 import com.goldze.mvvmhabit.utils.RetrofitClient;
-
-import io.reactivex.annotations.NonNull;
-
-import static android.support.v4.util.Preconditions.checkNotNull;
 
 
 /**
@@ -20,12 +14,14 @@ import static android.support.v4.util.Preconditions.checkNotNull;
  * Created by goldze on 2019/3/26.
  */
 public class Injection {
-    @SuppressLint("RestrictedApi")
-    public static DemoRepository provideDemoRepository(@NonNull Context context) {
-        //检查Context是否为空
-        checkNotNull(context);
+    public static DemoRepository provideDemoRepository() {
         //网络API服务
         DemoApiService apiService = RetrofitClient.getInstance().create(DemoApiService.class);
-        return DemoRepository.getInstance(HttpDataSourceImpl.getInstance(apiService), LocalDataSourceImpl.getInstance());
+        //网络数据源
+        HttpDataSource httpDataSource = HttpDataSourceImpl.getInstance(apiService);
+        //本地数据源
+        LocalDataSource localDataSource = LocalDataSourceImpl.getInstance();
+        //两条分支组成一个数据仓库
+        return DemoRepository.getInstance(httpDataSource, localDataSource);
     }
 }

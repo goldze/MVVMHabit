@@ -24,7 +24,7 @@ public class AppViewModelFactory extends ViewModelProvider.NewInstanceFactory {
         if (INSTANCE == null) {
             synchronized (AppViewModelFactory.class) {
                 if (INSTANCE == null) {
-                    INSTANCE = new AppViewModelFactory(application, Injection.provideDemoRepository(application.getApplicationContext()));
+                    INSTANCE = new AppViewModelFactory(application, Injection.provideDemoRepository());
                 }
             }
         }

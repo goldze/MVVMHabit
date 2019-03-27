@@ -1,6 +1,7 @@
 package com.goldze.mvvmhabit.ui.network;
 
 import android.app.Application;
+import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
 import android.databinding.ObservableArrayList;
 import android.databinding.ObservableBoolean;
@@ -21,6 +22,7 @@ import io.reactivex.functions.Consumer;
 import me.goldze.mvvmhabit.base.BaseViewModel;
 import me.goldze.mvvmhabit.binding.command.BindingAction;
 import me.goldze.mvvmhabit.binding.command.BindingCommand;
+import me.goldze.mvvmhabit.bus.event.SingleLiveEvent;
 import me.goldze.mvvmhabit.http.BaseResponse;
 import me.goldze.mvvmhabit.http.ResponseThrowable;
 import me.goldze.mvvmhabit.utils.RxUtils;
@@ -33,8 +35,7 @@ import me.tatarka.bindingcollectionadapter2.ItemBinding;
  */
 
 public class NetWorkViewModel extends BaseViewModel<DemoRepository> {
-    private int itemIndex = 0;
-    public MutableLiveData<NetWorkItemViewModel> deleteItemLiveData = new MutableLiveData();
+    public SingleLiveEvent<NetWorkItemViewModel> deleteItemLiveData = new SingleLiveEvent<>();
     //封装一个界面发生改变的观察者
     public UIChangeObservable uc = new UIChangeObservable();
 
@@ -67,14 +68,13 @@ public class NetWorkViewModel extends BaseViewModel<DemoRepository> {
     public BindingCommand onLoadMoreCommand = new BindingCommand(new BindingAction() {
         @Override
         public void call() {
-            if (itemIndex > 50) {
+            if (observableList.size() > 50) {
                 ToastUtils.showLong("兄dei，你太无聊啦~崩是不可能的~");
                 uc.finishLoadmore.set(!uc.finishLoadmore.get());
                 return;
             }
             //模拟网络上拉加载更多
-            addSubscribe(Observable.just("")
-                    .delay(3, TimeUnit.SECONDS) //延迟3秒
+            addSubscribe(model.simulationLoadMore()
                     .compose(RxUtils.schedulersTransformer()) //线程调度
                     .doOnSubscribe(new Consumer<Disposable>() {
                         @Override
@@ -82,20 +82,16 @@ public class NetWorkViewModel extends BaseViewModel<DemoRepository> {
                             ToastUtils.showShort("上拉加载");
                         }
                     })
-                    .subscribe(new Consumer<Object>() {
+                    .subscribe(new Consumer<DemoEntity>() {
                         @Override
-                        public void accept(Object o) throws Exception {
-                            //刷新完成收回
-                            uc.finishLoadmore.set(!uc.finishLoadmore.get());
-                            //模拟一部分假数据
-                            for (int i = 0; i < 10; i++) {
-                                DemoEntity.ItemsEntity item = new DemoEntity.ItemsEntity();
-                                item.setId(-1);
-                                item.setName("模拟条目" + itemIndex++);
-                                NetWorkItemViewModel itemViewModel = new NetWorkItemViewModel(NetWorkViewModel.this, item);
+                        public void accept(DemoEntity entity) throws Exception {
+                            for (DemoEntity.ItemsEntity itemsEntity : entity.getItems()) {
+                                NetWorkItemViewModel itemViewModel = new NetWorkItemViewModel(NetWorkViewModel.this, itemsEntity);
                                 //双向绑定动态添加Item
                                 observableList.add(itemViewModel);
                             }
+                            //刷新完成收回
+                            uc.finishLoadmore.set(!uc.finishLoadmore.get());
                         }
                     }));
         }
@@ -120,12 +116,10 @@ public class NetWorkViewModel extends BaseViewModel<DemoRepository> {
                 .subscribe(new Consumer<BaseResponse<DemoEntity>>() {
                     @Override
                     public void accept(BaseResponse<DemoEntity> response) throws Exception {
-                        itemIndex = 0;
                         //清除列表
                         observableList.clear();
                         //请求成功
                         if (response.getCode() == 1) {
-                            //将实体赋给LiveData
                             for (DemoEntity.ItemsEntity entity : response.getResult().getItems()) {
                                 NetWorkItemViewModel itemViewModel = new NetWorkItemViewModel(NetWorkViewModel.this, entity);
                                 //双向绑定动态添加Item
@@ -144,7 +138,6 @@ public class NetWorkViewModel extends BaseViewModel<DemoRepository> {
                         //请求刷新完成收回
                         uc.finishRefreshing.set(!uc.finishRefreshing.get());
                         ToastUtils.showShort(throwable.message);
-                        throwable.printStackTrace();
                     }
                 }, new Action() {
                     @Override

@@ -1,6 +1,7 @@
 package com.goldze.mvvmhabit.ui.network;
 
 import android.databinding.ObservableField;
+import android.databinding.ObservableInt;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -22,6 +23,7 @@ import me.goldze.mvvmhabit.utils.ToastUtils;
 public class NetWorkItemViewModel extends ItemViewModel<NetWorkViewModel> {
     public ObservableField<DemoEntity.ItemsEntity> entity = new ObservableField<>();
     public Drawable drawableImg;
+    public ObservableField<Integer> position = new ObservableField<>();
 
     public NetWorkItemViewModel(@NonNull NetWorkViewModel viewModel, DemoEntity.ItemsEntity entity) {
         super(viewModel);
@@ -30,13 +32,25 @@ public class NetWorkItemViewModel extends ItemViewModel<NetWorkViewModel> {
         drawableImg = ContextCompat.getDrawable(viewModel.getApplication(), R.mipmap.ic_launcher);
     }
 
+    /**
+     * 获取position的方式有很多种,indexOf是其中一种，常见的还有在Adapter中、ItemBinding.of回调里
+     *
+     * @return
+     */
+    public int position() {
+        if (position.get() == null) {
+            position.set(viewModel.observableList.indexOf(this));
+        }
+        return position.get();
+    }
+
     //条目的点击事件
     public BindingCommand itemClick = new BindingCommand(new BindingAction() {
         @Override
         public void call() {
             //这里可以通过一个标识,做出判断，已达到跳入不同界面的逻辑
             if (entity.get().getId() == -1) {
-                ToastUtils.showShort(entity.get().getName());
+                viewModel.deleteItemLiveData.setValue(NetWorkItemViewModel.this);
             } else {
                 //跳转到详情界面,传入条目的实体对象
                 Bundle mBundle = new Bundle();
@@ -52,7 +66,7 @@ public class NetWorkItemViewModel extends ItemViewModel<NetWorkViewModel> {
             //以前是使用Messenger发送事件，在NetWorkViewModel中完成删除逻辑
 //            Messenger.getDefault().send(NetWorkItemViewModel.this, NetWorkViewModel.TOKEN_NETWORKVIEWMODEL_DELTE_ITEM);
             //现在ItemViewModel中存在ViewModel引用，可以直接拿到LiveData去做删除
-            viewModel.deleteItemLiveData.setValue(NetWorkItemViewModel.this);
+            ToastUtils.showShort(entity.get().getName());
         }
     });
 //    /**

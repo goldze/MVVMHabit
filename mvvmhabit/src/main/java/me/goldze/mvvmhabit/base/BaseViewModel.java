@@ -4,12 +4,9 @@ import android.app.Application;
 import android.arch.lifecycle.AndroidViewModel;
 import android.arch.lifecycle.Lifecycle;
 import android.arch.lifecycle.LifecycleOwner;
-import android.arch.lifecycle.LiveData;
-import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.Observer;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 
 import com.trello.rxlifecycle2.LifecycleProvider;
 
@@ -17,7 +14,6 @@ import java.lang.ref.WeakReference;
 import java.util.HashMap;
 import java.util.Map;
 
-import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 import me.goldze.mvvmhabit.bus.event.SingleLiveEvent;
 

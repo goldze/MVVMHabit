@@ -16,7 +16,6 @@ import com.goldze.mvvmhabit.BR;
 import com.goldze.mvvmhabit.R;
 import com.goldze.mvvmhabit.app.AppViewModelFactory;
 import com.goldze.mvvmhabit.databinding.FragmentNetworkBinding;
-import com.goldze.mvvmhabit.ui.login.LoginViewModel;
 
 import me.goldze.mvvmhabit.base.BaseFragment;
 import me.goldze.mvvmhabit.utils.MaterialDialogUtils;

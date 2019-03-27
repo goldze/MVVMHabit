@@ -1,8 +1,6 @@
 package com.goldze.mvvmhabit.ui.login;
 
 import android.app.Application;
-import android.arch.lifecycle.MediatorLiveData;
-import android.databinding.ObservableBoolean;
 import android.databinding.ObservableField;
 import android.databinding.ObservableInt;
 import android.support.annotation.NonNull;
@@ -97,9 +95,8 @@ public class LoginViewModel extends BaseViewModel<DemoRepository> {
             ToastUtils.showShort("请输入密码！");
             return;
         }
-        //RaJava模拟一个延迟操作
-        addSubscribe(Observable.just("")
-                .delay(3, TimeUnit.SECONDS) //延迟3秒
+        //RaJava模拟登录
+        addSubscribe(model.simulationLogin()
                 .compose(RxUtils.schedulersTransformer()) //线程调度
                 .doOnSubscribe(new Consumer<Disposable>() {
                     @Override
