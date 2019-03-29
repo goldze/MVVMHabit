@@ -5,9 +5,15 @@
 
         <import type="com.goldze.mvvmhabit.ui.viewpager.vm.ViewPagerViewModel" />
 
+        <import type="com.goldze.mvvmhabit.ui.viewpager.adapter.ViewPagerBindingAdapter" />
+
         <variable
             name="viewModel"
-            type="com.goldze.mvvmhabit.ui.viewpager.vm.ViewPagerViewModel" />
+            type="ViewPagerViewModel" />
+
+        <variable
+            name="adapter"
+            type="ViewPagerBindingAdapter" />
     </data>
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -35,7 +41,7 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            binding:adapter="@{viewModel.adapter}"
+            binding:adapter="@{adapter}"
             binding:itemBinding="@{viewModel.itemBinding}"
             binding:items="@{viewModel.items}"
             binding:onPageSelectedCommand="@{viewModel.onPageSelectedCommand}"

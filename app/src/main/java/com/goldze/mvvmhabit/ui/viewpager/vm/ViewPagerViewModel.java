@@ -44,8 +44,6 @@ public class ViewPagerViewModel extends BaseViewModel {
             return "条目" + position;
         }
     };
-    //给ViewPager添加Adpter，使用自定义的Adapter继承BindingViewPagerAdapter，重写onBindBinding方法
-    public final ViewPagerBindingAdapter adapter = new ViewPagerBindingAdapter();
     //ViewPager切换监听
     public BindingCommand<Integer> onPageSelectedCommand = new BindingCommand<>(new BindingConsumer<Integer>() {
         @Override

@@ -8,6 +8,7 @@ import android.support.design.widget.TabLayout;
 import com.goldze.mvvmhabit.BR;
 import com.goldze.mvvmhabit.R;
 import com.goldze.mvvmhabit.databinding.FragmentViewpagerBinding;
+import com.goldze.mvvmhabit.ui.viewpager.adapter.ViewPagerBindingAdapter;
 import com.goldze.mvvmhabit.ui.viewpager.vm.ViewPagerViewModel;
 
 import me.goldze.mvvmhabit.base.BaseActivity;
@@ -37,6 +38,8 @@ public class ViewPagerActivity extends BaseActivity<FragmentViewpagerBinding, Vi
         // 使用 TabLayout 和 ViewPager 相关联
         binding.tabs.setupWithViewPager(binding.viewPager);
         binding.viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(binding.tabs));
+        //给ViewPager设置adapter
+        binding.setAdapter(new ViewPagerBindingAdapter());
     }
 
     @Override

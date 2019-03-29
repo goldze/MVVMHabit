@@ -1,15 +1,11 @@
 package com.goldze.mvvmhabit.ui.viewpager.adapter;
 
-import android.arch.lifecycle.LifecycleOwner;
-import android.arch.lifecycle.Observer;
 import android.databinding.ViewDataBinding;
-import android.support.annotation.Nullable;
 import android.view.ViewGroup;
 
 import com.goldze.mvvmhabit.databinding.ItemViewpagerBinding;
 import com.goldze.mvvmhabit.ui.viewpager.vm.ViewPagerItemViewModel;
 
-import me.goldze.mvvmhabit.utils.ToastUtils;
 import me.tatarka.bindingcollectionadapter2.BindingViewPagerAdapter;
 
 /**

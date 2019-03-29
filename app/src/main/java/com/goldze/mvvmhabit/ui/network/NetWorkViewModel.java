@@ -54,8 +54,6 @@ public class NetWorkViewModel extends BaseViewModel<DemoRepository> {
     public ObservableList<NetWorkItemViewModel> observableList = new ObservableArrayList<>();
     //给RecyclerView添加ItemBinding
     public ItemBinding<NetWorkItemViewModel> itemBinding = ItemBinding.of(BR.viewModel, R.layout.item_network);
-    //给RecyclerView添加Adpter，请使用自定义的Adapter继承BindingRecyclerViewAdapter，重写onBindBinding方法，里面有你要的Item对应的binding对象
-    public final BindingRecyclerViewAdapter<NetWorkItemViewModel> adapter = new BindingRecyclerViewAdapter<>();
     //下拉刷新
     public BindingCommand onRefreshCommand = new BindingCommand(new BindingAction() {
         @Override
