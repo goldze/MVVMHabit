@@ -5,9 +5,15 @@
 
         <import type="com.goldze.mvvmhabit.ui.rv_multi.MultiRecycleViewModel" />
 
+        <import type="me.tatarka.bindingcollectionadapter2.BindingRecyclerViewAdapter" />
+
         <variable
             name="viewModel"
             type="MultiRecycleViewModel" />
+
+        <variable
+            name="adapter"
+            type="BindingRecyclerViewAdapter" />
 
         <import type="me.tatarka.bindingcollectionadapter2.LayoutManagers" />
 
@@ -23,7 +29,7 @@
         <android.support.v7.widget.RecyclerView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            binding:adapter="@{viewModel.adapter}"
+            binding:adapter="@{adapter}"
             binding:itemBinding="@{viewModel.itemBinding}"
             binding:items="@{viewModel.observableList}"
             binding:layoutManager="@{LayoutManagers.linear()}"

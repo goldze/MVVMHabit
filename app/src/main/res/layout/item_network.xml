@@ -32,6 +32,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="6dp"
-            android:text="@{viewModel.entity.id == -1 ? viewModel.position() + viewModel.entity.name : viewModel.entity.name}" />
+            android:text="@{viewModel.entity.id == -1 ? viewModel.getPosition() + viewModel.entity.name : viewModel.entity.name}" />
     </LinearLayout>
 </layout>

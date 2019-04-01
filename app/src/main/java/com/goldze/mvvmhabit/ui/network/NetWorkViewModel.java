@@ -164,7 +164,7 @@ public class NetWorkViewModel extends BaseViewModel<DemoRepository> {
      * @param netWorkItemViewModel
      * @return
      */
-    public int getPosition(NetWorkItemViewModel netWorkItemViewModel) {
+    public int getItemPosition(NetWorkItemViewModel netWorkItemViewModel) {
         return observableList.indexOf(netWorkItemViewModel);
     }
 

@@ -71,6 +71,4 @@ public class MultiRecycleViewModel extends BaseViewModel {
             }
         }
     });
-    //给RecyclerView添加Adpter，请使用自定义的Adapter继承BindingRecyclerViewAdapter，重写onBindBinding方法，里面有你要的Item对应的binding对象
-    public final BindingRecyclerViewAdapter<MultiItemViewModel> adapter = new BindingRecyclerViewAdapter<>();
 }

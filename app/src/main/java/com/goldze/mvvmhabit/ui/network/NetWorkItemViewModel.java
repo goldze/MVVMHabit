@@ -23,7 +23,6 @@ import me.goldze.mvvmhabit.utils.ToastUtils;
 public class NetWorkItemViewModel extends ItemViewModel<NetWorkViewModel> {
     public ObservableField<DemoEntity.ItemsEntity> entity = new ObservableField<>();
     public Drawable drawableImg;
-    public ObservableField<Integer> position = new ObservableField<>();
 
     public NetWorkItemViewModel(@NonNull NetWorkViewModel viewModel, DemoEntity.ItemsEntity entity) {
         super(viewModel);
@@ -37,11 +36,8 @@ public class NetWorkItemViewModel extends ItemViewModel<NetWorkViewModel> {
      *
      * @return
      */
-    public int position() {
-        if (position.get() == null) {
-            position.set(viewModel.observableList.indexOf(this));
-        }
-        return position.get();
+    public int getPosition() {
+        return viewModel.getItemPosition(this);
     }
 
     //条目的点击事件
