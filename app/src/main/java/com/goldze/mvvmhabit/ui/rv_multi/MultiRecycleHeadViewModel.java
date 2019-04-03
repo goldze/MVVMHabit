@@ -2,9 +2,8 @@ package com.goldze.mvvmhabit.ui.rv_multi;
 
 import android.support.annotation.NonNull;
 
-import me.goldze.mvvmhabit.base.MultiItemViewModel;
-
 import me.goldze.mvvmhabit.base.BaseViewModel;
+import me.goldze.mvvmhabit.base.MultiItemViewModel;
 import me.goldze.mvvmhabit.binding.command.BindingAction;
 import me.goldze.mvvmhabit.binding.command.BindingCommand;
 import me.goldze.mvvmhabit.utils.ToastUtils;

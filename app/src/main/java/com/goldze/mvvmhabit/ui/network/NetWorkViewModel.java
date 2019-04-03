@@ -1,8 +1,6 @@
 package com.goldze.mvvmhabit.ui.network;
 
 import android.app.Application;
-import android.arch.lifecycle.LiveData;
-import android.arch.lifecycle.MutableLiveData;
 import android.databinding.ObservableArrayList;
 import android.databinding.ObservableBoolean;
 import android.databinding.ObservableList;
@@ -13,9 +11,6 @@ import com.goldze.mvvmhabit.R;
 import com.goldze.mvvmhabit.data.DemoRepository;
 import com.goldze.mvvmhabit.entity.DemoEntity;
 
-import java.util.concurrent.TimeUnit;
-
-import io.reactivex.Observable;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Action;
 import io.reactivex.functions.Consumer;
@@ -27,7 +22,6 @@ import me.goldze.mvvmhabit.http.BaseResponse;
 import me.goldze.mvvmhabit.http.ResponseThrowable;
 import me.goldze.mvvmhabit.utils.RxUtils;
 import me.goldze.mvvmhabit.utils.ToastUtils;
-import me.tatarka.bindingcollectionadapter2.BindingRecyclerViewAdapter;
 import me.tatarka.bindingcollectionadapter2.ItemBinding;
 
 /**

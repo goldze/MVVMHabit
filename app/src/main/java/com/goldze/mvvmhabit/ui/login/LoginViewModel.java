@@ -10,9 +10,6 @@ import android.view.View;
 import com.goldze.mvvmhabit.data.DemoRepository;
 import com.goldze.mvvmhabit.ui.main.DemoActivity;
 
-import java.util.concurrent.TimeUnit;
-
-import io.reactivex.Observable;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
 import me.goldze.mvvmhabit.base.BaseViewModel;
