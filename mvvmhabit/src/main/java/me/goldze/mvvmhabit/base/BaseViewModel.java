@@ -28,6 +28,7 @@ public class BaseViewModel<M extends BaseModel> extends AndroidViewModel impleme
 
     public BaseViewModel(@NonNull Application application) {
         super(application);
+        model = null;
     }
 
     public BaseViewModel(@NonNull Application application, M model) {
