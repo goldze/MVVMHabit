@@ -13,7 +13,7 @@ import me.goldze.mvvmhabit.base.BaseViewModel;
  */
 
 public class DetailViewModel extends BaseViewModel {
-    public ObservableField<DemoEntity.ItemsEntity> entity = new ObservableField();
+    public ObservableField<DemoEntity.ItemsEntity> entity = new ObservableField<>();
 
     public DetailViewModel(@NonNull Application application) {
         super(application);
