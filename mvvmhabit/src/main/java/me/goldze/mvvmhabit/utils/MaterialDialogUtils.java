@@ -205,7 +205,6 @@ public class MaterialDialogUtils {
 
     /***
      * 选择图片等Item的对话框  带标题
-     * 吴志杰
      * @param
      * @return MaterialDialog.Builder
      */
