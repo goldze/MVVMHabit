@@ -10,7 +10,6 @@ import me.goldze.mvvmhabit.utils.SPUtils;
  * Created by goldze on 2019/3/26.
  */
 public class LocalDataSourceImpl implements LocalDataSource {
-    private DemoApiService apiService;
     private volatile static LocalDataSourceImpl INSTANCE = null;
 
     public static LocalDataSourceImpl getInstance() {

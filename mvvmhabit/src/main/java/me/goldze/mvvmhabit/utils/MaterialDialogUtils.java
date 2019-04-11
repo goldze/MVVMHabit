@@ -135,7 +135,6 @@ public class MaterialDialogUtils {
 
     /***
      * 显示一个基础的对话框  只有内容没有标题
-     * 吴志杰
      * @param
      * @return MaterialDialog.Builder
      */
@@ -153,7 +152,6 @@ public class MaterialDialogUtils {
     /***
      * 显示一个基础的对话框  带标题 带内容
      * 没有取消按钮
-     * 吴志杰
      * @param
      * @return MaterialDialog.Builder
      */
@@ -170,7 +168,6 @@ public class MaterialDialogUtils {
 
     /***
      * 显示一个基础的对话框  带标题 带内容
-     * 吴志杰
      * @param
      * @return MaterialDialog.Builder
      */
@@ -188,7 +185,6 @@ public class MaterialDialogUtils {
 
     /***
      * 显示一个基础的对话框  带标题 带内容
-     * 吴志杰
      * @return MaterialDialog.Builder
      */
     public static MaterialDialog.Builder showBasicDialogPositive(final Context context, String
