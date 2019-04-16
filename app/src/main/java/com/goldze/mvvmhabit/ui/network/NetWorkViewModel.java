@@ -2,7 +2,6 @@ package com.goldze.mvvmhabit.ui.network;
 
 import android.app.Application;
 import android.databinding.ObservableArrayList;
-import android.databinding.ObservableBoolean;
 import android.databinding.ObservableList;
 import android.support.annotation.NonNull;
 
@@ -35,9 +34,9 @@ public class NetWorkViewModel extends BaseViewModel<DemoRepository> {
 
     public class UIChangeObservable {
         //下拉刷新完成
-        public ObservableBoolean finishRefreshing = new ObservableBoolean(false);
+        public SingleLiveEvent finishRefreshing = new SingleLiveEvent<>();
         //上拉加载完成
-        public ObservableBoolean finishLoadmore = new ObservableBoolean(false);
+        public SingleLiveEvent finishLoadmore = new SingleLiveEvent<>();
     }
 
     public NetWorkViewModel(@NonNull Application application, DemoRepository repository) {
@@ -62,7 +61,7 @@ public class NetWorkViewModel extends BaseViewModel<DemoRepository> {
         public void call() {
             if (observableList.size() > 50) {
                 ToastUtils.showLong("兄dei，你太无聊啦~崩是不可能的~");
-                uc.finishLoadmore.set(!uc.finishLoadmore.get());
+                uc.finishLoadmore.call();
                 return;
             }
             //模拟网络上拉加载更多
@@ -83,7 +82,7 @@ public class NetWorkViewModel extends BaseViewModel<DemoRepository> {
                                 observableList.add(itemViewModel);
                             }
                             //刷新完成收回
-                            uc.finishLoadmore.set(!uc.finishLoadmore.get());
+                            uc.finishLoadmore.call();
                         }
                     }));
         }
@@ -128,7 +127,7 @@ public class NetWorkViewModel extends BaseViewModel<DemoRepository> {
                         //关闭对话框
                         dismissDialog();
                         //请求刷新完成收回
-                        uc.finishRefreshing.set(!uc.finishRefreshing.get());
+                        uc.finishRefreshing.call();
                         ToastUtils.showShort(throwable.message);
                     }
                 }, new Action() {
@@ -137,7 +136,7 @@ public class NetWorkViewModel extends BaseViewModel<DemoRepository> {
                         //关闭对话框
                         dismissDialog();
                         //请求刷新完成收回
-                        uc.finishRefreshing.set(!uc.finishRefreshing.get());
+                        uc.finishRefreshing.call();
                     }
                 });
     }

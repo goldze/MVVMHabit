@@ -3,7 +3,6 @@ package com.goldze.mvvmhabit.ui.network;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.pm.ActivityInfo;
-import android.databinding.Observable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -63,17 +62,17 @@ public class NetWorkFragment extends BaseFragment<FragmentNetworkBinding, NetWor
     @Override
     public void initViewObservable() {
         //监听下拉刷新完成
-        viewModel.uc.finishRefreshing.addOnPropertyChangedCallback(new Observable.OnPropertyChangedCallback() {
+        viewModel.uc.finishRefreshing.observe(this, new Observer() {
             @Override
-            public void onPropertyChanged(Observable observable, int i) {
+            public void onChanged(@Nullable Object o) {
                 //结束刷新
                 binding.twinklingRefreshLayout.finishRefreshing();
             }
         });
         //监听上拉加载完成
-        viewModel.uc.finishLoadmore.addOnPropertyChangedCallback(new Observable.OnPropertyChangedCallback() {
+        viewModel.uc.finishLoadmore.observe(this, new Observer() {
             @Override
-            public void onPropertyChanged(Observable observable, int i) {
+            public void onChanged(@Nullable Object o) {
                 //结束刷新
                 binding.twinklingRefreshLayout.finishLoadmore();
             }

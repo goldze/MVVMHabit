@@ -11,7 +11,6 @@ import com.goldze.mvvmhabit.BR;
 import com.goldze.mvvmhabit.R;
 import com.goldze.mvvmhabit.app.AppViewModelFactory;
 import com.goldze.mvvmhabit.databinding.ActivityLoginBinding;
-import com.goldze.mvvmhabit.ui.network.NetWorkViewModel;
 
 import me.goldze.mvvmhabit.base.BaseActivity;
 
