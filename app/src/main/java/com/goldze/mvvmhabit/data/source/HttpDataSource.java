@@ -10,10 +10,10 @@ import me.goldze.mvvmhabit.http.BaseResponse;
  */
 public interface HttpDataSource {
     //模拟登录
-    Observable<Object> simulationLogin();
+    Observable<Object> login();
 
     //模拟上拉加载
-    Observable<DemoEntity> simulationLoadMore();
+    Observable<DemoEntity> loadMore();
 
     Observable<BaseResponse<DemoEntity>> demoGet();
 

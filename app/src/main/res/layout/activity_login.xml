@@ -114,7 +114,7 @@
                     android:layout_width="30dp"
                     android:layout_height="30dp"
                     android:padding="6dp"
-                    android:src="@mipmap/show_psw"
+                    android:src="@mipmap/show_psw_press"
                     binding:onClickCommand="@{viewModel.passwordShowSwitchOnClickCommand}" />
             </LinearLayout>
 

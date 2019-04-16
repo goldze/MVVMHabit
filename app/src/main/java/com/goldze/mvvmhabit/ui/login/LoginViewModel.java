@@ -93,7 +93,7 @@ public class LoginViewModel extends BaseViewModel<DemoRepository> {
             return;
         }
         //RaJava模拟登录
-        addSubscribe(model.simulationLogin()
+        addSubscribe(model.login()
                 .compose(RxUtils.schedulersTransformer()) //线程调度
                 .doOnSubscribe(new Consumer<Disposable>() {
                     @Override

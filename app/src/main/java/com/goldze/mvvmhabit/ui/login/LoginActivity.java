@@ -47,11 +47,11 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding, LoginViewM
                 if (viewModel.uc.pSwitchEvent.getValue()) {
                     //密码可见
                     //在xml中定义id后,使用binding可以直接拿到这个view的引用,不再需要findViewById去找控件了
-                    binding.ivSwichPasswrod.setImageResource(R.mipmap.show_psw_press);
+                    binding.ivSwichPasswrod.setImageResource(R.mipmap.show_psw);
                     binding.etPassword.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
                 } else {
                     //密码不可见
-                    binding.ivSwichPasswrod.setImageResource(R.mipmap.show_psw);
+                    binding.ivSwichPasswrod.setImageResource(R.mipmap.show_psw_press);
                     binding.etPassword.setTransformationMethod(PasswordTransformationMethod.getInstance());
                 }
             }

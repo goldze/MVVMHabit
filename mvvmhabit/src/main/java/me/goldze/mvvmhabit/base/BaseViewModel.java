@@ -37,6 +37,9 @@ public class BaseViewModel<M extends BaseModel> extends AndroidViewModel impleme
     }
 
     protected void addSubscribe(Disposable disposable) {
+        if (model == null) {
+            throw new NullPointerException("Create ViewModel with ViewModelFactory with Model");
+        }
         model.addSubscribe(disposable);
     }
 

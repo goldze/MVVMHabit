@@ -66,7 +66,7 @@ public class NetWorkViewModel extends BaseViewModel<DemoRepository> {
                 return;
             }
             //模拟网络上拉加载更多
-            addSubscribe(model.simulationLoadMore()
+            addSubscribe(model.loadMore()
                     .compose(RxUtils.schedulersTransformer()) //线程调度
                     .doOnSubscribe(new Consumer<Disposable>() {
                         @Override
@@ -93,7 +93,7 @@ public class NetWorkViewModel extends BaseViewModel<DemoRepository> {
      * 网络请求方法，在ViewModel中调用Model层，通过Okhttp+Retrofit+RxJava发起请求
      */
     public void requestNetWork() {
-        //建议使用addSubscribe()套一层，请求与View周期同步
+        //建议调用addSubscribe()添加Disposable，请求与View周期同步
         //addSubscribe();
         model.demoGet()
                 .compose(RxUtils.bindToLifecycle(getLifecycleProvider())) //请求与View周期同步（过度期，尽量少使用）

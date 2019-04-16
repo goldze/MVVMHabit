@@ -46,13 +46,13 @@ public class DemoRepository extends BaseModel implements HttpDataSource, LocalDa
 
 
     @Override
-    public Observable<Object> simulationLogin() {
-        return mHttpDataSource.simulationLogin();
+    public Observable<Object> login() {
+        return mHttpDataSource.login();
     }
 
     @Override
-    public Observable<DemoEntity> simulationLoadMore() {
-        return mHttpDataSource.simulationLoadMore();
+    public Observable<DemoEntity> loadMore() {
+        return mHttpDataSource.loadMore();
     }
 
     @Override
