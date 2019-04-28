@@ -107,6 +107,17 @@ public class ViewAdapter {
         });
     }
 
+    /**
+     * view的显示隐藏
+     */
+    @BindingAdapter(value = {"isVisible"}, requireAll = false)
+    public static void isVisible(View view, final Boolean visibility) {
+        if (visibility) {
+            view.setVisibility(View.VISIBLE);
+        } else {
+            view.setVisibility(View.GONE);
+        }
+    }
 //    @BindingAdapter({"onTouchCommand"})
 //    public static void onTouchCommand(View view, final ResponseCommand<MotionEvent, Boolean> onTouchCommand) {
 //        view.setOnTouchListener(new View.OnTouchListener() {
