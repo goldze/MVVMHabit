@@ -47,7 +47,7 @@ public class MultiRecycleViewModel extends BaseViewModel {
                     item.multiItemType(MultiRecycleType_Right);
                     observableList.add(item);
                 }
-            }
+             }
         }
     }
 
