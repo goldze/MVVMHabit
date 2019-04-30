@@ -25,7 +25,7 @@ public abstract class ApiDisposableObserver<T> extends DisposableObserver<T> {
         e.printStackTrace();
         KLog.e(e.getMessage());
         if (e instanceof ResponseThrowable) {
-            ResponseThrowable rError =  (ResponseThrowable) e;
+            ResponseThrowable rError = (ResponseThrowable) e;
             ToastUtils.showShort(rError.getMessage());
             return;
         }
@@ -39,7 +39,7 @@ public abstract class ApiDisposableObserver<T> extends DisposableObserver<T> {
         ToastUtils.showShort("http is start");
         // if  NetworkAvailable no !   must to call onCompleted
         if (!NetworkUtil.isNetworkAvailable(Utils.getContext())) {
-            ToastUtils.showShort("无网络，读取缓存数据");
+            KLog.d("无网络，读取缓存数据");
             onComplete();
         }
     }
