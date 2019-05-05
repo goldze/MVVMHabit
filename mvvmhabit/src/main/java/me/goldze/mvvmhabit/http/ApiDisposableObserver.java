@@ -23,10 +23,9 @@ public abstract class ApiDisposableObserver<T> extends DisposableObserver<T> {
     @Override
     public void onError(Throwable e) {
         e.printStackTrace();
-        KLog.e(e.getMessage());
         if (e instanceof ResponseThrowable) {
             ResponseThrowable rError = (ResponseThrowable) e;
-            ToastUtils.showShort(rError.getMessage());
+            ToastUtils.showShort(rError.message);
             return;
         }
         //其他全部甩锅网络异常
