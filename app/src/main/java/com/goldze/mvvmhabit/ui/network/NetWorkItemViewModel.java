@@ -1,7 +1,6 @@
 package com.goldze.mvvmhabit.ui.network;
 
 import android.databinding.ObservableField;
-import android.databinding.ObservableInt;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
