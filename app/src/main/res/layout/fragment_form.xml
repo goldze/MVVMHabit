@@ -19,7 +19,7 @@
         <include
             android:id="@+id/include"
             layout="@layout/layout_toolbar"
-            binding:toolbarViewModel="@{viewModel}" />
+            binding:toolbarViewModel="@{viewModel.toolbarViewModel}" />
 
         <LinearLayout
             android:layout_width="match_parent"

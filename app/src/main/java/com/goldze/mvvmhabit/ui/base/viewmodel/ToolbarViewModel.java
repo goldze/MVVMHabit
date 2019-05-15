@@ -28,9 +28,16 @@ public class ToolbarViewModel<M extends BaseModel> extends BaseViewModel<M> {
     public ObservableInt rightTextVisibleObservable = new ObservableInt(View.GONE);
     //右边图标的观察者
     public ObservableInt rightIconVisibleObservable = new ObservableInt(View.GONE);
+    //兼容databinding，去泛型化
+    public ToolbarViewModel toolbarViewModel;
 
     public ToolbarViewModel(@NonNull Application application) {
-        super(application);
+        this(application, null);
+    }
+
+    public ToolbarViewModel(@NonNull Application application, M model) {
+        super(application, model);
+        toolbarViewModel = this;
     }
 
     /**
