@@ -199,6 +199,8 @@
 -dontusemixedcaseclassnames
 #不去忽略非公共的库类
 -dontskipnonpubliclibraryclasses
+#指定不去忽略非公共库的类成员
+-dontskipnonpubliclibraryclassmembers
  #优化  不优化输入的类文件
 -dontoptimize
  #预校验
