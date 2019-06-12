@@ -55,8 +55,6 @@ public abstract class BaseActivity<V extends ViewDataBinding, VM extends BaseVie
         super.onDestroy();
         //解除Messenger注册
         Messenger.getDefault().unregister(viewModel);
-        //解除ViewModel生命周期感应
-        getLifecycle().removeObserver(viewModel);
         if (viewModel != null) {
             viewModel.removeRxBus();
         }
