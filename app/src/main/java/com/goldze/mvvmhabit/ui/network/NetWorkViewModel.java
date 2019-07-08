@@ -121,14 +121,16 @@ public class NetWorkViewModel extends BaseViewModel<DemoRepository> {
                             ToastUtils.showShort("数据错误");
                         }
                     }
-                }, new Consumer<ResponseThrowable>() {
+                }, new Consumer<Throwable>() {
                     @Override
-                    public void accept(ResponseThrowable throwable) throws Exception {
+                    public void accept(Throwable throwable) throws Exception {
                         //关闭对话框
                         dismissDialog();
                         //请求刷新完成收回
                         uc.finishRefreshing.call();
-                        ToastUtils.showShort(throwable.message);
+                        if (throwable instanceof ResponseThrowable) {
+                            ToastUtils.showShort(((ResponseThrowable) throwable).message);
+                        }
                     }
                 }, new Action() {
                     @Override
