@@ -93,8 +93,9 @@ public class LoggingInterceptor implements Interceptor {
                 || subtype.contains("xml")
                 || subtype.contains("plain")
                 || subtype.contains("html"))) {
-            String bodyString = Printer.getJsonString(responseBody.string());
-            Printer.printJsonResponse(builder, chainMs, isSuccessful, code, header, bodyString, segmentList);
+            String bodyString = responseBody.string();
+            String bodyJson = Printer.getJsonString(bodyString);
+            Printer.printJsonResponse(builder, chainMs, isSuccessful, code, header, bodyJson, segmentList);
             body = ResponseBody.create(contentType, bodyString);
         } else {
             Printer.printFileResponse(builder, chainMs, isSuccessful, code, header, segmentList);
