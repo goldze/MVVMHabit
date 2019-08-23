@@ -82,4 +82,13 @@ public class TabBarActivity extends BaseActivity<ActivityTabBarBinding, BaseView
             }
         });
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (mFragments != null) {
+            mFragments.clear();
+            mFragments = null;
+        }
+    }
 }
