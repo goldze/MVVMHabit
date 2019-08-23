@@ -65,8 +65,9 @@ public class NetWorkViewModel extends BaseViewModel<DemoRepository> {
                 return;
             }
             //模拟网络上拉加载更多
-            addSubscribe(model.loadMore()
+            model.loadMore()
                     .compose(RxUtils.schedulersTransformer()) //线程调度
+                    .doOnSubscribe(NetWorkViewModel.this) //请求与ViewModel周期同步
                     .doOnSubscribe(new Consumer<Disposable>() {
                         @Override
                         public void accept(Disposable disposable) throws Exception {
@@ -84,7 +85,7 @@ public class NetWorkViewModel extends BaseViewModel<DemoRepository> {
                             //刷新完成收回
                             uc.finishLoadmore.call();
                         }
-                    }));
+                    });
         }
     });
 
@@ -92,12 +93,11 @@ public class NetWorkViewModel extends BaseViewModel<DemoRepository> {
      * 网络请求方法，在ViewModel中调用Model层，通过Okhttp+Retrofit+RxJava发起请求
      */
     public void requestNetWork() {
-        //建议调用addSubscribe()添加Disposable，请求与View周期同步
-        //addSubscribe();
+        //可以调用addSubscribe()添加Disposable，请求与View周期同步
         model.demoGet()
-                .compose(RxUtils.bindToLifecycle(getLifecycleProvider())) //请求与View周期同步（过度期，尽量少使用）
                 .compose(RxUtils.schedulersTransformer()) //线程调度
                 .compose(RxUtils.exceptionTransformer()) // 网络错误的异常转换, 这里可以换成自己的ExceptionHandle
+                .doOnSubscribe(this)//请求与ViewModel周期同步
                 .doOnSubscribe(new Consumer<Disposable>() {
                     @Override
                     public void accept(Disposable disposable) throws Exception {
