@@ -158,6 +158,7 @@ public abstract class BaseFragment<V extends ViewDataBinding, VM extends BaseVie
 
     public void showDialog(String title) {
         if (dialog != null) {
+            dialog = dialog.getBuilder().title(title).build();
             dialog.show();
         } else {
             MaterialDialog.Builder builder = MaterialDialogUtils.showIndeterminateProgressDialog(getActivity(), title, true);
