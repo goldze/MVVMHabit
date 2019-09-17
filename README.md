@@ -573,10 +573,10 @@ Messenger.getDefault().register(this, LoginViewModel.TOKEN_LOGINVIEWMODEL_REFRES
 //参数2：定义的token
 //参数3：实体的泛型约束
 //参数4：执行的回调监听
-Messenger.getDefault().register(this, LoginViewModel.TOKEN_LOGINVIEWMODEL_REFRESH, String.class, new Consumer<String>() {
+Messenger.getDefault().register(this, LoginViewModel.TOKEN_LOGINVIEWMODEL_REFRESH, String.class, new BindingConsumer<String>() {
     @Override
-    public void accept(String s) throws Exception {
-                
+    public void call(String s) {
+         
     }
 });
 ```
