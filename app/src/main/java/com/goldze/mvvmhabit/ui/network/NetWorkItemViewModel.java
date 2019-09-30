@@ -1,10 +1,10 @@
 package com.goldze.mvvmhabit.ui.network;
 
-import android.databinding.ObservableField;
+import androidx.databinding.ObservableField;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.v4.content.ContextCompat;
+import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 
 import com.goldze.mvvmhabit.R;
 import com.goldze.mvvmhabit.entity.DemoEntity;

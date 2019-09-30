@@ -1,7 +1,7 @@
 package com.goldze.mvvmhabit.ui.rv_multi;
 
-import android.databinding.ObservableField;
-import android.support.annotation.NonNull;
+import androidx.databinding.ObservableField;
+import androidx.annotation.NonNull;
 
 import me.goldze.mvvmhabit.base.MultiItemViewModel;
 

@@ -1,9 +1,9 @@
 package me.goldze.mvvmhabit.utils.constant;
 
-import android.support.annotation.IntDef;
-
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
+
+import androidx.annotation.IntDef;
 
 /**
  * Created by goldze on 2017/5/14.

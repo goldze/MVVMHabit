@@ -1,9 +1,8 @@
 package com.goldze.mvvmhabit.ui.tab_bar.activity;
 
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v4.content.ContextCompat;
+import androidx.fragment.app.Fragment;
+import androidx.core.content.ContextCompat;
 
 import com.goldze.mvvmhabit.BR;
 import com.goldze.mvvmhabit.R;
@@ -16,6 +15,7 @@ import com.goldze.mvvmhabit.ui.tab_bar.fragment.TabBar4Fragment;
 import java.util.ArrayList;
 import java.util.List;
 
+import androidx.fragment.app.FragmentTransaction;
 import me.goldze.mvvmhabit.base.BaseActivity;
 import me.goldze.mvvmhabit.base.BaseViewModel;
 import me.majiajie.pagerbottomtabstrip.NavigationController;

@@ -1,6 +1,6 @@
 package com.goldze.mvvmhabit.ui.viewpager.vm;
 
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 import me.goldze.mvvmhabit.base.ItemViewModel;
 import me.goldze.mvvmhabit.binding.command.BindingAction;

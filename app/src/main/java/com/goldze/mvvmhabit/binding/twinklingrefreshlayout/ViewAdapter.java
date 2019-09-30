@@ -1,7 +1,7 @@
 package com.goldze.mvvmhabit.binding.twinklingrefreshlayout;
 
 
-import android.databinding.BindingAdapter;
+import androidx.databinding.BindingAdapter;
 
 import com.lcodecore.tkrefreshlayout.RefreshListenerAdapter;
 import com.lcodecore.tkrefreshlayout.TwinklingRefreshLayout;

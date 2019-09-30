@@ -1,10 +1,8 @@
 package com.goldze.mvvmhabit.ui.main;
 
 import android.app.Application;
-import android.arch.lifecycle.MutableLiveData;
-import android.databinding.ObservableBoolean;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 import com.goldze.mvvmhabit.entity.FormEntity;
 import com.goldze.mvvmhabit.ui.form.FormFragment;

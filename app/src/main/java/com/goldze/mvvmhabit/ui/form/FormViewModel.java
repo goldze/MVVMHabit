@@ -1,8 +1,8 @@
 package com.goldze.mvvmhabit.ui.form;
 
 import android.app.Application;
-import android.databinding.ObservableBoolean;
-import android.support.annotation.NonNull;
+import androidx.databinding.ObservableBoolean;
+import androidx.annotation.NonNull;
 import android.text.TextUtils;
 import android.view.View;
 

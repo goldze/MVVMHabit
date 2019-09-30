@@ -1,9 +1,7 @@
 package me.goldze.mvvmhabit.binding.viewadapter.radiogroup;
 
-import android.databinding.BindingAdapter;
-import android.support.annotation.IdRes;
-import android.text.TextUtils;
-import android.webkit.WebView;
+import androidx.annotation.IdRes;
+import androidx.databinding.BindingAdapter;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 

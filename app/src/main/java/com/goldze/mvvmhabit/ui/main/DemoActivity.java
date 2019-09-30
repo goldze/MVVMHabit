@@ -2,12 +2,11 @@ package com.goldze.mvvmhabit.ui.main;
 
 import android.Manifest;
 import android.app.ProgressDialog;
-import android.arch.lifecycle.Observer;
-import android.content.Context;
+import androidx.lifecycle.Observer;
+
 import android.content.pm.ActivityInfo;
-import android.databinding.Observable;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
+import androidx.annotation.Nullable;
 
 import com.goldze.mvvmhabit.BR;
 import com.goldze.mvvmhabit.R;
@@ -18,7 +17,6 @@ import io.reactivex.functions.Consumer;
 import me.goldze.mvvmhabit.base.BaseActivity;
 import me.goldze.mvvmhabit.http.DownLoadManager;
 import me.goldze.mvvmhabit.http.download.ProgressCallBack;
-import me.goldze.mvvmhabit.utils.KLog;
 import me.goldze.mvvmhabit.utils.ToastUtils;
 import okhttp3.ResponseBody;
 

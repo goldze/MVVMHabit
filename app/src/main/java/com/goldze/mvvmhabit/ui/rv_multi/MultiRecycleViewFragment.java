@@ -1,7 +1,7 @@
 package com.goldze.mvvmhabit.ui.rv_multi;
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
+import androidx.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
