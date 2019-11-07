@@ -1,19 +1,14 @@
 package me.goldze.mvvmhabit.http;
 
-import android.databinding.ObservableBoolean;
-
 import java.util.concurrent.TimeUnit;
 
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Consumer;
-import io.reactivex.observers.DisposableObserver;
 import io.reactivex.schedulers.Schedulers;
-import me.goldze.mvvmhabit.bus.RxBus;
 import me.goldze.mvvmhabit.http.download.DownLoadSubscriber;
 import me.goldze.mvvmhabit.http.download.ProgressCallBack;
 import me.goldze.mvvmhabit.http.interceptor.ProgressInterceptor;
-import me.goldze.mvvmhabit.utils.RxUtils;
 import okhttp3.OkHttpClient;
 import okhttp3.ResponseBody;
 import retrofit2.Retrofit;
