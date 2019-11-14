@@ -5,7 +5,6 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.telephony.TelephonyManager;
 
-
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.InetAddress;

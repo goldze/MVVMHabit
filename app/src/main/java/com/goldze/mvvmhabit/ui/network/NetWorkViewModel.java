@@ -1,15 +1,15 @@
 package com.goldze.mvvmhabit.ui.network;
 
 import android.app.Application;
-import android.databinding.ObservableArrayList;
-import android.databinding.ObservableList;
-import android.support.annotation.NonNull;
 
 import com.goldze.mvvmhabit.BR;
 import com.goldze.mvvmhabit.R;
 import com.goldze.mvvmhabit.data.DemoRepository;
 import com.goldze.mvvmhabit.entity.DemoEntity;
 
+import androidx.annotation.NonNull;
+import androidx.databinding.ObservableArrayList;
+import androidx.databinding.ObservableList;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Action;
 import io.reactivex.functions.Consumer;

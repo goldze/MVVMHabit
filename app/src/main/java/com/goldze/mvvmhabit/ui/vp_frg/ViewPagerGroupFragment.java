@@ -1,8 +1,5 @@
 package com.goldze.mvvmhabit.ui.vp_frg;
 
-import android.support.v4.app.Fragment;
-
-
 import com.goldze.mvvmhabit.ui.base.fragment.BasePagerFragment;
 import com.goldze.mvvmhabit.ui.tab_bar.fragment.TabBar1Fragment;
 import com.goldze.mvvmhabit.ui.tab_bar.fragment.TabBar2Fragment;
@@ -11,6 +8,8 @@ import com.goldze.mvvmhabit.ui.tab_bar.fragment.TabBar4Fragment;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import androidx.fragment.app.Fragment;
 
 /**
  * Create Author：goldze

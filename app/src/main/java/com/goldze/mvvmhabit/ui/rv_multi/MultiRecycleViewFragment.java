@@ -1,7 +1,6 @@
 package com.goldze.mvvmhabit.ui.rv_multi;
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
@@ -9,6 +8,7 @@ import com.goldze.mvvmhabit.BR;
 import com.goldze.mvvmhabit.R;
 import com.goldze.mvvmhabit.databinding.FragmentMultiRvBinding;
 
+import androidx.annotation.Nullable;
 import me.goldze.mvvmhabit.base.BaseFragment;
 import me.tatarka.bindingcollectionadapter2.BindingRecyclerViewAdapter;
 

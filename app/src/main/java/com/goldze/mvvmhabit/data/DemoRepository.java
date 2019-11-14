@@ -1,12 +1,11 @@
 package com.goldze.mvvmhabit.data;
 
-import android.support.annotation.NonNull;
-import android.support.annotation.VisibleForTesting;
-
 import com.goldze.mvvmhabit.data.source.HttpDataSource;
 import com.goldze.mvvmhabit.data.source.LocalDataSource;
 import com.goldze.mvvmhabit.entity.DemoEntity;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.VisibleForTesting;
 import io.reactivex.Observable;
 import me.goldze.mvvmhabit.base.BaseModel;
 import me.goldze.mvvmhabit.http.BaseResponse;

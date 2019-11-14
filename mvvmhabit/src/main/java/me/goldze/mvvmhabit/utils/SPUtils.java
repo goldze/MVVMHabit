@@ -2,12 +2,13 @@ package me.goldze.mvvmhabit.utils;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.support.annotation.NonNull;
 
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
+
+import androidx.annotation.NonNull;
 
 /**
  * Created by goldze on 2017/5/14.

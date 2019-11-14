@@ -16,10 +16,10 @@
 
 package me.goldze.mvvmhabit.bus.event;
 
-import android.arch.lifecycle.LifecycleOwner;
-import android.arch.lifecycle.Observer;
-import android.support.annotation.Nullable;
-import android.support.annotation.StringRes;
+import androidx.annotation.Nullable;
+import androidx.annotation.StringRes;
+import androidx.lifecycle.LifecycleOwner;
+import androidx.lifecycle.Observer;
 
 /**
  * A SingleLiveEvent used for Snackbar messages. Like a {@link SingleLiveEvent} but also prevents

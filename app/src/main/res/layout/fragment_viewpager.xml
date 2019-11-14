@@ -22,21 +22,21 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <android.support.design.widget.TabLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+        <com.google.android.material.tabs.TabLayout
             android:id="@+id/tabs"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:tabGravity="fill"
-            app:tabIndicatorColor="@color/colorPrimary"
-            app:tabSelectedTextColor="@color/colorPrimary"
-            app:tabTextColor="@android:color/black" />
+            binding:tabGravity="fill"
+            binding:tabIndicatorColor="@color/colorPrimary"
+            binding:tabSelectedTextColor="@color/colorPrimary"
+            binding:tabTextColor="@android:color/black" />
 
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:background="#F0F0F0" />
 
-        <android.support.v4.view.ViewPager
+        <androidx.viewpager.widget.ViewPager
             android:id="@+id/viewPager"
             android:layout_width="match_parent"
             android:layout_height="0dp"

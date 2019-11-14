@@ -28,8 +28,6 @@ import android.provider.MediaStore.MediaColumns;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
 
-import org.reactivestreams.Subscriber;
-
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.ByteArrayInputStream;

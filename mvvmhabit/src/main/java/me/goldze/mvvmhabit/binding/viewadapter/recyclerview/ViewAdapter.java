@@ -1,11 +1,10 @@
 package me.goldze.mvvmhabit.binding.viewadapter.recyclerview;
 
-import android.databinding.BindingAdapter;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-
 import java.util.concurrent.TimeUnit;
 
+import androidx.databinding.BindingAdapter;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import io.reactivex.functions.Consumer;
 import io.reactivex.subjects.PublishSubject;
 import me.goldze.mvvmhabit.binding.command.BindingCommand;
@@ -20,6 +19,10 @@ public class ViewAdapter {
         recyclerView.addItemDecoration(lineManagerFactory.create(recyclerView));
     }
 
+    @BindingAdapter("layoutManager")
+    public static void setLayoutManager(RecyclerView recyclerView, LayoutManagers.LayoutManagerFactory layoutManagerFactory) {
+        recyclerView.setLayoutManager(layoutManagerFactory.create(recyclerView));
+    }
 
     @BindingAdapter(value = {"onScrollChangeCommand", "onScrollStateChangedCommand"}, requireAll = false)
     public static void onScrollChangeCommand(final RecyclerView recyclerView,

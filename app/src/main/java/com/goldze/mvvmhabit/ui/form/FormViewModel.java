@@ -1,8 +1,6 @@
 package com.goldze.mvvmhabit.ui.form;
 
 import android.app.Application;
-import android.databinding.ObservableBoolean;
-import android.support.annotation.NonNull;
 import android.text.TextUtils;
 import android.view.View;
 
@@ -14,6 +12,8 @@ import com.google.gson.Gson;
 import java.util.ArrayList;
 import java.util.List;
 
+import androidx.annotation.NonNull;
+import androidx.databinding.ObservableBoolean;
 import me.goldze.mvvmhabit.binding.command.BindingAction;
 import me.goldze.mvvmhabit.binding.command.BindingCommand;
 import me.goldze.mvvmhabit.binding.command.BindingConsumer;

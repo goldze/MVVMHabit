@@ -1,8 +1,9 @@
 package com.goldze.mvvmhabit.entity;
 
-import android.databinding.BaseObservable;
 import android.os.Parcel;
 import android.os.Parcelable;
+
+import androidx.databinding.BaseObservable;
 
 /**
  * Created by goldze on 2017/7/17.

@@ -1,11 +1,7 @@
 package com.goldze.mvvmhabit.ui.form;
 
 import android.app.DatePickerDialog;
-import android.arch.lifecycle.Observer;
-import android.databinding.Observable;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.widget.DatePicker;
@@ -17,6 +13,10 @@ import com.goldze.mvvmhabit.entity.FormEntity;
 
 import java.util.Calendar;
 
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.databinding.Observable;
+import androidx.lifecycle.Observer;
 import me.goldze.mvvmhabit.base.BaseFragment;
 import me.goldze.mvvmhabit.utils.MaterialDialogUtils;
 

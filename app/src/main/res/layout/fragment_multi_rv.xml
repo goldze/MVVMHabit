@@ -15,7 +15,7 @@
             name="adapter"
             type="BindingRecyclerViewAdapter" />
 
-        <import type="me.tatarka.bindingcollectionadapter2.LayoutManagers" />
+        <import type="me.goldze.mvvmhabit.binding.viewadapter.recyclerview.LayoutManagers" />
 
         <import type="me.goldze.mvvmhabit.binding.viewadapter.recyclerview.LineManagers" />
     </data>
@@ -26,7 +26,7 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <android.support.v7.widget.RecyclerView
+        <androidx.recyclerview.widget.RecyclerView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             binding:adapter="@{adapter}"
