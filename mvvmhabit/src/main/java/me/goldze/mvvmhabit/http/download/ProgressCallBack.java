@@ -60,7 +60,6 @@ public abstract class ProgressCallBack<T> {
                 fos.write(buf, 0, len);
             }
             fos.flush();
-            unsubscribe();
             //onCompleted();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
@@ -70,6 +69,7 @@ public abstract class ProgressCallBack<T> {
             try {
                 if (is != null) is.close();
                 if (fos != null) fos.close();
+                unsubscribe();
             } catch (IOException e) {
                 Log.e("saveFile", e.getMessage());
             }
