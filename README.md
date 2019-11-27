@@ -8,7 +8,7 @@
 - 修改文档说明。
 #### [更多日志](./UpdateLog.md)
 
-#### [AndroidX分支](https://github.com/goldze/MVVMHabit/tree/androidx)
+#### [AndroidX分支](https://github.com/goldze/MVVMHabit/tree/androidx)  (AndroidX分支目前还处于过度阶段，如果你的项目需要AndroidX的支持，那么请使用本地依赖的方式导入项目Library)
 ***
 
 **注：[1.x-废弃版（最后版本：1.2.6.1）](https://github.com/goldze/MVVMHabit/tree/1.2.6.1)、[2.x-顺手版（最后版本：2.0.10）](https://github.com/goldze/MVVMHabit/tree/2.0.10)已停止维护，建议使用当前[3.x-健壮版（最后版本：3.1.3）](https://github.com/goldze/MVVMHabit)。**
