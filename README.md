@@ -1,5 +1,5 @@
 ## 最新日志
-#### AndroidX分支目前还处于过度阶段，如果你的项目需要AndroidX的支持，那么请使用本地依赖的方式导入项目Library。
+#### AndroidX分支目前还处于过度阶段，如果你的项目需要AndroidX的支持，那么请使用本地依赖的方式导入该分支的Library。
 #### [更多日志](./UpdateLog.md)
 
 > **原文地址：** [https://github.com/goldze/MVVMHabit](https://github.com/goldze/MVVMHabit)
