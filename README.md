@@ -769,6 +769,22 @@ ImageUtils.compressWithRx(filePaths, new Subscriber() {
 解决方法：其实确保自己的写法没有问题，是可以直接运行的，报红不一定是你写的有问题，也有可能是编译器抽风了。或者使用下面的办法</br>
 第一招：Build->Clean Project；</br>第二招：Build->Rebuild Project；</br>第三招：重启大法。
 
+##### 4.1.5、gradle错误
+如果遇到以下编译问题：
+
+错误: 无法将类 BindingRecyclerViewAdapters中的方法 setAdapter应用到给定类型;
+需要: RecyclerView,ItemBinding,List,BindingRecyclerViewAdapter,ItemIds<? super T>,ViewHolderFactory
+找到: RecyclerView,ItemBinding,ObservableList,BindingRecyclerViewAdapter<CAP#1>,ItemIds,ViewHolderFactory
+原因: 推断类型不符合等式约束条件
+推断: CAP#1
+等式约束条件: CAP#1,NetWorkItemViewModel
+其中, T是类型变量:
+T扩展已在方法 setAdapter(RecyclerView,ItemBinding,List,BindingRecyclerViewAdapter,ItemIds<? super T>,ViewHolderFactory)中声明的Object
+其中, CAP#1是新类型变量:
+CAP#1从?的捕获扩展Object
+
+一般是由于gradle plugin版本3.5.1造成的，请换成gradle plugin 3.5.0以下版本
+
 ## 混淆
 例子程序中给出了最新的【MVVMHabit混淆规则】，包含MVVMHabit中依赖的所有第三方library，可以将规则直接拷贝到自己app的混淆规则中。在此基础上你只需要关注自己业务代码以及自己引入第三方的混淆，【MVVMHabit混淆规则】请参考app目录下的[proguard-rules.pro](./app/proguard-rules.pro)文件。
 
