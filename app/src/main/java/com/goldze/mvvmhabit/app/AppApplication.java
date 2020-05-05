@@ -27,7 +27,7 @@ public class AppApplication extends BaseApplication {
         }
     }
 
-    private void initCrash() {
+    private void trackCrash() {
         CaocConfig.Builder.create()
                 .backgroundMode(CaocConfig.BACKGROUND_MODE_SILENT) //背景模式,开启沉浸式
                 .enabled(true) //是否启动全局异常捕获
