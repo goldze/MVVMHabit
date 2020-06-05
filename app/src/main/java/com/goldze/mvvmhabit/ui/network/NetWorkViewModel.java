@@ -13,6 +13,7 @@ import com.goldze.mvvmhabit.entity.DemoEntity;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Action;
 import io.reactivex.functions.Consumer;
+import io.reactivex.observers.DisposableObserver;
 import me.goldze.mvvmhabit.base.BaseViewModel;
 import me.goldze.mvvmhabit.binding.command.BindingAction;
 import me.goldze.mvvmhabit.binding.command.BindingCommand;
@@ -104,9 +105,9 @@ public class NetWorkViewModel extends BaseViewModel<DemoRepository> {
                         showDialog("正在请求...");
                     }
                 })
-                .subscribe(new Consumer<BaseResponse<DemoEntity>>() {
+                .subscribe(new DisposableObserver<BaseResponse<DemoEntity>>() {
                     @Override
-                    public void accept(BaseResponse<DemoEntity> response) throws Exception {
+                    public void onNext(BaseResponse<DemoEntity> response) {
                         //清除列表
                         observableList.clear();
                         //请求成功
@@ -121,9 +122,9 @@ public class NetWorkViewModel extends BaseViewModel<DemoRepository> {
                             ToastUtils.showShort("数据错误");
                         }
                     }
-                }, new Consumer<Throwable>() {
+
                     @Override
-                    public void accept(Throwable throwable) throws Exception {
+                    public void onError(Throwable throwable) {
                         //关闭对话框
                         dismissDialog();
                         //请求刷新完成收回
@@ -132,9 +133,9 @@ public class NetWorkViewModel extends BaseViewModel<DemoRepository> {
                             ToastUtils.showShort(((ResponseThrowable) throwable).message);
                         }
                     }
-                }, new Action() {
+
                     @Override
-                    public void run() throws Exception {
+                    public void onComplete() {
                         //关闭对话框
                         dismissDialog();
                         //请求刷新完成收回
