@@ -1,6 +1,6 @@
 package com.goldze.mvvmhabit.ui.viewpager.adapter;
 
-import android.databinding.ViewDataBinding;
+import androidx.databinding.ViewDataBinding;
 import android.view.ViewGroup;
 
 import com.goldze.mvvmhabit.databinding.ItemViewpagerBinding;

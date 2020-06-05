@@ -1,16 +1,15 @@
 package com.goldze.mvvmhabit.ui.rv_multi;
 
 import android.app.Application;
-import android.databinding.ObservableArrayList;
-import android.databinding.ObservableList;
-import android.support.annotation.NonNull;
+import androidx.databinding.ObservableArrayList;
+import androidx.databinding.ObservableList;
+import androidx.annotation.NonNull;
 
 import com.goldze.mvvmhabit.BR;
 import com.goldze.mvvmhabit.R;
 
 import me.goldze.mvvmhabit.base.BaseViewModel;
 import me.goldze.mvvmhabit.base.MultiItemViewModel;
-import me.tatarka.bindingcollectionadapter2.BindingRecyclerViewAdapter;
 import me.tatarka.bindingcollectionadapter2.ItemBinding;
 import me.tatarka.bindingcollectionadapter2.OnItemBind;
 

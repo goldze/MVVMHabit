@@ -1,6 +1,6 @@
 package me.goldze.mvvmhabit.utils.compression;
 
-import android.support.annotation.Nullable;
+import androidx.annotation.Nullable;
 
 final class Preconditions {
 

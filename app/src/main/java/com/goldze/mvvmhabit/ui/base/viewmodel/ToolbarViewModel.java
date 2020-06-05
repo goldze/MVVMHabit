@@ -1,9 +1,9 @@
 package com.goldze.mvvmhabit.ui.base.viewmodel;
 
 import android.app.Application;
-import android.databinding.ObservableField;
-import android.databinding.ObservableInt;
-import android.support.annotation.NonNull;
+import androidx.databinding.ObservableField;
+import androidx.databinding.ObservableInt;
+import androidx.annotation.NonNull;
 import android.view.View;
 
 import me.goldze.mvvmhabit.base.BaseModel;

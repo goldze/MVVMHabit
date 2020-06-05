@@ -1,6 +1,6 @@
 package me.goldze.mvvmhabit.binding.viewadapter.recyclerview;
 
-import android.support.v7.widget.RecyclerView;
+import androidx.recyclerview.widget.RecyclerView;
 
 /**
  * Created by goldze on 2017/6/16.

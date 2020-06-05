@@ -1,13 +1,12 @@
 package com.goldze.mvvmhabit.ui.viewpager.vm;
 
 import android.app.Application;
-import android.databinding.ObservableArrayList;
-import android.databinding.ObservableList;
-import android.support.annotation.NonNull;
+import androidx.databinding.ObservableArrayList;
+import androidx.databinding.ObservableList;
+import androidx.annotation.NonNull;
 
 import com.goldze.mvvmhabit.BR;
 import com.goldze.mvvmhabit.R;
-import com.goldze.mvvmhabit.ui.viewpager.adapter.ViewPagerBindingAdapter;
 
 import me.goldze.mvvmhabit.base.BaseViewModel;
 import me.goldze.mvvmhabit.binding.command.BindingCommand;
