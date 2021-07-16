@@ -1,17 +1,24 @@
 ## 最新日志
-**v3.0.7：2019年1月25日**
+**v4.0.0：2021年07月16日**
 
+- 迁移AndroidX分支作为主线分支；
+- 升级第三方框架依赖版本；
+- 升级gradle插件版本支持；
 - 优化框架代码，解决已知Bug；
-- 新增ViewPager+Fragment例子；
-- 新增RecycleView多布局例子；
-- 升级第三方依赖库；
 - 修改文档说明。
 #### [更多日志](./UpdateLog.md)
 
-#### [AndroidX分支](https://github.com/goldze/MVVMHabit/tree/androidx)
 ***
 
-**注：[1.x-废弃版（最后版本：1.2.6.1）](https://github.com/goldze/MVVMHabit/tree/1.2.6.1)、[2.x-顺手版（最后版本：2.0.10）](https://github.com/goldze/MVVMHabit/tree/2.0.10)已停止维护，建议使用当前[3.x-健壮版（最后版本：3.1.6）](https://github.com/goldze/MVVMHabit)。**
+**注：** 
+
+[1.x-废弃版（最后版本：1.2.6.1）](https://github.com/goldze/MVVMHabit/tree/1.2.6.1)停止维护
+
+[2.x-顺手版（最后版本：2.0.10）](https://github.com/goldze/MVVMHabit/tree/2.0.10)停止维护
+
+[3.x-健壮版（最后版本：3.1.6）](https://github.com/goldze/MVVMHabit/tree/20210716_v3.1.6_android)非AndroidX版本
+
+[4.x-AndroidX版（最后版本：4.0.0）](https://github.com/goldze/MVVMHabit) 建议使用当前版本
 
 > **原文地址：** [https://github.com/goldze/MVVMHabit](https://github.com/goldze/MVVMHabit)
 
@@ -82,7 +89,7 @@ allprojects {
 ```gradle
 dependencies {
     ...
-    implementation 'com.github.goldze:MVVMHabit:3.1.6'
+    implementation 'com.github.goldze:MVVMHabit:4.0.0'
 }
 ```
 或
