@@ -68,6 +68,9 @@ dependencies {
     api(rootProject.ext.dependencies["bindingcollectionadapter-recyclerview"]) {
         exclude group: 'com.android.support'
     }
+    api(rootProject.ext.dependencies["bindingcollectionadapter-viewpager2"]) {
+        exclude group: 'com.android.support'
+    }
     //Google LiveData和ViewModel组件
     api rootProject.ext.dependencies["lifecycle-extensions"]
     annotationProcessor rootProject.ext.dependencies["lifecycle-compiler"]
