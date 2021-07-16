@@ -1,7 +1,5 @@
 package me.goldze.mvvmhabit.binding.command;
 
-
-import io.reactivex.exceptions.Exceptions;
 import io.reactivex.functions.Function;
 
 /**

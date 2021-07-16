@@ -1,7 +1,5 @@
 package me.goldze.mvvmhabit.binding.command;
 
-import me.goldze.mvvmhabit.R;
-
 /**
  * Represents a function with zero arguments.
  *

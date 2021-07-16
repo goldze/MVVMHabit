@@ -1,12 +1,12 @@
 package me.goldze.mvvmhabit.binding.viewadapter.edittext;
 
 import android.content.Context;
-import android.databinding.BindingAdapter;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 
+import androidx.databinding.BindingAdapter;
 import me.goldze.mvvmhabit.binding.command.BindingCommand;
 
 /**

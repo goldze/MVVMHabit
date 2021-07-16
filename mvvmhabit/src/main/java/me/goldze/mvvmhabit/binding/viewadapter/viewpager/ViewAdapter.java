@@ -1,10 +1,7 @@
 package me.goldze.mvvmhabit.binding.viewadapter.viewpager;
 
-import android.databinding.BindingAdapter;
-import android.support.v4.view.ViewPager;
-import android.text.TextUtils;
-import android.webkit.WebView;
-
+import androidx.databinding.BindingAdapter;
+import androidx.viewpager.widget.ViewPager;
 import me.goldze.mvvmhabit.binding.command.BindingCommand;
 
 /**

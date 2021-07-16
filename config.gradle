@@ -11,19 +11,18 @@ ext {
     ]
     //version配置
     versions = [
-            "support-version": "28.0.0",
+            "support-version": "1.0.0",
             "junit-version"  : "4.12",
     ]
     //support配置
     support = [
-            "constraint-layout"       : "1.0.0-beta2",
-            'support-v4'              : "com.android.support:support-v4:${versions["support-version"]}",
-            'appcompat-v7'            : "com.android.support:appcompat-v7:${versions["support-version"]}",
-            'recyclerview-v7'         : "com.android.support:recyclerview-v7:${versions["support-version"]}",
-            'support-v13'             : "com.android.support:support-v13:${versions["support-version"]}",
-            'support-fragment'        : "com.android.support:support-fragment:${versions["support-version"]}",
-            'design'                  : "com.android.support:design:${versions["support-version"]}",
-            'animated-vector-drawable': "com.android.support:animated-vector-drawable:${versions["support-version"]}",
+            'support-v4'              : "androidx.legacy:legacy-support-v4:${versions["support-version"]}",
+            'appcompat-v7'            : "androidx.appcompat:appcompat:${versions["support-version"]}",
+            'recyclerview-v7'         : "androidx.recyclerview:recyclerview:${versions["support-version"]}",
+            'support-v13'             : "androidx.legacy:legacy-support-v13:${versions["support-version"]}",
+            'support-fragment'        : "androidx.fragment:fragment:${versions["support-version"]}",
+            'design'                  : "com.google.android.material:material:${versions["support-version"]}",
+            'animated-vector-drawable': "androidx.vectordrawable:vectordrawable-animated:${versions["support-version"]}",
             'junit'                   : "junit:junit:${versions["junit-version"]}",
     ]
     //依赖第三方配置
@@ -44,19 +43,20 @@ ext {
             "converter-gson"                       : "com.squareup.retrofit2:converter-gson:2.4.0",
             "adapter-rxjava"                       : "com.squareup.retrofit2:adapter-rxjava2:2.4.0",
             //glide图片加载
-            "glide"                                : "com.github.bumptech.glide:glide:4.8.0",
-            "glide-compiler"                       : "com.github.bumptech.glide:compiler:4.8.0",
+            "glide"                                : "com.github.bumptech.glide:glide:4.11.0",
+            "glide-compiler"                       : "com.github.bumptech.glide:compiler:4.11.0",
             //json解析
-            "gson"                                 : "com.google.code.gson:gson:2.8.5",
+            "gson"                                 : "com.google.code.gson:gson:2.8.6",
             //material-dialogs
-            "material-dialogs-core"                : "com.afollestad.material-dialogs:core:0.9.4.5",
-            "material-dialogs-commons"             : "com.afollestad.material-dialogs:commons:0.9.4.5",
+            "material-dialogs-core"                : "com.afollestad.material-dialogs:core:0.9.6.0",
+            "material-dialogs-commons"             : "com.afollestad.material-dialogs:commons:0.9.6.0",
             //recyclerview的databinding套装
-            "bindingcollectionadapter"             : "me.tatarka.bindingcollectionadapter2:bindingcollectionadapter:2.2.0",
-            "bindingcollectionadapter-recyclerview": "me.tatarka.bindingcollectionadapter2:bindingcollectionadapter-recyclerview:2.2.0",
+            "bindingcollectionadapter"             : "me.tatarka.bindingcollectionadapter2:bindingcollectionadapter:4.0.0",
+            "bindingcollectionadapter-recyclerview": "me.tatarka.bindingcollectionadapter2:bindingcollectionadapter-recyclerview:4.0.0",
+            "bindingcollectionadapter-viewpager2"  : "me.tatarka.bindingcollectionadapter2:bindingcollectionadapter-viewpager2:4.0.0",
             //Google AAC
-            "lifecycle-extensions"                 : "android.arch.lifecycle:extensions:1.1.1",
-            "lifecycle-compiler"                 : "android.arch.lifecycle:compiler:1.1.1",
+            "lifecycle-extensions"                 : "androidx.lifecycle:lifecycle-extensions:2.0.0",
+            "lifecycle-compiler"                   : "androidx.lifecycle:lifecycle-compiler:2.0.0",
             //MVVMHabit
             "MVVMHabit"                            : "com.github.goldze:MVVMHabit:3.1.6",
     ]

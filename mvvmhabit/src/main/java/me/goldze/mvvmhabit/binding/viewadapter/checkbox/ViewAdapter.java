@@ -1,9 +1,9 @@
 package me.goldze.mvvmhabit.binding.viewadapter.checkbox;
 
-import android.databinding.BindingAdapter;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 
+import androidx.databinding.BindingAdapter;
 import me.goldze.mvvmhabit.binding.command.BindingCommand;
 
 /**

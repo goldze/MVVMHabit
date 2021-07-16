@@ -1,9 +1,10 @@
 package me.goldze.mvvmhabit.base;
 
 import android.app.Activity;
-import android.support.v4.app.Fragment;
 
 import java.util.Stack;
+
+import androidx.fragment.app.Fragment;
 
 /**
  * Created by goldze on 2017/6/15.

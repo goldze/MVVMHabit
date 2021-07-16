@@ -1,6 +1,5 @@
 package me.goldze.mvvmhabit.bus;
 
-
 import io.reactivex.observers.DisposableObserver;
 
 /**

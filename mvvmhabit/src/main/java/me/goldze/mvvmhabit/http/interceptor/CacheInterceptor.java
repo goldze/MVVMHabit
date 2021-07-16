@@ -1,8 +1,6 @@
 package me.goldze.mvvmhabit.http.interceptor;
 
-import android.app.Activity;
 import android.content.Context;
-import android.widget.Toast;
 
 import java.io.IOException;
 

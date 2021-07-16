@@ -1,6 +1,5 @@
 package me.goldze.mvvmhabit.bus;
 
-
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 

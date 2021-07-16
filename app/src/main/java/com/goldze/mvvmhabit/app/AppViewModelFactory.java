@@ -2,14 +2,15 @@ package com.goldze.mvvmhabit.app;
 
 import android.annotation.SuppressLint;
 import android.app.Application;
-import android.arch.lifecycle.ViewModel;
-import android.arch.lifecycle.ViewModelProvider;
-import android.support.annotation.NonNull;
-import android.support.annotation.VisibleForTesting;
 
 import com.goldze.mvvmhabit.data.DemoRepository;
 import com.goldze.mvvmhabit.ui.login.LoginViewModel;
 import com.goldze.mvvmhabit.ui.network.NetWorkViewModel;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.VisibleForTesting;
+import androidx.lifecycle.ViewModel;
+import androidx.lifecycle.ViewModelProvider;
 
 /**
  * Created by goldze on 2019/3/26.

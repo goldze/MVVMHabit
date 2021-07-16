@@ -1,7 +1,5 @@
 package me.goldze.mvvmhabit.bus;
 
-import org.reactivestreams.Subscription;
-
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 

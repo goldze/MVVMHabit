@@ -1,7 +1,6 @@
 package com.goldze.mvvmhabit.data.source.local;
 
 import com.goldze.mvvmhabit.data.source.LocalDataSource;
-import com.goldze.mvvmhabit.data.source.http.service.DemoApiService;
 
 import me.goldze.mvvmhabit.utils.SPUtils;
 

@@ -1,6 +1,5 @@
 package me.goldze.mvvmhabit.utils;
 
-import android.support.v4.util.SimpleArrayMap;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -8,6 +7,7 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import androidx.collection.SimpleArrayMap;
 import me.goldze.mvvmhabit.utils.constant.RegexConstants;
 
 /**

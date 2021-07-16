@@ -1,10 +1,10 @@
 package me.goldze.mvvmhabit.binding.viewadapter.scrollview;
 
-import android.databinding.BindingAdapter;
-import android.support.v4.widget.NestedScrollView;
 import android.view.ViewTreeObserver;
 import android.widget.ScrollView;
 
+import androidx.core.widget.NestedScrollView;
+import androidx.databinding.BindingAdapter;
 import me.goldze.mvvmhabit.binding.command.BindingCommand;
 
 /**

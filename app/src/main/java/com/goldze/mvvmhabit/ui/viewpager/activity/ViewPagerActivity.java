@@ -1,16 +1,16 @@
 package com.goldze.mvvmhabit.ui.viewpager.activity;
 
-import android.arch.lifecycle.Observer;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.design.widget.TabLayout;
 
 import com.goldze.mvvmhabit.BR;
 import com.goldze.mvvmhabit.R;
 import com.goldze.mvvmhabit.databinding.FragmentViewpagerBinding;
 import com.goldze.mvvmhabit.ui.viewpager.adapter.ViewPagerBindingAdapter;
 import com.goldze.mvvmhabit.ui.viewpager.vm.ViewPagerViewModel;
+import com.google.android.material.tabs.TabLayout;
 
+import androidx.annotation.Nullable;
+import androidx.lifecycle.Observer;
 import me.goldze.mvvmhabit.base.BaseActivity;
 import me.goldze.mvvmhabit.utils.ToastUtils;
 
