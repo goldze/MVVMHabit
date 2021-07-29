@@ -1,5 +1,6 @@
 package com.goldze.mvvmhabit.ui.network;
 
+import android.annotation.SuppressLint;
 import android.app.Application;
 
 import com.goldze.mvvmhabit.BR;
@@ -58,6 +59,7 @@ public class NetWorkViewModel extends BaseViewModel<DemoRepository> {
     });
     //上拉加载
     public BindingCommand onLoadMoreCommand = new BindingCommand(new BindingAction() {
+        @SuppressLint("CheckResult")
         @Override
         public void call() {
             if (observableList.size() > 50) {
@@ -67,7 +69,7 @@ public class NetWorkViewModel extends BaseViewModel<DemoRepository> {
             }
             //模拟网络上拉加载更多
             model.loadMore()
-                    .compose(RxUtils.schedulersTransformer()) //线程调度
+                    .compose(RxUtils.<DemoEntity>schedulersTransformer()) //线程调度
                     .doOnSubscribe(NetWorkViewModel.this) //请求与ViewModel周期同步
                     .doOnSubscribe(new Consumer<Disposable>() {
                         @Override
@@ -93,11 +95,12 @@ public class NetWorkViewModel extends BaseViewModel<DemoRepository> {
     /**
      * 网络请求方法，在ViewModel中调用Model层，通过Okhttp+Retrofit+RxJava发起请求
      */
+    @SuppressLint("CheckResult")
     public void requestNetWork() {
         //可以调用addSubscribe()添加Disposable，请求与View周期同步
         model.demoGet()
-                .compose(RxUtils.schedulersTransformer()) //线程调度
-                .compose(RxUtils.exceptionTransformer()) // 网络错误的异常转换, 这里可以换成自己的ExceptionHandle
+                .compose(RxUtils.<BaseResponse<DemoEntity>>schedulersTransformer()) //线程调度
+                .compose(RxUtils.<BaseResponse<DemoEntity>>exceptionTransformer()) // 网络错误的异常转换, 这里可以换成自己的ExceptionHandle
                 .doOnSubscribe(this)//请求与ViewModel周期同步
                 .doOnSubscribe(new Consumer<Disposable>() {
                     @Override
