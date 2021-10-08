@@ -12,13 +12,9 @@
 
 **注：** 
 
-[1.x-废弃版（最后版本：1.2.6.1）](https://github.com/goldze/MVVMHabit/tree/1.2.6.1) 停止维护
+[3.x：Support版（最后版本：3.1.6）](https://github.com/goldze/MVVMHabit/tree/20210716_v3.1.6_android) 
 
-[2.x-顺手版（最后版本：2.0.10）](https://github.com/goldze/MVVMHabit/tree/2.0.10) 停止维护
-
-[3.x-健壮版（最后版本：3.1.6）](https://github.com/goldze/MVVMHabit/tree/20210716_v3.1.6_android) Support版
-
-[4.x-AndroidX版（最后版本：4.0.0）](https://github.com/goldze/MVVMHabit) 建议使用当前版本
+[4.x：AndroidX版（最后版本：4.0.0）](https://github.com/goldze/MVVMHabit) 建议使用当前版本
 
 > **原文地址：** [https://github.com/goldze/MVVMHabit](https://github.com/goldze/MVVMHabit)
 
