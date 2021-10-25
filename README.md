@@ -1,6 +1,8 @@
 ## 最新日志
 **v4.0.0：2021年07月16日**
 
+[![Maintainability](https://cloud.quality-gate.com/dashboard/api/badge?projectName=goldze_MVVMHabit&branchName=master)](https://cloud.quality-gate.com/dashboard/branches/292943#overview)
+
 - 迁移AndroidX分支作为主线分支；
 - 升级第三方框架依赖版本；
 - 升级gradle插件版本支持；
