@@ -18,7 +18,10 @@
 
 > **原文地址：** [https://github.com/goldze/MVVMHabit](https://github.com/goldze/MVVMHabit)
 
-<a target="_blank" href="http://qm.qq.com/cgi-bin/qm/qr?k=Pvi-65bZN6fRly3VBC8F3fS7A-Pjinna"><img border="0" src="http://pub.idqqimg.com/wpa/images/group.png" alt="MVVMHabit-Family" title="MVVMHabit-Family"></a>
+②群 <a target="_blank" href="https://jq.qq.com/?_wv=1027&k=V3luKUW7"><img border="0" src="http://pub.idqqimg.com/wpa/images/group.png" alt="MVVMHabit-Family2" title="MVVMHabit-Family2"></a>
+
+①群 <a target="_blank" href="https://jq.qq.com/?_wv=1027&k=Fv9et98F"><img border="0" src="http://pub.idqqimg.com/wpa/images/group.png" alt="MVVMHabit-Family" title="MVVMHabit-Family"></a>（已满）
+
 # MVVMHabit
 ##
 目前，android流行的MVC、MVP模式的开发框架很多，然而一款基于MVVM模式开发框架却很少。**MVVMHabit是以谷歌DataBinding+LiveData+ViewModel框架为基础，整合Okhttp+RxJava+Retrofit+Glide等流行模块，加上各种原生控件自定义的BindingAdapter，让事件与数据源完美绑定的一款容易上瘾的实用性MVVM快速开发框架**。从此告别findViewById()，告别setText()，告别setOnClickListener()...
